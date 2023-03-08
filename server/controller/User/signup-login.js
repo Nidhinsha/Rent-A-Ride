@@ -4,7 +4,7 @@ const generateToken = require('../../Middlewares/generateToken')
 
 // Sign UP
 exports.SignUpPost = async(req,res)=>{
-
+    console.log(req.body);
     try {
         let details = {
             firstName,
