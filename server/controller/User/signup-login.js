@@ -46,7 +46,7 @@ exports.SignUpPost = async(req,res)=>{
 // Login 
 
 exports.LoginPost= async(req,res)=>{
-    console.log(req.body);
+    console.log(req.body,'login body');
 
     try {
         userSchema.findOne({email: req.body.email}).then((userData)=>{

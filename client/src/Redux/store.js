@@ -3,20 +3,22 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import {
     userSignupReducer,
+    userLoginReducer
   } from "./Reducers/userReducers";
 
   const reducer = combineReducers({
 
     userSignup: userSignupReducer,
+    userLogin : userLoginReducer
     
   });
 
 
 
-let userinfo = JSON.parse(localStorage.getItem("userInfo"));
+let userData = JSON.parse(localStorage.getItem("userInfo"));
 
 const initialstate = {
-  userLogin: { userinfo: userinfo },
+  userLogin: { userinfo: userData },
 };
 
 const middleware = [thunk];
