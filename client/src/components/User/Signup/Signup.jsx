@@ -1,71 +1,93 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userSignup } from '../../../Redux/Actions/userActions';
+import {Link, useNavigate} from 'react-router-dom'
 function Signup() {
 
-    const [firstName,setFirstName] = useState('')
-    const [lastName,setLastName] = useState('')
-    const [email,setEmail] = useState('')
-    const [phone,setPhone] = useState('')
-    const [password,setPassword] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
 
 
-    const dispatch = useDispatch()
-    const handleSubmit =(e) =>{
-        e.preventDefault()
-        console.log(firstName,lastName,email,phone,password);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-        dispatch(userSignup(firstName,lastName,email,phone,password))
-    }
+  // not finished
+  const haveAccount = () =>{
+    navigate('/user-login')
+  }
+
+  const Signup = useSelector(state => state.userSignup)
+
+  const { loading, error } = Signup
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(firstName, lastName, email, phone, password);
+
+    dispatch(userSignup(firstName, lastName, email, phone, password))
+  }
   return (
     <div>
-        <form action="">
+      <form action="">
 
-        <input 
-      onChange={(e)=>{
-        setFirstName(e.target.value)
-      }}
-      type="text" 
-      name="firstName"
-      
-       />
-      <input 
-      onChange={(e)=>{
-        setLastName(e.target.value)
-      }}
-      type="text" 
-      name="lastName"
-      
-       />
-      <input 
-      onChange={(e)=>{
-        setEmail(e.target.value)
-      }}
-      type="email" 
-      name="email"
-      
-       />
-      <input 
-      onChange={(e)=>{
-        setPhone(e.target.value)
-      }}
-      type="number" 
-      name="phone"
-      
-       />
-    
-      <input 
-      onChange={(e)=>{
-        setPassword(e.target.value)
-      }}
-      type="password" 
-      name="password"
-      
-       />
+        {/* error showing */}
+        {error ? <strong>{error}</strong> : ""}
 
-       <button onClick={handleSubmit}>submit</button>
-        </form>
-     
+        {/* loadding showing */}
+        {loading ? <strong>Loading..</strong> : ""}
+
+
+        <input
+          onChange={(e) => {
+            setFirstName(e.target.value)
+          }}
+          type="text"
+          name="firstName"
+
+        />
+        <input
+          onChange={(e) => {
+            setLastName(e.target.value)
+          }}
+          type="text"
+          name="lastName"
+
+        />
+        <input
+          onChange={(e) => {
+            setEmail(e.target.value)
+          }}
+          type="email"
+          name="email"
+
+        />
+        <input
+          onChange={(e) => {
+            setPhone(e.target.value)
+          }}
+          type="number"
+          name="phone"
+
+        />
+
+        <input
+          onChange={(e) => {
+            setPassword(e.target.value)
+          }}
+          type="password"
+          name="password"
+
+        />
+
+        <button onClick={handleSubmit}>submit</button>
+      </form>
+
+      <div>
+        <Link to={'/login'}>login</Link>
+      </div>
     </div>
   )
 }
