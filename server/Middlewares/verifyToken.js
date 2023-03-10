@@ -9,11 +9,13 @@ const protect = asyncHandler(async (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         try {
             token = req.headers.authorization.split(" ")[1]
-            const decoded = jwt.verify(token, "process.env.JWT_SECRET")
-            console.log(decoded);
+            console.log(token,'this is token');
+            const decoded = jwt.verify(token, process.env.JWT_SECRET)
+            console.log(decoded,'decoded token');
             next()
         } catch (err) {
             res.status(401).send("Invalid Token")
+            console.log(err,'the error in the protect');
         }
     }
     if (!token) {

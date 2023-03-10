@@ -7,6 +7,10 @@ import {
     USER_LOGIN_SUCCESS,
     USER_LOGIN_FAIL,
 
+    USER_PROFILE_REQUEST,
+    USER_PROFILE_SUCCESS,
+    USER_PROFILE_FAIL,
+
     USER_LOGOUT
 } from '../Constants/userConstants'
 
@@ -74,5 +78,44 @@ export const userSignup =
           : error.response.data
       })
       console.log(error.response.data);
+    }
+  }
+
+  // USER LOGOUT 
+
+  export const userLogout = () => async (dispatch) => {
+    localStorage.removeItem("userInfo")
+    dispatch({type:USER_LOGOUT})
+  }
+
+  // USER PROFILE
+
+  export const userProfile = () => async (dispatch) => {
+    try {
+      dispatch({type : USER_PROFILE_REQUEST})
+
+      const token = JSON.parse(localStorage.getItem("userInfo"))
+      console.log(token.token,'token getting from local storege');
+
+      const config = {
+        headers : {
+          Authorication : "Bearer " + token.token,
+        }
+      }
+
+      const {data} = await axios.get(
+        "http://localhost:5000/profile?id=" + token._id,
+        config 
+      )
+
+      dispatch({type:USER_PROFILE_SUCCESS,payload : data})
+
+    } catch (error) {
+      dispatch({type:USER_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message 
+          : error.response.data
+        })
     }
   }
