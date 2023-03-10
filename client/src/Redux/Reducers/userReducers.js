@@ -8,7 +8,7 @@ import {
     USER_LOGIN_FAIL
 } from '../Constants/userConstants'
 
-const initialState = [{}]
+const initialState = {}
 
 export const userSignupReducer = (state = initialState, action) => {
     switch (action.type) {

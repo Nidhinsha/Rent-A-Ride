@@ -11,15 +11,15 @@ dotenv.config()
 
 
 const usersRouter = require('./routes/User/users');
-
+const adminRouter = require('./routes/Admin/admin')
 
 var app = express();
 
 // cors 
 const corsOptions = {
-  origin : 'http://localhost:3000',
-  credentials : true ,
-  optionSuccessStatus : 200
+  origin: 'http://localhost:3000',
+  credentials: true,
+  optionSuccessStatus: 200
 }
 
 app.use(cors(corsOptions))
@@ -38,15 +38,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // the routes 
-app.use('/',usersRouter)
+app.use('/', usersRouter)
+app.use('/admin',adminRouter)
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -57,7 +58,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.listen(PORT, (req,res) => {
+app.listen(PORT, (req, res) => {
   console.log(`server is runnig http://localhost:${PORT}/`);
 })
 module.exports = app;
