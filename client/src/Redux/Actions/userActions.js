@@ -99,7 +99,7 @@ export const userSignup =
 
       const config = {
         headers : {
-          Authorication : "Bearer " + token.token,
+          Authorization : "Bearer " + token.token,
         }
       }
 
@@ -107,7 +107,7 @@ export const userSignup =
         "http://localhost:5000/profile?id=" + token._id,
         config 
       )
-
+        console.log(data,'data');
       dispatch({type:USER_PROFILE_SUCCESS,payload : data})
 
     } catch (error) {

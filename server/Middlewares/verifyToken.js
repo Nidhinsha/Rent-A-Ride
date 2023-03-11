@@ -4,7 +4,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const protect = asyncHandler(async (req, res, next) => {
-    console.log("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+    console.log(req.query,"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
     let token;
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         try {
