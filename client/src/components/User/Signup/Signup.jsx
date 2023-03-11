@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { userSignup } from '../../../Redux/Actions/userActions';
-import {Link, useNavigate} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 function Signup() {
 
   const [firstName, setFirstName] = useState('')
@@ -15,20 +15,28 @@ function Signup() {
   const dispatch = useDispatch()
 
   // not finished
-  const haveAccount = () =>{
+  const haveAccount = () => {
     navigate('/user-login')
   }
 
   const Signup = useSelector(state => state.userSignup)
 
-  const { loading, error } = Signup
+  const { loading, error, userInfo } = Signup
 
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(firstName, lastName, email, phone, password);
 
     dispatch(userSignup(firstName, lastName, email, phone, password))
+
   }
+  // this one redirect the user into login page
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/login');
+    }
+  }, [userInfo, navigate]);
+
   return (
     <div>
       <form action="">

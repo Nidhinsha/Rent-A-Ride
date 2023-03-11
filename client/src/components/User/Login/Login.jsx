@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link,useNavigate } from 'react-router-dom'
 import { userLogin } from '../../../Redux/Actions/userActions'
@@ -11,18 +11,24 @@ function Login() {
     const userlogin = useSelector(state => state.userLogin)
     const {error,loading,data} = userlogin
 
-    console.log(userLogin,'oooooo');
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    
+    // redirecting into the home after login .. 
+    useEffect(() => {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    
+        if (userInfo) {
+          navigate('/');
+        }
+      }, [data, navigate]);
 
+    // submitting the data 
     const handleSubmit = (e)=>{
         e.preventDefault()
         dispatch(userLogin(email,password))
-        if(data){
-            navigate("/")
-        }
     }
+
     return (
         <div>
             <form action="">
