@@ -16,6 +16,8 @@ function Profile() {
   return (
     <div>
       <div>
+        {error ? <div>{error}</div>  : ""}
+        {loading ? "loading.." : ""}
       {profileData 
         ? <div>
           <div>{profileData.firstName} {profileData.lastName}</div>   
