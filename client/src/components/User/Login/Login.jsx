@@ -9,19 +9,38 @@ function Login() {
     const [password, setPassword] = useState("")
 
     const userlogin = useSelector(state => state.userLogin)
-    const {error,loading,data} = userlogin
+    const {error,loading } = userlogin
+
+
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
-    // redirecting into the home after login .. 
+    // workign not the right way 
     useEffect(() => {
-        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        let interval;
+        
+        // check for userInfo every second until it is available
+        interval = setInterval(() => {
+          const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+      
+          if (userInfo) {
+            navigate('/');
+            clearInterval(interval); // clear the interval once userInfo is available
+          }
+        }, 1000)
+      
+        return () => clearInterval(interval); // clear the interval on unmount
+      }, [navigate]);
+   
+    // redirecting into the home after login .. 
+    // useEffect(() => {
+    //     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     
-        if (userInfo) {
-          navigate('/');
-        }
-      }, [data, navigate]);
+    //     if (userInfo) {
+    //       navigate('/');
+    //     } 
+    //   }, [data, navigate]);
 
     // submitting the data 
     const handleSubmit = (e)=>{
@@ -31,7 +50,7 @@ function Login() {
 
     return (
         <div>
-            <form action="">
+            <form >
         {error ? <div>{error}</div> : ""}
         {loading ? 'loading...' : ""}
                 <input
