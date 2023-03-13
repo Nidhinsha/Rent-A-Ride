@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 
 
 const userSchema = new mongoose.Schema({
-    firstName: { 
+    firstName: {
         type: String,
         required: true
     },
@@ -11,28 +11,43 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    email: { 
+    email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    phone: { 
+    phone: {
         type: Number,
         required: true
     },
-    password: { 
+    password: {
         type: String,
         required: true
     },
     status: {
         type: Boolean,
-        default : true
-    }
-})
+        default: true
+    },
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    picture: {
+        type: String,
+        required: true,
+        default:
+            "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    },
+}
+    , {
+        timestamps: true
+    })
 
 // userSchema.methods.generateAuthToken = function(){
 //     const token = jwt.sign({_id:this.id},'RENTANDRIDEUSER',{expiresIn:"7d"})
 //     return token
 // }
 
-const model = mongoose.model("User",userSchema)
+const model = mongoose.model("User", userSchema)
 module.exports = model

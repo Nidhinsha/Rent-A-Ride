@@ -11,3 +11,11 @@ exports.profileGet = async (req,res)=>{
         console.log(error,'user profile feching eror');
     }
 }
+
+exports.addProfilePic = async (req,res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
