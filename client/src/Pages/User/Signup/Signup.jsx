@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { userSignup } from '../../../Redux/Actions/userActions';
 import { Link, useNavigate } from 'react-router-dom'
+import Loading from '../../../components/Loading/Loading';
+import ErrorMessage from '../../../components/Alert/Error';
 function Signup() {
 
   const [firstName, setFirstName] = useState('')
@@ -42,10 +44,10 @@ function Signup() {
       <form action="">
 
         {/* error showing */}
-        {error ? <strong>{error}</strong> : ""}
+        {error ? <ErrorMessage variant="danger"> {error}</ErrorMessage> : ""}
 
         {/* loadding showing */}
-        {loading ? <strong>Loading..</strong> : ""}
+        {loading ? <strong><Loading /> </strong> : ""}
 
 
         <input

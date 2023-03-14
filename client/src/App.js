@@ -1,10 +1,11 @@
 import React from 'react'
 import { Route , Routes } from 'react-router-dom'
-import AdminLogin from './components/Admin/AdminLogin/AdminLogin'
-import Home from './components/User/Home/Home'
-import Login from './components/User/Login/Login'
-import Profile from './components/User/Profile/Profile'
-import Signup from './components/User/Signup/Signup'
+import AdminLogin from './Pages/Admin/AdminLogin/AdminLogin'
+import UserManage from './Pages/Admin/UserManage/UserManage'
+import Home from './Pages/User/Home/Home'
+import Login from './Pages/User/Login/Login'
+import Profile from './Pages/User/Profile/Profile'
+import Signup from './Pages/User/Signup/Signup'
 function App() {
 
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path='/signup' element={<Signup />} />
       <Route path='/' exact element={<Home />} />
       <Route path='/profile' exact  element={<Profile />} />
+      <Route path='/user-manage' exact element={<UserManage />} />
       </Routes>
     </div>
   )

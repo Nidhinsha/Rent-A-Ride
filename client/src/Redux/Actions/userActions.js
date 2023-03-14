@@ -8,8 +8,12 @@ import {
     USER_LOGIN_FAIL,
 
     USER_PROFILE_REQUEST,
-    USER_PROFILE_SUCCESS,
     USER_PROFILE_FAIL,
+    USER_PROFILE_SUCCESS,
+
+    USER_IMAGE_REQUEST,
+    USER_IMAGE_SUCCESS,
+    USER_IMAGE_FAIL,
 
     USER_LOGOUT
 } from '../Constants/userConstants'
@@ -89,33 +93,62 @@ export const userSignup =
   }
 
   // USER PROFILE
-
-  export const userProfile = () => async (dispatch) => {
+  export const userProfileAction = () => async (dispatch) => {
     try {
-      dispatch({type : USER_PROFILE_REQUEST})
-
-      const token = JSON.parse(localStorage.getItem("userInfo"))
-      console.log(token.token,'token getting from local storege');
-
+      dispatch({ type: USER_PROFILE_REQUEST });
+  
+      const token = JSON.parse(localStorage.getItem("userInfo"));
+      console.log(token.token);
       const config = {
-        headers : {
-          Authorization : "Bearer " + token.token,
-        }
-      }
-
-      const {data} = await axios.get(
+        headers: {
+          Authorization: "Bearer " + token.token,
+        },
+      };
+  
+      const { data } = await axios.get(
         "http://localhost:5000/profile?id=" + token._id,
-        config 
-      )
-        console.log(data,'data');
-      dispatch({type:USER_PROFILE_SUCCESS,payload : data})
-
+        config
+      );
+  
+      dispatch({ type: USER_PROFILE_SUCCESS, payload: data });
     } catch (error) {
-      dispatch({type:USER_PROFILE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message 
-          : error.message
-        })
+      dispatch({
+        type: USER_PROFILE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.response.data,
+      });
     }
-  }
+  };
+  
+  export const userImageAction = (photo) => async (dispatch) => {
+    try {
+      dispatch({ type: USER_IMAGE_REQUEST });
+  
+      const token = JSON.parse(localStorage.getItem("userInfo"));
+      console.log(token._id + "THIS IS ID ID ID I DI DI ID I D");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token.token,
+        },
+      };
+      console.log(photo + "THIS IS THE PHOTO");
+      const { data } = await axios.post(
+        "http://localhost:5000/profile-photo?id=" + token._id,
+        { photo },
+        config
+      );
+      console.log(data);
+      dispatch({ type: USER_IMAGE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: USER_IMAGE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.response.data,
+      });
+    }
+  };

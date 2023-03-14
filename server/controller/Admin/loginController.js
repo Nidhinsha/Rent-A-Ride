@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt')
 const generateToken = require('../../Middlewares/generateToken')
 
 exports.adminLogin = async (req, res) => {
+    console.log(req.body,'ddddddd');
     adminSchema.findOne({ email: req.body.email }).then((data) => {
+        console.log(data,'admin data');
         if (data) {
             bcrypt.compare(req.body.password, data.password, function (err, response) {
                 console.log(response);

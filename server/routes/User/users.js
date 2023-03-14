@@ -16,6 +16,6 @@ router.route("/").get(protect,)
 router.route("/profile").get(protect,userProfile.profileGet)
 
 // Add Profile Photo
-router.route("/profile-pic").post(protect,userProfile.addProfilePic)
+router.route("/profile-photo").post(protect, userProfile.addPhoto);
 
 module.exports = router;

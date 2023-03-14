@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Nav, Container, Image, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { userLogout } from '../../../Redux/Actions/userActions';
+import { userLogout } from '../../Redux/Actions/userActions';
 
 function NavBar() {
     const dispatch = useDispatch()

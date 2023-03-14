@@ -28,12 +28,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    isAdmin: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    picture: {
+    // isAdmin: {
+    //     type: Boolean,
+    //     required: true,
+    //     default: false
+    // },
+    photo: {
         type: String,
         required: true,
         default:
@@ -42,7 +42,8 @@ const userSchema = new mongoose.Schema({
 }
     , {
         timestamps: true
-    })
+    }
+)
 
 // userSchema.methods.generateAuthToken = function(){
 //     const token = jwt.sign({_id:this.id},'RENTANDRIDEUSER',{expiresIn:"7d"})

@@ -6,7 +6,9 @@ import thunk from "redux-thunk";
 import {
     userSignupReducer,
     userLoginReducer,
-    userProfileReducer
+    userImageUplaodReducer,
+    userProfileReduer,
+    
 
   } from "./Reducers/userReducers";
 
@@ -19,7 +21,8 @@ import {
     userSignup: userSignupReducer,
     userLogin : userLoginReducer,
 
-    userProfile : userProfileReducer,
+    userProfile: userProfileReduer,
+  userImage: userImageUplaodReducer,
 
     adminLogin : adminLoginReducer
     

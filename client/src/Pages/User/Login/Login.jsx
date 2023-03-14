@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link,useNavigate } from 'react-router-dom'
 import { userLogin } from '../../../Redux/Actions/userActions'
+import ErrorMessage from '../../../components/Alert/Error'
+import Loading from '../../../components/Loading/Loading'
 
 function Login() {
 
@@ -51,8 +53,8 @@ function Login() {
     return (
         <div>
             <form >
-        {error ? <div>{error}</div> : ""}
-        {loading ? 'loading...' : ""}
+        {error ? <ErrorMessage varient="danger">{error}</ErrorMessage> : ""}
+        {loading ? <Loading /> : ""}
                 <input
                     onChange={(e) => {
                         setEmail(e.target.value)

@@ -28,10 +28,12 @@ exports.SignUpPost = async(req,res)=>{
                         firstName : userData.firstName ,
                         lastName : userData.lastName , 
                         email : userData.email ,
+                        // picture: userData.picture,
                         token : generateToken(userData.id)
                     }
                     res.status(201).json(details)
                     console.log(userData);
+                    // throw new Error("Error occured ! ")
                 }).catch((err)=>{
                     res.status(400)
                     console.log('err',err);
