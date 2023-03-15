@@ -11,6 +11,6 @@ router.route("/login").post(loginController.adminLogin)
 
 router.route("/user-manage").get(protect, adminController.adminUser)
 
-router.route("/blockUser").put(protect,adminController.blockUser)
+router.route("/blockUser").post(protect,adminController.blockUser)
 
 module.exports = router

@@ -6,7 +6,11 @@ import {
 
   ADMIN_USER_FETCH_REQUEST,
   ADMIN_USER_FETCH_SUCCESS,
-  ADMIN_USER_FETCH_FAIL
+  ADMIN_USER_FETCH_FAIL,
+
+  ADMIN_USER_BLOCK_REQUEST,
+  ADMIN_USER_BLOCK_SUCCESS,
+  ADMIN_USER_BLOCK_FAIL
 
 } from '../Constants/adminConstants'
 
@@ -37,5 +41,19 @@ export const adminUserFetchReducer = (state = initialState, action) => {
       return { loading: false, error: action.payload }
     default:
       return state
+  }
+}
+
+export const adminUserBlockReducer = (state= initialState,action)=>{
+  switch (action.type) {
+    case ADMIN_USER_BLOCK_REQUEST:
+      return {blockLoading : true}
+    case ADMIN_USER_BLOCK_SUCCESS:
+      return {blockLoading : false, blockUserData : action.payload}
+    case ADMIN_USER_BLOCK_FAIL:
+      return {blockLoading : false , blockError : action.payload}
+  
+    default:
+      return {};
   }
 }

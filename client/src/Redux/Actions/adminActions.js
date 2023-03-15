@@ -6,7 +6,11 @@ import {
 
     ADMIN_USER_FETCH_REQUEST,
     ADMIN_USER_FETCH_SUCCESS,
-    ADMIN_USER_FETCH_FAIL
+    ADMIN_USER_FETCH_FAIL,
+
+    ADMIN_USER_BLOCK_REQUEST,
+    ADMIN_USER_BLOCK_SUCCESS,
+    ADMIN_USER_BLOCK_FAIL
 
 } from "../Constants/adminConstants"
 
@@ -70,6 +74,41 @@ export const adminUserFetchAction = () => async (dispatch) => {
             type:ADMIN_USER_FETCH_FAIL,
             payload : 
                 error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.response.data
+        })
+    }
+}
+
+export const adminBlockUserAction = (id) => async (dispatch) =>{
+    console.log(id,'nmnmn');
+    try {
+        dispatch({type : ADMIN_USER_BLOCK_REQUEST})
+
+        const token = JSON.parse(localStorage.getItem("adminInfo"))
+        console.log(token.token);
+
+        const config = {
+            headers:{
+                Authorization : "Bearer " + token.token
+            }
+        }
+        // get ot put  
+       
+
+        const { data } = await axios.get(
+            "http://localhost:5000/admin/blockUser?id=" + id,
+            config
+          );
+          console.log(data,'kookoko');
+         
+        dispatch({type : ADMIN_USER_BLOCK_SUCCESS,payload : data})
+
+    } catch (error) {
+        dispatch({
+            type: ADMIN_USER_BLOCK_FAIL,
+            payload:
+                error.response && error.reponse.data.message
                     ? error.response.data.message
                     : error.response.data
         })

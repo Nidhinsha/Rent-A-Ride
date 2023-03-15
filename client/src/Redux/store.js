@@ -14,7 +14,9 @@ import {
 
 import {
   adminLoginReducer,
-  adminUserFetchReducer
+  adminUserFetchReducer,
+  adminUserBlockReducer
+
 } from './Reducers/adminReducers'
 
   const reducer = combineReducers({
@@ -27,7 +29,8 @@ import {
 
     adminLogin : adminLoginReducer,
     
-    adminUserFetch : adminUserFetchReducer
+    adminUserFetch : adminUserFetchReducer,
+    adminUserBlock : adminUserBlockReducer
     
   });
 
