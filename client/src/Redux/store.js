@@ -13,7 +13,8 @@ import {
   } from "./Reducers/userReducers";
 
 import {
-  adminLoginReducer
+  adminLoginReducer,
+  adminUserFetchReducer
 } from './Reducers/adminReducers'
 
   const reducer = combineReducers({
@@ -24,7 +25,9 @@ import {
     userProfile: userProfileReduer,
   userImage: userImageUplaodReducer,
 
-    adminLogin : adminLoginReducer
+    adminLogin : adminLoginReducer,
+    
+    adminUserFetch : adminUserFetchReducer
     
   });
 

@@ -54,23 +54,28 @@ exports.LoginPost= async(req,res)=>{
         userSchema.findOne({email: req.body.email}).then((userData)=>{
             if (userData) {
                 // here i need to check whether the user is bloked or not 
-                bcrypt.compare(req.body.password , userData.password , function (err,response){
-                    if (response) {
-                        let details ={
-                        _id : userData._id ,
-                        firstName : userData.firstName ,
-                        lastName : userData.lastName ,
-                        email : userData.email ,
-                        phone : userData.phone , 
-                        token : generateToken(userData.id)
-                    }
-                    console.log('details',details);
-                    res.status(200).json(details)
-                    }else{
-                        res.status(401).json("Incorrect Password")
-                        console.log("password incorrect !");
-                    }
-                })
+                if(userData.status){
+                    bcrypt.compare(req.body.password , userData.password , function (err,response){
+                        if (response) {
+                            let details ={
+                            _id : userData._id ,
+                            firstName : userData.firstName ,
+                            lastName : userData.lastName ,
+                            email : userData.email ,
+                            phone : userData.phone , 
+                            token : generateToken(userData.id)
+                        }
+                        console.log('details',details);
+                        res.status(200).json(details)
+                        }else{
+                            res.status(401).json("Incorrect Password")
+                            console.log("password incorrect !");
+                        }
+                    })
+                }else{
+                    res.status(401).json("Account is Suspended")
+                }
+                
             }else{
                 res.status(400).json("User Does Not Exits")
                 console.log(" No User ");

@@ -14,6 +14,7 @@ function NavBar() {
     const onUserProfile = () =>{
         navigate("/profile")
     }
+    
   return (
     <Navbar bg="light" expand="lg">
       <Container>

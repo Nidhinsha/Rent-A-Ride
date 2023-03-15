@@ -5,7 +5,14 @@ import { Provider } from "react-redux"
 import store from "./Redux/store"
 import App from "./App"
 import 'bootstrap/dist/css/bootstrap.min.css';
+//theme
+import "primereact/resources/themes/lara-light-indigo/theme.css";     
+    
+//core
+import "primereact/resources/primereact.min.css";
 
+//icons
+import "primeicons/primeicons.css";    
 
 
 const element = document.getElementById("root")
