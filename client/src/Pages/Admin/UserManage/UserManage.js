@@ -5,6 +5,8 @@ import { adminBlockUserAction, adminLogOut, adminUserFetchAction } from "../../.
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from "primereact/button";
+import Loading from '../../../components/Loading/Loading';
+import ErrorMessage from '../../../components/Alert/Error';
 
 function UserManage() {
 
@@ -17,9 +19,9 @@ function UserManage() {
   console.log(adminUserData ? adminUserData : 'No user data available');
   console.log(adminUserData, '||||||||');
 
-  const adminBlock = useSelector((state)=>state.adminUserBlock)
-  const {blockLoading,blockError,blockUserData} = adminBlock
-
+  const adminBlock = useSelector((state) => state.adminUserBlock)
+  const { blockLoading, blockError, blockUserData } = adminBlock
+  console.log(adminBlock, 'bbbbbbbbbbbbbbbbbbbbb');
   const [users, setUsers] = useState([]);
   console.log(users, ';;;;;');
 
@@ -27,7 +29,9 @@ function UserManage() {
     let adminData = localStorage.getItem("adminInfo");
     if (adminData != null) {
       dispatch(adminUserFetchAction());
+      console.log(adminUserData, 'inthe useeffect user data');
       setUsers(adminUserData)
+
     } else {
       navigate("/admin/login");
     }
@@ -41,15 +45,17 @@ function UserManage() {
 
   const handleBlockUser = (id) => {
     dispatch(adminBlockUserAction(id))
+
+    setUsers(blockUserData)
   }
 
-  // const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
-  // const paginatorRight = <Button type="button" icon="pi pi-download" text />;
+  
   return (
     <div className="card">
-
+      hi
       <Button icon="pi pi-user" rounded severity="info" aria-label="User" onClick={OnAdminLogOut} />
-
+      {blockLoading ? <Loading /> : ""}
+      {blockError ?<ErrorMessage variant="danger"> {error} </ErrorMessage> : ""}
       <DataTable value={users} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
         <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo} alt="User" height="50" />} />
         <Column field="firstName" header="firstName" sortable style={{ width: '25%' }}></Column>
@@ -62,7 +68,7 @@ function UserManage() {
             <Button label="unBlock" severity="success" outlined className="my-button" onClick={() => handleBlockUser(rowData._id)} />
           )}
         />
-       
+
       </DataTable>
     </div>
   );
@@ -70,3 +76,4 @@ function UserManage() {
 
 
 export default UserManage;
+

@@ -108,7 +108,7 @@ export const adminBlockUserAction = (id) => async (dispatch) =>{
         dispatch({
             type: ADMIN_USER_BLOCK_FAIL,
             payload:
-                error.response && error.reponse.data.message
+                error.response && error.response.data.message
                     ? error.response.data.message
                     : error.response.data
         })
