@@ -16,7 +16,7 @@ import { Button } from 'primereact/button';
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { userLogin } from '../../../Redux/Actions/userActions'
+import { adminLogin } from '../../../Redux/Actions/adminActions'
 import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
 import { useForm } from "react-hook-form";
@@ -29,15 +29,16 @@ function Test() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const userLoginData = useSelector(state => state.userLogin)
-  const {error,loading,userLoginDetails } = userLoginData
+  const adminlogin = useSelector((state)=> state.adminLogin)
+  const {loading,error} = adminlogin
+
 
   // const {register,handleSubmit}
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
-      dispatch(userLogin(email,password))
+      dispatch(adminLogin(email,password))
     }
 
   
@@ -46,20 +47,19 @@ function Test() {
   
   // workign not the right way 
   useEffect(() => {
-      let interval;
-      
-      // check for userInfo every second until it is available
-      interval = setInterval(() => {
-        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    let interval;
     
-        if (userInfo) {
-          navigate('/');
-          clearInterval(interval); // clear the interval once userInfo is available
-        }
-      }, 1000)
-    
-      return () => clearInterval(interval); // clear the interval on unmount
-    }, [navigate,userLoginDetails]);
+    // check for userInfo every second until it is available
+    interval = setInterval(() => {
+      const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
+      if (adminInfo) {
+        navigate('/user-manage');
+        clearInterval(interval); // clear the interval once userInfo is available
+      }
+    }, 1000)
+  
+    return () => clearInterval(interval); // clear the interval on unmount
+  }, [navigate]);
  
 
 
@@ -73,14 +73,16 @@ function Test() {
           <img src="https://cdn.discordapp.com/attachments/1008571146465193994/1086209035457548368/Nidhinsha_single_scooter_illustration__a_person_sitting_on_it___8b629dc8-4b17-4faa-a457-20076e193e40.png"
             className="img-fluid" alt="Phone image" />
         </MDBCol>
-       
+
+
         <MDBCol col='4' md='6' style={{ marginBottom: "4rem" }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         
          
 
           
           <form onSubmit={handleSubmit(onSubmit)}>
-          <h3 style={{ marginBottom: "4rem" }} >Login </h3>
+          <h3 style={{ marginBottom: "4rem" }} >Admin</h3>
               {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
               {loading ? <Loading /> : ""}
 
@@ -119,39 +121,10 @@ function Test() {
                {errors.password && <p style={{color : 'red'}}>Please check the Password</p>}
             </div>
 
-
-           
-
-
             <Button type='submit' label="Login" severity="success" raised style={{ width: '100%' }} />
-
-
-            <div className="divider d-flex align-items-center justify-content-center my-4">
-              <p className="text-center fw-bold mx-3 mb-0">OR</p>
-            </div>
-
-
-
-            <i class="bi bi-google"></i>
-            <div className="card flex flex-wrap justify-content-center gap-3">
-
-
-
-              <Button icon="pi pi-fw pi-google" className="p-button-text-icon-left" outlined
-                label={<span>Sign in with <span style={{ color: '#34A853' }}>G</span><span style={{ color: '#EA4335' }}>o</span><span style={{ color: '#FBBC05' }}>o</span><span style={{ color: '#4285F4' }}>g</span><span style={{ color: '#EA4335' }}>l</span><span style={{ color: '#34A853' }}>e</span></span>}
-              />
-            </div>
+            
           </form>
-
-          <Link to={'/signup'}>
-          <div className="card flex flex-wrap justify-content-center gap-3" style={{ marginTop: "2rem" }}>
-          <Button className="p-button-text-icon-left" outlined severity="primary"
-                label='New Member ? SignUp'
-              />
-          </div>
-          </Link>
-
-
+        </div>
         </MDBCol>
 
       </MDBRow>
