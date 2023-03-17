@@ -9,24 +9,35 @@ import {
   userImageAction,
   userProfileAction,
 } from "../../../Redux/Actions/userActions";
+
+// import { useDispatch } from 'react-redux';
+import {  useNavigate } from 'react-router-dom';
+import { userLogout } from '../../../Redux/Actions/userActions';
+
 function Profile() {
+
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+
   const userProfileData = useSelector((state) => state.userProfile);
   const { loading, error, profileData } = userProfileData;
+
   const image = useSelector((state) => state.userImage);
   const { imageloading, imageerror, userProfilePicture } = image;
   const [photo, setPhoto] = useState("");
   console.log(userProfilePicture + "THIS IS THE IMAGE EEE");
+
   const addphoto = (e) => {
     e.preventDefault();
     const data = new FormData();
     console.log(photo);
     data.append("file", photo);
-   // data.append("upload_preset", "noteapp");
+    // data.append("upload_preset", "noteapp");
     data.append("upload_preset", "RentAndRide");
     // data.append("cloud_name", "dhajqatgt");driuxmoax,thy3sk1o
-     data.append("cloud_name", "driuxmoax");
+    data.append("cloud_name", "driuxmoax");
     console.log(data);
+
     fetch("https://api.cloudinary.com/v1_1/driuxmoax/image/upload", {
       method: "post",
       body: data,
@@ -37,10 +48,17 @@ function Profile() {
         dispatch(userImageAction(data.url));
       });
   };
+
   useEffect(() => {
     dispatch(userProfileAction());
   }, [userProfilePicture]);
+
   console.log(userProfilePicture + "THIS IS THE IMAGEEEE");
+
+  const handleLogOut = () => {
+    dispatch(userLogout())
+    navigate("/login")
+  }
   return (
 
     <div className="vh-100" style={{ backgroundColor: '#9de2ff' }}>
@@ -80,7 +98,7 @@ function Profile() {
                           <MDBFile size='lg' id='formFileLg' onChange={(e) => setPhoto(e.target.files[0])} />
                         </div>
                         <div className="d-flex pt-1">
-                          <button outline onClick={addphoto} className="me-1 flex-grow-1" style={{backgroundColor:'black',color:'white'}}>Add Profile Picture</button>
+                          <button outline onClick={addphoto} className="me-1 flex-grow-1" style={{ backgroundColor: 'black', color: 'white' }}>Add Profile Picture</button>
                           {/* <MDBBtn className="flex-grow-1">Follow</MDBBtn> */}
                         </div>
                       </form>
@@ -93,22 +111,23 @@ function Profile() {
                 ""
               )}
 
-             
+
             </MDBCard>
-           
+
           </MDBCol>
         </MDBRow>
-       
+
       </MDBContainer>
-     
-        <Link to={'/'} >
-        <MDBBtn className='mx-2' color='dark' size='lg' style={{width:500,margin:20}}>
-        Return to Home
-              </MDBBtn>
-        </Link>
-                
-       </div>
-   
+
+      <Link to={'/'} >
+        <MDBBtn className='mx-2' color='dark' size='lg' style={{ width: 500, margin: 20 }}>
+          Return to Home
+        </MDBBtn>
+      </Link>
+      <button onClick={handleLogOut}> logout </button>
+
+    </div>
+
   );
 }
 

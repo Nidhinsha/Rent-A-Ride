@@ -80,6 +80,9 @@ exports.LoginPost= async(req,res)=>{
                 res.status(400).json("User Does Not Exits")
                 console.log(" No User ");
             }
+        }).
+        catch((error)=>{
+            rs.json("Error")
         })
     } catch (error) {
         

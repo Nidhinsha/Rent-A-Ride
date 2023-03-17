@@ -37,16 +37,20 @@ function UserManage() {
     }
   }, [dispatch]);
 
+
+  useEffect(() => {
+    setUsers(blockUserData);
+  }, [blockUserData]);
+
   const OnAdminLogOut = () => {
     dispatch(adminLogOut());
     navigate("/admin");
   };
 
 
-  const handleBlockUser = (id) => {
-    dispatch(adminBlockUserAction(id))
-
-    setUsers(blockUserData)
+  const handleBlockUser =  (id) => {
+   dispatch(adminBlockUserAction(id))
+    // setUsers(blockUserData)
   }
 
   
@@ -65,7 +69,13 @@ function UserManage() {
         <Column field="status" header="Status" sortable style={{ width: '25%' }}></Column>
         <Column
           body={(rowData) => (
-            <Button label="unBlock" severity="success" outlined className="my-button" onClick={() => handleBlockUser(rowData._id)} />
+            <>
+              {rowData.status ? (
+                <Button label="Block" severity="danger" outlined className="my-button" onClick={() => handleBlockUser(rowData._id)} />
+              ) : (
+                <Button label="Unblock" severity="success" outlined className="my-button" onClick={() => handleBlockUser(rowData._id)} />
+              )}
+            </>
           )}
         />
 

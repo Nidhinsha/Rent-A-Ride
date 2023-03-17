@@ -1,9 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react';
+import {
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBInput,
+}
+  from 'mdb-react-ui-kit';
+
+import { InputText } from "primereact/inputtext";
+// import { IconName } from "react-icons/bs";
+
+import { Button } from 'primereact/button';
+
+
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { userSignup } from '../../../Redux/Actions/userActions';
-import { Link, useNavigate } from 'react-router-dom'
+import {  Link, useNavigate } from 'react-router-dom'
 import Loading from '../../../components/Loading/Loading';
 import ErrorMessage from '../../../components/Alert/Error';
+import { useForm } from "react-hook-form";
+import './Signup.css'
+
+
 function Signup() {
 
   const [firstName, setFirstName] = useState('')
@@ -20,14 +39,14 @@ function Signup() {
   const haveAccount = () => {
     navigate('/user-login')
   }
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const Signup = useSelector(state => state.userSignup)
 
   const { loading, error, userInfo } = Signup
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(firstName, lastName, email, phone, password);
+  const onSubmit = (data) => {
+    console.log(data, 'vbvbvb');
 
     dispatch(userSignup(firstName, lastName, email, phone, password))
 
@@ -39,69 +58,144 @@ function Signup() {
     }
   }, [userInfo, navigate]);
 
+
+
   return (
-    <div>
-      <form action="">
+    <MDBContainer fluid className="p-3 my-5">
 
-        {/* error showing */}
-        {error ? <ErrorMessage variant="danger"> {error}</ErrorMessage> : ""}
+      <MDBRow>
 
-        {/* loadding showing */}
-        {loading ? <strong><Loading /> </strong> : ""}
+        <MDBCol col='10' md='6'>
+          <img src="https://cdn.discordapp.com/attachments/1008571146465193994/1086209035457548368/Nidhinsha_single_scooter_illustration__a_person_sitting_on_it___8b629dc8-4b17-4faa-a457-20076e193e40.png"
+            className="img-fluid" alt="Phone image" />
+        </MDBCol>
+
+        <MDBCol col='4' md='6'>
+          {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
+          {loading ? <Loading /> : ""}
+
+          <h3 style={{ marginBottom: "2rem" }}>Create Account</h3>
+          <form onSubmit={handleSubmit(onSubmit)}>
+
+            <div className="p-input-icon-left p-float-label" style={{ marginBottom: "2rem" }}>
+              {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
+              <i className="pi pi-user " />
+              <InputText id="firstName" className='p-inputtext-lg' style={{ width: '46rem', height: '3rem' }}
+                {...register("firstName", { required: true, maxLength: 10 })}
+                onChange={(e) => {
+                  setFirstName(e.target.value)
+                }}
+              />
+              <label htmlFor="">FirstName</label>
+            {errors.firstName && <p style={{color : 'red'}}>Please check the First Name</p>}
+            </div>
+
+            <div className="p-input-icon-left p-float-label" style={{ marginBottom: "2rem" }}>
+              <i className="pi pi-user " />
+              <InputText id="lastName" className='p-inputtext-lg' style={{ width: '46rem', height: '3rem' }}
+                {...register("lastName", { required: true, maxLength: 10 })}
+                onChange={(e) => {
+                  setLastName(e.target.value)
+                }}
+              />
+              <label htmlFor="">LastName</label>
+            {errors.lastName && <p style={{color : 'red'}}>Please check the Last Name</p>}
+            </div>
 
 
-        <input
-          onChange={(e) => {
-            setFirstName(e.target.value)
-          }}
-          type="text"
-          name="firstName"
+            <div className="p-input-icon-left p-float-label" style={{ marginBottom: "2rem" }}>
+              <i className="pi pi-envelope " />
+              <InputText id="email" className='p-inputtext-lg' style={{ width: '46rem', height: '3rem' }}
+                {...register("email",
+                  {
+                    required: true,
+                    maxLength: 15,
 
-        />
-        <input
-          onChange={(e) => {
-            setLastName(e.target.value)
-          }}
-          type="text"
-          name="lastName"
+                    // pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                  })}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                }}
+              />
+              <label htmlFor="">Email</label>
+            {errors.email && <p style={{color : 'red'}}>Please check the Email</p>}
+            </div>
 
-        />
-        <input
-          onChange={(e) => {
-            setEmail(e.target.value)
-          }}
-          type="email"
-          name="email"
 
-        />
-        <input
-          onChange={(e) => {
-            setPhone(e.target.value)
-          }}
-          type="number"
-          name="phone"
 
-        />
+            <div className="p-input-icon-left p-float-label" style={{ marginBottom: "2rem" }}>
+              <i className="pi pi-phone " />
+              <InputText id="phone" className='p-inputtext-lg' style={{ width: '46rem', height: '3rem' }}
+                {...register('phone', {
+                  required: true,
+                  maxLength: 10,
+                  minLength: 10,
+                  // pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+                })}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+              <label htmlFor="username">Phone</label>
+            {errors.phone && <p style={{color : 'red'}}>Please check the phone</p>}
+            </div>
 
-        <input
-          onChange={(e) => {
-            setPassword(e.target.value)
-          }}
-          type="password"
-          name="password"
 
-        />
+            <div className="p-input-icon-left p-float-label" style={{ marginBottom: "2rem" }}>
+            {/* <i className="pi pi-lock " /> */}
+              <MDBInput wrapperClass='mb-6' label='Password' id='form1' type='password'   style={{ width: '46rem', height: '3rem' }}
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  maxLength: 16,
+                  // pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+                })}
 
-        <button onClick={handleSubmit}>submit</button>
-      </form>
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                }}
+              />
+               {errors.password && <p style={{color : 'red'}}>Please check the Password</p>}
+            </div>
 
-      <div>
-        <Link to={'/login'}>login</Link>
-      </div>
-    </div>
-  )
+
+           
+
+
+            <Button type='submit' label="SignUp" severity="success" raised style={{ width: '100%' }} />
+
+
+            <div className="divider d-flex align-items-center justify-content-center my-4">
+              <p className="text-center fw-bold mx-3 mb-0">OR</p>
+            </div>
+
+
+
+            <i class="bi bi-google"></i>
+            <div className="card flex flex-wrap justify-content-center gap-3">
+
+
+
+              <Button icon="pi pi-fw pi-google" className="p-button-text-icon-left" outlined
+                label={<span>Sign in with <span style={{ color: '#34A853' }}>G</span><span style={{ color: '#EA4335' }}>o</span><span style={{ color: '#FBBC05' }}>o</span><span style={{ color: '#4285F4' }}>g</span><span style={{ color: '#EA4335' }}>l</span><span style={{ color: '#34A853' }}>e</span></span>}
+              />
+            </div>
+          </form>
+            
+          <Link to={'/login'}>
+
+          <div className="card flex flex-wrap justify-content-center gap-3" style={{ marginBottom: "2rem" }}>
+
+          <Button className="p-button-text-icon-left" outlined
+                label='Already Have an accout ? Login'
+              />
+
+          </div>
+          </Link>
+        </MDBCol>
+
+      </MDBRow>
+
+    </MDBContainer>
+  );
 }
 
-export default Signup
-
-
+export default Signup;

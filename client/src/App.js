@@ -6,6 +6,7 @@ import Home from './Pages/User/Home/Home'
 import Login from './Pages/User/Login/Login'
 import Profile from './Pages/User/Profile/Profile'
 import Signup from './Pages/User/Signup/Signup'
+import Test from './Pages/User/Test/Test'
 function App() {
 
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path='/' exact element={<Home />} />
       <Route path='/profile' exact  element={<Profile />} />
       <Route path='/user-manage' exact element={<UserManage />} />
+      <Route path='/test' exact element={<Test />} />
       </Routes>
     </div>
   )

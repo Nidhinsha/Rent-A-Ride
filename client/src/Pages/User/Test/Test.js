@@ -20,10 +20,10 @@ import { userLogin } from '../../../Redux/Actions/userActions'
 import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
 import { useForm } from "react-hook-form";
-import './Login.css'
+import './Test.css'
 
 
-function Login() {
+function Test() {
 
 
   const [email, setEmail] = useState("")
@@ -160,4 +160,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Test;
