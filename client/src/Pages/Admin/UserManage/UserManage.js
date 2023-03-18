@@ -25,6 +25,7 @@ function UserManage() {
   const [users, setUsers] = useState([]);
   // setUsers(adminUserData)
   console.log(users, ';;;;;');
+ 
 
   useEffect(() => {
     let adminData = localStorage.getItem("adminInfo");
@@ -33,6 +34,7 @@ function UserManage() {
       console.log(adminUserData, 'inthe useeffect user data');
       setUsers(adminUserData)
       console.log(users,'zzzzzzz');
+    
 
     } else {
       navigate("/admin/login");
@@ -52,7 +54,13 @@ function UserManage() {
 
   const handleBlockUser =  (id) => {
    dispatch(adminBlockUserAction(id))
-    setUsers(blockUserData)
+    // setUsers(blockUserData)
+    setUsers(users.map(user => {
+      if (user._id === id) {
+        user.status = !user.status; // toggle the status
+      }
+      return user;
+    }));
   }
 
   

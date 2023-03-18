@@ -55,8 +55,8 @@ function Login() {
       // check for userInfo every second until it is available
       interval = setInterval(() => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-        const googleUser = JSON.parse(localStorage.getItem('user'))
-        if (userInfo || googleUser) {
+        // const googleUser = JSON.parse(localStorage.getItem('user'))
+        if (userInfo ) {
           navigate('/');
           clearInterval(interval); // clear the interval once userInfo is available
         }

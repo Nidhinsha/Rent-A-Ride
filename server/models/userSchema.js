@@ -18,11 +18,11 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: Number,
-        // required: true
+        required: true
     },
     password: {
         type: String,
-        // required: true
+        required: true
     },
     status: {
         type: Boolean,
