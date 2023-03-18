@@ -21,8 +21,9 @@ function UserManage() {
 
   const adminBlock = useSelector((state) => state.adminUserBlock)
   const { blockLoading, blockError, blockUserData } = adminBlock
-  console.log(adminBlock, 'bbbbbbbbbbbbbbbbbbbbb');
+  console.log(blockUserData, 'bbbbbbbbbbbbbbbbbbbbb');
   const [users, setUsers] = useState([]);
+  // setUsers(adminUserData)
   console.log(users, ';;;;;');
 
   useEffect(() => {
@@ -31,6 +32,7 @@ function UserManage() {
       dispatch(adminUserFetchAction());
       console.log(adminUserData, 'inthe useeffect user data');
       setUsers(adminUserData)
+      console.log(users,'zzzzzzz');
 
     } else {
       navigate("/admin/login");
@@ -38,9 +40,9 @@ function UserManage() {
   }, [dispatch]);
 
 
-  useEffect(() => {
-    setUsers(blockUserData);
-  }, [blockUserData]);
+  // useEffect(() => {
+  //   setUsers(blockUserData);
+  // }, [blockUserData]);
 
   const OnAdminLogOut = () => {
     dispatch(adminLogOut());
@@ -50,13 +52,13 @@ function UserManage() {
 
   const handleBlockUser =  (id) => {
    dispatch(adminBlockUserAction(id))
-    // setUsers(blockUserData)
+    setUsers(blockUserData)
   }
 
   
   return (
     <div className="card">
-      hi
+    
       <Button icon="pi pi-user" rounded severity="info" aria-label="User" onClick={OnAdminLogOut} />
       {blockLoading ? <Loading /> : ""}
       {blockError ?<ErrorMessage variant="danger"> {error} </ErrorMessage> : ""}

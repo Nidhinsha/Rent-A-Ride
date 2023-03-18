@@ -2,19 +2,11 @@
     width: 100%;
 }
 
-.g {
-    color: green;
-  }
-  
-  .o {
-    color: orange;
-  }
-  
-  .l {
-    color: blue;
-  }
-  
-  .e {
-    color: red;
-  }
-  
+.input-adj-size{
+  width: 23rem;
+  height: 3rem;
+}
+
+.mantine-FileInput-input{
+  width: 30rem;
+}

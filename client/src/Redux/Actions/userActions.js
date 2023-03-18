@@ -24,7 +24,7 @@ import axios from 'axios'
 
 export const userSignup =
   (firstName, lastName, email,phone , password) => async (dispatch) => {
-    console.log(firstName);
+    console.log(firstName,lastName,email,phone,password,'in user action ');
     try {
       dispatch({ type: USER_SIGNUP_REQUEST });
       const config = {

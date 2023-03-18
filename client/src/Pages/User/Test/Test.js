@@ -1,160 +1,94 @@
-// import React, { useState } from "react";
+// import React from 'react'
+// import './Adminhome.css'
+// import {useNavigate} from 'react-router-dom'
+// import {useDispatch,useSelector} from 'react-redux'
+// import {Table,Button, Container, Form} from 'react-bootstrap'
+// import { useEffect } from 'react'
+// import { adminHomeAction, adminuserBlock,admindeleteUser, adminLogout, adminSearch } from '../../../REDUX/Actions/adminAction'
+// import { useState } from 'react'
 
-function Test() {
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [phoneNumber, setPhoneNumber] = useState("");
-  // const [addressLine1, setAddressLine1] = useState("");
-  // const [addressLine2, setAddressLine2] = useState("");
-  // const [postcode, setPostcode] = useState("");
-  // const [state, setState] = useState("");
-  // const [area, setArea] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [education, setEducation] = useState("");
-  // const [country, setCountry] = useState("");
-  // const [stateRegion, setStateRegion] = useState("");
-  // const [designExperience, setDesignExperience] = useState("");
-  // const [additionalDetails, setAdditionalDetails] = useState("");
-  // const [showExperienceForm, setShowExperienceForm] = useState(false);
-  // const [experienceList, setExperienceList] = useState([]);
+// function Test() {
+//   const navigate = useNavigate()
+//   const dispatch = useDispatch()
+//   const [searchkeyword,setSearchKeyword] = useState('')
+//   // const adminsearch = useSelector((state)=>state.adminSearch)
+//   // let {searchloading,searcherror,searchresult} = adminsearch
+//   // console.log(searchresult);
+//   const adminhome = useSelector((state)=>state.adminHome)
+//   let {loading,error,adminHome} = adminhome;
+//   const adminblock = useSelector((state)=>state.adminBlock)
+//   let {blockloading,blockerror,blockdata} = adminblock;
+//   // const admindelete = useSelector((state)=>state.adminDelete)
+//   // let {deleteloading,deleteerror,deletedata} = admindelete
+//   useEffect(()=>{
+//     let admindata = localStorage.getItem("adminInfo")
+//     if(admindata!=null){
+//       dispatch(adminHomeAction())
+//     }else{
+//       navigate("/admin/login")
+//     }
 
-  // const handleSaveProfile = () => {
-  //   // save profile information to database or server
-  //   console.log("Profile information saved!");
-  // };
+    
 
-  // const handleAddExperience = () => {
-  //   setShowExperienceForm(true);
-  // };
+//   },[blockdata])
 
-  // const handleExperienceFormSubmit = (event) => {
-  //   event.preventDefault();
-  //   const newExperience = {
-  //     designExperience,
-  //     additionalDetails,
-  //   };
-  //   setExperienceList([...experienceList, newExperience]);
-  //   setDesignExperience("");
-  //   setAdditionalDetails("");
-  //   setShowExperienceForm(false);
-  // };
+//   const blockuser = (id)=>{
+//     dispatch(adminuserBlock(id))
+//   }
 
-  return (
-    <div className="container rounded bg-white mt-5 mb-5">
-      <div className="row">
-        <div className="col-md-3 border-right">
-          <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-            <img
-              className="rounded-circle mt-5"
-              width="150px"
-              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-              alt="Profile"
-            />
-            <span className="font-weight-bold">full name</span>
-            <span className="text-black-50">email</span>
-          </div>
-        </div>
-        <div className="col-md-5 border-right">
-          <div className="p-3 py-5">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h4 className="text-right">Profile Settings</h4>
-            </div>
-            <div className="row mt-2">
-              <div className="col-md-6">
-                <label className="labels">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="first name"
-              
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="labels">Surname</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="surname"
-                
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="labels">Surname</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="surname"
-                
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="labels">Surname</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="surname"
-                
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="labels">Surname</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="surname"
-                
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="labels">Surname</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="surname"
-                
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="labels">Surname</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="surname"
-                
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="labels">Surname</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="surname"
-                
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="labels">Surname</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="surname"
-                
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="labels">Surname</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="surname"
-                
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-export default Test
+ 
+//   const logout = ()=>{
+//     dispatch(adminLogout())
+//     navigate("/admin/login")
+//   }
+
+ 
+ 
+//   console.log(blockloading);
+//   return (
+    
+//     <div className='adminhomemain'>
+//       <h2>ADMIN HOME </h2>
+//       <Button className='btn btn-warning' style={{right:0}} onClick={logout}> <i class="fa-solid fa-power-off"></i> LOGOUT</Button>
+//       <Container>
+       
+      
+        
+//        {
+//         adminHome?   <Table striped bordered hover>
+//         <thead>
+//           <tr>
+//             <th>#</th>
+//             <th>Name</th>
+//             <th>Last Name</th>
+//             <th>ACCESS</th>
+//             <th>Delete</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//         {
+//          adminHome?adminHome.map((data,i)=>{
+//           return(
+   
+//         <tr>
+//           <td>{i+1}</td>
+//           <td>{data.firstname} {data.lastname}</td>
+//           <td>{data.email}</td>
+//           <td> {blockloading ? <p>Loading</p> : <Button onClick={()=>blockuser(data._id)} style={data.status?{backgroundColor:"red",width:"100px"}:{backgroundColor:"green",width:"100px"}}> {data.status ? 'Block' : 'Unblock'} </Button> } </td>
+//           {/* <td><Button onClick={()=>deleteuser(data._id)} style={{backgroundColor:"red"} }>Delete</Button></td> */}
+//         </tr>
+       
+      
+  
+//           )
+//         }) : ''
+//         }
+//         </tbody>
+//       </Table> : ''
+//        }
+//       </Container>
+//     </div>
+//   )
+// }
+
+// export default Test

@@ -58,7 +58,7 @@ function Signup() {
     }
   }, [userInfo, navigate]);
 
-
+ 
 
   return (
     <MDBContainer fluid className="p-3 my-5">
@@ -170,14 +170,15 @@ function Signup() {
 
 
             <i class="bi bi-google"></i>
-            <div className="card flex flex-wrap justify-content-center gap-3">
+            {/* <div className="card flex flex-wrap justify-content-center gap-3">
 
 
 
               <Button icon="pi pi-fw pi-google" className="p-button-text-icon-left" outlined
                 label={<span>Sign in with <span style={{ color: '#34A853' }}>G</span><span style={{ color: '#EA4335' }}>o</span><span style={{ color: '#FBBC05' }}>o</span><span style={{ color: '#4285F4' }}>g</span><span style={{ color: '#EA4335' }}>l</span><span style={{ color: '#34A853' }}>e</span></span>}
+                onClick={handleGoogle}
               />
-            </div>
+            </div> */}  
           </form>
             
           <Link to={'/login'}>

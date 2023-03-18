@@ -16,12 +16,16 @@ import { Button } from 'primereact/button';
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { userLogin } from '../../../Redux/Actions/userActions'
+import { userLogin, userSignup } from '../../../Redux/Actions/userActions'
 import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
 import { useForm } from "react-hook-form";
 import './Login.css'
 
+
+
+import { auth,provider } from '../../../firebase/config';
+import {signInWithPopup} from 'firebase/auth'
 
 function Login() {
 
@@ -51,8 +55,8 @@ function Login() {
       // check for userInfo every second until it is available
       interval = setInterval(() => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    
-        if (userInfo) {
+        const googleUser = JSON.parse(localStorage.getItem('user'))
+        if (userInfo || googleUser) {
           navigate('/');
           clearInterval(interval); // clear the interval once userInfo is available
         }
@@ -61,7 +65,25 @@ function Login() {
       return () => clearInterval(interval); // clear the interval on unmount
     }, [navigate,userLoginDetails]);
  
-
+    const handleGoogle = () =>{
+      signInWithPopup(auth,provider).then((data)=>{
+        // setEmail(data.user.email)
+        let fullName = data.user.displayName
+        const [firstName,lastName] = fullName.split(' ')
+        // const value = {
+        //   firstName : firstName,
+        //   lastName : lastName ,
+        //   email : data.user.email
+  
+        // }
+        localStorage.setItem('user',data.user.email)
+        navigate('/')
+        console.log(firstName,lastName,'ttttt');
+  
+         dispatch(userSignup(firstName,lastName, data.user.email, data.user.phoneNumber,firstName))
+        console.log(data.user,'gogle user data');
+      })
+    }
 
 
   return (
@@ -139,6 +161,7 @@ function Login() {
 
               <Button icon="pi pi-fw pi-google" className="p-button-text-icon-left" outlined
                 label={<span>Sign in with <span style={{ color: '#34A853' }}>G</span><span style={{ color: '#EA4335' }}>o</span><span style={{ color: '#FBBC05' }}>o</span><span style={{ color: '#4285F4' }}>g</span><span style={{ color: '#EA4335' }}>l</span><span style={{ color: '#34A853' }}>e</span></span>}
+                onClick={handleGoogle}
               />
             </div>
           </form>
