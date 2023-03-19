@@ -15,7 +15,6 @@ import { useState } from "react";
 import { MDBFile } from 'mdb-react-ui-kit';
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from 'react-router-dom';
 import {
   userImageAction,
   userProfileAction,
@@ -113,6 +112,7 @@ function Profile() {
                 <MDBFile size='md' className='mt-4' id='formFileLg' onChange={(e) => setPhoto(e.target.files[0])} />
                 <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-3">
                   <Button
+                    severity="primary"
                     label="Add Photo"
                     icon="pi pi-upload"
                     onClick={addphoto} />
@@ -120,7 +120,7 @@ function Profile() {
               </form>
 
               <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-5">
-                <Button label="LogOut" icon="pi pi-arrow-left" onClick={handleLogOut} />
+                <Button severity="primary" label="LogOut" icon="pi pi-arrow-left" onClick={handleLogOut} />
               </div>
             </div>
           </div>
@@ -229,7 +229,7 @@ function Profile() {
 
               </div>
               <div className="card flex flex-wrap justify-content-center gap-3  mt-3">
-                <Button label="Save " icon="pi pi-check" />
+                <Button severity="primary" label="Save " icon="pi pi-check"/>
               </div>
             </div>
           </div>

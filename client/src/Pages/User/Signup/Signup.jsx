@@ -66,7 +66,7 @@ function Signup() {
       <MDBRow>
 
         <MDBCol col='10' md='6'>
-          <img src="https://cdn.discordapp.com/attachments/1008571146465193994/1086209035457548368/Nidhinsha_single_scooter_illustration__a_person_sitting_on_it___8b629dc8-4b17-4faa-a457-20076e193e40.png"
+          <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1086965739522637884/pekka_a_person_sitting_on_a_scooter_blue_illustration__white_ba_630badc6-1414-41e6-b2ec-03f2425615b8.png"
             className="img-fluid" alt="Phone image" />
         </MDBCol>
 
@@ -160,7 +160,7 @@ function Signup() {
            
 
 
-            <Button type='submit' label="SignUp" severity="success" raised style={{ width: '100%' }} />
+            <Button type='submit' label="SignUp" severity="primary" raised style={{ width: '100%' }} />
 
 
             <div className="divider d-flex align-items-center justify-content-center my-4">

@@ -275,7 +275,7 @@ function NavBar() {
             </Link>
 
             <Link to={'/profile'}>
-              <Button icon="pi pi-user" rounded severity="info" aria-label="User" />
+              <Button icon="pi pi-user" rounded severity="primary" aria-label="User" />
             </Link>
 
           </Group>
