@@ -13,6 +13,9 @@ const bikeSchema = new mongoose.Schema({
         type:String,
         // required :true
     },
+    engineNumber:{
+        type : String
+    },
     brand : {
         type:String,
         required :true
@@ -33,18 +36,7 @@ const bikeSchema = new mongoose.Schema({
         type : Number,
         // required :true
     },
-    image1 :{
-        type:String
-    },
-    image2 :{
-        type:String
-    },
-    image3 :{
-        type:String
-    },
-    image4 :{
-        type:String
-    }
+   photo:[]
 })
 
 const model = mongoose.model("bikes",bikeSchema)
