@@ -6,6 +6,7 @@ const upload = require("../../utils/multer")
 const loginController = require('../../controller/Admin/loginController')
 const adminController = require("../../controller/Admin/adminController")
 const addBikeController = require("../../controller/Admin/bikeController/adminAddBikeController")
+const adminViewBikeController = require("../../controller/Admin/bikeController/adminViewBikeController")
 const { protect } = require("../../Middlewares/verifyToken")
 
 
@@ -17,4 +18,5 @@ router.route("/blockUser").get(protect,adminController.blockUser)
 
 router.route("/add-bike").post(upload.array('image'),addBikeController.addBike)
 
+router.route("/view-bike").get(adminViewBikeController.viewBike)
 module.exports = router

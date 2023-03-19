@@ -31,10 +31,6 @@ exports.addBike = async (req, res) => {
                 photo.push(urls[i].url)
                 
             }
-            // res.status(200).json({
-            //     message: "Image Upload Success",
-            //     data: urls
-            // })
 
             let bikeDetails = {
                 ownerName : req.body.ownerName,
@@ -57,9 +53,9 @@ exports.addBike = async (req, res) => {
 
 
         }else{
-            // res.status(405).json({
-            //     error : `${req.method} method is not allowed`
-            // })
+            res.status(405).json({
+                error : `${req.method} method is not allowed`
+            })
         }
     } catch (error) {
 
