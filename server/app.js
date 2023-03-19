@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const bodyParser = require("body-parser")
 var logger = require('morgan');
 const cors = require('cors')
 const mongoose = require("mongoose")
@@ -23,6 +24,13 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+
+// for image upload 
+
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
+app.use(bodyParser.json())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
