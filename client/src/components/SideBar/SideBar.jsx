@@ -111,8 +111,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     const navigate = useNavigate()
 
     const handleLogout = () => {
-        localStorage.removeItem("adminToken")
-        window.location = '/admin_login'
+        localStorage.removeItem("adminInfo")
+        window.location = '/admin'
     }
 
     return (
@@ -137,7 +137,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Drawer variant="permanent" open={open}>
+            
+            <Drawer variant="permanent" open={open}> 
                 <DrawerHeader>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -180,13 +181,22 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                                     onClick={() => {
                                         console.log(text.name);
                                         let text2 = text.name.toLowerCase()
-                                        text2 === "users" ? navigate('/admin') : navigate(`/admin/${text2}`)
-                                        text2 === "logout" ? handleLogout() : navigate('/admin')
+                                        text2 === "users" && navigate('/user-manage')
+                                        text2 === "logout"  ? handleLogout() : navigate('/admin')
+                                        text2 === "dashboard"  && navigate('/dashboard')
+                                        text2 === "bike List"  && navigate('/bike-list')
+                                        text2 === "add bike"  && navigate('/add-bike')
+                                        text2 === "bike rent request"  && navigate('/bike-request')
+                                        text2 === "booked bike"  && navigate('/booked=bike')
+                                        text2 === "branches"  && navigate('/branches')
+                                        text2 === "bike report"  && navigate('/bike-report')
+                                        
                                     }} />
                             </ListItemButton>
                         </ListItem>
                     ))}
                 </List>
+                
                 <Divider />
             </Drawer>
         </Box >
