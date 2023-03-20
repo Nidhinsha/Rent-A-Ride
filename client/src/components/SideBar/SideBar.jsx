@@ -182,7 +182,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                                         console.log(text.name);
                                         let text2 = text.name.toLowerCase()
                                         text2 === "users" && navigate('/user-manage')
-                                        text2 === "logout"  ? handleLogout() : navigate('/admin')
+                                        text2 === "logout"  && handleLogout() 
                                         text2 === "dashboard"  && navigate('/dashboard')
                                         text2 === "bike List"  && navigate('/bike-list')
                                         text2 === "add bike"  && navigate('/add-bike')

@@ -8,7 +8,7 @@ import { Button } from "primereact/button";
 import Loading from '../../../components/Loading/Loading';
 import ErrorMessage from '../../../components/Alert/Error';
 import SideBar from '../../../components/SideBar/SideBar'
-import { Box } from '@mui/material';
+import { Box, styled } from '@mui/material'
 import { Container } from '@mantine/core';
 function UserManage() {
 
@@ -27,21 +27,38 @@ function UserManage() {
   const [users, setUsers] = useState([]);
   // setUsers(adminUserData)
   console.log(users, ';;;;;');
+  
 
+  // useEffect(() => {
+  //   let adminData = localStorage.getItem("adminInfo");
+  //   if (adminData != null) {
+  //     dispatch(adminUserFetchAction());
+  //     console.log(adminUserData, 'inthe useeffect user data');
+  //     setUsers(adminUserData)
+  //     console.log(users, 'zzzzzzz');
 
-  useEffect(() => {
+  //   } else {
+  //     navigate("/admin/login");
+  //   }
+  // }, [dispatch]);
+
+  useEffect(()=>{
     let adminData = localStorage.getItem("adminInfo");
-    if (adminData != null) {
-      dispatch(adminUserFetchAction());
-      console.log(adminUserData, 'inthe useeffect user data');
-      setUsers(adminUserData)
-      console.log(users, 'zzzzzzz');
+      if (adminData != null) {
+        dispatch(adminUserFetchAction());
+        console.log(adminUserData, 'inthe useeffect user data');
+        setUsers(adminUserData)
+        console.log(users, 'zzzzzzz')
+  
+      } else {
+        navigate("/admin/login");
+      }
+  },[dispatch])
 
-
-    } else {
-      navigate("/admin/login");
-    }
-  }, [dispatch]);
+  useEffect(()=>{
+    setUsers(adminUserData)
+    console.log(adminUserData,'in second effect');
+  },[adminUserData])
 
 
   // useEffect(() => {
@@ -65,6 +82,14 @@ function UserManage() {
     }));
   }
 
+  const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+}));
 
   return (
 
@@ -72,16 +97,16 @@ function UserManage() {
     <Box sx={{ display: 'flex' }}>
 
       <SideBar />
-      <Box component="main" sx={{ flexGrow: 1, p: 3,mr:3 }}>
-
+      <Box component="main" sx={{ flexGrow: 1, p: 3,mr:1 }}>
+      <DrawerHeader />
 
       {/* <div className="card"> */}
-      <Container fixed sx={{mt: 5}}>
+      <Container fixed sx={{mt: 1}}>
 
         {/* <SideBar> */}
         {/* <Button icon="pi pi-user" rounded severity="info" aria-label="User" onClick={OnAdminLogOut} /> */}
-        {blockLoading ? <Loading /> : ""}
-        {blockError ? <ErrorMessage variant="danger"> {error} </ErrorMessage> : ""}
+        {/* {blockLoading ? <Loading /> : ""} */}
+        {/* {blockError ? <ErrorMessage variant="danger"> {error} </ErrorMessage> : ""} */}
         <DataTable value={users} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
           <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo} alt="User" height="50" />} />
           <Column field="firstName" header="firstName" sortable style={{ width: '25%' }}></Column>
