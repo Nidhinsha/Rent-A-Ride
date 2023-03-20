@@ -19,4 +19,5 @@ router.route("/blockUser").get(protect,adminController.blockUser)
 router.route("/add-bike").post(upload.array('image'),addBikeController.addBike)
 
 router.route("/view-bike").get(adminViewBikeController.viewBike)
+
 module.exports = router

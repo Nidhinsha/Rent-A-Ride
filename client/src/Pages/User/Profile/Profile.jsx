@@ -79,16 +79,16 @@ function Profile() {
 
   return (
     <>
-    <NavBar />
-    <div className="container rounded bg-white mb-5 ">
-      {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
-      {loading ? <Loading /> : ""}
-      {/* {profileData ? */}
+      <NavBar />
+      <div className="container rounded bg-white mb-5 ">
+        {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
+        {loading ? <Loading /> : ""}
+        {/* {profileData ? */}
         <div className="row">
           {/* <h1>{profileData.firstName}</h1> */}
           <div className="col-md-3 border-right">
 
-            <div className="d-flex flex-column align-items-center text-center p-3 py-5">
+            <div className="d-flex flex-column align-items-center text-center p-3 py-5 shadow p-3 mb-5 bg-white rounded">
               <img
                 className="rounded-circle mt-5"
                 width="150px"
@@ -120,6 +120,9 @@ function Profile() {
               </form>
 
               <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-5">
+                <Button severity="primary" label="Reset Password" icon="pi pi-lock" />
+              </div>
+              <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-5">
                 <Button severity="primary" label="LogOut" icon="pi pi-arrow-left" onClick={handleLogOut} />
               </div>
             </div>
@@ -127,7 +130,7 @@ function Profile() {
 
           <div className="col-md-8 border-right">
 
-            <div className="p-3 py-5">
+            <div className="p-3 py-5 shadow-lg p-3 mb-5 bg-white rounded">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h4 className="text-right">Profile Settings</h4>
               </div>
@@ -170,66 +173,20 @@ function Profile() {
                   </div>
                 </div>
 
-                <div className="col-md-12  mt-3">
-                  <div className="p-inputgroup">
-                    <span className="p-inputgroup-addon">
-                      <i className="pi pi-home"></i>
-                    </span>
-                    <InputTextarea placeholder="Address" />
-                  </div>
-                </div>
-
-
-                <div className="col-md-12  mt-3">
+              </div>
+              <div className="card flex flex-wrap justify-content-center gap-3  mt-3">
+                <Button severity="primary" label="Edit " icon="pi pi-check" />
+              </div>
+            </div>
+            <div className="col-md-12 border-right">
+              <div className="p-3 py-5 shadow-lg p-3 mb-5 bg-white rounded">
+                <div className="col-md-12  ">
                   <label htmlFor="">Proof</label>
                   <div className="card">
+                    {/* if the proof is there i a just need to show the proof otherse need to add it */}
                     <FileUpload severity="primary" name="demo[]" url={'/api/upload'} multiple accept="image/*" maxFileSize={1000000} emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />
                   </div>
                 </div>
-
-
-                <div className="col-md-6  mt-3">
-                  <div className="p-inputgroup">
-                    <span className="p-inputgroup-addon">
-                      <i className="pi pi-globe"></i>
-                    </span>
-                    <InputText placeholder="Country" />
-                  </div>
-                </div>
-
-                <div className="col-md-6  mt-3">
-                  <div className="p-inputgroup">
-                    <span className="p-inputgroup-addon">
-                      <i className="pi pi-map"></i>
-                    </span>
-                    <InputText placeholder="State" />
-                  </div>
-                </div>
-
-                <div className="col-md-6  mt-3">
-                  <div className="p-inputgroup">
-                    <span className="p-inputgroup-addon">
-                      <i className="pi pi-building"></i>
-                    </span>
-                    <InputText placeholder="Landmark" />
-                  </div>
-                </div>
-
-                <div className="col-md-6  mt-3">
-                  <div className="p-inputgroup">
-                    <span className="p-inputgroup-addon">
-                      <i className="pi pi-map-marker"></i>
-                    </span>
-                    <InputText placeholder="Pincode" />
-                  </div>
-                </div>
-
-
-
-
-              </div>
-              <div className="card flex flex-wrap justify-content-center gap-3  mt-3">
-                <Button severity="primary" label="Save " icon="pi pi-check"/>
               </div>
             </div>
           </div>
@@ -240,7 +197,7 @@ function Profile() {
 
         {/* : ''} */}
 
-    </div></> 
+      </div></>
   )
 }
 export default Profile

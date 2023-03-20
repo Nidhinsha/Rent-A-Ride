@@ -37,6 +37,13 @@ const bikeSchema = new mongoose.Schema({
         // required :true
     },
    photo:[]
+   ,
+   assured :{
+        type:Boolean,
+        default:false
+   }
+   
+
 })
 
 const model = mongoose.model("bikes",bikeSchema)
