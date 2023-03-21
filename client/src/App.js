@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route , Routes } from 'react-router-dom'
+import AddBike from './Pages/Admin/AddBike/AddBike'
 import AdminLogin from './Pages/Admin/AdminLogin/AdminLogin'
 import UserManage from './Pages/Admin/UserManage/UserManage'
 import Home from './Pages/User/Home/Home'
@@ -17,8 +18,9 @@ function App() {
       <Route path='/signup' element={<Signup />} />
       <Route path='/' exact element={<Home />} />
       <Route path='/profile' exact  element={<Profile />} />
-      <Route path='/user-manage' exact element={<UserManage />} />
+      <Route path='/admin/user-manage' exact element={<UserManage />} />
       <Route path='/test' exact element={<Test />} />
+      <Route path='/admin/add-bike' exact element={<AddBike />} />
       </Routes>
     </div>
   )

@@ -53,7 +53,7 @@ function AdminLogin() {
     interval = setInterval(() => {
       const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
       if (adminInfo) {
-        navigate('/user-manage');
+        navigate('/admin/user-manage');
         clearInterval(interval); // clear the interval once userInfo is available
       }
     }, 1000)
