@@ -7,23 +7,19 @@ import { InputMask } from "primereact/inputmask";
 import { Toast } from 'primereact/toast';
 
 
-import { FileInput, rem } from '@mantine/core';
-import { IconUpload } from '@tabler/icons-react';
-
 import { useState } from "react";
 // import "./Profile.css";
 import { MDBFile } from 'mdb-react-ui-kit';
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  getUserProfileAction,
   userImageAction,
-  userProfileAction,
+  userLogOut,
 } from "../../../Redux/Actions/userActions";
 import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
-// import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { userLogout } from '../../../Redux/Actions/userActions';
 import NavBar from '../../../components/NavBar/NavBar';
 
 function Profile() {
@@ -33,14 +29,15 @@ function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  const userProfileData = useSelector((state) => state.userProfile);
+  const userProfileData = useSelector((state) => state.userLoginReducer.userLoginDetails);
   const { loading, error, profileData } = userProfileData;
   console.log('profiledata', profileData);
+  console.log('profiledata ggggg', userProfileData);
 
-  const image = useSelector((state) => state.userImage);
-  const { imageloading, imageerror, userProfilePicture } = image;
+  const profilePictureData = useSelector((state) => state.userImageUplaodReducer);
+  const { imageLoading, imageError, profilePicture } = profilePictureData;
   const [photo, setPhoto] = useState("");
-  console.log(userProfilePicture + "THIS IS THE IMAGE EEE");
+  console.log(profilePicture + "THIS IS THE IMAGE EEE");
 
   console.log(photo, 'phto name');
 
@@ -49,9 +46,9 @@ function Profile() {
     const data = new FormData();
     console.log(photo, 'bbbbbbbbbbbbbb');
     data.append("file", photo);
-    // data.append("upload_preset", "noteapp");
+   
     data.append("upload_preset", "RentAndRide");
-    // data.append("cloud_name", "dhajqatgt");driuxmoax,thy3sk1o
+  
     data.append("cloud_name", "driuxmoax");
     console.log(data);
 
@@ -67,13 +64,13 @@ function Profile() {
   };
 
   useEffect(() => {
-    dispatch(userProfileAction());
-  }, [userProfilePicture]);
+    dispatch(getUserProfileAction());
+  }, []);
 
-  console.log(userProfilePicture + "THIS IS THE IMAGEEEE");
+  console.log( "THIS IS THE IMAGEEEE");
 
   const handleLogOut = () => {
-    dispatch(userLogout())
+    dispatch(userLogOut())
     navigate("/login")
   }
 
@@ -92,8 +89,8 @@ function Profile() {
               <img
                 className="rounded-circle mt-5"
                 width="150px"
-                src={profileData?.photo
-                  ? profileData?.photo
+                src={userProfileData?.photo
+                  ? userProfileData?.photo
                   : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}
                 // src="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
                 alt="Profile" />
@@ -103,7 +100,7 @@ function Profile() {
                   <span className="p-inputgroup-addon">
                     <i className="pi pi-user"></i>
                   </span>
-                  <InputText placeholder="Full Name" value={profileData?.firstName + profileData?.lastName} />
+                  <InputText placeholder="Full Name" value={userProfileData?.firstName + userProfileData?.lastName} />
                 </div>
               </div>
 
@@ -142,7 +139,7 @@ function Profile() {
                     <span className="p-inputgroup-addon">
                       <i className="pi pi-user"></i>
                     </span>
-                    <InputText placeholder="First Name" value={profileData?.firstName} />
+                    <InputText placeholder="First Name" value={userProfileData?.firstName} />
                   </div>
                 </div>
 
@@ -151,7 +148,7 @@ function Profile() {
                     <span className="p-inputgroup-addon">
                       <i className="pi pi-user"></i>
                     </span>
-                    <InputText placeholder="Last Name" value={profileData?.lastName} />
+                    <InputText placeholder="Last Name" value={userProfileData?.lastName} />
                   </div>
                 </div>
 
@@ -160,7 +157,7 @@ function Profile() {
                     <span className="p-inputgroup-addon">
                       <i className="pi pi-envelope"></i>
                     </span>
-                    <InputText placeholder="Email" value={profileData?.email} />
+                    <InputText placeholder="Email" value={userProfileData?.email} />
                   </div>
                 </div>
 
@@ -169,7 +166,7 @@ function Profile() {
                     <span className="p-inputgroup-addon">
                       <i className="pi pi-phone"></i>
                     </span>
-                    <InputMask id="ssn" mask="999-999-9999" placeholder="999-999-9999" value={profileData?.phone}></InputMask>
+                    <InputMask id="ssn" mask="999-999-9999" placeholder="999-999-9999" value={userProfileData?.phone}></InputMask>
                   </div>
                 </div>
 

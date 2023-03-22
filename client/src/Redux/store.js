@@ -7,7 +7,7 @@ import {
     userSignupReducer,
     userLoginReducer,
     userImageUplaodReducer,
-    userProfileReduer,
+    getUserProfileReduer,
     
 
   } from "./Reducers/userReducers";
@@ -15,39 +15,39 @@ import {
 import {
   adminLoginReducer,
   adminUserFetchReducer,
-  adminUserBlockReducer
-
+  
 } from './Reducers/adminReducers'
 
   const reducer = combineReducers({
 
-    userSignup: userSignupReducer,
-    userLogin : userLoginReducer,
+    userSignupReducer: userSignupReducer,
+    userLoginReducer : userLoginReducer,
 
-    userProfile: userProfileReduer,
-  userImage: userImageUplaodReducer,
+    getUserProfileReduer: getUserProfileReduer,
+  userImageUplaodReducer: userImageUplaodReducer,
 
-    adminLogin : adminLoginReducer,
+    adminLoginReducer : adminLoginReducer,
     
-    adminUserFetch : adminUserFetchReducer,
-    adminUserBlock : adminUserBlockReducer
+    adminUserFetchReducer : adminUserFetchReducer,
     
   });
 
 
 
-let userData = JSON.parse(localStorage.getItem("userInfo"));
+let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+let adminInfo = JSON.parse(localStorage.getItem("adminInfo"))
 
 const initialstate = {
-  userLogin: { userinfo: userData },
+  userLoginReducer: { userLoginDetails: userInfo },
+  adminLoginReducer: {adminLoginData : adminInfo}
 };
 
-const middleware = [thunk];
+
 
 const store = createStore(
   reducer,
   initialstate,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 export default store;

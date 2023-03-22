@@ -1,36 +1,28 @@
-import {
-    USER_SIGNUP_REQUEST,
-    USER_SIGNUP_SUCCESS,
-    USER_SIGNUP_FAIL,
 
-    USER_LOGIN_REQUEST,
-    USER_LOGIN_SUCCESS,
-    USER_LOGIN_FAIL,
+import { userActionType } from "../Constants/userConstants";
 
-    USER_LOGOUT,
 
-    USER_PROFILE_REQUEST,
-    USER_PROFILE_SUCCESS,
-    USER_PROFILE_FAIL,
-
-    USER_IMAGE_REQUEST,
-    USER_IMAGE_SUCCESS,
-    USER_IMAGE_FAIL
-
-} from '../Constants/userConstants'
-
-const initialState = {}
-
-export const userSignupReducer = (state = initialState, action) => {
+export const userSignupReducer = (state ={}, action) => {
     switch (action.type) {
-        case USER_SIGNUP_REQUEST:
 
-            return { loading: true }
+        case userActionType.USER_SIGNUP_REQUEST:
 
-        case USER_SIGNUP_SUCCESS:
-            return { loading: false, userInfo: action.payload };
-        case USER_SIGNUP_FAIL:
-            return { loading: false, error: action.payload };
+            return { 
+              loading: true 
+            }
+
+        case userActionType.USER_SIGNUP_SUCCESS:
+
+            return { 
+              loading: false, 
+              signUpData: action.payload 
+            };
+        case userActionType.USER_SIGNUP_FAIL:
+
+            return {
+               loading: false,
+                signUpError: action.payload 
+              };
 
         default:
             return state;
@@ -38,45 +30,85 @@ export const userSignupReducer = (state = initialState, action) => {
 }
 
 
-export const userLoginReducer = (state = initialState, action) => {
+export const userLoginReducer = (state = {}, action) => {
+  console.log(action,'login reducer');
     switch (action.type) {
-        case USER_LOGIN_REQUEST:
-            return { loading: true }
-        case USER_LOGIN_SUCCESS:
-            return { loading: false, userLoginDetails: action.payload }
-        case USER_LOGIN_FAIL:
-            return { loading: false, error: action.payload }
-        case USER_LOGOUT:
-            return {}
+
+        case userActionType.USER_LOGIN_REQUEST:
+            return {
+               loading: true
+               }
+
+        case userActionType.USER_LOGIN_SUCCESS:
+            return { 
+              loading: false,
+               userLoginDetails: action.payload
+              }
+
+        case userActionType.USER_LOGIN_FAIL:
+            return { 
+              loading: false,
+               userLoginError: action.payload 
+              }
+
+        case userActionType.USER_LOGOUT:
+            return {
+              userLoginDetails:false
+            }
+
+        case userActionType.UPDATE_USER_PROFILE :
+          return {
+            userLoginDetails : action.payload
+          }
+
         default:
             return state
     }
 }
-export const userProfileReduer = (state = initialState, action) => {
+
+export const getUserProfileReduer = (state = {}, action) => {
+
   switch (action.type) {
-    case USER_PROFILE_REQUEST:
-      return { loading: true };
+    case userActionType.GET_USER_PROFILE_REQUEST:
 
-    case USER_PROFILE_SUCCESS:
-      return { loading: false, profileData: action.payload };
+      return { 
+        loading: true
+       }
 
-    case USER_PROFILE_FAIL:
-      return { loading: false, error: action.payload };
+    case userActionType.GET_USER_PROFILE_SUCCESS:
+      return { 
+        loading: false,
+         userProfileData: action.payload
+         };
+
+    case userActionType.GET_USER_PROFILE_FAIL:
+      return { 
+        loading: false,
+        userProfileDataError: action.payload };
+
     default:
       return state;
   }
 };
 
-export const userImageUplaodReducer = (state = initialState, action) => {
+export const userImageUplaodReducer = (state = {}, action) => {
   switch (action.type) {
-    case USER_IMAGE_REQUEST:
-      return { imageloading: true };
+    case userActionType.USER_UPLOAD_IMAGE_REQUEST:
+      return { 
+        ImageLoading: true 
+      };
 
-    case USER_IMAGE_SUCCESS:
-      return { imageloading: false, userProfilePicture: action.payload };
+    case userActionType.USER_UPLOAD_IMAGE_SUCCESS:
+      return { 
+        imageLoading: false,
+         profilePicture: action.payload
+         };
 
-    case USER_IMAGE_FAIL:
-      return { imageloading: false, error: action.payload };
+    case userActionType.USER_UPLOAD_IMAGE_FAIL:
+      return { 
+        imageLoading: false,
+         imageError: action.payload
+         };
     default:
       return state;
   }

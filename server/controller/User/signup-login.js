@@ -63,6 +63,7 @@ exports.LoginPost= async(req,res)=>{
                             lastName : userData.lastName ,
                             email : userData.email ,
                             phone : userData.phone , 
+                            photo : userData.photo,
                             token : generateToken(userData.id)
                         }
                         console.log('details',details);

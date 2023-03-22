@@ -29,61 +29,42 @@ import {signInWithPopup} from 'firebase/auth'
 
 function Login() {
 
-
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const userLoginData = useSelector(state => state.userLogin)
+  const userLoginData = useSelector(state => state.userLoginReducer)
   const {error,loading,userLoginDetails } = userLoginData
 
   // const {register,handleSubmit}
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
       dispatch(userLogin(email,password))
     }
 
   
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  
-  // workign not the right way 
-  useEffect(() => {
-      let interval;
-      
-      // check for userInfo every second until it is available
-      interval = setInterval(() => {
-        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-        // const googleUser = JSON.parse(localStorage.getItem('user'))
-        if (userInfo ) {
-          navigate('/');
-          clearInterval(interval); // clear the interval once userInfo is available
-        }
-      }, 1000)
-    
-      return () => clearInterval(interval); // clear the interval on unmount
-    }, [navigate,userLoginDetails]);
  
-    const handleGoogle = () =>{
-      signInWithPopup(auth,provider).then((data)=>{
-        // setEmail(data.user.email)
-        let fullName = data.user.displayName
-        const [firstName,lastName] = fullName.split(' ')
-        // const value = {
-        //   firstName : firstName,
-        //   lastName : lastName ,
-        //   email : data.user.email
   
-        // }
-        localStorage.setItem('user',data.user.email)
-        navigate('/')
-        console.log(firstName,lastName,'ttttt');
+
+ 
+    // const handleGoogle = () =>{
+    //   signInWithPopup(auth,provider).then((data)=>{
+    //     // setEmail(data.user.email)
+    //     let fullName = data.user.displayName
+    //     const [firstName,lastName] = fullName.split(' ')
+    
+    //     localStorage.setItem('user',data.user.email)
+    //     navigate('/')
+    //     console.log(firstName,lastName,'ttttt');
   
-         dispatch(userSignup(firstName,lastName, data.user.email, data.user.phoneNumber,firstName))
-        console.log(data.user,'gogle user data');
-      })
-    }
+    //      dispatch(userSignup(firstName,lastName, data.user.email, data.user.phoneNumber,firstName))
+    //     console.log(data.user,'gogle user data');
+    //   })
+    // }
 
 
   return (
@@ -159,7 +140,7 @@ function Login() {
 
               <Button icon="pi pi-fw pi-google" className="p-button-text-icon-left" outlined
                 label={<span>Sign in with <span style={{ color: '#34A853' }}>G</span><span style={{ color: '#EA4335' }}>o</span><span style={{ color: '#FBBC05' }}>o</span><span style={{ color: '#4285F4' }}>g</span><span style={{ color: '#EA4335' }}>l</span><span style={{ color: '#34A853' }}>e</span></span>}
-                onClick={handleGoogle}
+                // onClick={handleGoogle}
               />
             </div>
           </form>

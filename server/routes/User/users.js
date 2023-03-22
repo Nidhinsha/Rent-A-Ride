@@ -21,7 +21,7 @@ router.route("/").get(protect,)
 router.route("/profile").get(protect,userProfile.profileGet)
 
 // Add Profile Photo
-router.route("/profile-photo").post(protect, userProfile.addPhoto);
+router.route("/userProfileImageUpdate").post(protect, userProfile.addPhoto);
 
 // Add bike from the user
 router.route("/user-add-bike").post(upload.array('image'),userAddBike.userAddBike)
