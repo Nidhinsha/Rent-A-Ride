@@ -59,37 +59,7 @@ export const adminUserFetchAction =() =>async(dispatch)=>{
     }
 }
 
-// export const adminBlockUserAction = (id) => async (dispatch) => {
-//     console.log(id, 'nmnmn');
-//     try {
-//         dispatch({ type: ADMIN_USER_BLOCK_REQUEST })
 
-//         const token = JSON.parse(localStorage.getItem("adminInfo"))
-//         console.log(token.token);
-
-//         const config = {
-//             headers: {
-//                 Authorization: "Bearer " + token.token
-//             }
-//         }
-//         // get ot put  
-
-
-//         const { data } = await axios.get(
-//             "http://localhost:5000/admin/blockUser?id=" + id,
-//             config
-//         );
-//         console.log(data, 'kookoko');
-
-//         dispatch({ type: ADMIN_USER_BLOCK_SUCCESS, payload: data })
-
-//     } catch (error) {
-//         dispatch({
-//             type: ADMIN_USER_BLOCK_FAIL,
-//             payload:
-//                 error.response && error.response.data.message
-//                     ? error.response.data.message
-//                     : error.response.data
-//         })
-//     }
-// }
+export const adminAddBikeAction = (data) => async(dispatch)=>{
+    console.log(data,'data in the action of add bike ');
+}

@@ -22,3 +22,4 @@ const configToken = {
 export const adminLoginApi = (email,password) => API.post('/login',{email,password},config)
 export const getUsersApi = () => API.get('/user-manage',configToken)
 export const userBlockUnblockApi =(id) => API.get('/userBlockUnblock?id=' +id,configToken)
+export const adminAddBikeAPI = (formData) => API.post('/add-bike',formData,configToken)
