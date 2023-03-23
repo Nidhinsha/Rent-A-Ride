@@ -8,7 +8,9 @@ import SideBar from '../../../components/SideBar/SideBar';
 import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
 import { adminAddBikeAPI } from '../../../Api/Admin/ApiCalls';
-
+import { adminAddBikeAction } from '../../../Redux/Actions/adminActions';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { Alert } from '@mui/material';
 function AddBike() {
 
 
@@ -22,36 +24,57 @@ function AddBike() {
     const [color, setColor] = useState('')
     const [images, setImages] = useState([])
     const [loading, setLoading] = useState(false)
+    const [sucess,setSuccess]=useState(false);
 
     const dispatch = useDispatch()
-
+    const navigate = useNavigate()
     const handleSubmit =async()=>{
-        console.log(bikeName,bikeModel,engineNumber,brand,fuel,description,price,color,'form data for add bike the ');
+        console.log(bikeName,bikeModel,engineNumber,brand,fuel,description,price,color,images,'form data for add bike the ');
         setLoading(true)
 
         // for using the form data
          
-        const formData = new FormData()
+        const formdata = new FormData()
 
         // for image
+        console.log(images,';;;;');
         images.forEach((value)=>{
-            formData.append("images",value)
+            console.log(value)
+            formdata.append("images",value)
         })
+
+
+        console.log(formdata.get("images"));
 
         // the form data 
-        formData.append("bikeName",bikeName)
-        formData.append("bikeModel",bikeModel)
-        formData.append("engineNumber",engineNumber)
-        formData.append("fuel",fuel)
-        formData.append("brand",brand)
-        formData.append("price",price)
-        formData.append("color",color)
-        formData.append("description",description)
+        formdata.append("bikeName",bikeName)
+        formdata.append("bikeModel",bikeModel)
+        formdata.append("engineNumber",engineNumber)
+        formdata.append("fuel",fuel)
+        formdata.append("brand",brand)
+        formdata.append("price",price)
+        formdata.append("color",color)
+        formdata.append("description",description)
 
-        adminAddBikeAPI(formData).then((data)=>{
+        adminAddBikeAPI(formdata).then((data)=>{
             console.log(data.data,'form data response');
+
+            dispatch(adminAddBikeAction(data.data))
+            setLoading(false)
+
+            setSuccess(true)
+
+            // setTimeout(()=>{
+            //     Navigate("/admin/bikes",{state:{bikeAdded:true}})
+            //     setSuccess(false)
+            // },3000)
+        })
+        .catch((error)=>{
+            console.log("some error",error);
+            setLoading(false)
         })
     }
+
 
     const DrawerHeader = styled('div')(({ theme }) => ({
         display: 'flex',
@@ -67,6 +90,9 @@ function AddBike() {
     return (
         <div className='shadow-lg'>
             <DrawerHeader />
+            {
+      sucess?   <Alert severity="success">This is a success alert — check it out!</Alert>:''
+     }
             <Box sx={{ display: 'flex', justifyContent: 'center', m: 5 }} >
                 <SideBar />
                 <Box
@@ -144,7 +170,7 @@ function AddBike() {
                     </div>
 
 
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    {/* <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             type="file"
                             helperText="Please select the image"
@@ -167,7 +193,11 @@ function AddBike() {
                             helperText="Please select the image"
                             onChange={(e) => setImages([...images, e.target.files[0]])}
                         />
-                    </div>
+                    </div> */}
+                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
+                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
+                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
+                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
                     <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '30px' }}>
                         <Button
                             variant="contained"

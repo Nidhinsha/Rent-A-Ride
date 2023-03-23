@@ -16,7 +16,7 @@ router.route("/user-manage").get(protect, adminController.adminUser)
 
 router.route("/userBlockUnblock").get(protect,adminController.blockUser)
 
-router.route("/add-bike").post(upload.array('image'),addBikeController.addBike)
+router.route("/add-bike").post(upload.array('images'),protect,addBikeController.addBike)
 
 router.route("/view-bike").get(adminViewBikeController.viewBike)
 

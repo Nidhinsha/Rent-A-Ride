@@ -54,17 +54,4 @@ export const adminUserFetchReducer = (state = {}, action) => {
   }
 }
 
-// export const adminUserBlockReducer = (state = {}, action) => {
-//   console.log(action, 'action in block reducer');
-//   switch (action.type) {
-//     case ADMIN_USER_BLOCK_REQUEST:
-//       return { blockLoading: true }
-//     case ADMIN_USER_BLOCK_SUCCESS:
-//       return { blockLoading: false, blockUserData: action.payload }
-//     case ADMIN_USER_BLOCK_FAIL:
-//       return { blockLoading: false, blockError: action.payload }
 
-//     default:
-//       return state;
-//   }
-// }

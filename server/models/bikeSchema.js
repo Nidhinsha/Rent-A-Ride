@@ -18,7 +18,7 @@ const bikeSchema = new mongoose.Schema({
     },
     brand : {
         type:String,
-        required :true
+        // required :true
     },
     color :{
         type:String,
@@ -41,8 +41,11 @@ const bikeSchema = new mongoose.Schema({
    assured :{
         type:Boolean,
         default:false
+   },
+   approved:{
+    type:Boolean,
+    default : false
    }
-   
 
 })
 

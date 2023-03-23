@@ -62,4 +62,16 @@ export const adminUserFetchAction =() =>async(dispatch)=>{
 
 export const adminAddBikeAction = (data) => async(dispatch)=>{
     console.log(data,'data in the action of add bike ');
+
+    dispatch({
+        type : adminActionType.ADMIN_BIKE_ADD_SUCCESS,
+        payload : data
+    })
+}
+
+
+// GET THE ALL BIKE AND ALSO IN THIS ADDING THE NEW BIKES USING NEW TECHNIQUE
+
+export const adminGetAllBikeAction = () =>async(dispatch)=>{
+    
 }

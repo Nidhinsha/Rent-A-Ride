@@ -112,7 +112,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
     const handleLogout = () => {
         localStorage.removeItem("adminInfo")
-        window.location = '/admin'
+        window.location = '/admin/login'
     }
 
     return (
