@@ -15,6 +15,8 @@ import {
 import {
   adminLoginReducer,
   adminUserFetchReducer,
+  adminGetAllBikeReducer
+  
   
 } from './Reducers/adminReducers'
 
@@ -29,6 +31,8 @@ import {
     adminLoginReducer : adminLoginReducer,
     
     adminUserFetchReducer : adminUserFetchReducer,
+    adminGetAllBikeReducer : adminGetAllBikeReducer
+    
     
   });
 

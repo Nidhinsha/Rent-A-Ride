@@ -54,4 +54,30 @@ export const adminUserFetchReducer = (state = {}, action) => {
   }
 }
 
+export const adminGetAllBikeReducer =(state={},action)=>{
 
+  switch (action.type) {
+    case adminActionType.ADMIN_GET_BIKE_REQUEST:
+      return {
+        bikeDataLoading : true
+      }
+    case adminActionType.ADMIN_GET_BIKE_SUCCESS:
+      return {
+        loading : false,
+        bikeData : action.payload
+      }
+    case adminActionType.ADMIN_GET_BIKE_FAIL:
+      return {
+        loading : false,
+        bikeDataError : action.payload
+      }
+    // in here im adding the bike into the existing state of the bike , by doing this i can reduce the req send to the backend
+
+    case adminActionType.ADMIN_BIKE_ADD_SUCCESS:
+      return {
+        bikeData:[...state.bikeData,action.payload]
+      }  
+    default:
+      return state;
+  }
+}

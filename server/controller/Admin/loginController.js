@@ -3,6 +3,7 @@ const userSchema = require('../../models/userSchema')
 const bcrypt = require('bcrypt')
 const generateToken = require('../../Middlewares/generateToken')
 
+
 exports.adminLogin = async (req, res) => {
     console.log(req.body,'ddddddd');
     adminSchema.findOne({ email: req.body.email }).then((data) => {
@@ -17,6 +18,7 @@ exports.adminLogin = async (req, res) => {
                         email: data.email,
                         token: generateToken(data._id)
                     }
+                    console.log(details,'admin login details backend');
                     res.status(200).json(details)
                 } else {
                     res.status(401).json("Invalid Password")

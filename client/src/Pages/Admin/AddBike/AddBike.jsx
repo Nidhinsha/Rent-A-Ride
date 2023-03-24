@@ -11,6 +11,12 @@ import { adminAddBikeAPI } from '../../../Api/Admin/ApiCalls';
 import { adminAddBikeAction } from '../../../Redux/Actions/adminActions';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+
 function AddBike() {
 
 
@@ -24,40 +30,40 @@ function AddBike() {
     const [color, setColor] = useState('')
     const [images, setImages] = useState([])
     const [loading, setLoading] = useState(false)
-    const [sucess,setSuccess]=useState(false);
+    const [sucess, setSuccess] = useState(false);
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const handleSubmit =async()=>{
-        console.log(bikeName,bikeModel,engineNumber,brand,fuel,description,price,color,images,'form data for add bike the ');
+    const handleSubmit = async () => {
+        console.log(bikeName, bikeModel, engineNumber, brand, fuel, description, price, color, images, 'form data for add bike the ');
         setLoading(true)
 
         // for using the form data
-         
+
         const formdata = new FormData()
 
         // for image
-        console.log(images,';;;;');
-        images.forEach((value)=>{
+        console.log(images, ';;;;');
+        images.forEach((value) => {
             console.log(value)
-            formdata.append("images",value)
+            formdata.append("images", value)
         })
 
 
         console.log(formdata.get("images"));
 
         // the form data 
-        formdata.append("bikeName",bikeName)
-        formdata.append("bikeModel",bikeModel)
-        formdata.append("engineNumber",engineNumber)
-        formdata.append("fuel",fuel)
-        formdata.append("brand",brand)
-        formdata.append("price",price)
-        formdata.append("color",color)
-        formdata.append("description",description)
+        formdata.append("bikeName", bikeName)
+        formdata.append("bikeModel", bikeModel)
+        formdata.append("engineNumber", engineNumber)
+        formdata.append("fuel", fuel)
+        formdata.append("brand", brand)
+        formdata.append("price", price)
+        formdata.append("color", color)
+        formdata.append("description", description)
 
-        adminAddBikeAPI(formdata).then((data)=>{
-            console.log(data.data,'form data response');
+        adminAddBikeAPI(formdata).then((data) => {
+            console.log(data.data, 'form data response');
 
             dispatch(adminAddBikeAction(data.data))
             setLoading(false)
@@ -69,10 +75,10 @@ function AddBike() {
             //     setSuccess(false)
             // },3000)
         })
-        .catch((error)=>{
-            console.log("some error",error);
-            setLoading(false)
-        })
+            .catch((error) => {
+                console.log("some error", error);
+                setLoading(false)
+            })
     }
 
 
@@ -90,9 +96,7 @@ function AddBike() {
     return (
         <div className='shadow-lg'>
             <DrawerHeader />
-            {
-      sucess?   <Alert severity="success">This is a success alert — check it out!</Alert>:''
-     }
+           
             <Box sx={{ display: 'flex', justifyContent: 'center', m: 5 }} >
                 <SideBar />
                 <Box
@@ -102,6 +106,10 @@ function AddBike() {
 
                     <h3>ADD BIKE</h3>
 
+                    {
+                sucess ? <Alert severity="success">This is a success alert — check it out!</Alert> : ''
+            }
+            
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             required
@@ -143,12 +151,26 @@ function AddBike() {
                             label="Color"
                             onChange={(e) => setColor(e.target.value)}
                         />
-                        <TextField sx={{ mr: 2 }}
+                        {/* <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
                             label="Fuel"
                             onChange={(e) => setFuel(e.target.value)}
-                        />
+                        /> */}
+                        <FormControl fullWidth sx={{marginTop:"40px",mr: 2 }} >
+                            <InputLabel id="demo-simple-select-label"  >Fuel</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={fuel}
+                                label="Fuel"
+                                onChange={(e) => setFuel(e.target.value)}
+                            >
+                                <MenuItem value="petrol" >Petrol</MenuItem>
+                                <MenuItem value="diesel" >Diesel</MenuItem>
+                                <MenuItem value="electric" >Electric</MenuItem>
+                            </Select>
+                        </FormControl>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
@@ -170,7 +192,7 @@ function AddBike() {
                     </div>
 
 
-                    {/* <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             type="file"
                             helperText="Please select the image"
@@ -193,11 +215,11 @@ function AddBike() {
                             helperText="Please select the image"
                             onChange={(e) => setImages([...images, e.target.files[0]])}
                         />
-                    </div> */}
+                    </div>
+                    {/* <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
                     <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
                     <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
-                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
-                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
+                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} /> */}
                     <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '30px' }}>
                         <Button
                             variant="contained"
@@ -205,9 +227,9 @@ function AddBike() {
                             sx={{
                                 mr: 2, mt: 5, width: '100%'
                             }}
-                            
+
                             onClick={handleSubmit}
-                            >
+                        >
                             ADD BIKE
                         </Button>
                     </div>

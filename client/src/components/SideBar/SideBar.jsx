@@ -182,14 +182,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                                         console.log(text.name);
                                         let text2 = text.name.toLowerCase()
                                         text2 === "users" && navigate('/admin/user-manage')
-                                        text2 === "logout"  && handleLogout() 
-                                        text2 === "dashboard"  && navigate('/dashboard')
-                                        text2 === "bike List"  && navigate('/bike-list')
+                                        text2 === "dashboard"  && navigate('/admin/dashboard')
+                                        text2 === "bike list"  && navigate('/admin/view-bike')
                                         text2 === "add bike"  && navigate('/admin/add-bike')
-                                        text2 === "bike rent request"  && navigate('/bike-request')
-                                        text2 === "booked bike"  && navigate('/booked=bike')
-                                        text2 === "branches"  && navigate('/branches')
-                                        text2 === "bike report"  && navigate('/bike-report')
+                                        text2 === "bike rent request"  && navigate('/admin/bike-request')
+                                        text2 === "booked bike"  && navigate('/admin/booked=bike')
+                                        text2 === "branches"  && navigate('/admin/branches')
+                                        text2 === "bike report"  && navigate('/admin/bike-report')
+                                        text2 === "logout"  && handleLogout() 
                                         
                                     }} />
                             </ListItemButton>

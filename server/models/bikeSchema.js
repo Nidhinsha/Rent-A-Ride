@@ -42,9 +42,8 @@ const bikeSchema = new mongoose.Schema({
         type:Boolean,
         default:false
    },
-   approved:{
-    type:Boolean,
-    default : false
+   status:{
+    type:String
    }
 
 })

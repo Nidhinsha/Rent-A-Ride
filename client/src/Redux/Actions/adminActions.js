@@ -1,22 +1,28 @@
 import { adminActionType } from '../Constants/adminConstants'
-import { adminLoginApi, getUsersApi } from "../../Api/Admin/ApiCalls"
+import { adminLoginApi, getAllBikeAPI, getUsersApi } from "../../Api/Admin/ApiCalls"
 
 
 export const adminLogin = (email, password) => async (dispatch) => {
 
-    dispatch({ type: adminActionType.ADMIN_LOGIN_REQUEST })
-
-    adminLoginApi(email, password).then((data) => {
-        console.log('admin data in action', data);
-
-        dispatch({ type: adminActionType.ADMIN_LOGIN_SUCCESS, payload: data.data })
-
-        localStorage.setItem("adminInfo", JSON.stringify(data.data))
+    dispatch({
+        type : adminActionType.ADMIN_LOGIN_REQUEST
     })
-    .catch((error)=>{
+
+    adminLoginApi(email,password).then((data) => {
+        console.log("ADMINLOGINDATA",data);
         dispatch({
-            type: adminActionType.ADMIN_LOGIN_FAIL,
-            payload: error.response.message
+            type : adminActionType.ADMIN_LOGIN_SUCCESS,
+            payload : data.data
+        })
+
+        localStorage.setItem("adminInfo",JSON.stringify(data.data))
+
+        
+    })
+    .catch((err) => {
+        dispatch({
+            type : adminActionType.ADMIN_LOGIN_FAIL,
+            payload : err.response.message
         })
     })
 }
@@ -73,5 +79,23 @@ export const adminAddBikeAction = (data) => async(dispatch)=>{
 // GET THE ALL BIKE AND ALSO IN THIS ADDING THE NEW BIKES USING NEW TECHNIQUE
 
 export const adminGetAllBikeAction = () =>async(dispatch)=>{
-    
+    console.log(dispatch,'gell bike');
+    dispatch({
+        type : adminActionType.ADMIN_GET_BIKE_REQUEST
+    })
+
+    getAllBikeAPI().then((data)=>{
+        console.log(data.data,'data of the all bikes.');
+
+        dispatch({
+            type:adminActionType.ADMIN_GET_BIKE_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type: adminActionType.ADMIN_GET_BIKE_FAIL,
+            payload : error.response.message
+        })
+    })
 }

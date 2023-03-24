@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux'
 import { Navigate, Route , Routes } from 'react-router-dom'
 import AddBike from './Pages/Admin/AddBike/AddBike'
 import AdminLogin from './Pages/Admin/AdminLogin/AdminLogin'
+import Dashboard from './Pages/Admin/Dashboard/Dashboard'
 import UserManage from './Pages/Admin/UserManage/UserManage'
+import ViewBike from './Pages/Admin/ViewBike/ViewBike'
 import Home from './Pages/User/Home/Home'
 import Login from './Pages/User/Login/Login'
 import Profile from './Pages/User/Profile/Profile'
@@ -17,7 +19,6 @@ function App() {
   return (
     <div>
       <Routes>
-      
       <Route path='/login' element={userData ?  <Navigate to='/'/> : <Login />}  />
       <Route path='/signup' element={userData ? <Login/> : <Signup />} />
       <Route path='/' exact element={<Home />} />
@@ -25,9 +26,11 @@ function App() {
      
       <Route path='/test' exact element={<Test />} />
 
-      <Route path='/admin/login' element={ adminData ? <Navigate to='/admin/user-manage'/>: <AdminLogin />} />
-      <Route path='/admin/user-manage' exact element={adminData ?  <UserManage /> :<Navigate to = '/admin/login'/>   } />
+      <Route path='/admin/login' element={ adminData ?<Dashboard/>: <AdminLogin />} />
+      <Route path='/admin/user-manage' exact element={adminData ?  <UserManage /> :<AdminLogin /> } />
       <Route path='/admin/add-bike' exact element={adminData ? <AddBike /> : <AdminLogin />} />
+      <Route path='/admin/view-bike' exact element={adminData ? <ViewBike />: <AdminLogin /> } />
+      <Route path='/admin/dashboard' exact element={adminData ? <Dashboard /> : <AdminLogin/>} />
       {/* <Route path='/admin/bikes' element={adminData ? } */}
       </Routes>
     </div>

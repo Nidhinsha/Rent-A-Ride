@@ -2,10 +2,15 @@ const adminSchema = require("../../models/adminSchema")
 const userSchema = require("../../models/userSchema")
 
 exports.adminUser = async (req,res) => {
+  try {
     userSchema.find().then((data)=>{
-        console.log(data,'bnbnbnbn');
-        res.status(200).json(data)
-    })
+      console.log(data,'bnbnbnbn');
+      res.status(200).json(data)
+  })
+  } catch (error) {
+    
+  }
+  
 }
 
 exports.blockUser = async (req, res) => {
@@ -23,26 +28,5 @@ exports.blockUser = async (req, res) => {
     }
   };
   
-
-
-
-// exports.blockUser = async (req, res) => {
-//     console.log(req.query.id,'iddd block');
-//     userSchema.findOne({ _id: req.query.id }).then((result) => {
-//       userSchema.updateOne(
-//         { _id: req.query.id },
-//         { $set: { status: !result.status } },
-//         function (err, respo) {
-//           if (err) {
-//             console.log(err);
-//           }
-//         }
-//       );
-//     });
-  
-//     userSchema.find().then((data) => {
-//       res.status(200).json(data);
-//     });
-//   };
 
 

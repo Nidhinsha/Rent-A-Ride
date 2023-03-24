@@ -19,7 +19,7 @@ function UserManage() {
   const dispatch = useDispatch();
 
   const adminUserDataList = useSelector((state) => state.adminUserFetchReducer);
-  const {loading,adminUserData,adminUserDataError} = adminUserDataList;
+  const { loading, adminUserData, adminUserDataError } = adminUserDataList;
   console.log(adminUserDataList, ';;;;;');
 
   const handleBlockUser = (id) => {
@@ -30,9 +30,9 @@ function UserManage() {
     })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(adminUserFetchAction())
-  },[])
+  }, [])
 
   const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -52,11 +52,16 @@ function UserManage() {
         <Box component="main" sx={{ flexGrow: 1, p: 3, mr: 1 }}>
           <DrawerHeader />
 
-          <Container fixed sx={{ mt: 1 }}>
+          <Container fixed sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
 
-         
-            <DataTable value={adminUserData} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-              <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo} alt="User" height="50" />} />
+
+            <DataTable value={adminUserData} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
+              <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo} alt="User" style={{
+                width: '5rem',
+                height:'5rem',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                borderRadius: '30%',
+              }} />} />
               <Column field="firstName" header="firstName" sortable style={{ width: '25%' }}></Column>
               <Column field="lastName" header="lastName" sortable style={{ width: '25%' }}></Column>
               <Column field="email" header="Email" sortable style={{ width: '25%' }}></Column>
