@@ -223,9 +223,11 @@ function NavBar() {
             <a href="#" className={classes.link}>
               Learn
             </a>
-            <a href="#" className={classes.link}>
-              Academy
+            {/* <Link to='/rent-bike'> */}
+            <a href='#'  className={classes.link}>
+              Rent-Bike
             </a>
+            {/* </Link> */}
           </Group>
 
           <Group className={classes.hiddenMobile}>

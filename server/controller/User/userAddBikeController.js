@@ -35,14 +35,14 @@ exports.userAddBike = async (req,res)=>{
                 bikeName : req.body.bikeName,
                 bikeModel : req.body.bikeModel,
                 engineNumber : req.body.engineNumber,
-                // assured : true,
+                assured : false,
                 brand : req.body.brand,
                 color : req.body.color,
                 fuel : req.body.fuel ,
                 description : req.body.description,
                 price : req.body.price,
                 photo,
-                approved : false
+                status : "pending",
             }
             console.log(bikeDetails,'hfhfhfffh');
 

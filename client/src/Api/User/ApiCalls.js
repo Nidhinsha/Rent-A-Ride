@@ -9,7 +9,8 @@ const config = {
 }
 let user = JSON.parse(localStorage.getItem('userInfo'))
 
-const ID = user?.id
+const ID = user?._id
+console.log(ID,'userid');
 
 const configToken = {
   headers : {
@@ -29,4 +30,4 @@ export const userLoginAPI = (email,password)=> API.post('/user-login',{email,pas
 export const userHomeAPI = () => API.get('/',config)
 export const userProfileAPI = (id) => API.get('/profile?id='+id,configToken)
 export const userImageUploadAPI =(id,image) => API.post('/userProfileImageUpdate?id='+id,{image},configToken)
-export const userAddBikeAPI = (formdata)=> API.post('/user-add-bike',formdata,configFormData)
+export const userAddBikeAPI = (formdata)=> API.post('/rent-bike?id='+ID,formdata,configFormData)
