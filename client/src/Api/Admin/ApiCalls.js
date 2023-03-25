@@ -8,20 +8,24 @@ const config = {
     "Content-Type" : "application/json",
   }
 }
+
 const admin = JSON.parse(localStorage.getItem("adminInfo"))
 console.log(admin,'admin loggggggggggggggggg');
+console.log(admin?.token,'the token api');
 const configToken = {
   headers : {
     "Content-Type": "application/json",
-    Authorization:"Bearer"+' '+admin?.token  
+    Authorization:"Bearer"+' '+admin?.token,
+  
 
   }
 }
 
+
 const configFormData = {
   headers : {
     "Content-Type": "multipart/form-data",
-    Authorization:"Bearer"+' '+admin?.token  
+    authorization:"Bearer"+' '+admin?.token  
 
   }
 }
@@ -30,3 +34,7 @@ export const getUsersApi = () => API.get('/user-manage',configToken)
 export const userBlockUnblockApi =(id) => API.get('/userBlockUnblock?id='+id,configToken)
 export const adminAddBikeAPI = (formdata) => API.post("/add-bike",formdata,configFormData)
 export const getAllBikeAPI = () => API.get('/view-bike',configToken)
+export const getPendingBikeAPI = () => API.get('/user-rent-request',configToken)
+// evert time we use put or post make sure to use data part req,data,header
+export const acceptBikeAPI =(id)=> API.put('/accept-request?id='+id,{},configToken)
+export const rejectBikeAPI =(id)=>API.put('/reject-request?id='+id,{},configToken)
