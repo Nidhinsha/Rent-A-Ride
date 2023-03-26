@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material'
+import { FormHelperText, styled } from '@mui/material'
 import SideBar from '../../../components/SideBar/SideBar';
 import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
@@ -15,6 +13,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+
+import { useForm } from "react-hook-form"
 
 
 function AddBike() {
@@ -34,7 +34,14 @@ function AddBike() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const handleSubmit = async () => {
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm()
+
+    const onSubmit = async () => {
         console.log(bikeName, bikeModel, engineNumber, brand, fuel, description, price, color, images, 'form data for add bike the ');
         setLoading(true)
 
@@ -70,10 +77,10 @@ function AddBike() {
 
             setSuccess(true)
 
-            // setTimeout(()=>{
-            //     Navigate("/admin/bikes",{state:{bikeAdded:true}})
-            //     setSuccess(false)
-            // },3000)
+            setTimeout(() => {
+                Navigate("/admin/bikes", { state: { bikeAdded: true } })
+                setSuccess(false)
+            }, 3000)
         })
             .catch((error) => {
                 console.log("some error", error);
@@ -96,52 +103,79 @@ function AddBike() {
     return (
         <div className='shadow-lg'>
             <DrawerHeader />
-           
+
             <Box sx={{ display: 'flex', justifyContent: 'center', m: 5 }} >
                 <SideBar />
                 <Box
                     sx={{
                         '& .MuiTextField-root': { mt: 5, width: '100%' },
-                    }}>
+                    }}
+
+                    component='form' onSubmit={handleSubmit(onSubmit)} >
 
                     <h3>ADD BIKE</h3>
 
                     {
-                sucess ? <Alert severity="success">This is a success alert — check it out!</Alert> : ''
-            }
-            
+                        sucess ? <Alert severity="success">Done Bike Added !!!</Alert> : ''
+                    }
+
+
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
                             label="Bike Name"
+                            {...register("bikeName",
+                                {
+                                    required: "This is required", minLength: 3
+                                })}
                             onChange={(e) => setBikeName(e.target.value)}
+                            helperText={errors.bikeName && <div style={{ color: 'red' }}>Please enter the bike name</div>}
 
                         />
+
+
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
                             label="Bike Model"
-                            onChange={(e) => setModel(e.target.value)}
 
+                            {...register("bikeModel",
+                                {
+                                    required: "This is required", minLength: 3
+                                })}
+                            onChange={(e) => setModel(e.target.value)}
+                            helperText={errors.bikeModel && <div style={{ color: 'red' }}>Please enter the bike model</div>}
                         />
+
 
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
+
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
                             label="Engine Number"
+                            {...register("engineNumber",
+                                {
+                                    required: true, minLength: 3
+                                })}
                             onChange={(e) => setEngineNumber(e.target.value)}
-
+                            helperText={errors.engineNumber && <div style={{ color: 'red' }}>Please enter the engine number</div>}
                         />
+
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
                             label="Brand"
+                            {...register("brand",
+                                {
+                                    required: true, minLength: 3
+                                })}
                             onChange={(e) => setBrand(e.target.value)}
-
+                            helperText={errors.engineNumber && <p style={{ color: 'red' }}>Please enter the brand</p>}
                         />
+
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -149,77 +183,121 @@ function AddBike() {
                             required
                             id="outlined-required"
                             label="Color"
+                            {...register("color",
+                                {
+                                    required: true, minLength: 3
+                                }
+                            )}
                             onChange={(e) => setColor(e.target.value)}
+                            helperText={errors.color && <div style={{ color: 'red' }}>Please enter the color</div>}
                         />
-                        {/* <TextField sx={{ mr: 2 }}
-                            required
-                            id="outlined-required"
-                            label="Fuel"
-                            onChange={(e) => setFuel(e.target.value)}
-                        /> */}
-                        <FormControl fullWidth sx={{marginTop:"40px",mr: 2 }} >
+
+
+                        <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }} >
                             <InputLabel id="demo-simple-select-label"  >Fuel</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={fuel}
                                 label="Fuel"
+                                {...register("fuel",
+                                    {
+                                        required: true, minLength: 3
+                                    }
+                                )}
                                 onChange={(e) => setFuel(e.target.value)}
                             >
+
+
                                 <MenuItem value="petrol" >Petrol</MenuItem>
                                 <MenuItem value="diesel" >Diesel</MenuItem>
                                 <MenuItem value="electric" >Electric</MenuItem>
                             </Select>
+                            {errors.fuel && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.fuel && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
                         </FormControl>
                     </div>
+
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
                             label="Price"
                             type="number"
+                            {...register("price",
+                                {
+                                    required: true, minLength: 2, maxLength: 3
+                                }
+                            )}
                             onChange={(e) => setPrice(e.target.value)}
-
+                            helperText={errors.price && <p style={{ color: 'red' }}>Please enter a price</p>}
                         />
+
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
                             label="Description"
                             multiline
                             maxRows={4}
+                            {...register("description",
+                                {
+                                    required: true, minLength: 3
+                                }
+                            )}
                             onChange={(e) => setDescription(e.target.value)}
+                            helperText={errors.description && <p style={{ color: 'red' }}>Please add a description</p>}
                         />
+
                     </div>
 
 
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             type="file"
-                            helperText="Please select the image"
+                            helperText={errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
+                            {...register("image1",
+                                {
+                                    required: true, minLength: 1
+                                }
+                            )}
                             onChange={(e) => setImages([...images, e.target.files[0]])}
                         />
+
+
                         <TextField sx={{ mr: 2 }}
                             type="file"
-                            helperText="Please select the image"
+                            helperText={errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
+                            {...register("image2",
+                                {
+                                    required: true, minLength: 1
+                                })}
                             onChange={(e) => setImages([...images, e.target.files[0]])}
                         />
+
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             type="file"
-                            helperText="Please select the image"
+                            helperText={errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
+                            {...register("image3",
+                                {
+                                    required: true, minLength: 1
+                                })}
                             onChange={(e) => setImages([...images, e.target.files[0]])}
                         />
+
+
                         <TextField sx={{ mr: 2 }}
                             type="file"
-                            helperText="Please select the image"
+                            helperText={errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
+                            {...register("image4",
+                                {
+                                    required: true, minLength: 1
+                                })}
                             onChange={(e) => setImages([...images, e.target.files[0]])}
                         />
+
                     </div>
-                    {/* <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
-                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
-                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} />
-                    <input type='file'  onChange={(e) => setImages([...images, e.target.files[0]])} /> */}
+
                     <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '30px' }}>
                         <Button
                             variant="contained"
@@ -227,6 +305,7 @@ function AddBike() {
                             sx={{
                                 mr: 2, mt: 5, width: '100%'
                             }}
+                            type='submit'
 
                             onClick={handleSubmit}
                         >

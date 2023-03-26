@@ -148,16 +148,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                 <List>
 
                     {[
-                        { name: 'Dashboard', icon: <DashboardIcon color='primary' /> },
-                        { name: 'Users', icon: <UsersIcon  color='primary'/> },
-                        { name: 'Bike List', icon: <TwoWheelerIcon  color='primary'/> },
-                        { name: 'Add Bike', icon: <AddCircleOutlineIcon color='primary' /> },
-                        { name: 'Bike Rent Request', icon: <RuleIcon color='primary' /> },
-                        { name: 'Booked bike', icon: <BookmarkAddIcon color='primary' /> },
-                        { name: 'Branches', icon: <BranchIcon color='primary' /> },
-                        { name: 'Bike Report', icon: <ReportIcon color='primary' /> },
+                        { name: 'Dashboard', icon: <DashboardIcon style={{ color:'#6366F1'}}  /> },
+                        { name: 'Users', icon: <UsersIcon  style={{ color:'#6366F1'}} /> },
+                        { name: 'Bike List', icon: <TwoWheelerIcon style={{ color:'#6366F1'}} /> },
+                        { name: 'Add Bike', icon: <AddCircleOutlineIcon style={{ color:'#6366F1'}}  /> },
+                        { name: 'Bike Rent Request', icon: <RuleIcon style={{ color:'#6366F1'}}  /> },
+                        { name: 'Booked bike', icon: <BookmarkAddIcon style={{ color:'#6366F1'}}  /> },
+                        { name: 'Branches', icon: <BranchIcon style={{ color:'#6366F1'}}  /> },
+                        { name: 'Bike Report', icon: <ReportIcon style={{ color:'#6366F1'}}  /> },
                         // { name: 'Other Donations', icon: <OthersIcon /> },
-                        { name: 'Logout', icon: <LogoutIcon color='primary' /> }
+                        { name: 'Logout', icon: <LogoutIcon style={{ color:'#6366F1'}}  /> }
 
                     ].map((text, index) => (
                         <ListItem key={text.name} disablePadding sx={{ display: 'block' }}>

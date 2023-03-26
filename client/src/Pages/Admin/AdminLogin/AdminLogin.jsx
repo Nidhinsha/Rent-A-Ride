@@ -1,118 +1,169 @@
 import React from 'react';
-import {
-  MDBContainer,
-  MDBCol,
-  MDBRow,
-  MDBInput,
-}
-  from 'mdb-react-ui-kit';
+import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
+import { AccountCircle, Email, Lock, GoogleIcon } from '@mui/icons-material';
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { InputText } from "primereact/inputtext";
-// import { IconName } from "react-icons/bs";
 
-import { Button } from 'primereact/button';
-
+import { Link } from 'react-router-dom';
 
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { adminLogin } from '../../../Redux/Actions/adminActions'
 import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
-import { useForm } from "react-hook-form";
 import './AdminLogin.css'
+
+
+const schema = yup.object().shape({
+
+  email: yup
+    .string("email should be string")
+    .email("please provide a valid email")
+    .required("email address is required"),
+
+  password: yup
+    .string("pasword should be string")
+    .min(5, "password should have a min length of 5")
+    .max(12, "password should have a max length of 12")
+    .required("password is required"),
+})
 
 
 function AdminLogin() {
 
+  // const dispatch = useDispatch()
+  // const navigate = useNavigate()
+
+  // const [email, setEmail] = useState("")
+  // const [password, setPassword] = useState("")
+
+  // const { register, handleSubmit, formState: { errors } } = useForm();
+
+  // const onSubmit = async () => {
+  //   console.log('email.pass admin',email,password);
+  //     dispatch(adminLogin(email,password))
+
+  // }
+
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const admin = useSelector((state) => state.adminLoginReducer)
+  const { loading, adminLoginError, adminLoginData } = admin
+  console.log(adminLoginError, 'error in te adddddddddd');
+  const { register, handleSubmit,
+    formState: { errors } } = useForm({
+      resolver: yupResolver(schema)
+    })
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const submitHandler = async (data) => {
 
-  const onSubmit = async () => {
-    console.log('email.pass admin',email,password);
-      dispatch(adminLogin(email,password))
+    const email = data.email
 
+    const password = data.password
+
+    try {
+      console.log("form", data);
+      dispatch(adminLogin(email, password))
+      // navigate('/')
+
+    } catch (error) {
+
+    }
   }
 
-  
- 
+
+
+
 
 
   return (
-    <MDBContainer fluid className="p-3 my-5">
-      <div col='10' md='6'>
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <Box boxShadow={3} borderRadius={4} p={2} m={4}>
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item xs={12} md={6}>
+            <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1086965739522637884/pekka_a_person_sitting_on_a_scooter_blue_illustration__white_ba_630badc6-1414-41e6-b2ec-03f2425615b8.png"
+              className="img-fluid" alt="Phone" />
+          </Grid>
+          <Grid item xs={12} md={6} direction="column" alignItems="flex-end">
+            <Box mb={20}>
+              <Typography variant="h5" align="left" sx={{ mt: 7 }}>
+                Login to Rent&Ride Admin Panel
+              </Typography>
+            </Box>
 
-      <MDBRow className='shadow-lg p-3 mb-5 bg-white rounded'>
-
-        <MDBCol col='10' md='6'>
-          <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1086965739522637884/pekka_a_person_sitting_on_a_scooter_blue_illustration__white_ba_630badc6-1414-41e6-b2ec-03f2425615b8.png"
-            className="img-fluid" alt="Phone-image" />
-        </MDBCol>
 
 
-        <MDBCol col='4' md='6' style={{ marginBottom: "4rem" }}>
-        <div  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        
-         
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center"
+              component="form" onSubmit={handleSubmit(submitHandler)}>
+              {
+                adminLoginError ? <p className='p-error' style={{ color: 'red' }}>{adminLoginError}</p> : ""
+              }
+              {
+                loading ? <Loading /> : ""
+              }
+              <TextField
+                label="Email"
+                name='email'
+                fullWidth
 
-          
-          <form onSubmit={handleSubmit(onSubmit)}>
-          <h3 style={{ marginBottom: "4rem" }} >Admin</h3>
-              {/* {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
-              {loading ? <Loading /> : ""} */}
+                error={!!errors.email}
+                helperText={errors.email ? errors.email.message : ""}
+                {...register("email")}
 
-            <div className="p-input-icon-left p-float-label" style={{ marginBottom: "4rem" }}>
-              <i className="pi pi-envelope " />
-              <InputText id="email" className='p-inputtext-lg' style={{ width: '46rem', height: '3rem' }}
-                {...register("email",
-                  {
-                    required: true,
-                    maxLength: 15,
 
-                    // pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                  })}
-                onChange={(e) => {
-                  setEmail(e.target.value)
+                sx={{ mb: 2 }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <Email />
+                    </InputAdornment>
+                  ),
                 }}
               />
-              <label htmlFor="">Email</label>
-            {errors.email && <p style={{color : 'red'}}>Please check the Email</p>}
-            </div>
 
-            <div className="p-input-icon-left p-float-label" style={{ marginBottom: "3rem" }}>
-            {/* <i className="pi pi-lock " /> */}
-              <MDBInput wrapperClass='mb-6' label='Password' id='form1' type='password'   style={{ width: '46rem', height: '3rem' }}
-                {...register("password", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 16,
-                  // pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
-                })}
+              <TextField
+                label="Password"
+                name='password'
+                type="password"
+                fullWidth
 
-                onChange={(e) => {
-                  setPassword(e.target.value)
+                error={!!errors.password}
+                helperText={errors.password ? errors.password.message : ""}
+                {...register("password")}
+
+                sx={{ mb: 2 }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <Lock />
+                    </InputAdornment>
+                  ),
                 }}
               />
-               {errors.password && <p style={{color : 'red'}}>Please check the Password</p>}
-            </div>
-            <div className="card flex flex-wrap justify-content-center gap-3">
 
-            <Button type='submit' label="Login" severity="primary" raised style={{ width: '100%' }} />
-            </div>
-            
-          </form>
-        </div>
-        </MDBCol>
+              <Button type='submit' variant="contained" fullWidth sx={{
+                mb: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
+                  bgcolor: "#6366F1"
+                }
+              }} >
+                login
+              </Button>
+     
+              {/* <Button variant="contained" color="primary" fullWidth startIcon={<Email />}>
+            Sign up with Google
+          </Button> */}
+            </Box>
 
-      </MDBRow>
-      </div>
-
-    </MDBContainer>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
   );
 }
 

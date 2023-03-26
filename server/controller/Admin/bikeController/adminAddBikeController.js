@@ -45,7 +45,7 @@ exports.addBike = async (req, res) => {
                 fuel : req.body.fuel ,
                 description : req.body.description,
                 price : req.body.price,
-                status:"approved",
+                status:"accepted",
                 photo
             }
             console.log(bikeDetails,'hfhfhfffh');

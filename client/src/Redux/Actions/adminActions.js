@@ -19,10 +19,12 @@ export const adminLogin = (email, password) => async (dispatch) => {
 
         
     })
-    .catch((err) => {
+    .catch((error) => {
         dispatch({
             type : adminActionType.ADMIN_LOGIN_FAIL,
-            payload : err.response.message
+            payload : error.response && error.response.data.message
+            ? error.response.data.message
+            : error.response.data
         })
     })
 }

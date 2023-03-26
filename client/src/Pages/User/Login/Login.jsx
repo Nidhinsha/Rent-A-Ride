@@ -1,164 +1,188 @@
 import React from 'react';
-import {
-  MDBContainer,
-  MDBCol,
-  MDBRow,
-  MDBInput,
-}
-  from 'mdb-react-ui-kit';
+import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
+import { AccountCircle, Email, Lock, GoogleIcon } from '@mui/icons-material';
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { InputText } from "primereact/inputtext";
-// import { IconName } from "react-icons/bs";
 
-import { Button } from 'primereact/button';
 
 
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { userLogin, userSignup } from '../../../Redux/Actions/userActions'
 import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
-import { useForm } from "react-hook-form";
 import './Login.css'
 
 
 
-import { auth,provider } from '../../../firebase/config';
-import {signInWithPopup} from 'firebase/auth'
+import { auth, provider } from '../../../firebase/config';
+import { signInWithPopup } from 'firebase/auth'
+
+const schema = yup.object().shape({
+
+  email: yup
+    .string("email should be string")
+    .email("please provide a valid email")
+    .required("email address is required"),
+
+  password: yup
+    .string("pasword should be string")
+    .min(5, "password should have a min length of 5")
+    .max(12, "password should have a max length of 12")
+    .required("password is required"),
+})
 
 function Login() {
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+
 
   const userLoginData = useSelector(state => state.userLoginReducer)
-  const {error,loading,userLoginDetails } = userLoginData
+  const { userLoginError, loading, userLoginDetails } = userLoginData
 
-  // const {register,handleSubmit}
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = () => {
-      dispatch(userLogin(email,password))
+
+
+
+
+
+  // const handleGoogle = () =>{
+  //   signInWithPopup(auth,provider).then((data)=>{
+  //     // setEmail(data.user.email)
+  //     let fullName = data.user.displayName
+  //     const [firstName,lastName] = fullName.split(' ')
+
+  //     localStorage.setItem('user',data.user.email)
+  //     navigate('/')
+  //     console.log(firstName,lastName,'ttttt');
+
+  //      dispatch(userSignup(firstName,lastName, data.user.email, data.user.phoneNumber,firstName))
+  //     console.log(data.user,'gogle user data');
+  //   })
+  // }
+
+
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const { register, handleSubmit,
+    formState: { errors } } = useForm({
+      resolver: yupResolver(schema)
+    })
+
+  const submitHandler = async (data) => {
+
+    const email = data.email
+
+    const password = data.password
+
+    try {
+      console.log("form", data);
+      dispatch(userLogin(email, password))
+      // navigate('/')
+
+    } catch (error) {
+
     }
+  }
 
-  
- 
-  
 
- 
-    // const handleGoogle = () =>{
-    //   signInWithPopup(auth,provider).then((data)=>{
-    //     // setEmail(data.user.email)
-    //     let fullName = data.user.displayName
-    //     const [firstName,lastName] = fullName.split(' ')
-    
-    //     localStorage.setItem('user',data.user.email)
-    //     navigate('/')
-    //     console.log(firstName,lastName,'ttttt');
-  
-    //      dispatch(userSignup(firstName,lastName, data.user.email, data.user.phoneNumber,firstName))
-    //     console.log(data.user,'gogle user data');
-    //   })
-    // }
 
 
   return (
-    <MDBContainer fluid className="p-3 my-5">
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <Box boxShadow={3} borderRadius={4} p={2} m={4}>
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item xs={12} md={6}>
+            <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1086965739522637884/pekka_a_person_sitting_on_a_scooter_blue_illustration__white_ba_630badc6-1414-41e6-b2ec-03f2425615b8.png"
+              className="img-fluid" alt="Phone" />
+          </Grid>
+          <Grid item xs={12} md={6} direction="column" alignItems="flex-end">
+            <Box mb={10}>
+              <Typography variant="h5" align="left" sx={{ mt: 7 }}>
+                Login to Rent&Ride
+              </Typography>
+            </Box>
 
-      <MDBRow className='shadow-lg p-3 mb-5 bg-white rounded'>
 
-        <MDBCol col='10' md='6'>
-          <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1086965739522637884/pekka_a_person_sitting_on_a_scooter_blue_illustration__white_ba_630badc6-1414-41e6-b2ec-03f2425615b8.png"
-            className="img-fluid" alt="Phone image" />
-        </MDBCol>
-       
-        <MDBCol col='4' md='6' style={{ marginBottom: "4rem" }}>
-        
-          
-          <form onSubmit={handleSubmit(onSubmit)}>
-          <h3 style={{ marginBottom: "4rem" }} >Login </h3>
-              {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
-              {loading ? <Loading /> : ""}
 
-            <div className="p-input-icon-left p-float-label" style={{ marginBottom: "4rem" }}>
-              <i className="pi pi-envelope " />
-              <InputText id="email" className='p-inputtext-lg' style={{ width: '46rem', height: '3rem' }}
-                {...register("email",
-                  {
-                    required: true,
-                    maxLength: 15,
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center"
+              component="form" onSubmit={handleSubmit(submitHandler)}>
+              {
+                userLoginError ? <p className='p-error' style={{ color: 'red' }}>{userLoginError}</p> : ""
+              }
+              {
+                loading ? <Loading /> : ""
+              }
+              <TextField
+                label="Email"
+                name='email'
+                fullWidth
 
-                    // pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                  })}
-                onChange={(e) => {
-                  setEmail(e.target.value)
+                error={!!errors.email}
+                helperText={errors.email ? errors.email.message : ""}
+                {...register("email")}
+
+
+                sx={{ mb: 2 }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <Email />
+                    </InputAdornment>
+                  ),
                 }}
               />
-              <label htmlFor="">Email</label>
-            {errors.email && <p style={{color : 'red'}}>Please check the Email</p>}
-            </div>
 
-            <div className="p-input-icon-left p-float-label" style={{ marginBottom: "3rem" }}>
-            {/* <i className="pi pi-lock " /> */}
-              <MDBInput wrapperClass='mb-6' label='Password' id='form1' type='password'   style={{ width: '46rem', height: '3rem' }}
-                {...register("password", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 16,
-                  // pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
-                })}
+              <TextField
+                label="Password"
+                name='password'
+                type="password"
+                fullWidth
 
-                onChange={(e) => {
-                  setPassword(e.target.value)
+                error={!!errors.password}
+                helperText={errors.password ? errors.password.message : ""}
+                {...register("password")}
+
+                sx={{ mb: 2 }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <Lock />
+                    </InputAdornment>
+                  ),
                 }}
               />
-               {errors.password && <p style={{color : 'red'}}>Please check the Password</p>}
-            </div>
+              
+              <Button type='submit' variant="contained"  fullWidth sx={{ mb: 2, backgroundColor:"#6366F1" , "&.MuiButtonBase-root:hover": {
+                bgcolor: "#6366F1"
+              } }} >
+                Login
+              </Button>
+              <Button
+    variant="text"
+    fullWidth
+    sx={{ mb: 2 }}
+    component={Link} // make the button act as a link
+    to="/signup" // specify the link destination
+  >
+   New Member ? Create
+  </Button>
+              {/* <Button variant="contained" color="primary" fullWidth startIcon={<Email />}>
+              Sign up with Google
+            </Button> */}
+            </Box>
 
-
-           
-
-
-            <Button type='submit' label="Login" severity="primary" raised style={{ width: '100%' }} />
-
-
-            <div className="divider d-flex align-items-center justify-content-center my-4">
-              <p className="text-center fw-bold mx-3 mb-0">OR</p>
-            </div>
-
-
-
-            <i class="bi bi-google"></i>
-            <div className="card flex flex-wrap justify-content-center gap-3">
-
-
-
-              <Button icon="pi pi-fw pi-google" className="p-button-text-icon-left" outlined
-                label={<span>Sign in with <span style={{ color: '#34A853' }}>G</span><span style={{ color: '#EA4335' }}>o</span><span style={{ color: '#FBBC05' }}>o</span><span style={{ color: '#4285F4' }}>g</span><span style={{ color: '#EA4335' }}>l</span><span style={{ color: '#34A853' }}>e</span></span>}
-                // onClick={handleGoogle}
-              />
-            </div>
-          </form>
-
-          <Link to={'/signup'}>
-          <div className="card flex flex-wrap justify-content-center gap-3" style={{ marginTop: "2rem" }}>
-          <Button className="p-button-text-icon-left" outlined severity="primary"
-                label='New Member ? SignUp'
-              />
-          </div>
-          </Link>
-
-
-        </MDBCol>
-
-      </MDBRow>
-
-    </MDBContainer>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
   );
 }
 
