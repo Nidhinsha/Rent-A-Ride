@@ -113,3 +113,25 @@ export const userImageUplaodReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const userGetBikeReducer =(state={},action)=>{
+  switch (action.type) {
+    case userActionType.USER_GET_BIKES_REQUEST:
+      return {
+        bikesDataLoading : true
+      }
+
+    case userActionType.USER_GET_BIKES_SUCCESS:
+      return {
+        loading : false,
+        bikesData : action.payload
+      }
+    case userActionType.USER_GET_BIKES_FAIL:
+      return {
+        loading : false,
+        bikesDataError : action.payload
+      }
+    default :
+      return state
+  }
+}

@@ -4,37 +4,40 @@ import thunk from "redux-thunk";
 
 
 import {
-    userSignupReducer,
-    userLoginReducer,
-    userImageUplaodReducer,
-    getUserProfileReduer,
-    
+  userSignupReducer,
+  userLoginReducer,
+  userImageUplaodReducer,
+  getUserProfileReduer,
+  userGetBikeReducer
 
-  } from "./Reducers/userReducers";
+
+} from "./Reducers/userReducers";
 
 import {
   adminLoginReducer,
   adminUserFetchReducer,
   adminGetAllBikeReducer
-  
-  
+
+
 } from './Reducers/adminReducers'
 
-  const reducer = combineReducers({
+const reducer = combineReducers({
 
-    userSignupReducer: userSignupReducer,
-    userLoginReducer : userLoginReducer,
+  userSignupReducer: userSignupReducer,
+  userLoginReducer: userLoginReducer,
 
-    getUserProfileReduer: getUserProfileReduer,
+  getUserProfileReduer: getUserProfileReduer,
   userImageUplaodReducer: userImageUplaodReducer,
 
-    adminLoginReducer : adminLoginReducer,
-    
-    adminUserFetchReducer : adminUserFetchReducer,
-    adminGetAllBikeReducer : adminGetAllBikeReducer
-    
-    
-  });
+  userGetBikeReducer: userGetBikeReducer,
+
+  adminLoginReducer: adminLoginReducer,
+
+  adminUserFetchReducer: adminUserFetchReducer,
+  adminGetAllBikeReducer: adminGetAllBikeReducer
+
+
+});
 
 
 
@@ -43,7 +46,7 @@ let adminInfo = JSON.parse(localStorage.getItem("adminInfo"))
 
 const initialstate = {
   userLoginReducer: { userLoginDetails: userInfo },
-  adminLoginReducer: {adminLoginData : adminInfo}
+  adminLoginReducer: { adminLoginData: adminInfo }
 };
 
 

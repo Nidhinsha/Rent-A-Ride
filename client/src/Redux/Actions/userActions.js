@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { userHomeAPI, userImageUploadAPI, userLoginAPI, userProfileAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { userGetBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userProfileAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -140,3 +140,30 @@ export const userImageAction = (image) => async (dispatch) => {
 
   }
 };
+
+export const userGetBikeAction = () => async (dispatch)=>{
+
+  try {
+    
+    dispatch({
+      type : userActionType.USER_GET_BIKES_REQUEST
+    })
+
+    userGetBikeAPI().then((data)=>{
+      console.log('bike for mmm',data.data);
+
+      dispatch({
+        type  : userActionType.USER_GET_BIKES_SUCCESS,
+        payload : data.data
+      })
+    })
+    .catch((error)=>{
+      dispatch({
+        type : userActionType.USER_GET_BIKES_FAIL,
+        payload : error.response.message
+      })
+    })
+  } catch (error) {
+    
+  }
+}

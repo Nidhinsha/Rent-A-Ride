@@ -27,6 +27,6 @@ router.route("/userProfileImageUpdate").post(protect, userProfile.addPhoto);
 // Add bike from the user
 router.route("/rent-bike").post(upload.array('images'),userAddBike.userAddBike);
 
-router.route("/display-bikes").get(userDisplayBikes.displayBikeController)
+router.route("/bikes").get(userDisplayBikes.displayBikeController)
 
 module.exports = router;

@@ -1,33 +1,34 @@
 import axios from 'axios'
 
-const API = axios.create({baseURL: "http://localhost:5000/api/user"})
+const API = axios.create({ baseURL: "http://localhost:5000/api/user" })
 
 const config = {
-    headers : {
-      "Content-Type" : "application/json",
-    }
+  headers: {
+    "Content-Type": "application/json",
+  }
 }
 let user = JSON.parse(localStorage.getItem('userInfo'))
 
 const ID = user?._id
-console.log(ID,'userid');
+console.log(ID, 'userid');
 
 const configToken = {
-  headers : {
-   "Content-Type" : "application/json",
-   Authorization:"Bearer"+' '+user?.token   
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer" + ' ' + user?.token
   }
 }
 
 const configFormData = {
-  headers : {
+  headers: {
     "Content-Type": "multipart/form-data",
-    Authorization:"Bearer"+' '+user?.token   
+    Authorization: "Bearer" + ' ' + user?.token
   }
 }
-export const userSignUpAPI = (firstName,lastName,email,phone,password)=> API.post('/user-signup',{firstName,lastName,email,phone,password},config)
-export const userLoginAPI = (email,password)=> API.post('/user-login',{email,password},config)
-export const userHomeAPI = () => API.get('/',config)
-export const userProfileAPI = (id) => API.get('/profile?id='+id,configToken)
-export const userImageUploadAPI =(id,image) => API.post('/userProfileImageUpdate?id='+id,{image},configToken)
-export const userAddBikeAPI = (formdata)=> API.post('/rent-bike?id='+ID,formdata,configFormData)
+export const userSignUpAPI = (firstName, lastName, email, phone, password) => API.post('/user-signup', { firstName, lastName, email, phone, password }, config)
+export const userLoginAPI = (email, password) => API.post('/user-login', { email, password }, config)
+export const userHomeAPI = () => API.get('/', config)
+export const userProfileAPI = (id) => API.get('/profile?id=' + id, configToken)
+export const userImageUploadAPI = (id, image) => API.post('/userProfileImageUpdate?id=' + id, { image }, configToken)
+export const userAddBikeAPI = (formdata) => API.post('/rent-bike?id=' + ID, formdata, configFormData)
+export const userGetBikeAPI = () => API.get('/bikes', config)

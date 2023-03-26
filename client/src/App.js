@@ -7,6 +7,7 @@ import BikeRequest from './Pages/Admin/BikeRequest/BikeRequest'
 import Dashboard from './Pages/Admin/Dashboard/Dashboard'
 import UserManage from './Pages/Admin/UserManage/UserManage'
 import ViewBike from './Pages/Admin/ViewBike/ViewBike'
+import Bikes from './Pages/User/Bikes/Bikes'
 import Home from './Pages/User/Home/Home'
 import Login from './Pages/User/Login/Login'
 import Profile from './Pages/User/Profile/Profile'
@@ -26,6 +27,7 @@ function App() {
       <Route path='/' exact element={<Home />} />
       <Route path='/profile' exact  element={userData ? <Profile /> : <Login/>} />
       <Route path='/rent-bike' exact element={userData? <RentBike />: <Login/> } />
+      <Route path='/bikes' exact element={<Bikes/>} />
       <Route path='/test' exact element={<Test />} />
 
       <Route path='/admin/login' element={ adminData ?<Dashboard/>: <AdminLogin />} />
