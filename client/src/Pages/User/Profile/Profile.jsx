@@ -4,7 +4,7 @@ import { InputText } from "primereact/inputtext"
 import { InputTextarea } from "primereact/inputtextarea";
 import { FileUpload } from 'primereact/fileupload';
 import { InputMask } from "primereact/inputmask";
-import { Toast } from 'primereact/toast';
+import Alert from '@mui/material/Alert';
 
 
 import { useState } from "react";
@@ -21,6 +21,7 @@ import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../../components/NavBar/NavBar';
+import { FormHelperText, TextField } from '@mui/material';
 
 function Profile() {
 
@@ -28,6 +29,9 @@ function Profile() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
+
+  const [imgTypeError, setImgTypeError] = useState('')
+ 
 
   const userProfileData = useSelector((state) => state.userLoginReducer.userLoginDetails);
   const { loading, error, profileData } = userProfileData;
@@ -46,28 +50,44 @@ function Profile() {
     const data = new FormData();
     console.log(photo, 'bbbbbbbbbbbbbb');
     data.append("file", photo);
-   
+
     data.append("upload_preset", "RentAndRide");
-  
+
     data.append("cloud_name", "driuxmoax");
     console.log(data);
 
+  //   fetch("https://api.cloudinary.com/v1_1/driuxmoax/image/upload", {
+  //     method: "post",
+  //     body: data,
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       dispatch(userImageAction(data.url));
+  //     });
+  // };
+
+  if (photo.type !== 'image/jpeg' && photo.type !== 'image/png') {
+    setImgTypeError('Not Supported');
+  } else {
+    setImgTypeError('');
     fetch("https://api.cloudinary.com/v1_1/driuxmoax/image/upload", {
       method: "post",
       body: data,
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        dispatch(userImageAction(data.url));
-      });
-  };
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      dispatch(userImageAction(data.url));
+    });
+  }
+};
 
   useEffect(() => {
     dispatch(getUserProfileAction());
   }, []);
 
-  console.log( "THIS IS THE IMAGEEEE");
+  console.log("THIS IS THE IMAGEEEE");
 
   const handleLogOut = () => {
     dispatch(userLogOut())
@@ -80,9 +100,9 @@ function Profile() {
       <div className="container rounded bg-white mb-5 ">
         {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
         {loading ? <Loading /> : ""}
-        {/* {profileData ? */}
+       
         <div className="row">
-          {/* <h1>{profileData.firstName}</h1> */}
+     
           <div className="col-md-3 border-right">
 
             <div className="d-flex flex-column align-items-center text-center p-3 py-5 shadow p-3 mb-5 bg-white rounded">
@@ -92,9 +112,9 @@ function Profile() {
                 src={userProfileData?.photo
                   ? userProfileData?.photo
                   : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}
-                // src="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+               
                 alt="Profile" />
-              {/* <span className="font-weight-bold">full name</span> */}
+             
               <div className="col-md-12 mt-3">
                 <div className="p-inputgroup">
                   <span className="p-inputgroup-addon">
@@ -103,10 +123,19 @@ function Profile() {
                   <InputText placeholder="Full Name" value={userProfileData?.firstName + userProfileData?.lastName} />
                 </div>
               </div>
-
               <form>
+              {imgTypeError && <Alert severity="error">{imgTypeError}</Alert>}
 
-                <MDBFile size='md' className='mt-4' id='formFileLg' onChange={(e) => setPhoto(e.target.files[0])} />
+                <TextField size='md' type='file' className='mt-4' id='formFileLg' onChange={(e) =>setPhoto(e.target.files[0]) }
+                  // if (e.target.files[0].type === 'image/jpeg' || e.target.files[0].type === 'image/png') {
+                  //   setPhoto(e.target.files[0])
+                  // } else {
+
+                  //   { imgTypeError }
+                  //   console.log('not suppted');
+                  // }
+               
+                />
                 <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-3">
                   <Button
                     severity="primary"
@@ -115,6 +144,7 @@ function Profile() {
                     onClick={addphoto} />
                 </div>
               </form>
+             
 
               <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-5">
                 <Button severity="primary" label="Reset Password" icon="pi pi-lock" />
@@ -188,9 +218,6 @@ function Profile() {
             </div>
           </div>
         </div>
-
-
-
 
         {/* : ''} */}
 

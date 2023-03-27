@@ -100,11 +100,11 @@ function Login() {
       <Box boxShadow={3} borderRadius={4} p={2} m={4}>
         <Grid container justifyContent="center" spacing={2}>
           <Grid item xs={12} md={6}>
-            <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1086965739522637884/pekka_a_person_sitting_on_a_scooter_blue_illustration__white_ba_630badc6-1414-41e6-b2ec-03f2425615b8.png"
+            <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1089765405301669919/pekka_a_person_sitting_on_a_scooter_with_color_light_blue_and_b_555f7a57-94cd-4851-95a9-8dbbe7933355.png"
               className="img-fluid" alt="Phone" />
           </Grid>
           <Grid item xs={12} md={6} direction="column" alignItems="flex-end">
-            <Box mb={10}>
+            <Box mb={15}>
               <Typography variant="h5" align="left" sx={{ mt: 7 }}>
                 Login to Rent&Ride
               </Typography>

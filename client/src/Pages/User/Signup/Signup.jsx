@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
-import { AccountCircle, Email, Lock, GoogleIcon } from '@mui/icons-material';
+import { AccountCircle, Email, Lock, GoogleIcon, } from '@mui/icons-material';
+import PhoneIcon from '@mui/icons-material/Phone';
 // import Image from '../path/to/image.jpg';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -117,7 +118,7 @@ function Signup() {
       <Box boxShadow={3} borderRadius={4} p={2} m={4}>
         <Grid container justifyContent="center" spacing={2}>
           <Grid item xs={12} md={6}>
-            <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1086965739522637884/pekka_a_person_sitting_on_a_scooter_blue_illustration__white_ba_630badc6-1414-41e6-b2ec-03f2425615b8.png"
+            <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1089765405301669919/pekka_a_person_sitting_on_a_scooter_with_color_light_blue_and_b_555f7a57-94cd-4851-95a9-8dbbe7933355.png"
               className="img-fluid" alt="Phone" />
           </Grid>
           <Grid item xs={12} md={6} direction="column" alignItems="flex-end">
@@ -205,7 +206,7 @@ function Signup() {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="start">
-                      <Lock />
+                      <PhoneIcon />
                     </InputAdornment>
                   ),
                 }}
@@ -215,6 +216,7 @@ function Signup() {
                 name='password'
                 type="password"
                 fullWidth
+                autoComplete="on"
 
                 error={!!errors.password}
                 helperText={errors.password ? errors.password.message : ""}
@@ -235,7 +237,7 @@ function Signup() {
                   bgcolor: "#6366F1"
                 }
               }} >
-                Login
+                signup
               </Button>
               <Button
     variant="text"
