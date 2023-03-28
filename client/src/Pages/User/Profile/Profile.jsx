@@ -4,7 +4,9 @@ import { InputText } from "primereact/inputtext"
 import { FileUpload } from 'primereact/fileupload';
 import { InputMask } from "primereact/inputmask";
 import Alert from '@mui/material/Alert';
-
+import ImageSearchIcon from '@mui/icons-material/ImageSearch';
+import UploadIcon from '@mui/icons-material/Upload';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import { useState } from "react";
 // import "./Profile.css";
@@ -15,6 +17,7 @@ import {
   getUserProfileAction,
   userImageAction,
   userLogOut,
+  userProofAction,
 } from "../../../Redux/Actions/userActions";
 
 import ErrorMessage from '../../../components/Alert/Error'
@@ -24,6 +27,8 @@ import NavBar from '../../../components/NavBar/NavBar';
 import { TextField } from '@mui/material';
 
 import ModalBox from '../../../components/Modal/ModalBox';
+import { configToken } from '../../../Api/User/ApiCalls';
+import { Box } from '@mui/system';
 
 function Profile() {
 
@@ -33,18 +38,17 @@ function Profile() {
   const navigate = useNavigate()
 
   const [imgTypeError, setImgTypeError] = useState('')
-  
-  const [modal,setModal] = useState(false)
+
+  const [modal, setModal] = useState(false)
 
   const profileData = useSelector((state) => state.userLoginReducer.userLoginDetails);
-  // const { loading, error, profileData } = profileData;
-  // console.log('profiledata', profileData);
+
   console.log('profiledata ggggg', profileData);
 
-  const profilePictureData = useSelector((state) => state.userImageUplaodReducer);
-  const { imageLoading, imageError, profilePicture } = profilePictureData;
+  // const profilePictureData = useSelector((state) => state.userImageUplaodReducer);
+  // const { imageLoading, imageError, profilePicture } = profilePictureData;
+  // console.log(profilePicture + "THIS IS THE IMAGE EEE");
   const [photo, setPhoto] = useState("");
-  console.log(profilePicture + "THIS IS THE IMAGE EEE");
 
   console.log(photo, 'phto name');
 
@@ -59,32 +63,48 @@ function Profile() {
     data.append("cloud_name", "driuxmoax");
     console.log(data);
 
-  //   fetch("https://api.cloudinary.com/v1_1/driuxmoax/image/upload", {
-  //     method: "post",
-  //     body: data,
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       dispatch(userImageAction(data.url));
-  //     });
-  // };
 
-  if (photo.type !== 'image/jpeg' && photo.type !== 'image/png') {
-    setImgTypeError('Not Supported');
-  } else {
-    setImgTypeError('');
+    if (photo.type !== 'image/jpeg' && photo.type !== 'image/png') {
+      setImgTypeError('Not Supported');
+    } else {
+      setImgTypeError('');
+      fetch("https://api.cloudinary.com/v1_1/driuxmoax/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          dispatch(userImageAction(data.url));
+        });
+    }
+  };
+
+  // add proof
+  const [proof, setProof] = useState("")
+  console.log(proof, 'proffffffffff');
+  const addProof = (e) => {
+    e.preventDefault()
+
+    const data = new FormData()
+
+    console.log(proof, 'proof');
+
+    data.append("file", proof)
+    data.append("upload_preset", "RentAndRide")
+    data.append("cloud_name", "driuxmoax")
+    console.log(data, 'data');
+
     fetch("https://api.cloudinary.com/v1_1/driuxmoax/image/upload", {
       method: "post",
       body: data,
     })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      dispatch(userImageAction(data.url));
-    });
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, 'the data proof suces in the fetch');
+        dispatch(userProofAction(data.url))
+      })
   }
-};
 
 
   const handleLogOut = () => {
@@ -102,11 +122,11 @@ function Profile() {
         {/* modal box */}
 
         {
-          modal ? <ModalBox closeModal={setModal} details={profileData}/> : ""
+          modal ? <ModalBox closeModal={setModal} details={profileData} /> : ""
         }
-       
+
         <div className="row">
-     
+
           <div className="col-md-3 border-right">
 
             <div className="d-flex flex-column align-items-center text-center p-3 py-5 shadow p-3 mb-5 bg-white rounded">
@@ -116,9 +136,9 @@ function Profile() {
                 src={profileData?.photo
                   ? profileData?.photo
                   : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}
-               
+
                 alt="Profile" />
-             
+
               <div className="col-md-12 mt-3">
                 <div className="p-inputgroup">
                   <span className="p-inputgroup-addon">
@@ -128,9 +148,9 @@ function Profile() {
                 </div>
               </div>
               <form>
-              {imgTypeError && <Alert severity="error">{imgTypeError}</Alert>}
+                {imgTypeError && <Alert severity="error">{imgTypeError}</Alert>}
 
-                <TextField size='md' type='file' className='mt-4' id='formFileLg' onChange={(e) =>setPhoto(e.target.files[0]) }
+                <TextField size='md' type='file' className='mt-4' id='formFileLg' onChange={(e) => setPhoto(e.target.files[0])}
                 />
                 <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-3">
                   <Button
@@ -140,7 +160,7 @@ function Profile() {
                     onClick={addphoto} />
                 </div>
               </form>
-             
+
 
               <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-5">
                 <Button severity="primary" label="Reset Password" icon="pi pi-lock" />
@@ -199,13 +219,12 @@ function Profile() {
               </div>
               <div className="card flex flex-wrap justify-content-center gap-3  mt-3">
                 <Button
-                 severity="primary"
+                  severity="primary"
                   // label="Edit "
-                   icon="pi pi-check"
-                   onClick = {(e) => 
-                    {setModal(true)}
-                    } 
-                    >Edit</Button>
+                  icon="pi pi-check"
+                  onClick={(e) => { setModal(true) }
+                  }
+                >Edit</Button>
               </div>
             </div>
             <div className="col-md-12 border-right">
@@ -213,23 +232,71 @@ function Profile() {
                 <div className="col-md-12  ">
                   <label htmlFor="">Proof</label>
                   <div className="card">
-                    {/* if the proof is there i a just need to show the proof otherse need to add it */}
-                    <FileUpload 
-                    severity="primary"
-                     name="demo"
-                      url={'/api/upload'}
-                      
-                       multiple accept="image/*"
-                        maxFileSize={1000000}
-                         emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+
+
+                      <TextField sx={{ mb: 2 }}
+                        required
+                        id="outlined-required"
+                        // label="Bike Name"
+                        type='file'
+                        fullWidth
+                        onChange={(e) => setProof(e.target.files[0])}
+                      />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+
+
+                      <Button
+                        type='submit'
+                        variant="contained"
+                        onClick={addProof}
+                        sx={{
+                          mb: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
+                            bgcolor: "#6366F1"
+                          }
+                        }}
+                      >
+                        <UploadIcon />
+                        Upload
+                      </Button>
+
+                      <Button
+                        type='submit'
+                        variant="contained"
+
+                        sx={{
+                          mb: 2, mr: 3, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
+                            bgcolor: "#6366F1"
+                          }
+                        }}
+                      >
+                        <CancelIcon />
+                        Cancel
+                      </Button>
+                    </div>
                   </div>
+                  <div className="card" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    {profileData?.proof ? (
+                      <img
+                        src={profileData.proof}
+                        alt="proof"
+                        height="200px"
+                        width="200px"
+                        style={{ objectFit: "contain" }}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+
+
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* : ''} */}
 
       </div></>
   )

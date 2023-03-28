@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { userGetBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userProfileAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { userGetBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -140,6 +140,26 @@ export const userImageAction = (image) => async (dispatch) => {
 
   }
 };
+
+export const userProofAction =(image) => async(dispatch)=>{
+  try {
+    const user = JSON.parse(localStorage.getItem("userInfo"))
+    console.log('userid in proof',user._id);
+
+    userProofUploadAPI(user._id,image).then((data)=>{
+      console.log('proof api data',data.data);
+
+      localStorage.setItem("userInfo",JSON.stringify(data.data))
+
+      dispatch({
+        type : userActionType.UPDATE_USER_PROFILE,
+        payload : data.data
+      })
+    })
+  } catch (error) {
+    
+  }
+}
 
 export const updateUserProfileAction = (data)=>async(dispatch)=>{
   try {

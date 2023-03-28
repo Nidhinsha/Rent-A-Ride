@@ -28,7 +28,7 @@ router.route("/edit-profile").post(protect,userProfile.editProfile)
 router.route("/userProfileImageUpdate").post(protect, userProfile.addPhoto);
 
 // add proof
-// router.route("/userAddProof").post(protect,)
+router.route("/userAddProof").post(protect,userProfile.addProof)
 
 // Add bike from the user
 router.route("/rent-bike").post(upload.array('images'),protect,userAddBike.userAddBike);

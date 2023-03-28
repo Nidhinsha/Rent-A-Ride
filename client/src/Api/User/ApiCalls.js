@@ -12,7 +12,7 @@ let user = JSON.parse(localStorage.getItem('userInfo'))
 const ID = user?._id
 console.log(ID, 'userid');
 
-const configToken = {
+export const configToken = {
   headers: {
     "Content-Type": "application/json",
     Authorization: "Bearer" + ' ' + user?.token
@@ -30,6 +30,7 @@ export const userLoginAPI = (email, password) => API.post('/user-login', { email
 export const userHomeAPI = () => API.get('/', config)
 export const userProfileAPI = (id) => API.get('/profile?id=' + id, configToken)
 export const userImageUploadAPI = (id, image) => API.post('/userProfileImageUpdate?id=' + id, { image }, configToken)
+export const userProofUploadAPI =(id,image) => API.post('/userAddProof?id=' +id,{image},configToken)
 export const userEditProfileAPI = (firstName,lastName,email,phone,id)=>{
   return(
     console.log("user edit api",firstName),

@@ -27,7 +27,7 @@ exports.addPhoto = async (req, res) => {
           console.log(result,'updated');
 
           userSchema.findOne({_id : id}).then((data)=>{
-            const {id,firstName,lastName,phone,email,status,photo} = data
+            const {id,firstName,lastName,phone,email,status,photo,proof} = data
             let result = {
               id,
               firstName,
@@ -36,6 +36,7 @@ exports.addPhoto = async (req, res) => {
               phone,
               status,
               photo,
+              proof,
               token : generateToken(id)
             }
 
@@ -53,6 +54,55 @@ exports.addPhoto = async (req, res) => {
     }
   };
 
+  exports.addProof = async (req,res)=>{
+    const id = req.query.id
+    const theProof = req.body.image
+
+    console.log(id,'the proof id');
+    console.log(req.body,'the req bidy');
+
+    try {
+      userSchema
+        .updateOne({_id : id},{$set : {proof : theProof}})
+        .then((result)=>{
+          console.log(result,'the proof reult');
+
+          userSchema
+            .findOne({_id : id}).then((data)=>{
+              const {
+                id,
+                firstName,
+                lastName,
+                email,
+                phone,
+                status,
+                photo,
+                proof
+              } = data
+
+              const result = {
+                id,
+                firstName,
+                lastName,
+                email,
+                phone,
+                status,
+                photo,
+                proof,
+                token : generateToken(id)
+              }
+
+              console.log(result,'the result after the proof added');
+
+              res.status(200).json(result)
+            })
+        })
+    } catch (error) {
+      res.status(400).json(error)
+      console.log('error in the prrof side',error);
+    }
+
+  }
 
   exports.editProfile = async(req,res)=>{
     console.log(req.body,'the data for edit');

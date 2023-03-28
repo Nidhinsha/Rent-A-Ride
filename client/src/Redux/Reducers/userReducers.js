@@ -119,6 +119,28 @@ export const userImageUplaodReducer = (state = {}, action) => {
   }
 };
 
+
+export const userProofUploadReducer = (state={},action)=>{
+  switch(action.type){
+    case userActionType.USER_UPLOAD_PROOF_REQUEST:
+      return {
+        proofLoading : true
+      }
+    case userActionType.USER_UPLOAD_PROOF_SUCCESS:
+      return {
+        proofLoading : false,
+        userProof : action.payload
+      }
+    case userActionType.USER_UPLOAD_PROOF_FAIL:
+      return {
+        proofLoading:false,
+        proofEroor : action.payload
+      }
+    default:
+      return state
+  }
+}
+
 export const userGetBikeReducer =(state={},action)=>{
   switch (action.type) {
     case userActionType.USER_GET_BIKES_REQUEST:
