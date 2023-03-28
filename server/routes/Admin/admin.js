@@ -10,6 +10,7 @@ const adminViewBikeController = require("../../controller/Admin/bikeController/a
 const userBikeRentRequestController = require("../../controller/Admin/bikeController/userRentRequest")
 const adminAcceptReq = require("../../controller/Admin/bikeController/accepetReqController")
 const adminRejectReq = require("../../controller/Admin/bikeController/rejectReqController")
+const locationController = require("../../controller/Admin/locationController")
 const { protect } = require("../../Middlewares/verifyToken")
 
 
@@ -28,5 +29,7 @@ router.route("/user-rent-request").get(protect,userBikeRentRequestController.use
 router.route("/accept-request").put(protect,adminAcceptReq.accepetReqController)
 
 router.route("/reject-request").put(protect,adminRejectReq.rejectReqController)
+
+router.route("/add-location").post(locationController.addLocation)
 
 module.exports = router
