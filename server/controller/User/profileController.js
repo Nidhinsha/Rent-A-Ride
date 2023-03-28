@@ -52,3 +52,39 @@ exports.addPhoto = async (req, res) => {
       console.log('error',error,'eroor in udpate prodile');
     }
   };
+
+
+  exports.editProfile = async(req,res)=>{
+    console.log(req.body,'the data for edit');
+    console.log(req.query.id,'id');
+
+    userSchema.updateOne({_id : req.query.id},
+      {
+        $set : {
+          firstName : req.body.firstName,
+          lastName : req.body.lastName,
+          phone : req.body.phone,
+          email : req.body.email
+        }
+      }).then(()=>{
+        userSchema.findOne({_id : req.query.id}).then((data)=>{
+          console.log("updated data",data);
+
+          const {id,firstName,lastName,phone,email,status,photo} = data
+
+          const result = {
+            id,
+            firstName,
+            lastName,
+            email,
+            phone,
+            photo,
+            status,
+            token : generateToken(id)
+          }
+
+          console.log('result of user ipdate',result);
+          res.status(200).json(result)
+        })
+      })
+  }

@@ -30,5 +30,16 @@ export const userLoginAPI = (email, password) => API.post('/user-login', { email
 export const userHomeAPI = () => API.get('/', config)
 export const userProfileAPI = (id) => API.get('/profile?id=' + id, configToken)
 export const userImageUploadAPI = (id, image) => API.post('/userProfileImageUpdate?id=' + id, { image }, configToken)
+export const userEditProfileAPI = (firstName,lastName,email,phone,id)=>{
+  return(
+    console.log("user edit api",firstName),
+    console.log("user edit api",lastName),
+    console.log("user edit api",email),
+    console.log("user edit api",phone),
+    console.log("user edit api",id),
+
+    API.post('/edit-profile?id='+ID,{firstName,lastName,email,phone},configToken)
+  )
+}
 export const userAddBikeAPI = (formdata) => API.post('/rent-bike?id=' + ID, formdata, configFormData)
 export const userGetBikeAPI = () => API.get('/bikes', config)

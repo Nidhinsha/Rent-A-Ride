@@ -60,6 +60,11 @@ export const userLoginReducer = (state = {}, action) => {
           return {
             userLoginDetails : action.payload
           }
+        
+        case userActionType.UPDATE_USER_PROFILE_DETAILS:
+          return {
+            userLoginDetails : action.payload
+          }
 
         default:
             return state
@@ -85,7 +90,7 @@ export const getUserProfileReduer = (state = {}, action) => {
       return { 
         loading: false,
         userProfileDataError: action.payload };
-
+   
     default:
       return state;
   }

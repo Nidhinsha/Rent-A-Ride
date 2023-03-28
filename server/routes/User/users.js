@@ -21,11 +21,17 @@ router.route("/").get(protect,)
 // Profile
 router.route("/profile").get(protect,userProfile.profileGet)
 
+// edit profile 
+router.route("/edit-profile").post(protect,userProfile.editProfile)
+
 // Add Profile Photo
 router.route("/userProfileImageUpdate").post(protect, userProfile.addPhoto);
 
+// add proof
+// router.route("/userAddProof").post(protect,)
+
 // Add bike from the user
-router.route("/rent-bike").post(upload.array('images'),userAddBike.userAddBike);
+router.route("/rent-bike").post(upload.array('images'),protect,userAddBike.userAddBike);
 
 router.route("/bikes").get(userDisplayBikes.displayBikeController)
 

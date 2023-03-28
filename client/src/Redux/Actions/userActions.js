@@ -141,6 +141,17 @@ export const userImageAction = (image) => async (dispatch) => {
   }
 };
 
+export const updateUserProfileAction = (data)=>async(dispatch)=>{
+  try {
+    dispatch({
+      type : userActionType.UPDATE_USER_PROFILE_DETAILS,
+      payload : data
+    })
+  } catch (error) {
+    
+  }
+}
+
 export const userGetBikeAction = () => async (dispatch)=>{
 
   try {

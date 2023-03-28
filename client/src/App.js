@@ -29,7 +29,7 @@ function App() {
       <Route path='/rent-bike' exact element={userData? <RentBike />: <Login/> } />
       <Route path='/bikes' exact element={<Bikes/>} />
       <Route path='/test' exact element={<Test />} />
-
+      
       <Route path='/admin/login' element={ adminData ?<Dashboard/>: <AdminLogin />} />
       <Route path='/admin/user-manage' exact element={adminData ?  <UserManage /> :<AdminLogin /> } />
       <Route path='/admin/add-bike' exact element={adminData ? <AddBike /> : <AdminLogin />} />

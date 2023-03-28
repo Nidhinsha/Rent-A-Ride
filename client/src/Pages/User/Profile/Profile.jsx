@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from "primereact/inputtext"
-import { InputTextarea } from "primereact/inputtextarea";
 import { FileUpload } from 'primereact/fileupload';
 import { InputMask } from "primereact/inputmask";
 import Alert from '@mui/material/Alert';
@@ -9,19 +8,22 @@ import Alert from '@mui/material/Alert';
 
 import { useState } from "react";
 // import "./Profile.css";
-import { MDBFile } from 'mdb-react-ui-kit';
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 import {
   getUserProfileAction,
   userImageAction,
   userLogOut,
 } from "../../../Redux/Actions/userActions";
+
 import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../../components/NavBar/NavBar';
-import { FormHelperText, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
+
+import ModalBox from '../../../components/Modal/ModalBox';
 
 function Profile() {
 
@@ -31,12 +33,13 @@ function Profile() {
   const navigate = useNavigate()
 
   const [imgTypeError, setImgTypeError] = useState('')
- 
+  
+  const [modal,setModal] = useState(false)
 
-  const userProfileData = useSelector((state) => state.userLoginReducer.userLoginDetails);
-  const { loading, error, profileData } = userProfileData;
-  console.log('profiledata', profileData);
-  console.log('profiledata ggggg', userProfileData);
+  const profileData = useSelector((state) => state.userLoginReducer.userLoginDetails);
+  // const { loading, error, profileData } = profileData;
+  // console.log('profiledata', profileData);
+  console.log('profiledata ggggg', profileData);
 
   const profilePictureData = useSelector((state) => state.userImageUplaodReducer);
   const { imageLoading, imageError, profilePicture } = profilePictureData;
@@ -83,11 +86,6 @@ function Profile() {
   }
 };
 
-  useEffect(() => {
-    dispatch(getUserProfileAction());
-  }, []);
-
-  console.log("THIS IS THE IMAGEEEE");
 
   const handleLogOut = () => {
     dispatch(userLogOut())
@@ -98,8 +96,14 @@ function Profile() {
     <>
       <NavBar />
       <div className="container rounded bg-white mb-5 ">
-        {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
-        {loading ? <Loading /> : ""}
+        {/* {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
+        {loading ? <Loading /> : ""} */}
+
+        {/* modal box */}
+
+        {
+          modal ? <ModalBox closeModal={setModal} details={profileData}/> : ""
+        }
        
         <div className="row">
      
@@ -109,8 +113,8 @@ function Profile() {
               <img
                 className="rounded-circle mt-5"
                 width="150px"
-                src={userProfileData?.photo
-                  ? userProfileData?.photo
+                src={profileData?.photo
+                  ? profileData?.photo
                   : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}
                
                 alt="Profile" />
@@ -120,21 +124,13 @@ function Profile() {
                   <span className="p-inputgroup-addon">
                     <i className="pi pi-user"></i>
                   </span>
-                  <InputText placeholder="Full Name" value={userProfileData?.firstName + userProfileData?.lastName} />
+                  <InputText placeholder="Full Name" value={profileData?.firstName + profileData?.lastName} />
                 </div>
               </div>
               <form>
               {imgTypeError && <Alert severity="error">{imgTypeError}</Alert>}
 
                 <TextField size='md' type='file' className='mt-4' id='formFileLg' onChange={(e) =>setPhoto(e.target.files[0]) }
-                  // if (e.target.files[0].type === 'image/jpeg' || e.target.files[0].type === 'image/png') {
-                  //   setPhoto(e.target.files[0])
-                  // } else {
-
-                  //   { imgTypeError }
-                  //   console.log('not suppted');
-                  // }
-               
                 />
                 <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-3">
                   <Button
@@ -169,7 +165,7 @@ function Profile() {
                     <span className="p-inputgroup-addon">
                       <i className="pi pi-user"></i>
                     </span>
-                    <InputText placeholder="First Name" value={userProfileData?.firstName} />
+                    <InputText placeholder="First Name" value={profileData?.firstName} />
                   </div>
                 </div>
 
@@ -178,7 +174,7 @@ function Profile() {
                     <span className="p-inputgroup-addon">
                       <i className="pi pi-user"></i>
                     </span>
-                    <InputText placeholder="Last Name" value={userProfileData?.lastName} />
+                    <InputText placeholder="Last Name" value={profileData?.lastName} />
                   </div>
                 </div>
 
@@ -187,7 +183,7 @@ function Profile() {
                     <span className="p-inputgroup-addon">
                       <i className="pi pi-envelope"></i>
                     </span>
-                    <InputText placeholder="Email" value={userProfileData?.email} />
+                    <InputText placeholder="Email" value={profileData?.email} />
                   </div>
                 </div>
 
@@ -196,13 +192,20 @@ function Profile() {
                     <span className="p-inputgroup-addon">
                       <i className="pi pi-phone"></i>
                     </span>
-                    <InputMask id="ssn" mask="999-999-9999" placeholder="999-999-9999" value={userProfileData?.phone}></InputMask>
+                    <InputMask id="ssn" mask="999-999-9999" placeholder="999-999-9999" value={profileData?.phone}></InputMask>
                   </div>
                 </div>
 
               </div>
               <div className="card flex flex-wrap justify-content-center gap-3  mt-3">
-                <Button severity="primary" label="Edit " icon="pi pi-check" />
+                <Button
+                 severity="primary"
+                  // label="Edit "
+                   icon="pi pi-check"
+                   onClick = {(e) => 
+                    {setModal(true)}
+                    } 
+                    >Edit</Button>
               </div>
             </div>
             <div className="col-md-12 border-right">
@@ -211,7 +214,14 @@ function Profile() {
                   <label htmlFor="">Proof</label>
                   <div className="card">
                     {/* if the proof is there i a just need to show the proof otherse need to add it */}
-                    <FileUpload severity="primary" name="demo[]" url={'/api/upload'} multiple accept="image/*" maxFileSize={1000000} emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />
+                    <FileUpload 
+                    severity="primary"
+                     name="demo"
+                      url={'/api/upload'}
+                      
+                       multiple accept="image/*"
+                        maxFileSize={1000000}
+                         emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />
                   </div>
                 </div>
               </div>
