@@ -24,3 +24,30 @@ exports.getLocation = async(req,res)=>{
         res.status(400).json({message : "cloudn't fetch the location"})
     }
 }
+
+exports.editLocation = async(req,res)=>{
+    try {
+        console.log(req.query.location,'loc for checkinf');
+        console.log(req.body.location,'jkjkjkjkjkj');
+
+        const findLocation = await  locationSchema.findOne({location : req.query.location})
+        console.log(findLocation,'findloac');
+        await  locationSchema.updateOne(
+                {
+                    location : req.query.location
+                },
+                {
+                    $set : {
+                        location : req.body.location
+                    }
+                }
+            )
+           
+           const data = await locationSchema.find()
+           
+           res.status(400).json(data)
+            
+    } catch (error) {
+        res.status(400).json({message : "error while updating"})
+    }
+}
