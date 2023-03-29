@@ -51,3 +51,24 @@ exports.editLocation = async(req,res)=>{
         res.status(400).json({message : "error while updating"})
     }
 }
+
+exports.deleteLocation = async(req,res)=>{
+    try {
+        console.log('delete query',req.query.location);
+        const findLocation = await  locationSchema.findOne({location : req.query.location})
+        console.log(findLocation,'findloac for dlt ');
+
+        await locationSchema.deleteOne(
+            {
+                location : req.query.location
+            }
+        )
+
+        const data = await locationSchema.find()
+
+        res.status(200).json(data)
+
+    } catch (error) {
+        res.status(400).json({message : "error while deleting.."})
+    }
+}

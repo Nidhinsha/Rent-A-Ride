@@ -36,4 +36,6 @@ router.route("/locations").get(locationController.getLocation)
 
 router.route("/edit-location").put(locationController.editLocation)
 
+router.route("/delete-location").delete(locationController.deleteLocation)
+
 module.exports = router
