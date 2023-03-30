@@ -32,10 +32,10 @@ router.route("/reject-request").put(protect,adminRejectReq.rejectReqController)
 
 router.route("/add-location").post(locationController.addLocation)
 
-router.route("/locations").get(locationController.getLocation)
+router.route("/locations").get(protect,locationController.getLocation)
 
-router.route("/edit-location").put(locationController.editLocation)
+router.route("/edit-location").put(protect,locationController.editLocation)
 
-router.route("/delete-location").delete(locationController.deleteLocation)
+router.route("/delete-location").delete(protect,locationController.deleteLocation)
 
 module.exports = router

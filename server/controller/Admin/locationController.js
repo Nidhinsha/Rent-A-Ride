@@ -27,14 +27,14 @@ exports.getLocation = async(req,res)=>{
 
 exports.editLocation = async(req,res)=>{
     try {
-        console.log(req.query.location,'loc for checkinf');
-        console.log(req.body.location,'jkjkjkjkjkj');
+        console.log(req.query.id,'loc for id');
+        console.log(req.body.location,'body location');
 
-        const findLocation = await  locationSchema.findOne({location : req.query.location})
+        const findLocation = await  locationSchema.findOne({_id : req.query.id})
         console.log(findLocation,'findloac');
         await  locationSchema.updateOne(
                 {
-                    location : req.query.location
+                    _id : req.query.id
                 },
                 {
                     $set : {
@@ -45,7 +45,7 @@ exports.editLocation = async(req,res)=>{
            
            const data = await locationSchema.find()
            
-           res.status(400).json(data)
+           res.status(200).json(data)
             
     } catch (error) {
         res.status(400).json({message : "error while updating"})
@@ -54,19 +54,14 @@ exports.editLocation = async(req,res)=>{
 
 exports.deleteLocation = async(req,res)=>{
     try {
-        console.log('delete query',req.query.location);
-        const findLocation = await  locationSchema.findOne({location : req.query.location})
-        console.log(findLocation,'findloac for dlt ');
-
-        await locationSchema.deleteOne(
-            {
-                location : req.query.location
-            }
-        )
-
-        const data = await locationSchema.find()
-
-        res.status(200).json(data)
+        console.log('delete query',req.query.id);
+        locationSchema.deleteOne({_id : req.query.id}).then((data) => {
+            console.log("deleed",data);
+            locationSchema.find().then((data) => {
+                console.log("after deletinf",data);
+                res.status(200).json(data)
+            })
+        })
 
     } catch (error) {
         res.status(400).json({message : "error while deleting.."})

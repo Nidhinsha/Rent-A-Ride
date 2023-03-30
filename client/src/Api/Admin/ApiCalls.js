@@ -38,3 +38,7 @@ export const getPendingBikeAPI = () => API.get('/user-rent-request',configToken)
 // evert time we use put or post make sure to use data part req,data,header
 export const acceptBikeAPI =(id)=> API.put('/accept-request?id='+id,{},configToken)
 export const rejectBikeAPI =(id)=>API.put('/reject-request?id='+id,{},configToken)
+export const addLocationAPI = (location)=> API.post('/add-location',{location},configToken)
+export const getLocationAPI = ()=> API.get('/locations',configToken)
+export const editLocationAPI = (id,location)=>API.put('/edit-location?id='+id,{location},configToken)
+export const deleteLocationAPI =(id)=> API.delete('/delete-location?id='+id,configToken)

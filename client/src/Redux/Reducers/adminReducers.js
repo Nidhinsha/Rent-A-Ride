@@ -81,3 +81,69 @@ export const adminGetAllBikeReducer =(state={},action)=>{
       return state;
   }
 }
+
+export const adminGetLocationReducer = (state={},action)=>{
+  console.log('get loc redu',action.payload)
+
+  switch(action.type){
+    case adminActionType.ADMIN_GET_LOCATION_REQUEST:
+      return {
+        loading : true
+      }
+    case adminActionType.ADMIN_GET_LOCATION_SUCCESS:
+      return {
+        loading : false,
+        location : action.payload
+      }
+    case adminActionType.ADMIN_GET_LOCATION_FAIL:
+      return {
+        loading : false,
+        locatonError : action.payload
+      }
+    default :
+      return state
+  }
+}
+
+export const adminEditLocationReducer = (state={},action)=>{
+  switch(action.type){
+    case adminActionType.ADMIN_EDIT_LOCATION_REQUEST:
+      return {
+        editLocationLoading : true
+      }
+    case adminActionType.ADMIN_EDIT_LOCATION_SUCCESS:
+      return {
+        editLocationLoading : false,
+        editLocationData : action.payload
+      }
+    case adminActionType.ADMIN_EDIT_LOCATION_FAIL:
+      return {
+        editLocationLoading:false,
+        editLocationError : action.payload
+      }
+    default :
+      return state
+  }
+}
+
+
+export const adminDeleteLocationReducer = (state = {},action)=>{
+  switch(action.type){
+    case adminActionType.ADMIN_DELETE_LOCATION_REQUEST:
+      return {
+        locationLoading : true
+      }
+    case adminActionType.ADMIN_DELETE_LOCATION_SUCCESS:
+      return {
+        locationLoading : false,
+        location:action.payload
+      }
+    case adminActionType.ADMIN_DELETE_LOCATION_FAIL:
+      return {
+        locationLoading : false,
+        locationError : action.payload
+      }
+    default :
+      return state
+  }
+}

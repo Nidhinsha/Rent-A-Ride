@@ -5,6 +5,7 @@ import AddBike from './Pages/Admin/AddBike/AddBike'
 import AdminLogin from './Pages/Admin/AdminLogin/AdminLogin'
 import BikeRequest from './Pages/Admin/BikeRequest/BikeRequest'
 import Dashboard from './Pages/Admin/Dashboard/Dashboard'
+import Location from './Pages/Admin/Location/Location'
 import UserManage from './Pages/Admin/UserManage/UserManage'
 import ViewBike from './Pages/Admin/ViewBike/ViewBike'
 import Bikes from './Pages/User/Bikes/Bikes'
@@ -36,6 +37,7 @@ function App() {
       <Route path='/admin/view-bike' exact element={adminData ? <ViewBike />: <AdminLogin /> } />
       <Route path='/admin/dashboard' exact element={adminData ? <Dashboard /> : <AdminLogin/>} />
       <Route path='/admin/bike-request' exact element={adminData ? <BikeRequest/> : <AdminLogin/>} />
+      <Route path='/admin/location' exact element={adminData ? <Location/>:<AdminLogin/>} />
       {/* <Route path='/admin/bikes' element={adminData ? } */}
       </Routes>
     </div>
