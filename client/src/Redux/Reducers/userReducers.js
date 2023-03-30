@@ -147,7 +147,6 @@ export const userGetBikeReducer =(state={},action)=>{
       return {
         bikesDataLoading : true
       }
-
     case userActionType.USER_GET_BIKES_SUCCESS:
       return {
         loading : false,
@@ -156,6 +155,20 @@ export const userGetBikeReducer =(state={},action)=>{
     case userActionType.USER_GET_BIKES_FAIL:
       return {
         loading : false,
+        bikesDataError : action.payload
+      }
+    case userActionType.USER_GET_SEARCH_BIKES_REQUEST:
+      return {
+        searchLoading : true
+      }
+    case userActionType.USER_GET_SEARCH_BIKES_SUCCESS:
+      return {
+        searchLoading : false,
+        bikesData : action.payload
+      }
+    case userActionType.USER_GET_SEARCH_BIKES_FAIL:
+      return {
+        searchLoading : false,
         bikesDataError : action.payload
       }
     default :

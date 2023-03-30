@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -9,8 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userGetBikeAction } from '../../../Redux/Actions/userActions';
 import Loading from '../../../components/Loading/Loading';
 import { Button } from 'primereact/button';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import ImageSearchIcon from '@mui/icons-material/ImageSearch';
+import { Box } from '@mantine/core';
+import { userBikeSearchAction } from '../../../Redux/Actions/userActions';
 
-
+  
 function Bikes() {
 
     const dispatch = useDispatch()
@@ -22,16 +27,44 @@ function Bikes() {
     useEffect(() => {
         dispatch(userGetBikeAction())
     }, [])
+
+    const [searchTerm,setSearchTerm]=useState('')
+
+    const handleSubmit=(e)=>{
+        e.preventDefault()
+        dispatch(userBikeSearchAction(searchTerm))
+        console.log('hey',searchTerm)
+    }
     return (
         <>
             <NavBar />
             <div className='d-flex flex-wrap justify-content-center  '>
+            <Box component='form' onSubmit={handleSubmit}>
+            <TextField
+                label="Search"
+                name='search'
+                value={searchTerm}
+                fullWidth
+
+                onChange={(e)=> setSearchTerm(e.target.value)}
+
+                sx={{ mb: 2 }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start" style={{ cursor: 'pointer' }}   onClick={handleSubmit}>
+                      <ImageSearchIcon  />
+                    </InputAdornment>
+                  ),
+                }}
+                helperText='enter the text here..'
+              />
+            </Box>
 
                 {
                     bikesDataLoading ? <Loading /> :
                         bikesData ? bikesData.map((data, index) => {
                             return (
-                                <Card sx={{ height: 380, width: 300, m: 3 ,boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
+                                <Card key={index} sx={{ height: 380, width: 300, m: 3 ,boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"

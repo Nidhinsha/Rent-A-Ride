@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { FormHelperText, styled } from '@mui/material'
 import SideBar from '../../../components/SideBar/SideBar';
 import Button from '@mui/material/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { adminAddBikeAPI } from '../../../Api/Admin/ApiCalls';
 import { adminAddBikeAction } from '../../../Redux/Actions/adminActions';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -30,7 +30,10 @@ function AddBike() {
     const [color, setColor] = useState('')
     const [images, setImages] = useState([])
     const [loading, setLoading] = useState(false)
-    const [sucess, setSuccess] = useState(false);
+    const [sucess, setSuccess] = useState(false)
+
+    const location = useSelector((state)=> state.adminGetLocationReducer.location)
+    console.log(location,'location')
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -173,7 +176,7 @@ function AddBike() {
                                     required: true, minLength: 3
                                 })}
                             onChange={(e) => setBrand(e.target.value)}
-                            helperText={errors.engineNumber && <p style={{ color: 'red' }}>Please enter the brand</p>}
+                            helperText={errors.brand && <p style={{ color: 'red' }}>Please enter the brand</p>}
                         />
 
                     </div>
@@ -207,11 +210,17 @@ function AddBike() {
                                 )}
                                 onChange={(e) => setFuel(e.target.value)}
                             >
+                                {
+                                    location ? location.map((value)=>{
+                                        return(
+                                            <MenuItem value={value.location} >{value.location}</MenuItem>
+                                        )
+                                    }) : ""
+                                }
 
-
-                                <MenuItem value="petrol" >Petrol</MenuItem>
+                                {/* <MenuItem value="petrol" >Petrol</MenuItem>
                                 <MenuItem value="diesel" >Diesel</MenuItem>
-                                <MenuItem value="electric" >Electric</MenuItem>
+                                <MenuItem value="electric" >Electric</MenuItem> */}
                             </Select>
                             {errors.fuel && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.fuel && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
                         </FormControl>

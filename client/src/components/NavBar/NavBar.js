@@ -17,6 +17,7 @@ import {
   Drawer,
   Collapse,
   ScrollArea,
+  Autocomplete,
   rem,
 } from '@mantine/core';
 import { MantineLogo } from '@mantine/ds';
@@ -29,8 +30,8 @@ import {
   IconFingerprint,
   IconCoin,
   IconChevronDown,
+  IconSearch
 } from '@tabler/icons-react';
-
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -98,38 +99,38 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const mockdata = [
-  {
-    icon: IconCode,
-    title: 'Open source',
-    description: 'This Pokémon’s cry is very loud and distracting',
-  },
-  {
-    icon: IconCoin,
-    title: 'Free for everyone',
-    description: 'The fluid of Smeargle’s tail secretions changes',
-  },
-  {
-    icon: IconBook,
-    title: 'Documentation',
-    description: 'Yanma is capable of seeing 360 degrees without',
-  },
-  {
-    icon: IconFingerprint,
-    title: 'Security',
-    description: 'The shell’s rounded shape and the grooves on its.',
-  },
-  {
-    icon: IconChartPie3,
-    title: 'Analytics',
-    description: 'This Pokémon uses its flying ability to quickly chase',
-  },
-  {
-    icon: IconNotification,
-    title: 'Notifications',
-    description: 'Combusken battles with the intensely hot flames it spews',
-  },
-];
+// const mockdata = [
+//   {
+//     icon: IconCode,
+//     title: 'Open source',
+//     description: 'This Pokémon’s cry is very loud and distracting',
+//   },
+//   {
+//     icon: IconCoin,
+//     title: 'Free for everyone',
+//     description: 'The fluid of Smeargle’s tail secretions changes',
+//   },
+//   {
+//     icon: IconBook,
+//     title: 'Documentation',
+//     description: 'Yanma is capable of seeing 360 degrees without',
+//   },
+//   {
+//     icon: IconFingerprint,
+//     title: 'Security',
+//     description: 'The shell’s rounded shape and the grooves on its.',
+//   },
+//   {
+//     icon: IconChartPie3,
+//     title: 'Analytics',
+//     description: 'This Pokémon uses its flying ability to quickly chase',
+//   },
+//   {
+//     icon: IconNotification,
+//     title: 'Notifications',
+//     description: 'Combusken battles with the intensely hot flames it spews',
+//   },
+// ];
 
 function NavBar() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
@@ -177,10 +178,10 @@ function NavBar() {
             </a>
             <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
               <HoverCard.Target>
-                <a href="#" className={classes.link}>
+                <a href="/bikes" className={classes.link}>
                   <Center inline>
                     <Box component="span" mr={5}>
-                      Features
+                      Bikes
                     </Box>
                     {/* <IconChevronDown size={16} color={theme.fn.primaryColor()} /> */}
                   </Center>
@@ -220,15 +221,29 @@ function NavBar() {
                 </div>
               </HoverCard.Dropdown> */}
             </HoverCard>
-            <a href="#" className={classes.link}>
-              Learn
+            <a href="/rent-bike" className={classes.link}>
+              Rent-Bike
             </a>
             {/* <Link to='/rent-bike'> */}
-            <a href='#'  className={classes.link}>
-              Rent-Bike
+            <a href='/chat' className={classes.link}>
+              Chat
             </a>
             {/* </Link> */}
           </Group>
+
+          {/* search  */}
+          {/* <Group>
+          <Group ml={50} spacing={5} className={classes.links}>
+            {items}
+          </Group>
+          <Autocomplete
+            className={classes.search}
+            placeholder="Search"
+            icon={<IconSearch size="1rem" stroke={1.5} />}
+            data={[]}
+          />
+        </Group> */}
+         {/* search  */}
 
           <Group className={classes.hiddenMobile}>
 
@@ -264,30 +279,37 @@ function NavBar() {
         <ScrollArea h={`calc(100vh - ${rem(60)})`} mx="-md">
           <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
 
-          <a href="#" className={classes.link}>
+          <a href="/" className={classes.link}>
             Home
           </a>
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
             <Center inline>
               <Box component="span" mr={5}>
-                Features
+                <Link to='/bikes'>
+                  Bikes
+                </Link>
               </Box>
               {/* <IconChevronDown size={16} color={theme.fn.primaryColor()} /> */}
             </Center>
           </UnstyledButton>
           {/* <Collapse in={linksOpened}>{links}</Collapse> */}
-          <a href="#" className={classes.link}>
-            Learn
+          <a href="/bikes" className={classes.link}>
+            Bikes
           </a>
-          <a href="#" className={classes.link}>
-            Academy
+          <a href="/rent-bike" className={classes.link}>
+            Rent-Bike
           </a>
 
           <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
 
           <Group position="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            <Link to='/login'>
+              <Button variant="default" >Log in
+              </Button>
+            </Link>
+            <Link to='/signup'>
+              <Button variant="default">Sign up</Button>
+            </Link>
 
           </Group>
         </ScrollArea>

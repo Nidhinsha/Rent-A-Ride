@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { userGetBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { searchBikesAPI, userGetBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -197,4 +197,23 @@ export const userGetBikeAction = () => async (dispatch)=>{
   } catch (error) {
     
   }
+}
+
+export const userBikeSearchAction = (searchTerm)=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_GET_SEARCH_BIKES_REQUEST
+  })
+
+  searchBikesAPI(searchTerm).then((data)=>{
+    dispatch({
+      type : userActionType.USER_GET_SEARCH_BIKES_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.USER_GET_SEARCH_BIKES_FAIL,
+      payload : error.response.message
+    })
+  })
 }

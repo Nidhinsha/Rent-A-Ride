@@ -8,7 +8,7 @@ const userSignupLogin = require("../../controller/User/signup-login")
 const userProfile = require("../../controller/User/profileController")
 const userAddBike = require("../../controller/User/userAddBikeController")
 const userDisplayBikes = require("../../controller/User/bikes/displayBikesController")
-
+const searchBikesController = require("../../controller/User/bikes/searchBikeController")
 // signUp Route
 
 router.post('/user-signup',userSignupLogin.SignUpPost)
@@ -32,7 +32,9 @@ router.route("/userAddProof").post(protect,userProfile.addProof)
 
 // Add bike from the user
 router.route("/rent-bike").post(upload.array('images'),protect,userAddBike.userAddBike);
-
+// displaying the all bikes
 router.route("/bikes").get(userDisplayBikes.displayBikeController)
+// search bikes
+router.route("/search-bikes").post(searchBikesController.searchBikes)
 
 module.exports = router;

@@ -159,21 +159,23 @@ function Login() {
                   ),
                 }}
               />
-              
-              <Button type='submit' variant="contained"  fullWidth sx={{ mb: 2, backgroundColor:"#6366F1" , "&.MuiButtonBase-root:hover": {
-                bgcolor: "#6366F1"
-              } }} >
+
+              <Button type='submit' variant="contained" fullWidth sx={{
+                mb: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
+                  bgcolor: "#6366F1"
+                }
+              }} >
                 Login
               </Button>
               <Button
-    variant="text"
-    fullWidth
-    sx={{ mb: 2 }}
-    component={Link} // make the button act as a link
-    to="/signup" // specify the link destination
-  >
-   New Member ? Create
-  </Button>
+                variant="text"
+                fullWidth
+                sx={{ mb: 2 }}
+                component={Link} // make the button act as a link
+                to="/signup" // specify the link destination
+              >
+                New Member ? Create
+              </Button>
               {/* <Button variant="contained" color="primary" fullWidth startIcon={<Email />}>
               Sign up with Google
             </Button> */}
