@@ -228,6 +228,9 @@ function NavBar() {
             <a href='/chat' className={classes.link}>
               Chat
             </a>
+            <a href='/rented-bikes' className={classes.link}>
+              Rented-Bikes
+            </a>
             {/* </Link> */}
           </Group>
 
