@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import {  CardActionArea, CardActions } from '@mui/material';
+import { CardActionArea, CardActions } from '@mui/material';
 import NavBar from '../../../components/NavBar/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { userGetBikeAction } from '../../../Redux/Actions/userActions';
@@ -14,11 +14,13 @@ import InputAdornment from '@mui/material/InputAdornment';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import { Box } from '@mantine/core';
 import { userBikeSearchAction } from '../../../Redux/Actions/userActions';
+import { useNavigate } from 'react-router-dom';
 
-  
+
 function Bikes() {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
@@ -28,50 +30,52 @@ function Bikes() {
         dispatch(userGetBikeAction())
     }, [])
 
-    const [searchTerm,setSearchTerm]=useState('')
+    const [searchTerm, setSearchTerm] = useState('')
 
-    const handleSubmit=(e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(userBikeSearchAction(searchTerm))
-        console.log('hey',searchTerm)
+        console.log('hey', searchTerm)
     }
     return (
         <>
             <NavBar />
             <div className='d-flex flex-wrap justify-content-center  '>
-            <Box component='form' onSubmit={handleSubmit}>
-            <TextField
-                label="Search"
-                name='search'
-                value={searchTerm}
-                fullWidth
+                <Box component='form' onSubmit={handleSubmit}>
+                    <TextField
+                        label="Search"
+                        name='search'
+                        value={searchTerm}
+                        fullWidth
 
-                onChange={(e)=> setSearchTerm(e.target.value)}
+                        onChange={(e) => setSearchTerm(e.target.value)}
 
-                sx={{ mb: 2 }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="start" style={{ cursor: 'pointer' }}   onClick={handleSubmit}>
-                      <ImageSearchIcon  />
-                    </InputAdornment>
-                  ),
-                }}
-                helperText='enter the text here..'
-              />
-            </Box>
+                        sx={{ mb: 2 }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="start" style={{ cursor: 'pointer' }} onClick={handleSubmit}>
+                                    <ImageSearchIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                        helperText='enter the text here..'
+                    />
+                </Box>
 
                 {
                     bikesDataLoading ? <Loading /> :
                         bikesData ? bikesData.map((data, index) => {
                             return (
-                                <Card key={index} sx={{ height: 380, width: 300, m: 3 ,boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
+                                <Card key={index} sx={{ height: 380, width: 300, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"
                                             height="180"
                                             width="140"
                                             image={data.photo[0]}
-                                            alt={data.bikeName} />
+                                            alt={data.bikeName} 
+                                            onClick={(e)=> navigate('/single-bike-view',{state : {bikesData}})}
+                                            />
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="div" >
                                                 {data.bikeName}
@@ -91,7 +95,7 @@ function Bikes() {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                    <Button label="Book" aria-label="Submit"  icon="pi pi-shopping-bag"  />
+                                        <Button label="Book" aria-label="Submit" icon="pi pi-shopping-bag" />
                                         {/* <Button variant="contained" endIcon={<SendIcon />}>
                                             Book
                                         </Button> */}
