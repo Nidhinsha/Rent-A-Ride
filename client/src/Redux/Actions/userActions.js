@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { searchBikesAPI, userGetBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { searchBikesAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -213,6 +213,82 @@ export const userBikeSearchAction = (searchTerm)=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_SEARCH_BIKES_FAIL,
+      payload : error.response.message
+    })
+  })
+}
+
+
+export const userGetAllRentedBikes =() => async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_GET_ALL_RENTED_BIKES_REQUEST
+  })
+
+  userGetAllRentedBikeAPI().then((data)=>{
+    dispatch({
+      type : userActionType.USER_GET_ALL_RENTED_BIKES_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.USER_GET_ALL_RENTED_BIKES_FAIL,
+      payload : error.response.message
+    })
+  })
+}
+
+export const userGetAcceptedBikes =()=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_GET_ACCEPTED_BIKES_REQUEST
+  })
+
+  userGetAcceptedBikeAPI().then((data)=>{
+    dispatch({
+      type : userActionType.USER_GET_ACCEPTED_BIKES_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.USER_GET_ACCEPTED_BIKES_FAIL,
+      payload : error.response.message
+    })
+  })
+}
+export const userGetRejectedBikes =()=>async(dispatch)=>{
+  console.log('rejected action');
+  dispatch({
+    type : userActionType.USER_GET_REJECTED_BIKES_REQUEST
+  })
+
+  userGetRejectedBikeAPI().then((data)=>{
+    dispatch({
+      type : userActionType.USER_GET_REJECTED_BIKES_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.USER_GET_REJECTED_BIKES_FAIL,
+      payload : error.response.message
+    })
+  })
+}
+export const userGetPendingBikes =()=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_GET_PENDING_BIKES_REQUEST
+  })
+
+  userGetPendingBikeAPI().then((data)=>{
+    dispatch({
+      type : userActionType.USER_GET_PENDING_BIKES_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.USER_GET_PENDING_BIKES_FAIL,
       payload : error.response.message
     })
   })

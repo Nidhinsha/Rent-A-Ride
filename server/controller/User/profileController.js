@@ -6,7 +6,7 @@ exports.profileGet = async (req,res)=>{
         console.log(req.query.id,'profile query');
         userSchema.findOne({_id : req.query.id}).then((data)=>{
             res.status(200).json(data)
-            console.log(data,'user data profile');
+           
         })
     } catch (error) {
         // console.log(error,'user profile feching eror');

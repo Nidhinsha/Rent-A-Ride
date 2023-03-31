@@ -1,6 +1,10 @@
 const mongoose = require("mongoose")
 
 const bikeSchema = new mongoose.Schema({
+    ownerId : {
+        type:String
+        // required : true
+    },
     ownerName : {
         type:String
         // required : true

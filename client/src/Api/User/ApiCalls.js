@@ -44,4 +44,8 @@ export const userEditProfileAPI = (firstName,lastName,email,phone,id)=>{
 }
 export const userAddBikeAPI = (formdata) => API.post('/rent-bike?id=' + ID, formdata, configFormData)
 export const userGetBikeAPI = () => API.get('/bikes', config)
+export const userGetAllRentedBikeAPI = () => API.get('/all-bikes?id='+ID,configToken)
+export const userGetAcceptedBikeAPI = () => API.get('/accepted-bikes?id='+ID,configToken)
+export const userGetRejectedBikeAPI = () => API.get('/rejected-bikes?id='+ID,configToken)
+export const userGetPendingBikeAPI = () => API.get('/pending-bikes?id='+ID,configToken)
 export const searchBikesAPI = (searchTerm)=> API.post('/search-bikes',{searchTerm},config)

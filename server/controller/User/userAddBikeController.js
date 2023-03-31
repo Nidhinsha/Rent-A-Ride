@@ -31,6 +31,7 @@ exports.userAddBike = async (req,res)=>{
             }
 
             let bikeDetails = {
+                ownerId : req.query.id,
                 ownerName : req.body.ownerName,
                 bikeName : req.body.bikeName,
                 bikeModel : req.body.bikeModel,

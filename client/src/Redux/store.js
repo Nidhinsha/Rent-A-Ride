@@ -9,7 +9,11 @@ import {
   userImageUplaodReducer,
   getUserProfileReduer,
   userGetBikeReducer,
-  userProofUploadReducer
+  userProofUploadReducer,
+  userGetAllRentedBikesReducer,
+  userGetAcceptedBikeReducer,
+  userGetPendingBikeReducer,
+  userGetRejectedBikeReducer
 
 
 } from "./Reducers/userReducers";
@@ -35,6 +39,11 @@ const reducer = combineReducers({
   userProofUploadReducer:userProofUploadReducer,
   
   userGetBikeReducer: userGetBikeReducer,
+  userGetAllRentedBikesReducer : userGetAllRentedBikesReducer,
+  userGetAcceptedBikeReducer : userGetAcceptedBikeReducer,
+  userGetPendingBikeReducer : userGetPendingBikeReducer,
+  userGetRejectedBikeReducer : userGetRejectedBikeReducer,
+
 
 
   adminLoginReducer: adminLoginReducer,

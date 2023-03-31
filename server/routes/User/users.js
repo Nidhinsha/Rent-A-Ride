@@ -39,9 +39,9 @@ router.route("/bikes").get(userDisplayBikes.displayBikeController)
 router.route("/search-bikes").post(searchBikesController.searchBikes)
 
 // displaying user rented bikes like rejected and accepted and in that page the edit of that item
-router.route('/all-bikes').get(rentedBikeController.userAllBikeController)
+router.route('/all-bikes').get(protect,rentedBikeController.userAllBikeController)
 
-router.route("/accepted-bikes").get(rentedBikeController.userGetAcceptedBikes)
-router.route("/rejected-bikes").get(rentedBikeController.userGetRejectedBikes)
-router.route("/pending-bikes").get(rentedBikeController.userGetPendingBikes)
+router.route("/accepted-bikes").get(protect,rentedBikeController.userGetAcceptedBikes)
+router.route("/rejected-bikes").get(protect,rentedBikeController.userGetRejectedBikes)
+router.route("/pending-bikes").get(protect,rentedBikeController.userGetPendingBikes)
 module.exports = router;

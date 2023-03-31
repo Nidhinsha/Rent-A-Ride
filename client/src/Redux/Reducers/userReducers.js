@@ -175,3 +175,90 @@ export const userGetBikeReducer =(state={},action)=>{
       return state
   }
 }
+
+export const userGetAllRentedBikesReducer = (state={},action)=>{
+  switch(action.type){
+    case userActionType.USER_GET_ALL_RENTED_BIKES_REQUEST:
+      return {
+        loading : true
+      }
+    case userActionType.USER_GET_ALL_RENTED_BIKES_SUCCESS:
+      return {
+        loading : false,
+        rentedBikesData : action.payload
+      }
+    case userActionType.USER_GET_ALL_RENTED_BIKES_FAIL:
+      return {
+        loading : false,
+        rentedBikesDataError : action.payload
+      }
+    
+    default :
+      return state
+  }
+}
+
+export const userGetAcceptedBikeReducer = (state={},action)=>{
+  switch(action.type){
+    case userActionType.USER_GET_ACCEPTED_BIKES_REQUEST:
+      return {
+        loading : true
+      }
+    case userActionType.USER_GET_ACCEPTED_BIKES_SUCCESS:
+      return {
+        loading : false,
+        acceptedBikesData : action.payload
+      }
+    case userActionType.USER_GET_ACCEPTED_BIKES_FAIL:
+      return {
+        loading : false,
+        acceptedBikesDataError : action.payload
+      }
+    
+    default :
+      return state
+  }
+}
+
+export const userGetPendingBikeReducer = (state={},action)=>{
+  switch(action.type){
+    case userActionType.USER_GET_PENDING_BIKES_REQUEST:
+      return {
+        loading : true
+      }
+    case userActionType.USER_GET_PENDING_BIKES_SUCCESS:
+      return {
+        loading : false,
+        pendingBikesData : action.payload
+      }
+    case userActionType.USER_GET_PENDING_BIKES_FAIL:
+      return {
+        loading : false,
+        pendingBikesDataError : action.payload
+      }
+    
+    default :
+      return state
+  }
+}
+export const userGetRejectedBikeReducer = (state={},action)=>{
+  switch(action.type){
+    case userActionType.USER_GET_REJECTED_BIKES_REQUEST:
+      return {
+        loading : true
+      }
+    case userActionType.USER_GET_REJECTED_BIKES_SUCCESS:
+      return {
+        loading : false,
+        rejectedBikesData : action.payload
+      }
+    case userActionType.USER_GET_REJECTED_BIKES_FAIL:
+      return {
+        loading : false,
+        rejectedBikesDataError : action.payload
+      }
+    
+    default :
+      return state
+  }
+}

@@ -13,7 +13,9 @@ import Home from './Pages/User/Home/Home'
 import Login from './Pages/User/Login/Login'
 import Profile from './Pages/User/Profile/Profile'
 import RentBike from './Pages/User/RentBike/RentBike'
+import RentedBikes from './Pages/User/RentedBikes/RentedBikes'
 import Signup from './Pages/User/Signup/Signup'
+import SingleBikeView from './Pages/User/SingleBikeView/SingleBikeView'
 import Test from './Pages/User/Test/Test'
 function App() {
 
@@ -29,7 +31,9 @@ function App() {
       <Route path='/profile' exact  element={userData ? <Profile /> : <Login/>} />
       <Route path='/rent-bike' exact element={userData? <RentBike />: <Login/> } />
       <Route path='/bikes' exact element={<Bikes/>} />
-      <Route path='/test' exact element={<Test />} />
+      <Route path='/single-bike-view' exact element={<SingleBikeView/>} />
+      <Route path='/rented-bikes' exact element={<RentedBikes/>} />
+      <Route path='/test' exact element={<Test />} /> 
       
       <Route path='/admin/login' element={ adminData ?<Dashboard/>: <AdminLogin />} />
       <Route path='/admin/user-manage' exact element={adminData ?  <UserManage /> :<AdminLogin /> } />
