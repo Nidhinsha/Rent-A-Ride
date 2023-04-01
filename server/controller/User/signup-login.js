@@ -58,7 +58,7 @@ exports.LoginPost= async(req,res)=>{
                     bcrypt.compare(req.body.password , userData.password , function (err,response){
                         if (response) {
                             let details ={
-                            _id : userData._id ,
+                            id : userData.id ,
                             firstName : userData.firstName ,
                             lastName : userData.lastName ,
                             email : userData.email ,
@@ -67,7 +67,7 @@ exports.LoginPost= async(req,res)=>{
                             proof : userData.proof,
                             token : generateToken(userData.id)
                         }
-                        console.log('details',details);
+                        console.log('details in login',details);
                         res.status(200).json(details)
                         }else{
                             res.status(401).json("Incorrect Password")
@@ -85,6 +85,44 @@ exports.LoginPost= async(req,res)=>{
         }).
         catch((error)=>{
             rs.json("Error")
+        })
+    } catch (error) {
+        
+    }
+}
+
+exports.otpLoginController = (req,res)=>{
+    try {
+        console.log(req.body,'bodyyyyyy');
+        userSchema.findOne({phone : req.body.phone}).then((data)=>{
+            if(data){
+                console.log(data,'data for send to the frontend');
+                if(data.status){
+                    const {id,firstName,lastName,email,status,phone,photo,proof} = data
+
+                    const result ={
+                        id,
+                        firstName,
+                        lastName,
+                        email,
+                        phone,
+                        photo,
+                        status,
+                        proof,
+                        token : generateToken(id)
+                    }
+                    console.log(result,'result otp');
+
+                    res.status(200).json(result)
+                }else{
+                    res.json(400).json("Account suspended Temporarily")
+                }
+            }else{
+                res.status(400).json("phone number not registred")
+            }
+        })
+        .catch((error)=>{
+            res.json(error)
         })
     } catch (error) {
         

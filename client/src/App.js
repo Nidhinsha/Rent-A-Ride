@@ -17,6 +17,7 @@ import RentedBikes from './Pages/User/RentedBikes/RentedBikes'
 import Signup from './Pages/User/Signup/Signup'
 import SingleBikeView from './Pages/User/SingleBikeView/SingleBikeView'
 import Test from './Pages/User/Test/Test'
+import OtpLogin from './Pages/User/OtpLogin/OtpLogin'
 function App() {
 
   // const userData = useSelector((state)=> state.userL)
@@ -27,6 +28,7 @@ function App() {
       <Routes>
       <Route path='/login' element={userData ?  <Navigate to='/'/> : <Login />}  />
       <Route path='/signup' element={userData ? <Login/> : <Signup />} />
+      <Route path='/otp-login' element={userData ? <Navigate to='/' /> : <OtpLogin/>}/>
       <Route path='/' exact element={<Home />} />
       <Route path='/profile' exact  element={userData ? <Profile /> : <Login/>} />
       <Route path='/rent-bike' exact element={userData? <RentBike />: <Login/> } />

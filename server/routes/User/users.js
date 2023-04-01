@@ -16,6 +16,7 @@ router.post('/user-signup',userSignupLogin.SignUpPost)
 
 router.post('/user-login',userSignupLogin.LoginPost)
 
+router.route('/otp-login').post(userSignupLogin.otpLoginController)
 // Home
 router.route("/").get(protect,)
 

@@ -176,6 +176,15 @@ function Login() {
               >
                 New Member ? Create
               </Button>
+              <Button
+                variant="text"
+                fullWidth
+                sx={{ mb: 2 }}
+                component={Link} // make the button act as a link
+                to="/otp-login" // specify the link destination
+              >
+                login with otp
+              </Button>
               {/* <Button variant="contained" color="primary" fullWidth startIcon={<Email />}>
               Sign up with Google
             </Button> */}

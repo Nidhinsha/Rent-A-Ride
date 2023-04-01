@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { searchBikesAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { searchBikesAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -69,6 +69,28 @@ export const userLogin = (email, password) => async (dispatch) => {
   }
 }
 
+// otp login
+
+export const userOtpLoginAction =(phone) =>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_LOGIN_REQUEST
+  })
+
+  userOtpLoginAPI(phone).then((data)=>{
+    dispatch({
+      type : userActionType.USER_LOGIN_SUCCESS,
+      payload : data.data
+    })
+    localStorage.setItem("userInfo",JSON.stringify(data.data))
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.USER_LOGIN_FAIL,
+      payload : error.response
+    })
+  })
+}
+
 // user logout
 
 export const userLogOut = () => async (dispatch) => {
@@ -93,9 +115,9 @@ export const getUserProfileAction = () => async (dispatch) => {
     dispatch({ type: userActionType.GET_USER_PROFILE_REQUEST });
 
     const user = JSON.parse(localStorage.getItem("userInfo"));
-    console.log("user tokeusern in profile",user._id);
+    console.log("user tokeusern in profile",user.id);
 
-    userProfileAPI(user._id).then((data) => {
+    userProfileAPI(user.id).then((data) => {
       console.log('profile dta', data.data);
 
       dispatch({
@@ -122,10 +144,10 @@ export const userImageAction = (image) => async (dispatch) => {
   try {
 
     const user = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(user._id + "tttttttttttttttttttt");
+    console.log(user.id + "tttttttttttttttttttt");
 
 
-    userImageUploadAPI(user._id, image).then((data) => {
+    userImageUploadAPI(user.id, image).then((data) => {
       console.log("image upload api data", data.data);
 
       localStorage.setItem("userInfo", JSON.stringify(data.data))
@@ -144,9 +166,9 @@ export const userImageAction = (image) => async (dispatch) => {
 export const userProofAction =(image) => async(dispatch)=>{
   try {
     const user = JSON.parse(localStorage.getItem("userInfo"))
-    console.log('userid in proof',user._id);
+    console.log('userid in proof',user.id);
 
-    userProofUploadAPI(user._id,image).then((data)=>{
+    userProofUploadAPI(user.id,image).then((data)=>{
       console.log('proof api data',data.data);
 
       localStorage.setItem("userInfo",JSON.stringify(data.data))

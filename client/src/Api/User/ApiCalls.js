@@ -9,7 +9,7 @@ const config = {
 }
 let user = JSON.parse(localStorage.getItem('userInfo'))
 
-const ID = user?._id
+const ID = user?.id
 console.log(ID, 'userid');
 
 export const configToken = {
@@ -27,11 +27,13 @@ const configFormData = {
 }
 export const userSignUpAPI = (firstName, lastName, email, phone, password) => API.post('/user-signup', { firstName, lastName, email, phone, password }, config)
 export const userLoginAPI = (email, password) => API.post('/user-login', { email, password }, config)
+export const userOtpLoginAPI = (phone) => API.post('/otp-login',{phone},config)
 export const userHomeAPI = () => API.get('/', config)
 export const userProfileAPI = (id) => API.get('/profile?id=' + id, configToken)
 export const userImageUploadAPI = (id, image) => API.post('/userProfileImageUpdate?id=' + id, { image }, configToken)
-export const userProofUploadAPI =(id,image) => API.post('/userAddProof?id=' +id,{image},configToken)
+export const userProofUploadAPI =(id,image) => API.post('/userAddProof?id='+id,{image},configToken)
 export const userEditProfileAPI = (firstName,lastName,email,phone,id)=>{
+  
   return(
     console.log("user edit api",firstName),
     console.log("user edit api",lastName),
