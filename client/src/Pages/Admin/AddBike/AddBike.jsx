@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormHelperText, styled } from '@mui/material'
@@ -6,7 +6,7 @@ import SideBar from '../../../components/SideBar/SideBar';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminAddBikeAPI } from '../../../Api/Admin/ApiCalls';
-import { adminAddBikeAction } from '../../../Redux/Actions/adminActions';
+import { adminAddBikeAction, adminGetLocation } from '../../../Redux/Actions/adminActions';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
@@ -25,6 +25,7 @@ function AddBike() {
     const [engineNumber, setEngineNumber] = useState('')
     const [brand, setBrand] = useState('')
     const [fuel, setFuel] = useState('')
+    const [loc, setLocation] = useState([])
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
     const [color, setColor] = useState('')
@@ -32,20 +33,29 @@ function AddBike() {
     const [loading, setLoading] = useState(false)
     const [sucess, setSuccess] = useState(false)
 
-    const location = useSelector((state)=> state.adminGetLocationReducer.location)
-    console.log(location,'location')
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+
+
+    useEffect(() => {
+        dispatch(adminGetLocation())
+    }, [])
+    const location = useSelector((state) => state.adminGetLocationReducer.location)
+    console.log(location, 'location in the add-bikepage')
+
+
+
+
     const {
         register,
+        watch,
         handleSubmit,
         formState: { errors }
     } = useForm()
 
     const onSubmit = async () => {
-        console.log(bikeName, bikeModel, engineNumber, brand, fuel, description, price, color, images, 'form data for add bike the ');
+        console.log(bikeName, bikeModel, engineNumber, brand, fuel, location, description, price, color, images, 'form data for add bike the ');
         setLoading(true)
 
         // for using the form data
@@ -70,6 +80,7 @@ function AddBike() {
         formdata.append("brand", brand)
         formdata.append("price", price)
         formdata.append("color", color)
+        formdata.append("location", loc)
         formdata.append("description", description)
 
         adminAddBikeAPI(formdata).then((data) => {
@@ -81,7 +92,7 @@ function AddBike() {
             setSuccess(true)
 
             setTimeout(() => {
-                Navigate("/admin/bikes", { state: { bikeAdded: true } })
+                navigate("/admin/bikes", { state: { bikeAdded: true } })
                 setSuccess(false)
             }, 3000)
         })
@@ -210,26 +221,21 @@ function AddBike() {
                                 )}
                                 onChange={(e) => setFuel(e.target.value)}
                             >
-                                {
-                                    location ? location.map((value)=>{
-                                        return(
-                                            <MenuItem value={value.location} >{value.location}</MenuItem>
-                                        )
-                                    }) : ""
-                                }
 
-                                {/* <MenuItem value="petrol" >Petrol</MenuItem>
+                                <MenuItem value="petrol" >Petrol</MenuItem>
                                 <MenuItem value="diesel" >Diesel</MenuItem>
-                                <MenuItem value="electric" >Electric</MenuItem> */}
+                                <MenuItem value="electric" >Electric</MenuItem>
                             </Select>
                             {errors.fuel && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.fuel && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
                         </FormControl>
                     </div>
 
+
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
+                            
                             label="Price"
                             type="number"
                             {...register("price",
@@ -241,6 +247,69 @@ function AddBike() {
                             helperText={errors.price && <p style={{ color: 'red' }}>Please enter a price</p>}
                         />
 
+                        <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }} >
+                            <InputLabel id="demo-simple-select-label"  >Location</InputLabel>
+                            {/* <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                // value={location}
+                                label="Location"
+                                {...register("location",
+                                    {
+                                        required: true, minLength: 3
+                                    }
+                                )}
+                                onChange={(e) => setLocation(e.target.value)}
+                            >
+                              
+                                {
+                                    location ? location.map((x)=>{
+                                        return(
+                                           
+                                            <MenuItem key={x._id}  >{x.location}</MenuItem>
+                                           
+                                        )
+                                    }) : ""
+                                }
+                            </Select> */}
+
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={location} // retrieve the selected value from React Hook Form
+                                label="Location"
+                                name='location'
+                                {...register("location", { required: true })}
+                                onChange={(e) => setLocation(e.target.value)}
+                            >
+                                {/* <MenuItem disabled value="choose">Choose Option</MenuItem> */}
+                                {location
+                                    ? location.map((x) => (
+                                        <MenuItem key={x._id} value={x.location}>
+                                            {/* set the value to the location */}
+                                            {x.location}
+                                        </MenuItem>
+                                    ))
+                                    : (
+                                        <MenuItem >No locations available</MenuItem>
+                                    )}
+                            </Select>
+
+
+                            {/* <select  name="" id="">
+                            {
+                                location ? location.map((m)=>{
+                                    return <><option value={m.location}>{m.location}</option></>
+                                })  :' '
+                            }
+                            </select> */}
+
+                            {errors.location && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.location && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
+                        </FormControl>
+
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
@@ -255,7 +324,6 @@ function AddBike() {
                             onChange={(e) => setDescription(e.target.value)}
                             helperText={errors.description && <p style={{ color: 'red' }}>Please add a description</p>}
                         />
-
                     </div>
 
 

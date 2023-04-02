@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Alert, CircularProgress } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
@@ -13,6 +13,7 @@ import { userAddBikeAPI } from '../../../Api/User/ApiCalls';
 import NavBar from '../../../components/NavBar/NavBar';
 import { FormHelperText } from '@mui/material'
 import { useForm } from "react-hook-form"
+import { userGetLocation } from '../../../Redux/Actions/userActions';
 
 function RentBike() {
 
@@ -22,6 +23,7 @@ function RentBike() {
     const [engineNumber, setEngineNumber] = useState('')
     const [brand, setBrand] = useState('')
     const [fuel, setFuel] = useState('')
+    const [loc, setLocation] = useState([])
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
     const [color, setColor] = useState('')
@@ -29,8 +31,20 @@ function RentBike() {
     const [loading, setLoading] = useState(false)
     const [sucess, setSuccess] = useState(false);
 
+
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        dispatch(userGetLocation())
+    }, [])
+
+    const location = useSelector((state) => state.userLocationReducer.locationData)
+    console.log(location, 'location in user rent page')
+
+
+
 
     const {
         register,
@@ -39,7 +53,7 @@ function RentBike() {
     } = useForm()
 
     const onSubmit = async () => {
-        console.log(bikeName, bikeModel, engineNumber, brand, fuel, description, price, color, images, 'form data for add bike the ');
+        console.log(bikeName, bikeModel, engineNumber, brand, fuel, location, description, price, color, images, 'form data for add bike the ');
         setLoading(true)
 
         // for using the form data
@@ -65,6 +79,7 @@ function RentBike() {
         formdata.append("brand", brand)
         formdata.append("price", price)
         formdata.append("color", color)
+        formdata.append("location", loc)
         formdata.append("description", description)
 
         userAddBikeAPI(formdata).then((data) => {
@@ -76,7 +91,7 @@ function RentBike() {
             setSuccess(true)
 
             setTimeout(() => {
-                Navigate("/profile", { state: { bikeAdded: true } })
+                navigate("/profile", { state: { bikeAdded: true } })
                 setSuccess(false)
             }, 3000)
         })
@@ -222,6 +237,59 @@ function RentBike() {
                             onChange={(e) => setPrice(e.target.value)}
                             helperText={errors.price && <p style={{ color: 'red' }}>Please enter a price</p>}
                         />
+
+                        <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }}>
+                            <InputLabel id="demo-simple-select-label">Location</InputLabel>
+                            {/* <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={location}
+                                label="Location"
+                                {...register("location",
+                                    {
+                                        required: true, minLength: 3
+                                    }
+                                )}
+                                onChange={(e) => setLocation(e.target.value)}
+                            >
+                                  {
+                                    locationData ? locationData.map((value)=>{
+                                        return(
+                                            <MenuItem key={value._id} value={value.location} >{value.location}</MenuItem>
+                                        )
+                                    }) : ""
+                                }
+                               
+                            </Select> */}
+
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={location} // retrieve the selected value from React Hook Form
+                                label="Location"
+                                name='location'
+                                {...register("location", { required: true })}
+                                onChange={(e) => setLocation(e.target.value)}
+                            >
+                                {/* <MenuItem disabled value="choose">Choose Option</MenuItem> */}
+                                {location
+                                    ? location.map((x) => (
+                                        <MenuItem key={x._id} value={x.location}>
+                                            {/* set the value to the location */}
+                                            {x.location}
+                                        </MenuItem>
+                                    ))
+                                    : (
+                                        <MenuItem >No locations available</MenuItem>
+                                    )}
+                            </Select>
+                            {errors.location && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.location && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
+                        </FormControl>
+
+
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
@@ -255,6 +323,7 @@ function RentBike() {
                                 })}
                             onChange={(e) => setImages([...images, e.target.files[0]])} />
                     </div>
+
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             type="file"

@@ -130,7 +130,7 @@ export const adminGetLocation = ()=>async(dispatch)=>{
     })
 
     getLocationAPI().then((data)=>{
-        console.log('data of loc get',data.data);
+        console.log('getlocation api',data.data);
 
         dispatch({
             type : adminActionType.ADMIN_GET_LOCATION_SUCCESS,

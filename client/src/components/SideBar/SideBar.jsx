@@ -154,7 +154,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                         { name: 'Add Bike', icon: <AddCircleOutlineIcon style={{ color:'#6366F1'}}  /> },
                         { name: 'Bike Rent Request', icon: <RuleIcon style={{ color:'#6366F1'}}  /> },
                         { name: 'Booked bike', icon: <BookmarkAddIcon style={{ color:'#6366F1'}}  /> },
-                        { name: 'Branches', icon: <BranchIcon style={{ color:'#6366F1'}}  /> },
+                        { name: 'Location', icon: <BranchIcon style={{ color:'#6366F1'}}  /> },
                         { name: 'Bike Report', icon: <ReportIcon style={{ color:'#6366F1'}}  /> },
                         // { name: 'Other Donations', icon: <OthersIcon /> },
                         { name: 'Logout', icon: <LogoutIcon style={{ color:'#6366F1'}}  /> }
@@ -186,8 +186,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                                         text2 === "bike list"  && navigate('/admin/view-bike')
                                         text2 === "add bike"  && navigate('/admin/add-bike')
                                         text2 === "bike rent request"  && navigate('/admin/bike-request')
-                                        text2 === "booked bike"  && navigate('/admin/booked=bike')
-                                        text2 === "branches"  && navigate('/admin/branches')
+                                        text2 === "booked bike"  && navigate('/admin/booked-bike')
+                                        text2 === "location"  && navigate('/admin/location')
                                         text2 === "bike report"  && navigate('/admin/bike-report')
                                         text2 === "logout"  && handleLogout() 
                                         

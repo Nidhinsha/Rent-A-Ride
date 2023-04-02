@@ -10,6 +10,7 @@ const userAddBike = require("../../controller/User/userAddBikeController")
 const userDisplayBikes = require("../../controller/User/bikes/displayBikesController")
 const searchBikesController = require("../../controller/User/bikes/searchBikeController")
 const rentedBikeController = require("../../controller/User/bikes/rentedBikesController")
+const locationController = require("../../controller/User/locationController")
 // signUp Route
 
 router.post('/user-signup',userSignupLogin.SignUpPost)
@@ -45,4 +46,6 @@ router.route('/all-bikes').get(protect,rentedBikeController.userAllBikeControlle
 router.route("/accepted-bikes").get(protect,rentedBikeController.userGetAcceptedBikes)
 router.route("/rejected-bikes").get(protect,rentedBikeController.userGetRejectedBikes)
 router.route("/pending-bikes").get(protect,rentedBikeController.userGetPendingBikes)
+
+router.route('/get-location').get(locationController.getLocations)
 module.exports = router;

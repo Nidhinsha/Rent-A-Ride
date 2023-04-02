@@ -262,3 +262,25 @@ export const userGetRejectedBikeReducer = (state={},action)=>{
       return state
   }
 }
+
+export const userLocationReducer = (state={},action)=>{
+  switch (action.type) {
+    case userActionType.USER_GET_LOCATION_REQUEST:
+      return {
+        loading : true
+      }
+    case userActionType.USER_GET_LOCATION_SUCCESS:
+      return {
+        loading : false,
+        locationData : action.payload
+      }
+    case userActionType.USER_GET_LOCATION_FAIL:
+      return {
+        loading : false,
+        locationError : action.payload
+      }
+  
+    default:
+     return state
+  }
+}

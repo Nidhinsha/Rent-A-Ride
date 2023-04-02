@@ -15,7 +15,12 @@ import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import { Box } from '@mantine/core';
 import { userBikeSearchAction } from '../../../Redux/Actions/userActions';
 import { useNavigate } from 'react-router-dom';
-
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 function Bikes() {
 
@@ -40,8 +45,15 @@ function Bikes() {
     return (
         <>
             <NavBar />
-            <div className='d-flex flex-wrap justify-content-center  '>
-                <Box component='form' onSubmit={handleSubmit}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%',marginBottom:50 }}>
+                <h1>Rent-A-Ride Bikes For You</h1>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+                <Box component='form' onSubmit={handleSubmit}
+                    sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '80%' }}
+
+                >
+
                     <TextField
                         label="Search"
                         name='search'
@@ -61,52 +73,58 @@ function Bikes() {
                         helperText='enter the text here..'
                     />
                 </Box>
-
-                {
-                    bikesDataLoading ? <Loading /> :
-                        bikesData ? bikesData.map((data, index) => {
-                            return (
-                                <Card key={index} sx={{ height: 380, width: 300, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            component="img"
-                                            height="180"
-                                            width="140"
-                                            image={data.photo[0]}
-                                            alt={data.bikeName} 
-                                            onClick={(e)=> navigate('/single-bike-view',{state : {bikesData}})}
+            </Box>
+                <Box>
+            <div className='d-flex flex-wrap justify-content-center  '>
+                    {
+                        bikesDataLoading ? <Loading /> :
+                            bikesData ? bikesData.map((data, index) => {
+                                return (
+                                    <Card key={index} sx={{ height: 350, width: 350, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
+                                        <CardActionArea>
+                                        <Typography gutterBottom variant="h6" textAlign='center' >
+                                                    {data.bikeName}
+                                                </Typography>
+                                            <CardMedia
+                                                component="img"
+                                                height="180"
+                                                width="140"
+                                                image={data.photo[0]}
+                                                alt={data.bikeName}
+                                                onClick={(e) => navigate('/single-bike-view', { state: { bikesData } })}
                                             />
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" component="div" >
-                                                {data.bikeName}
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary" fontWeight="bold" >
-                                                Model : {data.bikeModel}
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                                                Brand : {data.brand}
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                                                Description : {data.description}
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                                                Price : {data.price}
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                    <CardActions>
-                                        <Button label="Book" aria-label="Submit" icon="pi pi-shopping-bag" />
-                                        {/* <Button variant="contained" endIcon={<SendIcon />}>
+                                            <CardContent>
+                                                {/* <Typography gutterBottom variant="h4" component="div" >
+                                                    {data.bikeName}
+                                                </Typography> */}
+                                                {/* <Typography variant="h6" color="text.secondary" textAlign='center' fontWeight="bold" >
+                                                    Model : {data.bikeModel}
+                                                </Typography>
+                                                <Typography variant="h6" color="text.secondary" fontWeight="bold" textAlign='center'>
+                                                    Brand : {data.brand}
+                                                </Typography> */}
+                                                {/* <Typography variant="h6" color="text.secondary" fontWeight="bold" textAlign='center'>
+                                                    Description : {data.description}
+                                                </Typography> */}
+                                                <Typography variant="h6" color="text.secondary" fontWeight="bold" textAlign='center'>
+                                                   Rent Now @ Price : {data.price} /hr
+                                                </Typography>
+                                              
+                                            </CardContent>
+                                        </CardActionArea>
+                                        <CardActions>
+                                            <Button  label="Book Now" aria-label="Submit" icon="pi pi-shopping-bag"  style={{ width: '100%',fontSize:'large' }}
+                                             />
+                                            {/* <Button variant="contained" endIcon={<SendIcon />}>
                                             Book
                                         </Button> */}
-                                    </CardActions>
-                                </Card>
-                            )
-                        }) : ""
-                }
-
-
+                                        </CardActions>
+                                    </Card>
+                                )
+                            }) : ""
+                    }
             </div>
+                </Box>
         </>
     )
 }

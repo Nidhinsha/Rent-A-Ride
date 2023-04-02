@@ -83,7 +83,7 @@ export const adminGetAllBikeReducer =(state={},action)=>{
 }
 
 export const adminGetLocationReducer = (state={},action)=>{
-  console.log('get loc redu',action.payload)
+  console.log('get loc redu ',action.payload)
 
   switch(action.type){
     case adminActionType.ADMIN_GET_LOCATION_REQUEST:

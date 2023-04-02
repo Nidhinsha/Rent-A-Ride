@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { searchBikesAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { searchBikesAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -311,6 +311,29 @@ export const userGetPendingBikes =()=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_PENDING_BIKES_FAIL,
+      payload : error.response.message
+    })
+  })
+}
+
+export const userGetLocation =()=> async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_GET_LOCATION_REQUEST
+  })
+
+  userGetLocationAPI().then((data)=>{
+    console.log('user location',data.data);
+
+    dispatch({
+      type : userActionType.USER_GET_LOCATION_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    console.log('user location err in action');
+
+    dispatch({
+      type : userActionType.USER_GET_LOCATION_FAIL,
       payload : error.response.message
     })
   })

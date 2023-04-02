@@ -51,3 +51,4 @@ export const userGetAcceptedBikeAPI = () => API.get('/accepted-bikes?id='+ID,con
 export const userGetRejectedBikeAPI = () => API.get('/rejected-bikes?id='+ID,configToken)
 export const userGetPendingBikeAPI = () => API.get('/pending-bikes?id='+ID,configToken)
 export const searchBikesAPI = (searchTerm)=> API.post('/search-bikes',{searchTerm},config)
+export const userGetLocationAPI =()=>API.get('/get-location',config)
