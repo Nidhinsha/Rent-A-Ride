@@ -40,6 +40,9 @@ const bikeSchema = new mongoose.Schema({
         type : Number,
         // required :true
     },
+    location:{
+        type:String
+    },
    photo:[]
    ,
    assured :{

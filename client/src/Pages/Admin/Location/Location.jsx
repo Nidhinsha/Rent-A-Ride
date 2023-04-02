@@ -42,6 +42,7 @@ function Location() {
     const [open, setOpen] = React.useState(false);
     const [editModalOpen, setEditModalOpen] = React.useState(false);
     const [locationId, setLocationId] = useState('')
+    // const [currentLocation,setCurrentLocation] = useState('')
 
     const dispatch = useDispatch()
     // const [location,setLocation] = useState('')
@@ -61,6 +62,8 @@ function Location() {
     }
     const handleEdit = (id) => {
         // dispatch()
+        // const locationToEdit = location.find((loc) => loc._id === id);
+        // setCurrentLocation(locationToEdit);
         setEditModalOpen(true);
         setLocationId(id)
         console.log('edit', id);

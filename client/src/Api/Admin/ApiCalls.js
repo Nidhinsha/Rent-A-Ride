@@ -33,6 +33,7 @@ export const adminLoginApi = (email,password) => API.post('/login',{email,passwo
 export const getUsersApi = () => API.get('/user-manage',configToken)
 export const userBlockUnblockApi =(id) => API.get('/userBlockUnblock?id='+id,configToken)
 export const adminAddBikeAPI = (formdata) => API.post("/add-bike",formdata,configFormData)
+export const adminEditBikeAPI = (id,formData) => API.post("/edit-bike?id="+id,formData,configFormData)
 export const adminDeleteBikeAPI = (id) => API.delete('/delete-bike?id='+id,configToken)
 export const getAllBikeAPI = () => API.get('/view-bike',configToken)
 export const getPendingBikeAPI = () => API.get('/user-rent-request',configToken)

@@ -49,34 +49,40 @@ function EditLocationModal({ open, onClose, locationId }) {
             onClose={onClose}
             title="Edit Location"
             content={
-                <Box
-                    component="form" onSubmit={handleSubmit(submitHandler)}>
+                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}
+                    // component="form" onSubmit={handleSubmit(submitHandler)}
+                    >
+                     <form style={{ width: '100%' }} onSubmit={handleSubmit(submitHandler)}>
 
                     <TextField
                         id="outlined-basic"
                         label="Outlined"
                         variant="outlined"
                         name='location'
+                        style={{ margin: '8px', width: '100%' }}
+                        fullWidth
+                        required
+                        // defaultValue={currentLocation}
                         error={!!errors.location}
                         helperText={errors.location ? errors.location.message : ""}
                         {...register("location")}
                     />
-                    <Box>
-                        <Button
-                            variant="outlined"
-                            type='submit'
-                        >
-                            Add
-                        </Button>
-                    </Box>
-                    <Box>
 
-                    <Button
+                    <Box  style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+                        
+                        <Button
                         variant="outlined"
-                    >
+                        color="primary"
+                        style={{ marginRight: '8px' }}
+                        onClick={onClose}
+                      >
                         Cancel
-                    </Button>
-                    </Box>
+                      </Button>
+                      <Button variant="contained" color="primary" type="submit">
+                        Add
+                      </Button>
+                      </Box>
+                     </form>
                 </Box>
             }
         >

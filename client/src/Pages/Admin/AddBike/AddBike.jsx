@@ -25,7 +25,7 @@ function AddBike() {
     const [engineNumber, setEngineNumber] = useState('')
     const [brand, setBrand] = useState('')
     const [fuel, setFuel] = useState('')
-    const [loc, setLocation] = useState([])
+    const [loc, setLocation] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
     const [color, setColor] = useState('')
@@ -92,7 +92,7 @@ function AddBike() {
             setSuccess(true)
 
             setTimeout(() => {
-                navigate("/admin/bikes", { state: { bikeAdded: true } })
+                navigate("/admin/view-bike", { state: { bikeAdded: true } })
                 setSuccess(false)
             }, 3000)
         })

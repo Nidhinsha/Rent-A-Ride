@@ -26,9 +26,6 @@ function ViewBike() {
     dispatch(adminGetAllBikeAction())
   }, [])
 
-  const handleEdit =()=>{
-    console.log('edit');
-  }
 
   const handleDelete =(id)=>{
     dispatch(adminDeleteBikeAction(id))
@@ -90,12 +87,15 @@ function ViewBike() {
             <Column field="engineNumber" header="engineNumber" sortable ></Column>
             <Column field='fuel' header="fuel" sortable></Column>
             <Column field='price' header="price" sortable></Column>
+            <Column field='location' header="location" sortable></Column>
             <Column field='assured' header="assured" sortable ></Column>
             <Column field='status' header="status" body={statusBodyTemplate} sortable ></Column>
             <Column header="Action" body={(rowData) => (
               <div>
                 <i className="pi pi-file-edit" style={{ fontSize: '1.5rem',marginRight: '5px',color:'blue'  }}
-                onClick={()=> handleEdit(rowData._id)} ></i>
+                onClick={(e)=> {
+                  navigate('/admin/edit-bike',{state:{bikeData:rowData}})
+                }} ></i>
                 <i className="pi pi-times" style={{ fontSize: '1.5rem',marginRight: '5px' ,color:'red' }}
                 onClick={()=> handleDelete(rowData._id)}></i>
               </div>

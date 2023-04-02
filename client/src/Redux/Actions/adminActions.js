@@ -16,6 +16,7 @@ export const adminLogin = (email, password) => async (dispatch) => {
         })
 
         localStorage.setItem("adminInfo",JSON.stringify(data.data))
+        
 
         
     })

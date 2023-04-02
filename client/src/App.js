@@ -18,6 +18,7 @@ import Signup from './Pages/User/Signup/Signup'
 import SingleBikeView from './Pages/User/SingleBikeView/SingleBikeView'
 import Test from './Pages/User/Test/Test'
 import OtpLogin from './Pages/User/OtpLogin/OtpLogin'
+import EditBike from './Pages/Admin/EditBike/EditBike'
 function App() {
 
   // const userData = useSelector((state)=> state.userL)
@@ -40,6 +41,7 @@ function App() {
       <Route path='/admin/login' element={ adminData ?<Dashboard/>: <AdminLogin />} />
       <Route path='/admin/user-manage' exact element={adminData ?  <UserManage /> :<AdminLogin /> } />
       <Route path='/admin/add-bike' exact element={adminData ? <AddBike /> : <AdminLogin />} />
+      <Route path='/admin/edit-bike' exact element={adminData ? <EditBike/> :<AdminLogin/>} />
       <Route path='/admin/view-bike' exact element={adminData ? <ViewBike />: <AdminLogin /> } />
       <Route path='/admin/dashboard' exact element={adminData ? <Dashboard /> : <AdminLogin/>} />
       <Route path='/admin/bike-request' exact element={adminData ? <BikeRequest/> : <AdminLogin/>} />

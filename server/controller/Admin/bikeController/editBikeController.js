@@ -53,6 +53,7 @@ exports.editBike = async(req,res)=>{
                 })
             })
         }else{
+            console.log('req body of edit',req.body);
             let newURLS = req.body.imageUrl.split(",")
             console.log('new URLS',newURLS);
 
@@ -75,6 +76,7 @@ exports.editBike = async(req,res)=>{
                     }
                 }
             ).then((data)=>{
+                console.log('efit',data);
                 bikeSchema.findOne({_id : req.query.id}).then((data)=>{
                     console.log('edited data',data);
                 })
