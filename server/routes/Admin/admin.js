@@ -6,11 +6,15 @@ const upload = require("../../utils/multer")
 const loginController = require('../../controller/Admin/loginController')
 const adminController = require("../../controller/Admin/adminController")
 const addBikeController = require("../../controller/Admin/bikeController/adminAddBikeController")
+const deleteBikeController = require("../../controller/Admin/bikeController/deleteBikeController")
 const adminViewBikeController = require("../../controller/Admin/bikeController/adminViewBikeController")
 const userBikeRentRequestController = require("../../controller/Admin/bikeController/userRentRequest")
 const adminAcceptReq = require("../../controller/Admin/bikeController/accepetReqController")
 const adminRejectReq = require("../../controller/Admin/bikeController/rejectReqController")
 const locationController = require("../../controller/Admin/locationController")
+
+
+
 const { protect } = require("../../Middlewares/verifyToken")
 
 
@@ -21,6 +25,8 @@ router.route("/user-manage").get(protect, adminController.adminUser)
 router.route("/userBlockUnblock").get(protect,adminController.blockUser)
 
 router.route("/add-bike").post(upload.array('images'),protect,addBikeController.addBike)
+
+router.route('/delete-bike').delete(protect,deleteBikeController.deleteBike)
 
 router.route("/view-bike").get(protect,adminViewBikeController.viewBike)
 

@@ -1,5 +1,5 @@
 import { adminActionType } from '../Constants/adminConstants'
-import { addLocationAPI, adminLoginApi, deleteLocationAPI, editLocationAPI, getAllBikeAPI, getLocationAPI, getUsersApi } from "../../Api/Admin/ApiCalls"
+import { addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteLocationAPI, editLocationAPI, getAllBikeAPI, getLocationAPI, getUsersApi } from "../../Api/Admin/ApiCalls"
 
 
 export const adminLogin = (email, password) => async (dispatch) => {
@@ -74,6 +74,25 @@ export const adminAddBikeAction = (data) => async(dispatch)=>{
     dispatch({
         type : adminActionType.ADMIN_BIKE_ADD_SUCCESS,
         payload : data
+    })
+}
+
+export const adminDeleteBikeAction =(id)=> async(dispatch)=>{
+    dispatch({
+        type : adminActionType.ADMIN_DELETE_BIKE_REQUEST
+    })
+
+    adminDeleteBikeAPI(id).then((data)=>{
+        dispatch({
+            type : adminActionType.ADMIN_DELETE_BIKE_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type : adminActionType.ADMIN_DELETE_BIKE_FAIL,
+            payload : error.response.message
+        })
     })
 }
 

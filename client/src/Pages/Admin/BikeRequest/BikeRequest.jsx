@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SideBar from '../../../components/SideBar/SideBar';
@@ -13,7 +13,7 @@ import { acceptBikeAPI, getPendingBikeAPI, rejectBikeAPI } from '../../../Api/Ad
 
 import { ConfirmPopup } from 'primereact/confirmpopup'; // To use <ConfirmPopup> tag
 import { confirmPopup } from 'primereact/confirmpopup'; // To use confirmPopup method
-        
+
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 function BikeRequest() {
@@ -21,30 +21,30 @@ function BikeRequest() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [pendingData,setPendingData] = useState([])
+    const [pendingData, setPendingData] = useState([])
     // console.log(bikeData,'bike data');
 
-    useEffect(()=>{    
-        getPendingBikeAPI().then((data)=>{
+    useEffect(() => {
+        getPendingBikeAPI().then((data) => {
             setPendingData(data.data)
         })
-    },[])
+    }, [])
 
-       // accept and reject bikes
+    // accept and reject bikes
 
-       const handleAccept = (id) => {
+    const handleAccept = (id) => {
         // Handle accept logic here
-        acceptBikeAPI(id).then((id)=>{
-            console.log(id,'data after updated');
+        acceptBikeAPI(id).then((id) => {
+            console.log(id, 'data after updated');
         })
         console.log("Accepted", id);
 
     };
-    
+
     const handleReject = (id) => {
         // Handle reject logic here
-        rejectBikeAPI(id).then((data)=>{
-            console.log("rejected data",data);
+        rejectBikeAPI(id).then((data) => {
+            console.log("rejected data", data);
         })
         console.log("Rejected", id);
     };
@@ -93,7 +93,7 @@ function BikeRequest() {
             // target: event.currentTarget,
             message: 'Are you sure you want to proceed?',
             icon: 'pi pi-exclamation-triangle',
-            accept :()=>handleAccept(id),acceptToast,
+            accept: () => handleAccept(id), acceptToast,
             reject
         });
     };
@@ -104,13 +104,13 @@ function BikeRequest() {
             message: 'Do you want to delete this record?',
             icon: 'pi pi-info-circle',
             acceptClassName: 'p-button-danger',
-            accept:()=>handleReject(id),
+            accept: () => handleReject(id),
             reject
         });
     };
-    
 
- 
+
+
 
     return (
 
@@ -141,8 +141,8 @@ function BikeRequest() {
                         <Column field='status' header="Status" body={statusBodyTemplate} sortable ></Column>
                         <Column header="Action" body={(rowData) => (
                             <div>
-                                  <Toast ref={toast} />
-            <ConfirmPopup />
+                                <Toast ref={toast} />
+                                <ConfirmPopup />
                                 <Button label="Accept" className="p-button-success p-mr-2" onClick={() => confirm1(rowData._id)} />
                                 <Button label="Reject" className="p-button-danger" onClick={() => confirm2(rowData._id)} />
                                 {/* <Button label="Accept" className="p-button-success p-mr-2" onClick={() => handleAccept(rowData._id)} />

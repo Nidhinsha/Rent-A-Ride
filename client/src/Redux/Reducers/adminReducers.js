@@ -76,7 +76,21 @@ export const adminGetAllBikeReducer =(state={},action)=>{
     case adminActionType.ADMIN_BIKE_ADD_SUCCESS:
       return {
         bikeData:[...state.bikeData,action.payload]
-      }  
+      } 
+    case adminActionType.ADMIN_DELETE_BIKE_REQUEST:
+      return {
+        bikeDeleteLoading : true
+      } 
+    case adminActionType.ADMIN_DELETE_BIKE_SUCCESS:
+      return {
+        deleteLoading:false,
+        bikeData : action.payload
+      }
+    case adminActionType.ADMIN_DELETE_BIKE_FAIL:
+      return {
+        deleteLoading : false,
+        bikeDeleteError :action.payload
+      }
     default:
       return state;
   }

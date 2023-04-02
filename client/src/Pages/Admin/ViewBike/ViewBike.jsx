@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { adminGetAllBikeAction } from '../../../Redux/Actions/adminActions';
+import { adminDeleteBikeAction, adminGetAllBikeAction } from '../../../Redux/Actions/adminActions';
 import SideBar from '../../../components/SideBar/SideBar';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -11,17 +11,28 @@ import { Tag } from 'primereact/tag';
 import { Box, styled } from '@mui/material'
 import { Container } from '@mantine/core';
 
+
 function ViewBike() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const bikes = useSelector((state) => state.adminGetAllBikeReducer)
+
   const { bikeDataLoading, bikeData, bikeDataError } = bikes
   // console.log(bikeData,'bike data');
+
   useEffect(() => {
     dispatch(adminGetAllBikeAction())
   }, [])
+
+  const handleEdit =()=>{
+    console.log('edit');
+  }
+
+  const handleDelete =(id)=>{
+    dispatch(adminDeleteBikeAction(id))
+  }
 
   const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -38,10 +49,10 @@ function ViewBike() {
 
   const getSeverity = (bikeData) => {
     switch (bikeData.status) {
-      case 'approved':
+      case 'accepted':
         return 'success';
 
-      case 'disApproved':
+      case 'pending':
         return 'warning';
 
       case 'rejected':
@@ -51,18 +62,21 @@ function ViewBike() {
         return null;
     }
   };
-  return (
-    
-      <Box sx={{ display: 'flex' }}>
 
-        <SideBar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3, mr: 1 }}>
-          <DrawerHeader />
+  
+
+  return (
+
+    <Box sx={{ display: 'flex' }}>
+
+      <SideBar />
+      <Box component="main" sx={{ flexGrow: 1, p: 3, mr: 1 }}>
+        <DrawerHeader />
 
         <Container fixed sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
 
           {/* <div className="card"> */}
-          <DataTable value={bikeData} tableStyle={{ minWidth: '60rem' }} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]}  resizableColumns showGridlines>
+          <DataTable value={bikeData} tableStyle={{ minWidth: '60rem' }} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} resizableColumns showGridlines>
             <Column field="bikeName" header="Name" sortable ></Column>
             <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo[0]} alt="User" style={{
               width: '5rem',
@@ -78,13 +92,21 @@ function ViewBike() {
             <Column field='price' header="price" sortable></Column>
             <Column field='assured' header="assured" sortable ></Column>
             <Column field='status' header="status" body={statusBodyTemplate} sortable ></Column>
+            <Column header="Action" body={(rowData) => (
+              <div>
+                <i className="pi pi-file-edit" style={{ fontSize: '1.5rem',marginRight: '5px',color:'blue'  }}
+                onClick={()=> handleEdit(rowData._id)} ></i>
+                <i className="pi pi-times" style={{ fontSize: '1.5rem',marginRight: '5px' ,color:'red' }}
+                onClick={()=> handleDelete(rowData._id)}></i>
+              </div>
+            )} />
 
           </DataTable>
         </Container>
       </Box>
     </Box>
-  
-    
+
+
   )
 }
 
