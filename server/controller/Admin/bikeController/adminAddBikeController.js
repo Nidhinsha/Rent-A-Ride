@@ -44,6 +44,7 @@ exports.addBike = async (req, res) => {
                 color : req.body.color,
                 fuel : req.body.fuel ,
                 description : req.body.description,
+                location : req.body.location,
                 price : req.body.price,
                 status:"accepted",
                 photo

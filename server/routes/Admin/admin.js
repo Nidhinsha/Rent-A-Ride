@@ -12,7 +12,7 @@ const userBikeRentRequestController = require("../../controller/Admin/bikeContro
 const adminAcceptReq = require("../../controller/Admin/bikeController/accepetReqController")
 const adminRejectReq = require("../../controller/Admin/bikeController/rejectReqController")
 const locationController = require("../../controller/Admin/locationController")
-
+const editBikeController = require("../../controller/Admin/bikeController/editBikeController")
 
 
 const { protect } = require("../../Middlewares/verifyToken")
@@ -25,6 +25,8 @@ router.route("/user-manage").get(protect, adminController.adminUser)
 router.route("/userBlockUnblock").get(protect,adminController.blockUser)
 
 router.route("/add-bike").post(upload.array('images'),protect,addBikeController.addBike)
+
+router.route('/edit-bike').post(upload.array('images'),protect,editBikeController.editBike)
 
 router.route('/delete-bike').delete(protect,deleteBikeController.deleteBike)
 

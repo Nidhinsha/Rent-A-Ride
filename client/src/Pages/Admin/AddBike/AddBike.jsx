@@ -330,6 +330,9 @@ function AddBike() {
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             type="file"
+                            inputProps={{
+                                accept: '.jpg, .jpeg, .png'
+                              }}
                             helperText={errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image1",
                                 {
@@ -342,6 +345,9 @@ function AddBike() {
 
                         <TextField sx={{ mr: 2 }}
                             type="file"
+                            inputProps={{
+                                accept: '.jpg, .jpeg, .png'
+                              }}
                             helperText={errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image2",
                                 {
@@ -354,6 +360,9 @@ function AddBike() {
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             type="file"
+                            inputProps={{
+                                accept: '.jpg, .jpeg, .png'
+                              }}
                             helperText={errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image3",
                                 {
@@ -365,6 +374,9 @@ function AddBike() {
 
                         <TextField sx={{ mr: 2 }}
                             type="file"
+                            inputProps={{
+                                accept: '.jpg, .jpeg, .png'
+                              }}
                             helperText={errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image4",
                                 {
