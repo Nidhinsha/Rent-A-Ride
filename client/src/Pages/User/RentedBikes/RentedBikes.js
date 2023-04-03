@@ -19,6 +19,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Button } from '@mui/material';
+import Loading from '../../../components/Loading/Loading';
 
 function TabPanel(props) {
 
@@ -89,15 +90,14 @@ function RentedBikes() {
     
 
     const rentedBikes = useSelector((state) => state.userGetAllRentedBikesReducer.rentedBikesData)
-    console.log("Rented Bikes", rentedBikes);
 
     const rejected = useSelector((state) => state.userGetRejectedBikeReducer.rejectedBikesData)
-    console.log("REJECTED", rejected);
+
     const pending = useSelector((state) => state.userGetPendingBikeReducer.pendingBikesData)
     console.log("pendign", pending);
 
     const accepted = useSelector((state) => state.userGetAcceptedBikeReducer.acceptedBikesData)
-    console.log("Accepted",accepted);
+    // console.log(accepted.length,'rrrr');
 
     useEffect(() => {
         dispatch(userGetAllRentedBikes())
@@ -108,8 +108,7 @@ function RentedBikes() {
             <Box sx={{ width: '100%' }}>
                 <Stack spacing={2} className='mt-3'>
                     <Item><h3>Rented Bikes</h3></Item>
-                    {/* <Item>Item 2</Item>
-              <Item>Item 3</Item> */}
+                  
                 </Stack>
             </Box>
 
@@ -132,11 +131,11 @@ function RentedBikes() {
                                     <TableCell align="center">Image</TableCell>
                                     <TableCell align="center">Bike Name</TableCell>
                                     <TableCell align="center">Status</TableCell>
-                                    {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+                                 
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {/* {rows.map((row) => ( */}
+                              
                                 {
                                     rentedBikes ? rentedBikes.map((x, i) => {
                                         return (
@@ -156,19 +155,17 @@ function RentedBikes() {
                                                             src={x.photo[0]}
                                                         />
                                                         <Figure.Caption>
-                                                            {/* Nulla vitae elit libero, a pharetra augue mollis interdum. */}
+                                                         
                                                         </Figure.Caption>
                                                     </Figure>
                                                 </TableCell>
                                                 <TableCell align="center">{x.brand}</TableCell>
                                                 <TableCell align="center">{x.status}</TableCell>
-                                                {/* <TableCell align="right">{row.protein}</TableCell> */}
+                                              
                                             </TableRow>
                                         )
                                     }) : "No Data Available..."
                                 }
-
-                                {/* ))} */}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -176,21 +173,26 @@ function RentedBikes() {
 
 
                 <TabPanel value={value} index={1}>
+                   
+                          
                         <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
+
+                           
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Sl No</TableCell>
                                     <TableCell align="center">Image</TableCell>
                                     <TableCell align="center">Bike Name</TableCell>
                                     <TableCell align="center">Status</TableCell>
-                                    {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+                                
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {/* {rows.map((row) => ( */}
+                                
+                             
                                 {
-                                    accepted ? accepted.map((x, i) => {
+                                 accepted && accepted.length > 0 ? accepted.map((x, i) => {
                                         return (
                                             <TableRow
                                                 key={i + 1}
@@ -208,22 +210,28 @@ function RentedBikes() {
                                                             src={x.photo[0]}
                                                         />
                                                         <Figure.Caption>
-                                                            {/* Nulla vitae elit libero, a pharetra augue mollis interdum. */}
+                                                          
                                                         </Figure.Caption>
                                                     </Figure>
                                                 </TableCell>
                                                 <TableCell align="center">{x.brand}</TableCell>
                                                 <TableCell align="center">{x.status}</TableCell>
-                                                {/* <TableCell align="right">{row.protein}</TableCell> */}
+                                             
                                             </TableRow>
                                         )
-                                    }) : "No Data Available..."
+                                    }) : (
+                                        <TableRow>
+                                        <TableCell colSpan={4} align="center">
+                                          No data available
+                                        </TableCell>
+                                      </TableRow>
+                                    )
                                 }
 
-                                {/* ))} */}
                             </TableBody>
                         </Table>
                     </TableContainer>
+                     
                 </TabPanel>
 
 
@@ -242,7 +250,7 @@ function RentedBikes() {
                             <TableBody>
                                 {/* {rows.map((row) => ( */}
                                 {
-                                    pending ? pending.map((x, i) => {
+                                   pending && pending.length > 0 ? pending.map((x, i) => {
                                         return (
                                             <TableRow
                                                 key={i + 1}
@@ -269,7 +277,13 @@ function RentedBikes() {
                                                 {/* <TableCell align="right">{row.protein}</TableCell> */}
                                             </TableRow>
                                         )
-                                    }) : "No Data Available..."
+                                    }) : (
+                                        <TableRow>
+                                        <TableCell colSpan={4} align="center">
+                                          No data available
+                                        </TableCell>
+                                      </TableRow>
+                                    )
                                 }
 
                                 {/* ))} */}
@@ -292,7 +306,7 @@ function RentedBikes() {
                             <TableBody>
                                 {/* {rows.map((row) => ( */}
                                 {
-                                    rejected ? rejected.map((x, i) => {
+                                   rejected && rejected.length > 0 ? rejected.map((x, i) => {
                                         return (
                                             <TableRow
                                                 key={i + 1}
@@ -319,7 +333,13 @@ function RentedBikes() {
                                                 {/* <TableCell align="right">{row.protein}</TableCell> */}
                                             </TableRow>
                                         )
-                                    }) : "No Data Available..."
+                                    }) : (
+                                        <TableRow>
+                                        <TableCell colSpan={4} align="center">
+                                          No data available
+                                        </TableCell>
+                                      </TableRow>
+                                    )
                                 }
 
                                 {/* ))} */}

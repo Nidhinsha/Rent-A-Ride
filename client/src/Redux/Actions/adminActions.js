@@ -9,7 +9,7 @@ export const adminLogin = (email, password) => async (dispatch) => {
     })
 
     adminLoginApi(email,password).then((data) => {
-        console.log("ADMINLOGINDATA",data);
+        
         dispatch({
             type : adminActionType.ADMIN_LOGIN_SUCCESS,
             payload : data.data
@@ -48,7 +48,7 @@ export const adminUserFetchAction =() =>async(dispatch)=>{
         })
 
         getUsersApi().then((data)=>{
-            console.log('user api data',data.data);
+          
 
             dispatch({
                 type:adminActionType.ADMIN_USER_FETCH_SUCCESS,
@@ -56,7 +56,7 @@ export const adminUserFetchAction =() =>async(dispatch)=>{
             })
         })
         .catch((error)=>{
-            console.log('api user error',error);
+         
 
             dispatch({
                 type:adminActionType.ADMIN_USER_FETCH_FAIL,
@@ -70,7 +70,7 @@ export const adminUserFetchAction =() =>async(dispatch)=>{
 
 
 export const adminAddBikeAction = (data) => async(dispatch)=>{
-    console.log(data,'data in the action of add bike ');
+  
 
     dispatch({
         type : adminActionType.ADMIN_BIKE_ADD_SUCCESS,
@@ -101,13 +101,13 @@ export const adminDeleteBikeAction =(id)=> async(dispatch)=>{
 // GET THE ALL BIKE AND ALSO IN THIS ADDING THE NEW BIKES USING NEW TECHNIQUE
 
 export const adminGetAllBikeAction = () =>async(dispatch)=>{
-    console.log(dispatch,'gell bike');
+  
     dispatch({
         type : adminActionType.ADMIN_GET_BIKE_REQUEST
     })
 
     getAllBikeAPI().then((data)=>{
-        console.log(data.data,'data of the all bikes.');
+      
 
         dispatch({
             type:adminActionType.ADMIN_GET_BIKE_SUCCESS,
@@ -129,14 +129,14 @@ export const adminAddLocationAction = (location)=>async(dispatch)=>{
     })
 
     addLocationAPI(location).then((data)=>{
-        console.log(data.data,'data added back and send to front');
+    
         dispatch({
             type : adminActionType.ADMIN_ADD_LOCATION_SUCCESS,
             payload : data.data
         })
     })
     .catch((error)=>{
-        console.log('err in the add loc F',error);
+   
         dispatch({
             type : adminActionType.ADMIN_ADD_LOCATION_FAIL,
             payload : error.response.message
@@ -150,7 +150,7 @@ export const adminGetLocation = ()=>async(dispatch)=>{
     })
 
     getLocationAPI().then((data)=>{
-        console.log('getlocation api',data.data);
+
 
         dispatch({
             type : adminActionType.ADMIN_GET_LOCATION_SUCCESS,
@@ -166,14 +166,12 @@ export const adminGetLocation = ()=>async(dispatch)=>{
 }
 
 export const adminEditLocation =(id,locationData)=> async(dispatch)=>{
-    console.log(id,locationData,'id for edit loc');
 
     dispatch({
         type : adminActionType.ADMIN_EDIT_LOCATION_REQUEST
     })
 
     editLocationAPI(id,locationData).then((data)=>{
-        console.log(data.data,'edit data resp');
 
         dispatch({
             type : adminActionType.ADMIN_DELETE_LOCATION_SUCCESS,
@@ -190,8 +188,6 @@ export const adminEditLocation =(id,locationData)=> async(dispatch)=>{
 
 
 export const adminDeleteLocation =(id)=> async(dispatch)=>{
-    console.log('delete id',id);
-
     dispatch({
         type:adminActionType.ADMIN_DELETE_LOCATION_REQUEST
     })

@@ -38,10 +38,10 @@ function EditBike() {
     const [sucess, setSuccess] = useState(false)
 
     const location = useLocation()
-    console.log('data from the bike list page', location.state.bikeData);
+
 
     useEffect(() => {
-        console.log("imagessssss",location.state.bikeData.photo);
+        
         dispatch(adminGetLocation())
 
         setImages1([location.state.bikeData.photo])
@@ -57,10 +57,7 @@ function EditBike() {
     }, [])
 
     const locationData = useSelector((state) => state.adminGetLocationReducer.location)
-    console.log('location data', locationData);
-
-    console.log("dsdsd",bikeModel);
-    console.log('aaa',bikeName);
+    
 
     const {
         register,
@@ -69,7 +66,7 @@ function EditBike() {
     } = useForm()
 
     const onSubmit = (data) => {
-        console.log('data submit',data);
+ 
         const formData = new FormData()
 
         images.forEach((image) => {
@@ -87,12 +84,12 @@ function EditBike() {
         formData.append("location", loc)
         formData.append("description", description)
 
-        console.log('images',images);
+     
 
     
         const id= location.state.bikeData._id
         adminEditBikeAPI(id,formData).then((data) => {
-            console.log('edited data form the backend', data.data);
+         
         })
     }
 
@@ -235,6 +232,9 @@ function EditBike() {
 
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
+                        InputProps={{
+                            inputProps: { min: 0 }
+                          }}
                             required
                             id="outlined-required"
                             defaultValue={location.state.bikeData.price}
@@ -251,29 +251,7 @@ function EditBike() {
 
                         <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }} >
                             <InputLabel id="demo-simple-select-label"  >Location</InputLabel>
-                            {/* <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        // value={location}
-                        label="Location"
-                        {...register("location",
-                            {
-                                required: true, minLength: 3
-                            }
-                        )}
-                        onChange={(e) => setLocation(e.target.value)}
-                    >
-                      
-                        {
-                            location ? location.map((x)=>{
-                                return(
-                                   
-                                    <MenuItem key={x._id}  >{x.location}</MenuItem>
-                                   
-                                )
-                            }) : ""
-                        }
-                    </Select> */}
+                         
 
                             <Select
                                 labelId="demo-simple-select-label"
@@ -289,13 +267,13 @@ function EditBike() {
                                 {...register("location", { required: true })}
                                 onChange={(e) => setLocation(e.target.value)}
                             >
-                                {/* <MenuItem disabled value="choose">Choose Option</MenuItem> */}
+                             
                                 {locationData
                                     ? locationData.map((x) => {
                                         if (x !== location.state.bikeData.Location) {
                                             return (
                                                 <MenuItem key={x._id} value={x.location}>
-                                                    {/* set the value to the location */}
+                                                 
                                                     {x.location}
                                                 </MenuItem>
                                             )
@@ -307,13 +285,7 @@ function EditBike() {
                             </Select>
 
 
-                            {/* <select  name="" id="">
-                    {
-                        location ? location.map((m)=>{
-                            return <><option value={m.location}>{m.location}</option></>
-                        })  :' '
-                    }
-                    </select> */}
+                           
 
                             {errors.location && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.location && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
                         </FormControl>
@@ -339,62 +311,7 @@ function EditBike() {
                     </div>
 
 
-                    {/* <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Box>
-
-                        <Figure>
-                            <Figure.Image
-                                width={200}
-                                height={150}
-                                alt="171x180"
-                               src={location.state.bikeData.photo[0]}
-                            />
-                           
-
-                        </Figure>
-                        </Box>
-                        <TextField sx={{ mr: 2 }}
-                            type="file"
-                            inputProps={{
-                                accept: '.jpg, .jpeg, .png'
-                            }}
-                            helperText={errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
-                            {...register("image1",
-                                {
-                                    required: true, minLength: 1
-                                }
-                            )}
-                            onChange={(e) => setImages([...images, e.target.files[0]])}
-                        />
-
-                        <Box>
-
-                        <Figure>
-                            <Figure.Image
-                                width={150}
-                                height={160}
-                                alt="171x180"
-                                src={location.state.bikeData.photo[1]}
-
-                            />
-                        </Figure>
-                        </Box>
-
-
-                        <TextField sx={{ mr: 2 }}
-                            type="file"
-                            inputProps={{
-                                accept: '.jpg, .jpeg, .png'
-                            }}
-                            helperText={errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
-                            {...register("image2",
-                                {
-                                    required: true, minLength: 1
-                                })}
-                            onChange={(e) => setImages([...images, e.target.files[0]])}
-                        />
-
-                    </div> */}
+                  
 
                     <Grid container alignItems="center" justify="center" spacing={2} mt={3}>
                         <Grid item xs={12} sm={6}>
@@ -408,19 +325,7 @@ function EditBike() {
                                 inputProps={{
                                     accept: ".jpg, .jpeg, .png",
                                 }}
-                                // helperText={
-                                //     errors.image1 && (
-                                //         <p style={{ color: "red" }}>Please choose an image</p>
-                                //     )
-                                //         ? errors.image1 && (
-                                //             <p style={{ color: "red" }}>Please choose an image</p>
-                                //         )
-                                //         : "Please select the image"
-                                // }
-                                // {...register("image1", {
-                                //     required: true,
-                                //     minLength: 1,
-                                // })}
+                            
                                 name='image1'
                                 onChange={(e) => setImages([...images, e.target.files[0]])}
                             />
@@ -436,19 +341,7 @@ function EditBike() {
                                 inputProps={{
                                     accept: ".jpg, .jpeg, .png",
                                 }}
-                                // helperText={
-                                //     errors.image2 && (
-                                //         <p style={{ color: "red" }}>Please choose an image</p>
-                                //     )
-                                //         ? errors.image2 && (
-                                //             <p style={{ color: "red" }}>Please choose an image</p>
-                                //         )
-                                //         : "Please select the image"
-                                // }
-                                // {...register("image2", {
-                                //     required: true,
-                                //     minLength: 1,
-                                // })}
+                               
                                 name='image2'
                                 onChange={(e) => setImages([...images, e.target.files[0]])}
                             />
@@ -466,19 +359,7 @@ function EditBike() {
                                 inputProps={{
                                     accept: ".jpg, .jpeg, .png",
                                 }}
-                                // helperText={
-                                //     errors.image3 && (
-                                //         <p style={{ color: "red" }}>Please choose an image</p>
-                                //     )
-                                //         ? errors.image3 && (
-                                //             <p style={{ color: "red" }}>Please choose an image</p>
-                                //         )
-                                //         : "Please select the image"
-                                // }
-                                // {...register("image3", {
-                                //     required: true,
-                                //     minLength: 1,
-                                // })}
+                             
                                 name='image3'
                                 onChange={(e) => setImages([...images, e.target.files[0]])}
                             />
@@ -494,79 +375,14 @@ function EditBike() {
                                 inputProps={{
                                     accept: ".jpg, .jpeg, .png",
                                 }}
-                                // helperText={
-                                //     errors.image4 && (
-                                //         <p style={{ color: "red" }}>Please choose an image</p>
-                                //     )
-                                //         ? errors.image4 && (
-                                //             <p style={{ color: "red" }}>Please choose an image</p>
-                                //         )
-                                //         : "Please select the image"
-                                // }
-                                // {...register("image4", {
-                                //     required: true,
-                                //     minLength: 1,
-                                // })}
+                              
                                 name='image4'
                                 onChange={(e) => setImages([...images, e.target.files[0]])}
                             />
                         </Grid>
                     </Grid>
 
-                    {/* <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Box>
-
-                            <Figure>
-                                <Figure.Image
-                                    width={150}
-                                    height={160}
-                                    alt="171x180"
-                                    src={location.state.bikeData.photo[2]}
-
-                                />
-
-                            </Figure>
-                        </Box>
-                        <TextField sx={{ mr: 2 }}
-                            type="file"
-                            inputProps={{
-                                accept: '.jpg, .jpeg, .png'
-                            }}
-                            helperText={errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
-                            {...register("image3",
-                                {
-                                    required: true, minLength: 1
-                                })}
-                            onChange={(e) => setImages([...images, e.target.files[0]])}
-                        />
-
-
-                        <Figure>
-                            <Figure.Image
-                                width={150}
-                                height={160}
-                                alt="171x180"
-                                src={location.state.bikeData.photo[3]}
-
-                            />
-
-                        </Figure>
-
-
-                        <TextField sx={{ mr: 2 }}
-                            type="file"
-                            inputProps={{
-                                accept: '.jpg, .jpeg, .png'
-                            }}
-                            helperText={errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
-                            {...register("image4",
-                                {
-                                    required: true, minLength: 1
-                                })}
-                            onChange={(e) => setImages([...images, e.target.files[0]])}
-                        />
-
-                    </div> */}
+                
 
                     <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '30px' }}>
                         <Button

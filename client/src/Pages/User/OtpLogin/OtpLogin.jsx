@@ -1,7 +1,4 @@
-// import { BsFillShieldLockFill, BsTelephoneFill } from "react-icons/bs";
-// import { CgSpinner } from "react-icons/cg";
 
-// import OtpInput from "otp-input-react";
 import { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -16,145 +13,179 @@ import { userOtpLoginAction } from "../../../Redux/Actions/userActions";
 
 function OtpLogin() {
 
-    const [otp, setOtp] = useState("")
-    const [phone, setPhone] = useState("")
-    const [showOtp, setShowOtp] = useState(false)
-    const [user, setUser] = useState(null)
+  const [otp, setOtp] = useState("")
+  const [phone, setPhone] = useState("")
+  const [showOtp, setShowOtp] = useState(false)
+  const [user, setUser] = useState(null)
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-    const {register,handleSubmit,formState : {errors}} = useForm()  
+  const { register, handleSubmit, formState: { errors } } = useForm()
 
-    function onCaptchVerify() {
-        if (!window.recaptchaVerifier) {
-          window.recaptchaVerifier = new RecaptchaVerifier(
-            "recaptcha-container",
-            {
-              size: "invisible",
-              callback: (response) => {
-                onSignup();
-              },
-              "expired-callback": () => {},
-            },
-            auth
-          );
-        }
-      }
+  function onCaptchVerify() {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: (response) => {
+            onSignup();
+          },
+          "expired-callback": () => { },
+        },
+        auth
+      );
+    }
+  }
 
-      function onSignup() {
-        
-        onCaptchVerify();
-    
-        const appVerifier = window.recaptchaVerifier;
-    
-        const phoneNumber  = "+" + phone;
-    
-        signInWithPhoneNumber(auth, phoneNumber , appVerifier)
-          .then((confirmationResult) => {
-            window.confirmationResult = confirmationResult;
-            
-            setShowOtp(true);
-            toast.success("OTP sended successfully!");
-          })
-          .catch((error) => {
-            console.log('otp error',error);
-            
-          });
-      }
+  function onSignup() {
 
-      function onOTPVerify() {
-   
-        window.confirmationResult
-          .confirm(otp)
-          .then(async (result) => {
-            console.log('result',result);
-            console.log("mobile",result.user.phoneNumber );
-            const phone =  result.user.phoneNumber.substring(3)
-            console.log("MOBILE",phone);
+    onCaptchVerify();
 
-            dispatch(userOtpLoginAction(phone))
-            toast.success('Logged in successfully!')
-            
-          })
-          .catch((err) => {
-            console.log(err);
-         
-          });
-      }
-    
+    const appVerifier = window.recaptchaVerifier;
+
+    const phoneNumber = "+" + phone;
+
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+      .then((confirmationResult) => {
+        window.confirmationResult = confirmationResult;
+
+        setShowOtp(true);
+        toast.success("OTP sended successfully!");
+      })
+      .catch((error) => {
+        console.log('otp error', error);
+
+      });
+  }
+
+  function onOTPVerify() {
+
+    window.confirmationResult
+      .confirm(otp)
+      .then(async (result) => {
+        console.log('result', result);
+        console.log("mobile", result.user.phoneNumber);
+        const phone = result.user.phoneNumber.substring(3)
+        console.log("MOBILE", phone);
+
+        dispatch(userOtpLoginAction(phone))
+        toast.success('Logged in successfully!')
+
+      })
+      .catch((err) => {
+        console.log(err);
+
+      });
+  }
 
 
-    return (
-        <div className='otp-login'>
+
+  return (
+    <div className='otp-login'>
       <div id='recaptcha-container'></div>
-      <Toaster toastOptions={{duration:4000}}></Toaster>
-      {/* <div className='img-div'>
-        <img src = {require('../../../ASSETS/Images/otpLogin.jpg')}  alt="" />
-      </div> */}
-      
-      
-      
+      <Toaster toastOptions={{ duration: 4000 }}></Toaster>
+
+
+
+
       <div className='login-box'>
-      
-      {
-            showOtp ? 
+
+        {
+          showOtp ?
             <div className='login-body'>
-            <h2 className = 'login-header'>Verify OTP</h2>
-            <div className='form-div'>
-           
-                {/* <Form onSubmit={handleSubmit(onSubmit)}>
-                    <Form.Field> */}
-                        <label htmlFor="">Enter the OTP*</label>
-                        
-                        <input type="text" placeholder='OTP'
-                        {...register('OTP',{
-                            required : true,
-                            maxLength : 6,
-                            minLength : 6,
-                        })} 
-                        onChange = {(e) => setOtp(e.target.value)}
-                         />
-                       
-                    
-                    {errors.OTP && <p style={{color : "red"}}>Please check the OTP</p>}
-                    <Button type='submit' className='otp-button' style= {{backgroundColor : '#0e7be8',color : 'white'}} 
-                     onClick={onOTPVerify}
-                    >
-                     
-                      LOGIN</Button>
+              <h2 className='login-header'>Verify OTP</h2>
+              <div className='form-div'>
+
+
+                <label htmlFor="">Enter the OTP*</label>
+
+                <input type="text" placeholder='OTP'
+                  {...register('OTP', {
+                    required: true,
+                    maxLength: 6,
+                    minLength: 6,
+                  })}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+
+
+                {errors.OTP && <p style={{ color: "red" }}>Please check the OTP</p>}
+                <Button type='submit' className='otp-button' style={{ backgroundColor: '#0e7be8', color: 'white' }}
+                  onClick={onOTPVerify}
+                >
+
+                  LOGIN</Button>
                 {/* </Form> */}
                 <div id='recaptcha-container'></div>
+              </div>
             </div>
-         </div> : 
-         
-         <div className='login-body'>
-            <h2 className = 'login-header'>OTP Login</h2>
-            <div className='form-div'>
-                {/* <Form onSubmit={handleSubmit(onSubmit)}> */}
-                    {/* <Form.Field> */}
-                        <label htmlFor="">Enter the mobile no*</label>
-                        <PhoneInput country={"in"} 
-                        value={phone}
-                        onChange={setPhone}
-                        // style={{width:"30rem"}}
-                        />
-                       
-                     
-                    {errors.phone && <p style={{color : "red"}}>Please check the Mobile No</p>}
-                    <Button type='submit' className='otp-button' 
-                    style= {{backgroundColor : '#0e7be8',color : 'white'}}
+
+            // <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#f2f2f2' }} className='login-body'>
+            //   <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '2rem' }} className='login-header'>Verify OTP</h2>
+            //   <div className='form-div'>
+            //     <label htmlFor="">Enter the OTP*</label>
+            //     <input type="text" placeholder='OTP'
+            //       {...register('OTP', {
+            //         required: true,
+            //         maxLength: 6,
+            //         minLength: 6,
+            //       })}
+            //       onChange={(e) => setOtp(e.target.value)}
+            //       style={{ padding: '0.5rem', borderRadius: '0.25rem', border: '1px solid #ccc', marginBottom: '1rem' }}
+            //     />
+            //     {errors.OTP && <p style={{ color: "red" }}>Please check the OTP</p>}
+            //     <Button type='submit' className='otp-button' style={{ backgroundColor: '#0e7be8', color: 'white', padding: '0.5rem', borderRadius: '0.25rem', border: 'none' }}
+            //       onClick={onOTPVerify}
+            //     >
+            //       LOGIN
+            //     </Button>
+            //     {/* </Form> */}
+            //     <div id='recaptcha-container'></div>
+            //   </div>
+            // </div>
+            :
+
+            // <div className='login-body' >
+            //   <h2 className='login-header'>OTP Login</h2>
+            //   <div className='form-div'>
+
+            //     <label htmlFor="">Enter the mobile no*</label>
+            //     <PhoneInput country={"in"}
+            //       value={phone}
+            //       onChange={setPhone}
+
+            //     />
+
+
+            //     {errors.phone && <p style={{ color: "red" }}>Please check the Mobile No</p>}
+            //     <Button type='submit' className='otp-button'
+            //       style={{ backgroundColor: '#0e7be8', color: 'white' }}
+            //       onClick={onSignup}
+            //     >Send OTP via SMS</Button>
+
+            //   </div>
+            // </div>
+
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+              <div className='login-body' style={{ maxWidth: '400px', width: '100%', backgroundColor: '#f5f5f5', padding: '20px', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)' }}>
+                <h2 className='login-header'>OTP Login</h2>
+                <div className='form-div'>
+                  <label htmlFor="">Enter the mobile no*</label>
+                  <PhoneInput country={"in"}
+                    value={phone}
+                    onChange={setPhone}
+                  />
+                  {errors.phone && <p style={{ color: "red" }}>Please check the Mobile No</p>}
+                  <Button type='submit' className='otp-button'
+                    style={{ backgroundColor: '#0e7be8', color: 'white', marginTop: '10px' }}
                     onClick={onSignup}
-                    >Send OTP via SMS</Button>
-                
+                  >Send OTP via SMS</Button>
+                </div>
+              </div>
             </div>
-         </div>
-
-          }
-         
-
-         
-         
+        }
       </div>
     </div>
   )

@@ -48,4 +48,5 @@ router.route("/rejected-bikes").get(protect,rentedBikeController.userGetRejected
 router.route("/pending-bikes").get(protect,rentedBikeController.userGetPendingBikes)
 
 router.route('/get-location').get(locationController.getLocations)
+
 module.exports = router;

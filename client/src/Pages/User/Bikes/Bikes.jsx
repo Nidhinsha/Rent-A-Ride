@@ -29,7 +29,7 @@ function Bikes() {
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
-    console.log(bikesData, 'jjjjjjjjjjjjjjjjjjj');
+   
 
     useEffect(() => {
         dispatch(userGetBikeAction())
@@ -94,18 +94,7 @@ function Bikes() {
                                                 onClick={(e) => navigate('/single-bike-view', { state: { bikesData } })}
                                             />
                                             <CardContent>
-                                                {/* <Typography gutterBottom variant="h4" component="div" >
-                                                    {data.bikeName}
-                                                </Typography> */}
-                                                {/* <Typography variant="h6" color="text.secondary" textAlign='center' fontWeight="bold" >
-                                                    Model : {data.bikeModel}
-                                                </Typography>
-                                                <Typography variant="h6" color="text.secondary" fontWeight="bold" textAlign='center'>
-                                                    Brand : {data.brand}
-                                                </Typography> */}
-                                                {/* <Typography variant="h6" color="text.secondary" fontWeight="bold" textAlign='center'>
-                                                    Description : {data.description}
-                                                </Typography> */}
+                                              
                                                 <Typography variant="h6" color="text.secondary" fontWeight="bold" textAlign='center'>
                                                    Rent Now @ Price : {data.price} /hr
                                                 </Typography>
@@ -115,9 +104,7 @@ function Bikes() {
                                         <CardActions>
                                             <Button  label="Book Now" aria-label="Submit" icon="pi pi-shopping-bag"  style={{ width: '100%',fontSize:'large' }}
                                              />
-                                            {/* <Button variant="contained" endIcon={<SendIcon />}>
-                                            Book
-                                        </Button> */}
+                                          
                                         </CardActions>
                                     </Card>
                                 )

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
-import { AccountCircle, Email, Lock, GoogleIcon } from '@mui/icons-material';
+import {  Email, Lock } from '@mui/icons-material';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -44,30 +44,6 @@ function Login() {
   const userLoginData = useSelector(state => state.userLoginReducer)
   const { userLoginError, loading, userLoginDetails } = userLoginData
 
-
-
-
-
-
-
-
-  // const handleGoogle = () =>{
-  //   signInWithPopup(auth,provider).then((data)=>{
-  //     // setEmail(data.user.email)
-  //     let fullName = data.user.displayName
-  //     const [firstName,lastName] = fullName.split(' ')
-
-  //     localStorage.setItem('user',data.user.email)
-  //     navigate('/')
-  //     console.log(firstName,lastName,'ttttt');
-
-  //      dispatch(userSignup(firstName,lastName, data.user.email, data.user.phoneNumber,firstName))
-  //     console.log(data.user,'gogle user data');
-  //   })
-  // }
-
-
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -95,6 +71,7 @@ function Login() {
 
 
 
+
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
       <Box boxShadow={3} borderRadius={4} p={2} m={4}>
@@ -117,9 +94,7 @@ function Login() {
               {
                 userLoginError ? <p className='p-error' style={{ color: 'red' }}>{userLoginError}</p> : ""
               }
-              {
-                loading ? <Loading /> : ""
-              }
+              
               <TextField
                 label="Email"
                 name='email'
@@ -139,6 +114,9 @@ function Login() {
                   ),
                 }}
               />
+              {
+                loading ? <Loading /> : ""
+              }
 
               <TextField
                 label="Password"
@@ -185,9 +163,7 @@ function Login() {
               >
                 login with otp
               </Button>
-              {/* <Button variant="contained" color="primary" fullWidth startIcon={<Email />}>
-              Sign up with Google
-            </Button> */}
+              
             </Box>
 
           </Grid>

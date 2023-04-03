@@ -20,7 +20,6 @@ function ViewBike() {
   const bikes = useSelector((state) => state.adminGetAllBikeReducer)
 
   const { bikeDataLoading, bikeData, bikeDataError } = bikes
-  // console.log(bikeData,'bike data');
 
   useEffect(() => {
     dispatch(adminGetAllBikeAction())

@@ -20,7 +20,6 @@ function UserManage() {
 
   const adminUserDataList = useSelector((state) => state.adminUserFetchReducer);
   const { loading, adminUserData, adminUserDataError } = adminUserDataList;
-  console.log(adminUserDataList, ';;;;;');
 
   const handleBlockUser = (id) => {
     userBlockUnblockApi(id).then((data) => {

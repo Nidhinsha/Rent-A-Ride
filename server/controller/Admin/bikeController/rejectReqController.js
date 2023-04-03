@@ -8,7 +8,5 @@ exports.rejectReqController = async(req,res)=>{
             $set :{
                 status : "rejected"
             }
-        }).then(()=>{
-            console.log("the bike req rejected...");
         })
 }

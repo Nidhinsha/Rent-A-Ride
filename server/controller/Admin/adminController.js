@@ -4,7 +4,6 @@ const userSchema = require("../../models/userSchema")
 exports.adminUser = async (req,res) => {
   try {
     userSchema.find().then((data)=>{
-      console.log(data,'bnbnbnbn');
       res.status(200).json(data)
   })
   } catch (error) {

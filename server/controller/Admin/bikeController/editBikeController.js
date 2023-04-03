@@ -47,15 +47,12 @@ exports.editBike = async(req,res)=>{
                         photo
                     }
                 }
-            ).then((data)=>{
-                bikeSchema.findOne({_id : req.query.id}).then((data)=>{
-                    console.log('edit data',data);
-                })
+            ).then(()=>{
+                bikeSchema.findOne({_id : req.query.id})
             })
         }else{
-            console.log('req body of edit',req.body);
-            let newURLS = req.body.imageUrl.split(",")
-            console.log('new URLS',newURLS);
+         
+            const newURLS = req.body.imageUrl.split(",")
 
             bikeSchema.updateOne(
                 {_id : req.query.id},
@@ -76,10 +73,7 @@ exports.editBike = async(req,res)=>{
                     }
                 }
             ).then((data)=>{
-                console.log('efit',data);
-                bikeSchema.findOne({_id : req.query.id}).then((data)=>{
-                    console.log('edited data',data);
-                })
+                bikeSchema.findOne({_id : req.query.id})
             })
         }
     }

@@ -55,7 +55,6 @@ function AddBike() {
     } = useForm()
 
     const onSubmit = async () => {
-        console.log(bikeName, bikeModel, engineNumber, brand, fuel, location, description, price, color, images, 'form data for add bike the ');
         setLoading(true)
 
         // for using the form data
@@ -63,14 +62,12 @@ function AddBike() {
         const formdata = new FormData()
 
         // for image
-        console.log(images, ';;;;');
         images.forEach((value) => {
             console.log(value)
             formdata.append("images", value)
         })
 
 
-        console.log(formdata.get("images"));
 
         // the form data 
         formdata.append("bikeName", bikeName)
@@ -84,7 +81,6 @@ function AddBike() {
         formdata.append("description", description)
 
         adminAddBikeAPI(formdata).then((data) => {
-            console.log(data.data, 'form data response');
 
             dispatch(adminAddBikeAction(data.data))
             setLoading(false)
@@ -97,7 +93,6 @@ function AddBike() {
             }, 3000)
         })
             .catch((error) => {
-                console.log("some error", error);
                 setLoading(false)
             })
     }
@@ -233,6 +228,9 @@ function AddBike() {
 
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
+                        InputProps={{
+                            inputProps: { min: 0 }
+                          }}
                             required
                             id="outlined-required"
                             
@@ -249,29 +247,7 @@ function AddBike() {
 
                         <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }} >
                             <InputLabel id="demo-simple-select-label"  >Location</InputLabel>
-                            {/* <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                // value={location}
-                                label="Location"
-                                {...register("location",
-                                    {
-                                        required: true, minLength: 3
-                                    }
-                                )}
-                                onChange={(e) => setLocation(e.target.value)}
-                            >
-                              
-                                {
-                                    location ? location.map((x)=>{
-                                        return(
-                                           
-                                            <MenuItem key={x._id}  >{x.location}</MenuItem>
-                                           
-                                        )
-                                    }) : ""
-                                }
-                            </Select> */}
+                        
 
                             <Select
                                 labelId="demo-simple-select-label"
@@ -282,11 +258,11 @@ function AddBike() {
                                 {...register("location", { required: true })}
                                 onChange={(e) => setLocation(e.target.value)}
                             >
-                                {/* <MenuItem disabled value="choose">Choose Option</MenuItem> */}
+                               
                                 {location
                                     ? location.map((x) => (
                                         <MenuItem key={x._id} value={x.location}>
-                                            {/* set the value to the location */}
+                                           
                                             {x.location}
                                         </MenuItem>
                                     ))
@@ -296,13 +272,7 @@ function AddBike() {
                             </Select>
 
 
-                            {/* <select  name="" id="">
-                            {
-                                location ? location.map((m)=>{
-                                    return <><option value={m.location}>{m.location}</option></>
-                                })  :' '
-                            }
-                            </select> */}
+                         
 
                             {errors.location && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.location && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
                         </FormControl>

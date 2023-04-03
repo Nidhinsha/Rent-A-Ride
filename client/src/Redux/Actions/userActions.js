@@ -15,7 +15,6 @@ export const userSignup = (firstName, lastName, email, phone, password) => async
 
     userSignUpAPI(firstName, lastName, email, phone, password)
       .then((data) => {
-        console.log("api data", data.data)
 
         dispatch({
           type: userActionType.USER_SIGNUP_SUCCESS,
@@ -27,10 +26,8 @@ export const userSignup = (firstName, lastName, email, phone, password) => async
           type: userActionType.USER_SIGNUP_FAIL,
           payload: error.response.data
         })
-        console.log('error in user signup action', error);
       })
   } catch (error) {
-    console.log('eroor', error);
   }
 }
 
@@ -45,7 +42,6 @@ export const userLogin = (email, password) => async (dispatch) => {
 
     userLoginAPI(email, password)
       .then((data) => {
-        console.log('login data of user ', data.data);
 
         dispatch({
           type: userActionType.USER_LOGIN_SUCCESS,
@@ -55,7 +51,6 @@ export const userLogin = (email, password) => async (dispatch) => {
         localStorage.setItem("userInfo", JSON.stringify(data.data))
       })
       .catch((error) => {
-        console.log("userlogin error", error);
 
         dispatch({
           type: userActionType.USER_LOGIN_FAIL,
@@ -115,10 +110,8 @@ export const getUserProfileAction = () => async (dispatch) => {
     dispatch({ type: userActionType.GET_USER_PROFILE_REQUEST });
 
     const user = JSON.parse(localStorage.getItem("userInfo"));
-    console.log("user tokeusern in profile",user.id);
 
     userProfileAPI(user.id).then((data) => {
-      console.log('profile dta', data.data);
 
       dispatch({
         type: userActionType.GET_USER_PROFILE_SUCCESS,
@@ -144,11 +137,8 @@ export const userImageAction = (image) => async (dispatch) => {
   try {
 
     const user = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(user.id + "tttttttttttttttttttt");
-
 
     userImageUploadAPI(user.id, image).then((data) => {
-      console.log("image upload api data", data.data);
 
       localStorage.setItem("userInfo", JSON.stringify(data.data))
 
@@ -166,10 +156,8 @@ export const userImageAction = (image) => async (dispatch) => {
 export const userProofAction =(image) => async(dispatch)=>{
   try {
     const user = JSON.parse(localStorage.getItem("userInfo"))
-    console.log('userid in proof',user.id);
 
     userProofUploadAPI(user.id,image).then((data)=>{
-      console.log('proof api data',data.data);
 
       localStorage.setItem("userInfo",JSON.stringify(data.data))
 
@@ -203,7 +191,6 @@ export const userGetBikeAction = () => async (dispatch)=>{
     })
 
     userGetBikeAPI().then((data)=>{
-      console.log('bike for mmm',data.data);
 
       dispatch({
         type  : userActionType.USER_GET_BIKES_SUCCESS,
@@ -279,7 +266,6 @@ export const userGetAcceptedBikes =()=>async(dispatch)=>{
   })
 }
 export const userGetRejectedBikes =()=>async(dispatch)=>{
-  console.log('rejected action');
   dispatch({
     type : userActionType.USER_GET_REJECTED_BIKES_REQUEST
   })
@@ -322,8 +308,6 @@ export const userGetLocation =()=> async(dispatch)=>{
   })
 
   userGetLocationAPI().then((data)=>{
-    console.log('user location',data.data);
-
     dispatch({
       type : userActionType.USER_GET_LOCATION_SUCCESS,
       payload : data.data

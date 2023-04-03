@@ -43,19 +43,16 @@ function Profile() {
 
   const profileData = useSelector((state) => state.userLoginReducer.userLoginDetails);
 
-  console.log('profiledata ggggg', profileData);
 
-  // const profilePictureData = useSelector((state) => state.userImageUplaodReducer);
-  // const { imageLoading, imageError, profilePicture } = profilePictureData;
-  // console.log(profilePicture + "THIS IS THE IMAGE EEE");
+
   const [photo, setPhoto] = useState("");
 
-  console.log(photo, 'phto name');
+
 
   const addphoto = (e) => {
     e.preventDefault();
     const data = new FormData();
-    console.log(photo, 'bbbbbbbbbbbbbb');
+    
     data.append("file", photo);
 
     data.append("upload_preset", "RentAndRide");
@@ -82,18 +79,14 @@ function Profile() {
 
   // add proof
   const [proof, setProof] = useState("")
-  console.log(proof, 'proffffffffff');
   const addProof = (e) => {
     e.preventDefault()
 
     const data = new FormData()
 
-    console.log(proof, 'proof');
-
     data.append("file", proof)
     data.append("upload_preset", "RentAndRide")
     data.append("cloud_name", "driuxmoax")
-    console.log(data, 'data');
 
     fetch("https://api.cloudinary.com/v1_1/driuxmoax/image/upload", {
       method: "post",
@@ -101,7 +94,6 @@ function Profile() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, 'the data proof suces in the fetch');
         dispatch(userProofAction(data.url))
       })
   }
@@ -116,11 +108,6 @@ function Profile() {
     <>
       <NavBar />
       <div className="container rounded bg-white mb-5 ">
-        {/* {error ? <ErrorMessage variant='danger'>{error}</ErrorMessage> : " "}
-        {loading ? <Loading /> : ""} */}
-
-        {/* modal box */}
-
         {
           modal ? <ModalBox closeModal={setModal} details={profileData} /> : ""
         }
@@ -220,10 +207,11 @@ function Profile() {
               <div className="card flex flex-wrap justify-content-center gap-3  mt-3">
                 <Button
                   severity="primary"
-                  // label="Edit "
-                  icon="pi pi-check"
+                  // label="Edit"
+                  icon="pi pi-user-edit"
                   onClick={(e) => { setModal(true) }
                   }
+                  style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                 >Edit</Button>
               </div>
             </div>
@@ -244,12 +232,13 @@ function Profile() {
                         onChange={(e) => setProof(e.target.files[0])}
                       />
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'end' }}>
 
 
                       <Button
                         type='submit'
                         variant="contained"
+                        size='small'
                         onClick={addProof}
                         sx={{
                           mb: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
@@ -264,7 +253,7 @@ function Profile() {
                       <Button
                         type='submit'
                         variant="contained"
-
+                        size='small'
                         sx={{
                           mb: 2, mr: 3, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
                             bgcolor: "#6366F1"
@@ -276,19 +265,28 @@ function Profile() {
                       </Button>
                     </div>
                   </div>
-                  <div className="card" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+               
+                  <div className="card" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "20px" }}>
                     {profileData?.proof ? (
-                      <img
-                        src={profileData.proof}
-                        alt="proof"
-                        height="200px"
-                        width="200px"
-                        style={{ objectFit: "contain" }}
-                      />
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px" }}>
+                        <div style={{ marginBottom: "10px" }}>
+                          <strong>Proof Uploaded:</strong>
+                        </div>
+                        <img
+                          src={profileData.proof}
+                          alt="proof"
+                          height="200px"
+                          width="100%"
+                          style={{ objectFit: "contain", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)" }}
+                        />
+                      </div>
                     ) : (
-                      ""
+                      <div style={{ marginBottom: "10px" }}>
+                        <strong>No Proof Uploaded</strong>
+                      </div>
                     )}
                   </div>
+
 
 
                 </div>

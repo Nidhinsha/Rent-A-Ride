@@ -41,8 +41,7 @@ function RentBike() {
     }, [])
 
     const location = useSelector((state) => state.userLocationReducer.locationData)
-    console.log(location, 'location in user rent page')
-
+   
 
 
 
@@ -68,7 +67,7 @@ function RentBike() {
         })
 
 
-        console.log(formdata.get("images"));
+      
 
         // the form data 
         formdata.append("ownerName", ownerName)
@@ -83,7 +82,6 @@ function RentBike() {
         formdata.append("description", description)
 
         userAddBikeAPI(formdata).then((data) => {
-            console.log(data.data, 'form data response');
 
             // dispatch(adminAddBikeAction(data.data))
             setLoading(false)
@@ -108,7 +106,7 @@ function RentBike() {
     return (
         <>
             <NavBar />
-            {/* <div className='shadow-lg'> */}
+         
 
 
             <Box sx={{ display: 'flex', justifyContent: 'center', width: "100%" }} >
@@ -240,27 +238,7 @@ function RentBike() {
 
                         <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }}>
                             <InputLabel id="demo-simple-select-label">Location</InputLabel>
-                            {/* <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={location}
-                                label="Location"
-                                {...register("location",
-                                    {
-                                        required: true, minLength: 3
-                                    }
-                                )}
-                                onChange={(e) => setLocation(e.target.value)}
-                            >
-                                  {
-                                    locationData ? locationData.map((value)=>{
-                                        return(
-                                            <MenuItem key={value._id} value={value.location} >{value.location}</MenuItem>
-                                        )
-                                    }) : ""
-                                }
-                               
-                            </Select> */}
+                           
 
                             <Select
                                 labelId="demo-simple-select-label"
@@ -271,11 +249,11 @@ function RentBike() {
                                 {...register("location", { required: true })}
                                 onChange={(e) => setLocation(e.target.value)}
                             >
-                                {/* <MenuItem disabled value="choose">Choose Option</MenuItem> */}
+                              
                                 {location
                                     ? location.map((x) => (
                                         <MenuItem key={x._id} value={x.location}>
-                                            {/* set the value to the location */}
+                                         
                                             {x.location}
                                         </MenuItem>
                                     ))
@@ -380,7 +358,7 @@ function RentBike() {
 
             </Box>
 
-            {/* </div> */}
+          
         </>
 
     )

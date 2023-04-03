@@ -42,15 +42,11 @@ function Location() {
     const [open, setOpen] = React.useState(false);
     const [editModalOpen, setEditModalOpen] = React.useState(false);
     const [locationId, setLocationId] = useState('')
-    // const [currentLocation,setCurrentLocation] = useState('')
+   
 
     const dispatch = useDispatch()
-    // const [location,setLocation] = useState('')
 
     const location = useSelector((state) => state.adminGetLocationReducer.location)
-    console.log(location, 'location data in the location page ');
-
-
 
     const addLocation = () => {
         setOpen(true)
@@ -61,16 +57,14 @@ function Location() {
         console.log('hi')
     }
     const handleEdit = (id) => {
-        // dispatch()
-        // const locationToEdit = location.find((loc) => loc._id === id);
-        // setCurrentLocation(locationToEdit);
+       
         setEditModalOpen(true);
         setLocationId(id)
-        console.log('edit', id);
+      
     }
     const handleDelete = (id) => {
         dispatch(adminDeleteLocation(id))
-        console.log('delete');
+       
     }
 
     useEffect(() => {
@@ -132,37 +126,7 @@ function Location() {
                 </Container>
             </Box>
         </Box>
-        // <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
-        //     <SideBar sx={{ flex: '0 0 auto', minWidth: { sm: '15rem' } }} />
-        //     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        //         <DrawerHeader />
-        //         <Container fixed sx={{ mt: 1, maxWidth: { sm: '120%' } }}>
-        //             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center' }}>
-        //                 <Box sx={{ mb: { xs: 2, sm: 0 } }}>
-        //                     <h2>Add Location</h2>
-        //                 </Box>
-        //                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mt: { xs: 2, sm: 0 } }}>
-        //                     <Button onClick={addLocation} variant='contained'>Add Location</Button>
-        //                     <AddLocationModal open={open} onClose={() => setOpen(false)} />
-        //                 </Box>
-        //             </Box>
-        //             <Box sx={{ mt: 3 }}>
-        //                 <DataTable value={location} tableStyle={{ minWidth: '60rem' }} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} resizableColumns showGridlines>
-        //                     <Column field="location" header="Model" sortable></Column>
-        //                     <Column header="Action" body={(rowData) => (
-        //                         <div>
-        //                             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'flex-end' }}>
-        //                                 <Button variant="contained" onClick={() => handleEdit(rowData._id)}>Edit</Button>
-        //                                 <EditLocationModal locationId={locationId} open={editModalOpen} onClose={() => setEditModalOpen(false)} />
-        //                                 <Button variant="contained" color="error" onClick={() => handleDelete(rowData._id)}>Delete</Button>
-        //                             </Box>
-        //                         </div>
-        //                     )} />
-        //                 </DataTable>
-        //             </Box>
-        //         </Container>
-        //     </Box>
-        // </Box>
+      
 
     )
 }

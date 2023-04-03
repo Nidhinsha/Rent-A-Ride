@@ -35,19 +35,6 @@ const schema = yup.object().shape({
 
 function AdminLogin() {
 
-  // const dispatch = useDispatch()
-  // const navigate = useNavigate()
-
-  // const [email, setEmail] = useState("")
-  // const [password, setPassword] = useState("")
-
-  // const { register, handleSubmit, formState: { errors } } = useForm();
-
-  // const onSubmit = async () => {
-  //   console.log('email.pass admin',email,password);
-  //     dispatch(adminLogin(email,password))
-
-  // }
 
 
   const dispatch = useDispatch()
@@ -55,7 +42,7 @@ function AdminLogin() {
 
   const admin = useSelector((state) => state.adminLoginReducer)
   const { loading, adminLoginError, adminLoginData } = admin
-  console.log(adminLoginError, 'error in te adddddddddd');
+
   const { register, handleSubmit,
     formState: { errors } } = useForm({
       resolver: yupResolver(schema)
@@ -154,10 +141,6 @@ function AdminLogin() {
               }} >
                 login
               </Button>
-     
-              {/* <Button variant="contained" color="primary" fullWidth startIcon={<Email />}>
-            Sign up with Google
-          </Button> */}
             </Box>
 
           </Grid>

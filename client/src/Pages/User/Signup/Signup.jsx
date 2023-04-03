@@ -55,38 +55,12 @@ const schema = yup.object().shape({
 
 function Signup() {
 
-  // const [firstName, setFirstName] = useState('')
-  // const [lastName, setLastName] = useState('')
-  // const [email, setEmail] = useState('')
-  // const [phone, setPhone] = useState('')
-  // const [password, setPassword] = useState('')
 
+  const userSignupData = useSelector(state => state.userSignupReducer)
+  const { signUpError, loading, signUpData } = userSignupData
 
-  // const navigate = useNavigate()
-  // const dispatch = useDispatch()
+  console.log('userSignupdata', userSignupData);
 
-  // // not finished
-  // const haveAccount = () => {
-  //   navigate('/user-login')
-  // }
-  // const { register, handleSubmit, formState: { errors } } = useForm();
-
-  // const Signup = useSelector(state => state.userSignup)
-
-  // const { loading, error, userInfo } = Signup
-
-  // const onSubmit = (data) => {
-  //   console.log(data, 'vbvbvb');
-
-  //   dispatch(userSignup(firstName, lastName, email, phone, password))
-
-  // }
-  // // this one redirect the user into login page
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate('/login');
-  //   }
-  // }, [userInfo, navigate]);
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -104,14 +78,24 @@ function Signup() {
     const password = data.password
 
     try {
-      console.log("form", data);
       dispatch(userSignup(firstName, lastName, email, phone, password))
-      navigate('/login')
+      // navigate('/login')
 
     } catch (error) {
 
     }
   }
+
+  useEffect(() => {
+    let userInfo = localStorage.getItem("userInfo")
+
+    if (userInfo) {
+      navigate('/')
+    } else {
+      navigate('/signup')
+    }
+  }, [])
+
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
@@ -132,6 +116,9 @@ function Signup() {
 
             <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center"
               component="form" onSubmit={handleSubmit(submitHandler)}>
+              {
+                signUpError ? <p className='p-error' style={{ color: 'red' }}>{signUpError}</p> : ""
+              }
               <TextField
                 autoFocus
                 label="First Name"
@@ -240,17 +227,15 @@ function Signup() {
                 signup
               </Button>
               <Button
-    variant="text"
-    fullWidth
-    sx={{ mb: 2 }}
-    component={Link} // make the button act as a link
-    to="/login" // specify the link destination
-  >
-    Already have an account? Login
-  </Button>
-              {/* <Button variant="contained" color="primary" fullWidth startIcon={<Email />}>
-              Sign up with Google
-            </Button> */}
+                variant="text"
+                fullWidth
+                sx={{ mb: 2 }}
+                component={Link} // make the button act as a link
+                to="/login" // specify the link destination
+              >
+                Already have an account? Login
+              </Button>
+
             </Box>
 
           </Grid>

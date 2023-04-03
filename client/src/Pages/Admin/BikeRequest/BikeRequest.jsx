@@ -22,7 +22,7 @@ function BikeRequest() {
     const navigate = useNavigate()
 
     const [pendingData, setPendingData] = useState([])
-    // console.log(bikeData,'bike data');
+
 
     useEffect(() => {
         getPendingBikeAPI().then((data) => {
@@ -145,8 +145,7 @@ function BikeRequest() {
                                 <ConfirmPopup />
                                 <Button label="Accept" className="p-button-success p-mr-2" onClick={() => confirm1(rowData._id)} />
                                 <Button label="Reject" className="p-button-danger" onClick={() => confirm2(rowData._id)} />
-                                {/* <Button label="Accept" className="p-button-success p-mr-2" onClick={() => handleAccept(rowData._id)} />
-                                <Button label="Reject" className="p-button-danger" onClick={() => handleReject(rowData._id)} /> */}
+                             
                             </div>
                         )} />
 

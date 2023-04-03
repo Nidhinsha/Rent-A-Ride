@@ -6,9 +6,6 @@ const fs = require('fs')
 
 
 exports.addBike = async (req, res) => {
-    // console.log(req.headers);
-    console.log("bike details", req.body);
-    console.log("bike details imagessssss", req.files);
 
     try {
         const uploader = async (path) => await cloudinary.uploads(path, 'Images')
@@ -25,16 +22,14 @@ exports.addBike = async (req, res) => {
                 fs.unlinkSync(path)
             }
 
-            console.log("Urls",urls);
 
             let photo = []
 
             for (let i = 0; i < urls.length; i++) {
-                photo.push(urls[i].url) 
-                console.log(urls[i].url,'url for the add bike');  
+                photo.push(urls[i].url)  
             }
 
-            let bikeDetails = {
+            const bikeDetails = {
                 ownerName : req.body.ownerName,
                 bikeName : req.body.bikeName,
                 bikeModel : req.body.bikeModel,
@@ -49,10 +44,8 @@ exports.addBike = async (req, res) => {
                 status:"accepted",
                 photo
             }
-            console.log(bikeDetails,'hfhfhfffh');
 
             bikeSchema.create(bikeDetails).then((data)=>{
-                console.log('bike data',data);
                 res.status(200).json(data)
             })
 
