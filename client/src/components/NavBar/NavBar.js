@@ -33,7 +33,7 @@ import {
   IconSearch
 } from '@tabler/icons-react';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { userLogOut } from '../../Redux/Actions/userActions';
 
@@ -99,46 +99,15 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-// const mockdata = [
-//   {
-//     icon: IconCode,
-//     title: 'Open source',
-//     description: 'This Pokémon’s cry is very loud and distracting',
-//   },
-//   {
-//     icon: IconCoin,
-//     title: 'Free for everyone',
-//     description: 'The fluid of Smeargle’s tail secretions changes',
-//   },
-//   {
-//     icon: IconBook,
-//     title: 'Documentation',
-//     description: 'Yanma is capable of seeing 360 degrees without',
-//   },
-//   {
-//     icon: IconFingerprint,
-//     title: 'Security',
-//     description: 'The shell’s rounded shape and the grooves on its.',
-//   },
-//   {
-//     icon: IconChartPie3,
-//     title: 'Analytics',
-//     description: 'This Pokémon uses its flying ability to quickly chase',
-//   },
-//   {
-//     icon: IconNotification,
-//     title: 'Notifications',
-//     description: 'Combusken battles with the intensely hot flames it spews',
-//   },
-// ];
 
 function NavBar() {
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-  const { classes, theme } = useStyles();
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const user = useSelector((state)=>state.userLoginReducer)
+  const {userLoginDetails} = user
+  console.log('user',userLoginDetails);
   const logOut = () => {
     dispatch(userLogOut())
     navigate("/login")
@@ -146,24 +115,12 @@ function NavBar() {
   const onUserProfile = () => {
     navigate("/profile")
   }
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
+  const { classes, theme } = useStyles();
 
-  // const links = mockdata.map((item) => (
-  //   <UnstyledButton className={classes.subLink} key={item.title}>
-  //     <Group noWrap align="flex-start">
-  //       <ThemeIcon size={34} variant="default" radius="md">
-  //         <item.icon size={rem(22)} color={theme.fn.primaryColor()} />
-  //       </ThemeIcon>
-  //       <div>
-  //         <Text size="sm" fw={500}>
-  //           {item.title}
-  //         </Text>
-  //         <Text size="xs" color="dimmed">
-  //           {item.description}
-  //         </Text>
-  //       </div>
-  //     </Group>
-  //   </UnstyledButton>
-  // ));
+
+  
 
   return (
     <Box pb={100}>
@@ -235,9 +192,9 @@ function NavBar() {
           </Group>
 
           {/* search  */}
-          {/* <Group>
+          <Group>
           <Group ml={50} spacing={5} className={classes.links}>
-            {items}
+            {/* {items} */}
           </Group>
           <Autocomplete
             className={classes.search}
@@ -245,9 +202,19 @@ function NavBar() {
             icon={<IconSearch size="1rem" stroke={1.5} />}
             data={[]}
           />
-        </Group> */}
-         {/* search  */}
+        </Group>
 
+         {/* search  */}
+          {/* checking user */}
+         {
+            userLoginDetails ?  
+            <Group className={classes.hiddenMobile}>
+              <Button onClick={logOut} variant="default">Log Out</Button>
+              <Link to={'/profile'}>
+              <Button icon="pi pi-user" rounded severity="primary" aria-label="User" />
+            </Link>
+            </Group>
+            : 
           <Group className={classes.hiddenMobile}>
 
             <Link to={'/login'}>
@@ -257,12 +224,9 @@ function NavBar() {
             <Link to={'/signup'}>
               <Button>Sign up</Button>
             </Link>
-
-            <Link to={'/profile'}>
-              <Button icon="pi pi-user" rounded severity="primary" aria-label="User" />
-            </Link>
-
           </Group>
+         }
+
 
 
           <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.hiddenDesktop} />

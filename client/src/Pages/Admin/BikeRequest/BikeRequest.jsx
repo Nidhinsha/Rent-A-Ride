@@ -6,9 +6,8 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
-import { Box, styled } from '@mui/material'
+import { Box, CircularProgress, styled } from '@mui/material'
 import { Container } from '@mantine/core';
-import { acceptBikeAPI, getPendingBikeAPI, rejectBikeAPI } from '../../../Api/Admin/ApiCalls';
 
 
 import { ConfirmPopup } from 'primereact/confirmpopup'; // To use <ConfirmPopup> tag
@@ -16,38 +15,39 @@ import { confirmPopup } from 'primereact/confirmpopup'; // To use confirmPopup m
 
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
+import { adminAcceptBikeAction, adminGetPendingBikeAction, adminRejectBikeAction } from '../../../Redux/Actions/adminActions';
 function BikeRequest() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [pendingData, setPendingData] = useState([])
+    // const [pendingData, setPendingData] = useState([])
+    const pendingDataList = useSelector((state) => state.adminRentRequestBikeReducer)
+    const { loading, bikeRequestData, bikeRequestDataError } = pendingDataList
+    console.log('pendign data selector', pendingDataList);
 
-
-    useEffect(() => {
-        getPendingBikeAPI().then((data) => {
-            setPendingData(data.data)
-        })
-    }, [])
 
     // accept and reject bikes
 
     const handleAccept = (id) => {
         // Handle accept logic here
-        acceptBikeAPI(id).then((id) => {
-            console.log(id, 'data after updated');
-        })
-        console.log("Accepted", id);
+
+        dispatch(adminAcceptBikeAction(id))
+        // console.log("Accepted", id);
 
     };
 
     const handleReject = (id) => {
         // Handle reject logic here
-        rejectBikeAPI(id).then((data) => {
-            console.log("rejected data", data);
-        })
+        dispatch(adminRejectBikeAction(id))
         console.log("Rejected", id);
     };
+
+    useEffect(() => {
+        dispatch(adminGetPendingBikeAction())
+    }, [dispatch])
+
+
 
     const DrawerHeader = styled('div')(({ theme }) => ({
         display: 'flex',
@@ -58,12 +58,12 @@ function BikeRequest() {
         ...theme.mixins.toolbar,
     }));
 
-    const statusBodyTemplate = (pendingData) => {
-        return <Tag value={pendingData.status} severity={getSeverity(pendingData)}></Tag>;
+    const statusBodyTemplate = (bikeRequestData) => {
+        return <Tag value={bikeRequestData.status} severity={getSeverity(bikeRequestData)}></Tag>;
     };
 
-    const getSeverity = (pendingData) => {
-        switch (pendingData.status) {
+    const getSeverity = (bikeRequestData) => {
+        switch (bikeRequestData.status) {
             case 'approved':
                 return 'success';
 
@@ -122,39 +122,40 @@ function BikeRequest() {
 
                 <Container fixed sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
 
-                    {/* <div className="card"> */}
-                    <DataTable value={pendingData} tableStyle={{ minWidth: '60rem' }} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} resizableColumns showGridlines>
-                        <Column field="bikeName" header="Name" sortable ></Column>
-                        <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo[0]} alt="User" style={{
-                            width: '5rem',
-                            height: '5rem',
-                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                            borderRadius: '30%',
-                        }} />} />
-                        <Column field="bikeModel" header="Model" sortable></Column>
-                        <Column field="brand" header="Brand" sortable></Column>
-                        <Column field="color" header="Color" sortable></Column>
-                        <Column field="engineNumber" header="engineNumber" sortable ></Column>
-                        <Column field='fuel' header="fuel" sortable></Column>
-                        <Column field='price' header="Price" sortable></Column>
-                        <Column field='assured' header="Assured" sortable ></Column>
-                        <Column field='status' header="Status" body={statusBodyTemplate} sortable ></Column>
-                        <Column header="Action" body={(rowData) => (
-                            <div>
-                                <Toast ref={toast} />
-                                <ConfirmPopup />
-                                <Button label="Accept" className="p-button-success p-mr-2" onClick={() => confirm1(rowData._id)} />
-                                <Button label="Reject" className="p-button-danger" onClick={() => confirm2(rowData._id)} />
-                             
-                            </div>
-                        )} />
+                    {loading ? (
+                        <CircularProgress />
+                    ) : (
 
-                    </DataTable>
+                        <DataTable value={bikeRequestData} tableStyle={{ minWidth: '60rem' }} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} resizableColumns showGridlines>
+                            <Column field="bikeName" header="Name" sortable ></Column>
+                            <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo[0]} alt="User" style={{
+                                width: '5rem',
+                                height: '5rem',
+                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                                borderRadius: '30%',
+                            }} />} />
+                            <Column field="bikeModel" header="Model" sortable></Column>
+                            <Column field="brand" header="Brand" sortable></Column>
+                            <Column field="color" header="Color" sortable></Column>
+                            <Column field="engineNumber" header="engineNumber" sortable ></Column>
+                            <Column field='fuel' header="fuel" sortable></Column>
+                            <Column field='price' header="Price" sortable></Column>
+                            <Column field='assured' header="Assured" sortable ></Column>
+                            <Column field='status' header="Status" body={statusBodyTemplate} sortable ></Column>
+                            <Column header="Action" body={(rowData) => (
+                                <div>
+                                    <Toast ref={toast} />
+                                    <ConfirmPopup />
+                                    <Button label="Accept" className="p-button-success p-mr-2" onClick={() => confirm1(rowData._id)} />
+                                    <Button label="Reject" className="p-button-danger" onClick={() => confirm2(rowData._id)} />
+                                </div>
+                            )} />
+                        </DataTable>
+                    )
+                    }
                 </Container>
             </Box>
         </Box>
-
-
     )
 }
 

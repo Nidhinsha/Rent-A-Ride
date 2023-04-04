@@ -1,5 +1,5 @@
 import { adminActionType } from '../Constants/adminConstants'
-import { addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteLocationAPI, editLocationAPI, getAllBikeAPI, getLocationAPI, getUsersApi } from "../../Api/Admin/ApiCalls"
+import { acceptBikeAPI, addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteLocationAPI, editLocationAPI, getAllBikeAPI, getLocationAPI, getPendingBikeAPI, getUsersApi, rejectBikeAPI } from "../../Api/Admin/ApiCalls"
 
 
 export const adminLogin = (email, password) => async (dispatch) => {
@@ -117,6 +117,69 @@ export const adminGetAllBikeAction = () =>async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type: adminActionType.ADMIN_GET_BIKE_FAIL,
+            payload : error.response.message
+        })
+    })
+}
+
+// GETTING THE PENDING BIKE DATA 
+
+export const adminGetPendingBikeAction =() => async(dispatch)=>{
+    dispatch({
+        type : adminActionType.ADMIN_GET_PENDING_BIKE_REQUEST
+    })
+
+    getPendingBikeAPI().then((data)=>{
+        console.log('pending data action',data.data);
+
+        dispatch({
+            type : adminActionType.ADMIN_GET_PENDING_BIKE_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type : adminActionType.ADMIN_GET_PENDING_BIKE_FAIL,
+            payload : error.response.message
+        })
+    })
+}
+
+export const adminAcceptBikeAction =(id)=>async(dispatch)=>{
+    dispatch({
+        type : adminActionType.ADMIN_ACCEPT_BIKE_REQUEST
+    })
+
+    acceptBikeAPI(id).then((data)=>{
+        console.log('accept ',data.data);
+
+        dispatch({
+            type : adminActionType.ADMIN_ACCEPT_BIKE_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type : adminActionType.ADMIN_ACCEPT_BIKE_FAIL,
+            payload : error.response.message
+        })
+    })
+}
+
+export const adminRejectBikeAction =(id)=>async(dispatch)=>{
+    dispatch({
+        type : adminActionType.ADMIN_REJECT_BIKE_REQUEST
+    })
+
+    rejectBikeAPI(id).then((data)=>{
+        dispatch({
+            type : adminActionType.ADMIN_REJECT_BIKE_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type : adminActionType.ADMIN_REJECT_BIKE_FAIL,
             payload : error.response.message
         })
     })

@@ -42,9 +42,6 @@ function AddBike() {
         dispatch(adminGetLocation())
     }, [])
     const location = useSelector((state) => state.adminGetLocationReducer.location)
-    console.log(location, 'location in the add-bikepage')
-
-
 
 
     const {
@@ -66,8 +63,6 @@ function AddBike() {
             console.log(value)
             formdata.append("images", value)
         })
-
-
 
         // the form data 
         formdata.append("bikeName", bikeName)

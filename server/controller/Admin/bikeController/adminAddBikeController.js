@@ -8,7 +8,7 @@ const fs = require('fs')
 exports.addBike = async (req, res) => {
 
     try {
-        const uploader = async (path) => await cloudinary.uploads(path, 'Images')
+        const uploader = async (path) => await cloudinary.uploads(path,'Images')
 
         if (req.method === 'POST') {
             const urls = []
