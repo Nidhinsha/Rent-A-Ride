@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
     },
     proof:{
         type:String
+    },
+    isGoogle:{
+        type : Boolean,
+        default : false
     }
 }
     , {

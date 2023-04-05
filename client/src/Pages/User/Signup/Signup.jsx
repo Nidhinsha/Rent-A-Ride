@@ -13,11 +13,13 @@ import { InputText } from "primereact/inputtext";
 // import { IconName } from "react-icons/bs";
 
 // import { Button } from 'primereact/button';
-
+// google
+import { auth, provider } from '../../../firebase/config';
+import { signInWithPopup } from 'firebase/auth'
 
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { userSignup } from '../../../Redux/Actions/userActions';
+import { googleSignupAction, userSignup } from '../../../Redux/Actions/userActions';
 import { Link } from 'react-router-dom'
 import Loading from '../../../components/Loading/Loading';
 import ErrorMessage from '../../../components/Alert/Error';
@@ -59,11 +61,27 @@ function Signup() {
   const userSignupData = useSelector(state => state.userSignupReducer)
   const { signUpError, loading, signUpData } = userSignupData
 
+
+  const googleSignupSelector = useSelector((state)=> state.googleSignupReducer)
+  const {googleLoading,googleSignupError} = googleSignupSelector
+
   console.log('userSignupdata', userSignupData);
 
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  // google
+
+  const googleSignup = ()=>{
+    signInWithPopup(auth,provider).then((data)=>{
+      const fullName = data.user.displayName
+      const [firstName,lastName] = fullName.split(' ')
+      // console.log('google data',data.user.displayName,data.user.email,data.user.photoURL,data.user.phoneNumber,firstName,lastName);
+      dispatch(googleSignupAction(firstName,lastName,data.user.email,data.user.phoneNumber,data.user.photoURL))
+      
+    })
+  }
 
   const { register, handleSubmit,
     formState: { errors } } = useForm({
@@ -88,7 +106,6 @@ function Signup() {
 
   useEffect(() => {
     let userInfo = localStorage.getItem("userInfo")
-
     if (userInfo) {
       navigate('/')
     } else {
@@ -118,6 +135,10 @@ function Signup() {
               component="form" onSubmit={handleSubmit(submitHandler)}>
               {
                 signUpError ? <p className='p-error' style={{ color: 'red' }}>{signUpError}</p> : ""
+              }
+
+              {
+                googleLoading ? <Loading/> : ""
               }
               <TextField
                 autoFocus
@@ -225,6 +246,14 @@ function Signup() {
                 }
               }} >
                 signup
+              </Button>
+              <Button
+                variant="text"
+                fullWidth
+                sx={{ mb: 2 }}
+                onClick={googleSignup}
+              >
+                login with Google
               </Button>
               <Button
                 variant="text"

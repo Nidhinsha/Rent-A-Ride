@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { userLogin, userSignup } from '../../../Redux/Actions/userActions'
+import { googleSignupAction, userLogin, userSignup } from '../../../Redux/Actions/userActions'
 import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
 import './Login.css'
@@ -66,6 +66,17 @@ function Login() {
     } catch (error) {
 
     }
+  }
+
+  const googleLogin =()=>{
+    signInWithPopup(auth,provider).then((data)=>{
+      const fullName = data.user.displayName
+      const [firstName,lastName] = fullName.split(' ')
+      // console.log('google data',data.user.displayName,data.user.email,data.user.photoURL,data.user.phoneNumber,firstName,lastName);
+      dispatch(googleSignupAction(firstName,lastName,data.user.email,data.user.phoneNumber,data.user.photoURL))
+      navigate("/")
+      console.log('google data',data);
+    })
   }
 
 
@@ -162,6 +173,14 @@ function Login() {
                 to="/otp-login" // specify the link destination
               >
                 login with otp
+              </Button>
+              <Button
+                variant="text"
+                fullWidth
+                sx={{ mb: 2 }}
+                onClick={googleLogin}
+              >
+                login with Google
               </Button>
               
             </Box>

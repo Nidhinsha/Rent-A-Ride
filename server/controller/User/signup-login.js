@@ -28,6 +28,7 @@ exports.SignUpPost = async(req,res)=>{
                         firstName : userData.firstName ,
                         lastName : userData.lastName , 
                         email : userData.email ,
+                        // isGoogle,
                         // picture: userData.picture,
                         token : generateToken(userData.id)
                     }
@@ -89,6 +90,67 @@ exports.LoginPost= async(req,res)=>{
     } catch (error) {
         
     }
+}
+
+// google signup 
+
+exports.googleSingup = async(req,res)=>{
+    console.log(req.body,'body');
+
+    userSchema.findOne(
+        {
+            email : req.body.email
+        }
+    ).then((existingUser)=>{
+        if (existingUser) {
+            if(existingUser.status){
+
+                const userDetails ={
+                    id : existingUser.id,
+                    firstName : existingUser.firstName,
+                    lastName : existingUser.lastName,
+                    email : existingUser.email,
+                    phone : existingUser.phone,
+                    proof : existingUser.proof,
+                    token : generateToken(existingUser.id),
+                    isGoogle : true
+                }
+
+                res.status(200).json(userDetails)
+                console.log('already existing user login');
+            }else{
+                res.status(401).json("Account is Suspended")
+            }
+        } else {
+            console.log('req.body in the crea user side',req.body);
+            
+            const userDetails ={
+                firstName :req.body.firstName,
+                lastName : req.body.lastName,
+                email : req.body.email,
+                phone : req.body.phone, 
+                photo : req.body.photo,
+                isGoogle : true
+            }
+            userSchema.create(userDetails).then((data)=>{
+                const details ={
+                    firstName : data.firstName,
+                    lastName : data.lastName,
+                    email : data.email,
+                    phone : data.phone,
+                    photo : data.photo,
+                    token : generateToken(data.id),
+                    isGoogle : true
+                }
+                res.status(201).json(details)
+                console.log('the user created',data);
+            })
+            .catch((error)=>{
+                console.log('error in google with signup create',error);
+                res.status(400).json("error while creating user with google !!!")
+            })
+        }
+    })
 }
 
 exports.otpLoginController = (req,res)=>{

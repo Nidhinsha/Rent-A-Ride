@@ -2,7 +2,7 @@
 import { userActionType } from "../Constants/userConstants";
 
 
-export const userSignupReducer = (state ={}, action) => {
+export const userSignupReducer = (state = {}, action) => {
     switch (action.type) {
 
         case userActionType.USER_SIGNUP_REQUEST:
@@ -69,6 +69,28 @@ export const userLoginReducer = (state = {}, action) => {
         default:
             return state
     }
+}
+
+export const googleSignupReducer =(state={},action)=>{
+  switch (action) {
+    case userActionType.GOOGLE_SIGNUP_REQUEST:
+      return{
+        googleLoading : true
+      }
+    case userActionType.GOOGLE_SIGNUP_SUCCESS:
+      return {
+        googleLoading : false,
+        googleSignupData : action.payload
+      }
+    case userActionType.GOOGLE_SIGNUP_FAIL:
+      return {
+        googleLoading : false,
+        googleSignupError : action.payload
+      }
+  
+    default:
+      return  state;
+  }
 }
 
 export const getUserProfileReduer = (state = {}, action) => {

@@ -17,6 +17,9 @@ router.post('/user-signup',userSignupLogin.SignUpPost)
 
 router.post('/user-login',userSignupLogin.LoginPost)
 
+// google signIn
+router.post("/google-signup",userSignupLogin.googleSingup)
+
 router.route('/otp-login').post(userSignupLogin.otpLoginController)
 // Home
 router.route("/").get(protect,)

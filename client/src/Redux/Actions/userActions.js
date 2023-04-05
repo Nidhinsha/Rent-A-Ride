@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { searchBikesAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { googleSignupAPI, searchBikesAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -63,6 +63,35 @@ export const userLogin = (email, password) => async (dispatch) => {
 
   }
 }
+
+// google signup
+
+
+export const googleSignupAction = (firstName, lastName, email, phone, photo) => async (dispatch) => {
+  try {
+    dispatch({
+      type: userActionType.GOOGLE_SIGNUP_REQUEST,
+    })
+
+    const { data } = await googleSignupAPI(firstName, lastName, email, phone, photo)
+
+    dispatch({
+      type: userActionType.GOOGLE_SIGNUP_SUCCESS,
+      payload: data,
+    })
+
+    await localStorage.setItem("userInfo", JSON.stringify(data))
+
+    // navigate to home page after localStorage operation is complete
+    window.location.href = "/"
+  } catch (error) {
+    dispatch({
+      type: userActionType.GOOGLE_SIGNUP_FAIL,
+      payload: error.response.message,
+    })
+  }
+}
+
 
 // otp login
 

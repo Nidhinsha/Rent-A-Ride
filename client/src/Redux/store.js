@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 import {
   userSignupReducer,
   userLoginReducer,
+  googleSignupReducer,
   userImageUplaodReducer,
   getUserProfileReduer,
   userGetBikeReducer,
@@ -35,6 +36,7 @@ const reducer = combineReducers({
 
   userSignupReducer: userSignupReducer,
   userLoginReducer: userLoginReducer,
+  googleSignupReducer : googleSignupReducer,
 
   getUserProfileReduer: getUserProfileReduer,
   userImageUplaodReducer: userImageUplaodReducer,
