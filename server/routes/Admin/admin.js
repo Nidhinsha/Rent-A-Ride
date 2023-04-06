@@ -13,7 +13,7 @@ const adminAcceptReq = require("../../controller/Admin/bikeController/accepetReq
 const adminRejectReq = require("../../controller/Admin/bikeController/rejectReqController")
 const locationController = require("../../controller/Admin/locationController")
 const editBikeController = require("../../controller/Admin/bikeController/editBikeController")
-
+const couponController = require("../../controller/Admin/couponController")
 
 const { protect } = require("../../Middlewares/verifyToken")
 
@@ -21,29 +21,26 @@ const { protect } = require("../../Middlewares/verifyToken")
 router.route("/login").post(loginController.adminLogin)
 
 router.route("/user-manage").get(protect, adminController.adminUser)
-
 router.route("/userBlockUnblock").get(protect,adminController.blockUser)
 
 router.route("/add-bike").post(upload.array('images'),protect,addBikeController.addBike)
-
 router.route('/edit-bike').post(upload.array('images'),protect,editBikeController.editBike)
-
 router.route('/delete-bike').delete(protect,deleteBikeController.deleteBike)
-
 router.route("/view-bike").get(protect,adminViewBikeController.viewBike)
 
 router.route("/user-rent-request").get(protect,userBikeRentRequestController.userRentRequest)
-
 router.route("/accept-request").put(protect,adminAcceptReq.accepetReqController)
-
 router.route("/reject-request").put(protect,adminRejectReq.rejectReqController)
 
-router.route("/add-location").post(locationController.addLocation)
-
+router.route("/add-location").post(protect,locationController.addLocation)
 router.route("/locations").get(protect,locationController.getLocation)
-
 router.route("/edit-location").put(protect,locationController.editLocation)
-
 router.route("/delete-location").delete(protect,locationController.deleteLocation)
+
+router.route("/coupons").get(protect,couponController.getCoupons)
+router.route("/add-coupon").post(protect,couponController.addCoupon)
+router.route("/edit-coupon").put(protect,couponController.editCoupon)
+router.route("/delete-coupon").delete(protect,couponController.deleteCoupon)
+
 
 module.exports = router

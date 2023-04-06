@@ -19,6 +19,7 @@ import SingleBikeView from './Pages/User/SingleBikeView/SingleBikeView'
 import Test from './Pages/User/Test/Test'
 import OtpLogin from './Pages/User/OtpLogin/OtpLogin'
 import EditBike from './Pages/Admin/EditBike/EditBike'
+import Coupons from './Pages/Admin/Coupons/Coupons'
 function App() {
 
   // const userData = useSelector((state)=> state.userL)
@@ -46,6 +47,7 @@ function App() {
       <Route path='/admin/dashboard' exact element={adminData ? <Dashboard /> : <AdminLogin/>} />
       <Route path='/admin/bike-request' exact element={adminData ? <BikeRequest/> : <AdminLogin/>} />
       <Route path='/admin/location' exact element={adminData ? <Location/>:<AdminLogin/>} />
+      <Route path='/admin/coupons' exact element={adminData ? <Coupons/> :<AdminLogin/>} />
       {/* <Route path='/admin/bikes' element={adminData ? } */}
       </Routes>
     </div>

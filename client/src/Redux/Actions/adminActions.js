@@ -1,5 +1,5 @@
 import { adminActionType } from '../Constants/adminConstants'
-import { acceptBikeAPI, addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteLocationAPI, editLocationAPI, getAllBikeAPI, getLocationAPI, getPendingBikeAPI, getUsersApi, rejectBikeAPI } from "../../Api/Admin/ApiCalls"
+import { acceptBikeAPI, addCouponAPI, addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteCouponAPI, deleteLocationAPI, editCouponAPI, editLocationAPI, getAllBikeAPI, getCouponsAPI, getLocationAPI, getPendingBikeAPI, getUsersApi, rejectBikeAPI } from "../../Api/Admin/ApiCalls"
 
 
 export const adminLogin = (email, password) => async (dispatch) => {
@@ -213,8 +213,6 @@ export const adminGetLocation = ()=>async(dispatch)=>{
     })
 
     getLocationAPI().then((data)=>{
-
-
         dispatch({
             type : adminActionType.ADMIN_GET_LOCATION_SUCCESS,
             payload : data.data
@@ -235,7 +233,6 @@ export const adminEditLocation =(id,locationData)=> async(dispatch)=>{
     })
 
     editLocationAPI(id,locationData).then((data)=>{
-
         dispatch({
             type : adminActionType.ADMIN_DELETE_LOCATION_SUCCESS,
             payload : data.data
@@ -256,7 +253,6 @@ export const adminDeleteLocation =(id)=> async(dispatch)=>{
     })
 
     deleteLocationAPI(id).then((data)=>{
-      
         dispatch({
             type : adminActionType.ADMIN_ADD_LOCATION_SUCCESS,
             payload : data.data
@@ -268,4 +264,80 @@ export const adminDeleteLocation =(id)=> async(dispatch)=>{
             payload :error.response.message
         })
     })
+}
+
+export const adminGetCouponsAction =()=>async(dispatch)=>{
+    dispatch({
+        type : adminActionType.ADMIN_GET_COUPON_REQUEST
+    })
+
+    getCouponsAPI().then((data)=>{
+        dispatch({
+            type : adminActionType.ADMIN_GET_COUPON_SUCCESS,
+            payload : data.data
+        })
+        .catch((error)=>{
+            dispatch({
+                type : adminActionType.ADMIN_GET_COUPON_FAIL,
+                payload : error.response.message
+            })
+        })
+    })
+}
+
+export const adminAddCouponAction=(couponName,couponCode)=>async(dispatch)=>{
+    dispatch({
+        type : adminActionType.ADMIN_ADD_COUPON_REQUEST
+    })
+
+    addCouponAPI(couponName,couponCode).then((data)=>{
+        dispatch({
+            type : adminActionType.ADMIN_ADD_COUPON_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type : adminActionType.ADMIN_ADD_COUPON_FAIL,
+            payload : error.response.message
+        })
+    })
+}
+
+export const adminEditCouponAction=(id,couponName,couponCode)=>async(dispatch)=>{
+    dispatch({
+        type : adminActionType.ADMIN_EDIT_COUPON_REQUEST
+    })
+
+    editCouponAPI(id,couponName,couponCode).then((data)=>{
+        dispatch({
+            type : adminActionType.ADMIN_EDIT_COUPON_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type : adminActionType.ADMIN_EDIT_COUPON_FAIL,
+            payload :error.response.message
+        })
+    })
+}
+
+export const adminDeleteCouponAction=(id)=>async(dispatch)=>{
+    dispatch({
+        type : adminActionType.ADMIN_DELETE_COUPON_REQUEST
+    })
+
+    deleteCouponAPI(id).then((data)=>{
+        dispatch({
+            type : adminActionType.ADMIN_DELETE_COUPON_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>[
+        dispatch({
+            type : adminActionType.ADMIN_DELETE_COUPON_FAIL,
+            payload :error.response.message
+        })
+    ])
 }

@@ -25,6 +25,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RuleIcon from '@mui/icons-material/Rule';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useNavigate } from 'react-router-dom';
 
 // import Table from '../Users/Users';
@@ -155,6 +156,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                         { name: 'Bike Rent Request', icon: <RuleIcon style={{ color:'#6366F1'}}  /> },
                         { name: 'Booked bike', icon: <BookmarkAddIcon style={{ color:'#6366F1'}}  /> },
                         { name: 'Location', icon: <BranchIcon style={{ color:'#6366F1'}}  /> },
+                        { name: 'Coupons', icon: <LocalOfferIcon style={{ color:'#6366F1'}}  /> },
                         { name: 'Bike Report', icon: <ReportIcon style={{ color:'#6366F1'}}  /> },
                         // { name: 'Other Donations', icon: <OthersIcon /> },
                         { name: 'Logout', icon: <LogoutIcon style={{ color:'#6366F1'}}  /> }
@@ -189,6 +191,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                                         text2 === "booked bike"  && navigate('/admin/booked-bike')
                                         text2 === "location"  && navigate('/admin/location')
                                         text2 === "bike report"  && navigate('/admin/bike-report')
+                                        text2 === "coupons"  && navigate('/admin/coupons')
                                         text2 === "logout"  && handleLogout() 
                                         
                                     }} />

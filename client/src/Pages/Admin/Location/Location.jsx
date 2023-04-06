@@ -47,11 +47,11 @@ function Location() {
     const dispatch = useDispatch()
 
     const location = useSelector((state) => state.adminGetLocationReducer.location)
+    console.log('location page',location);
 
     const addLocation = () => {
         setOpen(true)
     }
-
 
     const handleSubmit = () => {
         console.log('hi')
@@ -69,7 +69,7 @@ function Location() {
 
     useEffect(() => {
         dispatch(adminGetLocation())
-    }, [dispatch,open,editModalOpen])
+    }, [dispatch, adminGetLocation])
 
 
     return (
@@ -79,7 +79,7 @@ function Location() {
             <Box component="main" sx={{ flexGrow: 1, p: 3, mr: 1 }}>
                 <DrawerHeader />
 
-                <Container fixed sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
+                <Container sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
 
                     <Box >
                         <h2>
@@ -118,7 +118,7 @@ function Location() {
                                         )} />
 
                                     </DataTable>
-                                    : ""
+                                    : "No location data available"
                             }
                         </Container>
                     </Box>
