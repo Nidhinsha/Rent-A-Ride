@@ -8,7 +8,7 @@ exports.addCoupon =async(req,res)=>{
         if(couponData){
             res.status(400).json("Coupon Already exits !!")
         }else{
-            couponData.create(req.body).then(()=>{
+            couponSchema.create(req.body).then(()=>{
                 couponSchema.find().then((data)=>{
                     res.status(201).json(data)
                 })
@@ -24,7 +24,7 @@ exports.getCoupons = async(req,res)=>{
     couponSchema.find().then((data)=>{
         res.status(200).json(data)
     })
-    .catch(()=>{
+    .catch((error)=>{
         res.status(400).json("error in finding coupons")
     })
 }
@@ -57,8 +57,10 @@ exports.deleteCoupon = async(req,res)=>{
             _id : req.query.id
         }
     )
-    .then((data)=>{
-        res.status(200).json(data)
+    .then(()=>{
+        couponSchema.find().then((data)=>{
+            res.status(200).json(data)
+        })
     })
     .catch(()=>{
         res.status(400).json("error in coupon deletion !!")

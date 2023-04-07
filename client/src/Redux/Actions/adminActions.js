@@ -276,11 +276,11 @@ export const adminGetCouponsAction =()=>async(dispatch)=>{
             type : adminActionType.ADMIN_GET_COUPON_SUCCESS,
             payload : data.data
         })
-        .catch((error)=>{
-            dispatch({
-                type : adminActionType.ADMIN_GET_COUPON_FAIL,
-                payload : error.response.message
-            })
+    })
+    .catch((error)=>{
+        dispatch({
+            type : adminActionType.ADMIN_GET_COUPON_FAIL,
+            payload : error.response.message
         })
     })
 }

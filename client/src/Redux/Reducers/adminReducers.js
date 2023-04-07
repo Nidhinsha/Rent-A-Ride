@@ -213,3 +213,70 @@ export const adminDeleteLocationReducer = (state = {}, action) => {
       return state
   }
 }
+
+export const adminCouponsReducer =(state={},action)=>{
+  switch (action.type) {
+    case adminActionType.ADMIN_GET_COUPON_REQUEST:
+      return {
+        loading : true
+      }
+    case adminActionType.ADMIN_GET_COUPON_SUCCESS:
+      return {
+        loading : false,
+        couponData : action.payload
+      }
+    case adminActionType.ADMIN_GET_COUPON_FAIL:
+      return {
+        loading : false,
+        couponDataError : action.payload
+      }
+
+    case adminActionType.ADMIN_ADD_COUPON_REQUEST:
+      return {
+        loading : true
+      }
+    case adminActionType.ADMIN_ADD_COUPON_SUCCESS:
+      return {
+        loading : false,
+        couponData : action.payload
+      }
+    case adminActionType.ADMIN_ADD_COUPON_FAIL:
+      return {
+        loading : false,
+        couponDataError : action.payload
+      }
+
+    case adminActionType.ADMIN_EDIT_COUPON_REQUEST:
+      return {
+        loading : true
+      }
+    case adminActionType.ADMIN_EDIT_COUPON_SUCCESS:
+      return {
+        loading : false,
+        couponData : action.payload
+      }
+    case adminActionType.ADMIN_EDIT_COUPON_FAIL:
+      return {
+        loading : false,
+        couponDataError : action.payload
+      }
+
+    case adminActionType.ADMIN_DELETE_COUPON_REQUEST:
+      return {
+        loading : true
+      }
+    case adminActionType.ADMIN_DELETE_COUPON_SUCCESS:
+      return {
+        loading : false,
+        couponData : action.payload
+      }
+    case adminActionType.ADMIN_DELETE_COUPON_FAIL:
+      return {
+        loading : false,
+        couponDataError : action.payload
+      }
+      
+    default:
+      return state;
+  }
+}

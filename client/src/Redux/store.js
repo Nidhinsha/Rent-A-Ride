@@ -27,7 +27,8 @@ import {
   adminGetLocationReducer,
   adminEditLocationReducer,
   adminDeleteLocationReducer,
-  adminRentRequestBikeReducer
+  adminRentRequestBikeReducer,
+  adminCouponsReducer
 
 
 } from './Reducers/adminReducers'
@@ -59,7 +60,9 @@ const reducer = combineReducers({
 
   adminGetLocationReducer : adminGetLocationReducer,
   adminEditLocationReducer : adminEditLocationReducer,
-  adminDeleteLocationReducer : adminDeleteLocationReducer
+  adminDeleteLocationReducer : adminDeleteLocationReducer,
+
+  adminCouponsReducer :adminCouponsReducer
   
 });
 

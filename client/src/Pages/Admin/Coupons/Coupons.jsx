@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, styled } from '@mui/material'
 import { Container } from '@mantine/core';
 import Button from '@mui/material/Button';
 import SideBar from '../../../components/SideBar/SideBar';
+import AddCouponModal from '../../../components/Modal/AddCouponModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { adminGetCouponsAction } from '../../../Redux/Actions/adminActions';
+import CouponTable from '../../../components/Table/CouponTable';
+
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -26,6 +31,17 @@ const style = {
 };
 
 function Coupons() {
+    const dispatch = useDispatch()
+
+    const[open,setOpen] = useState(false)
+
+    const coupons = useSelector((state)=>state.adminCouponsReducer.couponData)
+    console.log('coupons data in the page',coupons);
+
+    useEffect(()=>{
+        dispatch(adminGetCouponsAction())
+    },[open])
+    
   return (
     <Box sx={{ display: 'flex' }}>
       <SideBar/>
@@ -40,40 +56,16 @@ function Coupons() {
 </Box>
 <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', mb: 3 }}>
     <Button
-        // onClick={addLocation}
+        onClick={(e)=>setOpen(true)}
         variant='contained'
     >add Coupon</Button>
-    {/* <AddLocationModal open={open} onClose={() => setOpen(false)} /> */}
+    {
+        open ?  <AddCouponModal open={open} onClose={() => setOpen(false)} /> :""
+    }
+   
 
 </Box>
-
-<Box>
-    <Container fixed sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
-
-        {/* <div className="card"> */}
-        {/* {
-            location ?
-
-                <DataTable value={location} tableStyle={{ minWidth: '60rem' }} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} resizableColumns showGridlines>
-
-                    <Column field="location" header="Model" sortable></Column>
-                    <Column header="Action" body={(rowData) => (
-                        <div>
-                            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-
-                                <Button variant="contained" sx={{ mr: 3 }} onClick={() => handleEdit(rowData._id)}>Edit</Button>
-                                <EditLocationModal locationId={locationId} open={editModalOpen} onClose={() => setEditModalOpen(false)} />
-                                <Button variant="contained" color="error" onClick={() => handleDelete(rowData._id)}>Delete</Button>
-                            </Box>
-
-                        </div>
-                    )} />
-
-                </DataTable>
-                : "No location data available"
-        } */}
-    </Container>
-</Box>
+<CouponTable data={coupons}/>
 
 </Container>
           </Box>
