@@ -50,7 +50,7 @@ exports.editLocation = async(req,res)=>{
 
 exports.deleteLocation = async(req,res)=>{
     try {
-        locationSchema.deleteOne({_id : req.query.id}).then((data) => {
+        locationSchema.deleteOne({_id : req.query.id}).then(() => {
             locationSchema.find().then((data) => {
                 res.status(200).json(data)
             })

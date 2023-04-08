@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { googleSignupAPI, searchBikesAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -347,6 +347,28 @@ export const userGetLocation =()=> async(dispatch)=>{
 
     dispatch({
       type : userActionType.USER_GET_LOCATION_FAIL,
+      payload : error.response.message
+    })
+  })
+}
+
+// USER BOOKING BIKE
+
+export const userBookingBikeAction =(bookingData)=>async(dispatch)=>{
+  console.log('booking data in action',bookingData);
+  dispatch({
+    type : userActionType.USER_BOOKING_BIKE_REQUEST
+  })
+
+  userBookingBikeAPI(bookingData).then((data)=>{
+    dispatch({
+      type : userActionType.USER_BOOKING_BIKE_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.USER_BOOKING_BIKE_FAIL,
       payload : error.response.message
     })
   })

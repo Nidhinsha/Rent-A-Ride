@@ -20,6 +20,7 @@ import Test from './Pages/User/Test/Test'
 import OtpLogin from './Pages/User/OtpLogin/OtpLogin'
 import EditBike from './Pages/Admin/EditBike/EditBike'
 import Coupons from './Pages/Admin/Coupons/Coupons'
+import Booking from './Pages/User/Booking/Booking'
 function App() {
 
   // const userData = useSelector((state)=> state.userL)
@@ -36,7 +37,8 @@ function App() {
       <Route path='/rent-bike' exact element={userData? <RentBike />: <Login/> } />
       <Route path='/bikes' exact element={<Bikes/>} />
       <Route path='/single-bike-view' exact element={<SingleBikeView/>} />
-      <Route path='/rented-bikes' exact element={<RentedBikes/>} />
+      <Route path='/rented-bikes' exact element={userData?<RentedBikes/>:<Login/>} />
+      <Route path='/booking' exact element={userData ?<Booking/> : <Login/>} />
       <Route path='/test' exact element={<Test />} /> 
       
       <Route path='/admin/login' element={ adminData ?<Dashboard/>: <AdminLogin />} />

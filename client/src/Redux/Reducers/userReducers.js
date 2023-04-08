@@ -306,3 +306,24 @@ export const userLocationReducer = (state={},action)=>{
      return state
   }
 }
+
+export const userBookingBikeReducer =(state={},action)=>{
+  switch (action.type) {
+    case userActionType.USER_BOOKING_BIKE_REQUEST:
+      return{
+        bookingBikeLoading : true
+      }
+    case userActionType.USER_BOOKING_BIKE_SUCCESS:
+      return{
+        bookingBikeLoading : false,
+        bookingBikeData : action.payload
+      }
+    case userActionType.USER_BOOKING_BIKE_FAIL:
+      return {
+        bookingBikeLoading: false,
+        bookingBikeDataError : action.payload
+      }
+    default:
+     return state
+  }
+}

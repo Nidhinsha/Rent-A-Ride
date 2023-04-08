@@ -36,12 +36,11 @@ function Coupons() {
     const[open,setOpen] = useState(false)
 
     const coupons = useSelector((state)=>state.adminCouponsReducer.couponData)
-    console.log('coupons data in the page',coupons);
 
     useEffect(()=>{
         dispatch(adminGetCouponsAction())
     },[open])
-    
+
   return (
     <Box sx={{ display: 'flex' }}>
       <SideBar/>

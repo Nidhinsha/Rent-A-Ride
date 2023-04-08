@@ -9,6 +9,7 @@ import Loading from '../Loading/Loading';
 import { Button } from 'primereact/button';
 import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import BookingButton from '../Button/BookingButton/BookingButton';
 
 function PriceAscSortBikes({priceAsc}) {
     console.log('priceAsc',priceAsc);
@@ -53,8 +54,7 @@ function PriceAscSortBikes({priceAsc}) {
                                             </CardContent>
                                         </CardActionArea>
                                         <CardActions>
-                                            <Button label="Book Now" aria-label="Submit" icon="pi pi-shopping-bag" style={{ width: '100%', fontSize: 'large' }}
-                                            />
+                                           <BookingButton onClick={(e)=>navigate("/booking",{ state: { bikesData,bikeName: data.bikeName  } })}/>
 
                                         </CardActions>
                                     </Card>

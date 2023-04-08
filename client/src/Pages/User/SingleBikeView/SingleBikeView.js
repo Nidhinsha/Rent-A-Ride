@@ -13,9 +13,10 @@ import { useLocation } from 'react-router-dom';
 import './SingleBikeView.css'
 
 function SingleBikeView() {
-    const bikeData = useLocation() // to get the data passing frm there
-    const data = bikeData.state.bikesData[0]
-    console.log(data.bikeName, 'single bike data');
+
+    const location = useLocation();
+    const { bikesData } = location.state;
+    const clickedBike = bikesData.find((bike) => bike.bikeName === location.state.bikeName);
     return (
         <Box>
             <NavBar />
@@ -24,7 +25,7 @@ function SingleBikeView() {
                     <Grid container justifyContent="center" spacing={2}>
                         <Grid item xs={12} md={6} mt={4}>
                             <Carousel variant="dark">
-                                {data.photo.map((pic, index) => (
+                                {clickedBike.photo.map((pic, index) => (
                                     <Carousel.Item key={index}>
                                         <img
                                             className="d-block  w-100 "
@@ -50,38 +51,38 @@ function SingleBikeView() {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align='center'>Bike Name :</TableCell>
-                                            <TableCell align='center'>{data.bikeName}</TableCell>
+                                            <TableCell align='center'>{clickedBike.bikeName}</TableCell>
                                         </TableRow>
 
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
                                             <TableCell align='center'>Bike Model :</TableCell>
-                                            <TableCell align='center'>{data.bikeModel}</TableCell>
+                                            <TableCell align='center'>{clickedBike.bikeModel}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell align='center'>Brand :  </TableCell>
-                                            <TableCell align='center'>{data.brand} </TableCell>
+                                            <TableCell align='center'>{clickedBike.brand} </TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell align='center'>Fuel Used :</TableCell>
-                                            <TableCell align='center'>{data.fuel} </TableCell>
+                                            <TableCell align='center'>{clickedBike.fuel} </TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell align='center'>Bike Color : </TableCell>
-                                            <TableCell align='center'>{data.color}</TableCell>
+                                            <TableCell align='center'>{clickedBike.color}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell align='center'>Type : </TableCell>
-                                            <TableCell align='center'>{data.assured}</TableCell>
+                                            <TableCell align='center'>{clickedBike.assured}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell align='center' >Description :  </TableCell>
-                                            <TableCell align='center'>{data.description} </TableCell>
+                                            <TableCell align='center'>{clickedBike.description} </TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell align='center' >Price : </TableCell>
-                                            <TableCell align='center'>{data.price} Rs/Hr </TableCell>
+                                            <TableCell align='center'>{clickedBike.price} Rs/Hr </TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
