@@ -60,8 +60,8 @@ function Booking() {
 
     const handleBookNow = () => {
         const bookingData = {
-            user: JSON.parse(localStorage.getItem("userInfo")).id,
-            bikesData: clickedBike,
+            userId: JSON.parse(localStorage.getItem("userInfo")).id,
+            bikeId: clickedBike._id,
             totalAmount,
             totalHours,
             needHelmet: needHelmet,

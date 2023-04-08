@@ -51,7 +51,15 @@ const bikeSchema = new mongoose.Schema({
    },
    status:{
     type:String
-   }
+   },
+   bookedTimeSlots:[{
+    startDate : {
+     type :String
+    },
+    endDate :{
+     type :String
+    }   
+ }],
 
 })
 

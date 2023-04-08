@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import BookingButton from '../Button/BookingButton/BookingButton';
 
 function AllBikes({allBikes}) {
-    console.log('all bikes for component',allBikes);
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -56,7 +55,7 @@ function AllBikes({allBikes}) {
                                             </CardContent>
                                         </CardActionArea>
                                         <CardActions>
-                                            <BookingButton bikeName={data.bikeName}/>
+                                            <BookingButton bikeName={data.bikeName} />
 
                                         </CardActions>
                                     </Card>

@@ -11,6 +11,7 @@ const userDisplayBikes = require("../../controller/User/bikes/displayBikesContro
 const searchBikesController = require("../../controller/User/bikes/searchBikeController")
 const rentedBikeController = require("../../controller/User/bikes/rentedBikesController")
 const locationController = require("../../controller/User/locationController")
+const bookingController = require("../../controller/User/bookingController")
 // signUp Route
 
 router.post('/user-signup',userSignupLogin.SignUpPost)
@@ -54,5 +55,6 @@ router.route("/pending-bikes").get(protect,rentedBikeController.userGetPendingBi
 
 router.route('/get-location').get(locationController.getLocations)
 
+router.route("/booking-bike").post(protect,bookingController.bikeBookingController)
 
 module.exports = router;
