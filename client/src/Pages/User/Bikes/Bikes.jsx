@@ -4,7 +4,6 @@ import NavBar from '../../../components/NavBar/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { userGetBikeAction } from '../../../Redux/Actions/userActions';
 import Loading from '../../../components/Loading/Loading';
-import { Button } from 'primereact/button';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
@@ -14,8 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import AllBikes from '../../../components/UserBikeList/AllBikes';
 import PriceAscSortBikes from '../../../components/UserBikeList/PriceAscSortBikes';
@@ -48,21 +45,8 @@ TabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
 
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 function Bikes() {
 
     const dispatch = useDispatch()
@@ -71,13 +55,11 @@ function Bikes() {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
-        console.log('eooeoeo');
         setValue(newValue);
     };
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
-    console.log('bike data n the main',bikesData);
 
     useEffect(() => {
         dispatch(userGetBikeAction())

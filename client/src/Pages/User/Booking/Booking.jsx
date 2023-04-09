@@ -16,9 +16,15 @@ import moment from "moment"
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userBookingBikeAction, userGetLocation } from '../../../Redux/Actions/userActions';
+
+// stripe 
+import StripeCheckout from 'react-stripe-checkout';
+import StripePayButton from '../../../components/Button/StripePayButton/StripePayButton';
+
 const { RangePicker } = DatePicker
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
 
 function Booking() {
     const dispatch = useDispatch()
@@ -58,9 +64,26 @@ function Booking() {
         dispatch(userGetLocation())
     }, [])
 
+    const bookingData = {
+        userId: JSON.parse(localStorage.getItem("userInfo")).id,
+        userName :JSON.parse(localStorage.getItem("userInfo")).firstName,
+        bikeId: clickedBike._id,
+        bikeData : clickedBike,
+        totalAmount,
+        totalHours,
+        needHelmet: needHelmet,
+        bookedTimeSlots: {
+            startDate,
+            endDate
+        },
+        pickupLocation,
+        dropOffLocation
+    }
+
     const handleBookNow = () => {
-        const bookingData = {
+         bookingData = {
             userId: JSON.parse(localStorage.getItem("userInfo")).id,
+            userName :JSON.parse(localStorage.getItem("userInfo")).firstName,
             bikeId: clickedBike._id,
             totalAmount,
             totalHours,
@@ -75,6 +98,26 @@ function Booking() {
 
         dispatch(userBookingBikeAction(bookingData))
     }
+
+    // const onToken =(token)=>{
+    //     console.log(token,'token');
+    //     const bookingData = {
+    //         token,
+    //         userId: JSON.parse(localStorage.getItem("userInfo")).id,
+    //         bikeId: clickedBike._id,
+    //         totalAmount,
+    //         totalHours,
+    //         needHelmet: needHelmet,
+    //         bookedTimeSlots: {
+    //             startDate,
+    //             endDate
+    //         },
+    //         pickupLocation,
+    //         dropOffLocation
+    //     }
+
+    //     dispatch(userBookingBikeAction(bookingData))
+    // }
 
     return (
         <Box>
@@ -133,7 +176,7 @@ function Booking() {
                                             value={pickupLocation} // retrieve the selected value from React Hook Form
                                             label="pickup location"
                                             name='pickupLocation'
-                                          
+
                                             onChange={(e) => setPickupLocation(e.target.value)}
                                         >
 
@@ -148,9 +191,9 @@ function Booking() {
                                                     <MenuItem >No locations available</MenuItem>
                                                 )}
                                         </Select>
-                                      
+
                                     </FormControl>
-                                    <FormControl fullWidth sx={{mt:3}}>
+                                    <FormControl fullWidth sx={{ mt: 3 }}>
                                         <InputLabel id="demo-simple-select-label">Drop Off Location</InputLabel>
 
 
@@ -160,7 +203,7 @@ function Booking() {
                                             value={dropOffLocation} // retrieve the selected value from React Hook Form
                                             label="drop Off location"
                                             name='dropOffLocation'
-                                          
+
                                             onChange={(e) => setDropOffLocation(e.target.value)}
                                         >
 
@@ -175,7 +218,7 @@ function Booking() {
                                                     <MenuItem >No locations available</MenuItem>
                                                 )}
                                         </Select>
-                                      
+
                                     </FormControl>
                                 </Box>
                                 <Box>
@@ -209,6 +252,26 @@ function Booking() {
                                 </Box>
                             </Box>
                         </Grid>
+
+                        <StripePayButton bookingData={bookingData}>Ckeck Out</StripePayButton>
+
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                                mt: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
+                                    bgcolor: "#6366F1"
+                                }
+                            }}
+                            size="large"
+
+                            // onClick={handleBookNow} stripe it self work all out 
+                        >
+                            Book Now
+                        </Button>
+
+                      
+{/* for other purpose to make it beatifu now just play along with it */}
                         <Button
                             variant="contained"
                             fullWidth

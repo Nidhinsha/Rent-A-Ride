@@ -360,16 +360,16 @@ export const userBookingBikeAction =(bookingData)=>async(dispatch)=>{
     type : userActionType.USER_BOOKING_BIKE_REQUEST
   })
 
-  userBookingBikeAPI(bookingData).then((data)=>{
-    dispatch({
-      type : userActionType.USER_BOOKING_BIKE_SUCCESS,
-      payload : data.data
-    })
-  })
-  .catch((error)=>{
-    dispatch({
-      type : userActionType.USER_BOOKING_BIKE_FAIL,
-      payload : error.response.message
-    })
-  })
+  // userBookingBikeAPI(bookingData).then((data)=>{
+  //   dispatch({
+  //     type : userActionType.USER_BOOKING_BIKE_SUCCESS,
+  //     payload : data.data
+  //   })
+  // })
+  // .catch((error)=>{
+  //   dispatch({
+  //     type : userActionType.USER_BOOKING_BIKE_FAIL,
+  //     payload : error.response.message
+  //   })
+  // })
 }

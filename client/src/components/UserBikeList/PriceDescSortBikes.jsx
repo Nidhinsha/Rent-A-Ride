@@ -18,9 +18,9 @@ function PriceDescSortBikes({priceDesc}) {
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
-    console.log('bikedata in dsc',bikesData);
+    console.log('bikedata in dsc',bikesData)
 
-    const descending = priceDesc ? priceDesc.sort((a,b)=>a.price - b.price) : "error in descending"
+    const descending = priceDesc ? priceDesc.sort((a,b)=>b.price - a.price) : "error in descending"
     return (
         <>
             <Box>

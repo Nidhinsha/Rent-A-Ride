@@ -30,7 +30,7 @@ const bookingSchema = new mongoose.Schema({
     totalAmount :{
         type :Number
     },
-    transactionId :{
+    stripeSessionId :{
         type : String
     }
 },{
