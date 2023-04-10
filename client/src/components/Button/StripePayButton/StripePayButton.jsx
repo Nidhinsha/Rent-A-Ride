@@ -21,7 +21,15 @@ function StripePayButton({bookingData}) {
     }
   return (
     <>
-      <Button onClick={handleCheckOut}>Check Out</Button>
+      <Button  fullWidth
+              sx={{
+                mt: 2,color:'white', backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
+                  bgcolor: "#6366F1"
+                }
+              }}
+              size="large"
+              
+      onClick={handleCheckOut}>Check Out</Button>
     </>
   )
 }

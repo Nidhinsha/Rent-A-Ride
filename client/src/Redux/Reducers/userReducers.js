@@ -327,3 +327,25 @@ export const userBookingBikeReducer =(state={},action)=>{
      return state
   }
 }
+
+export const userGetBookedBikeReducer =(state={},action)=>{
+  switch(action.type){
+    case userActionType.USER_GET_BOOKED_BIKE_REQUEST:
+      return{
+        getBookedBikeLoading : true
+      }
+    case userActionType.USER_GET_BOOKED_BIKE_SUCCESS:
+      return{
+        getBookedBikeLoading : false,
+        bookedBikeData : action.payload
+      }
+    case userActionType.USER_GET_BOOKED_BIKE_FAIL:
+      return{
+        getBookedBikeLoading : false,
+        bookedBikeDataError : action.payload
+      }
+    default :
+      return state
+    
+  }
+}

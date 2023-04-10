@@ -47,3 +47,5 @@ export const userGetPendingBikeAPI = () => API.get('/pending-bikes?id='+ID,confi
 export const searchBikesAPI = (searchTerm)=> API.post('/search-bikes',{searchTerm},config)
 export const userGetLocationAPI =()=>API.get('/get-location',config)
 export const userBookingBikeAPI =(bookingDetails)=>API.post("/booking-bike",{bookingDetails},configToken)
+
+export const userGetBookedBikeAPI =(id)=>API.get("/booked-bikes?id="+id,configToken)

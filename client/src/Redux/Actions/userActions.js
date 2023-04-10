@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -372,4 +372,23 @@ export const userBookingBikeAction =(bookingData)=>async(dispatch)=>{
   //     payload : error.response.message
   //   })
   // })
+}
+
+export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_GET_BOOKED_BIKE_REQUEST
+  })
+
+  userGetBookedBikeAPI(id).then((data)=>{
+    dispatch({
+      type : userActionType.USER_GET_BOOKED_BIKE_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.USER_GET_BOOKED_BIKE_FAIL,
+      payload : error.response.message
+    })
+  })
 }

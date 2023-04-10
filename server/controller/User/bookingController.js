@@ -80,3 +80,59 @@ exports.bikeBookingController = async (req, res) => {
     }
 }
 
+exports.userGetBookedBikeController = async (req, res) => {
+    try {
+        const userId = req.query.id;
+        const bookingsWithBikes = await bookingSchema
+            .aggregate(
+                [
+                    { $match: { userId } },
+
+                    {
+                        '$lookup': {
+                            'from': 'bikes',
+                            'localField': 'bikeId',
+                            'foreignField': '_id',
+                            'as': 'bikeData'
+                        }
+                    },
+                    {
+                        $project: {
+
+                            bookingId: '$_id',
+                            bikeName: { $arrayElemAt: ['$bikeData.bikeName', 0] },
+                            description: { $arrayElemAt: ['$bikeData.description', 0] },
+                            rentPerHour: { $arrayElemAt: ['$bikeData.price', 0] },
+                            photo: { $arrayElemAt: ['$bikeData.photo', 0] },
+                            pickupLocation: 1,
+                            dropOffLocation: 1,
+                            totalAmount: 1,
+                            totalHours: 1,
+                            needHelmet: 1,
+                            bookedTimeSlots: 1,
+
+                        }
+                    }, {
+                        $project: {
+                            pickupLocation: 1,
+                            dropOffLocation: 1,
+                            totalAmount: 1,
+                            totalHours: 1,
+                            needHelmet: 1,
+                            bookedTimeSlots: 1,
+                            description:1,
+                            bookingId: 1,
+                            bikeName: 1,
+                            bikeModel: 1,
+                            rentPerHour: 1,
+                            photo: { $arrayElemAt: ["$photo", 0] },
+
+                        }
+                    }
+                ])
+        res.status(200).json(bookingsWithBikes)
+    } catch (error) {
+        res.json(400).json("error while getting data from the booked data")
+
+    }
+}

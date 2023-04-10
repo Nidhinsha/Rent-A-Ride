@@ -38,6 +38,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { userLogOut } from '../../Redux/Actions/userActions';
 
 import { Button } from 'primereact/button';
+import ProfileDropDown from '../DropDown/ProfileDropDown';
 
 
 const useStyles = createStyles((theme) => ({
@@ -105,35 +106,29 @@ function NavBar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const user = useSelector((state)=>state.userLoginReducer)
-  const {userLoginDetails} = user
-  console.log('user',userLoginDetails);
-  const logOut = () => {
-    dispatch(userLogOut())
-    navigate("/login")
-  }
-  const onUserProfile = () => {
-    navigate("/profile")
-  }
+  const user = useSelector((state) => state.userLoginReducer)
+  const { userLoginDetails } = user
+  console.log('user', userLoginDetails);
+
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const { classes, theme } = useStyles();
 
 
-  
+
 
   return (
     <Box pb={100}>
-      <Header height={60} px="md">
+      <Header height={70} px="md">
         <Group position="apart" sx={{ height: '100%' }}>
           {/* <MantineLogo size={30} /> */}
-          <h3>Rent&Ride</h3>
+          <h3 size={30}>Rent&Ride</h3>
 
           <Group sx={{ height: '100%' }} spacing={0} className={classes.hiddenMobile}>
-            <a href="#" className={classes.link}>
+            <a href="/" className={classes.link}>
               Home
             </a>
-            <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
+            <HoverCard width={300} position="bottom" radius="md" shadow="md" withinPortal>
               <HoverCard.Target>
                 <a href="/bikes" className={classes.link}>
                   <Center inline>
@@ -144,6 +139,7 @@ function NavBar() {
                   </Center>
                 </a>
               </HoverCard.Target>
+              {/* hover */}
 
               {/* <HoverCard.Dropdown sx={{ overflow: 'hidden' }}>
                 <Group position="apart" px="md">
@@ -163,20 +159,10 @@ function NavBar() {
                   {links}
                 </SimpleGrid>
 
-                <div className={classes.dropdownFooter}>
-                  <Group position="apart">
-                    <div>
-                      <Text fw={500} fz="sm">
-                        Get started
-                      </Text>
-                      <Text size="xs" color="dimmed">
-                        Their food sources have decreased, and their numbers
-                      </Text>
-                    </div>
-                    <Button variant="default">Get started</Button>
-                  </Group>
-                </div>
+
               </HoverCard.Dropdown> */}
+
+              {/* hover */}
             </HoverCard>
             <a href="/rent-bike" className={classes.link}>
               Rent-Bike
@@ -185,47 +171,50 @@ function NavBar() {
             <a href='/chat' className={classes.link}>
               Chat
             </a>
-            <a href='/rented-bikes' className={classes.link}>
-              Rented-Bikes
-            </a>
+
             {/* </Link> */}
-          </Group>
 
-          {/* search  */}
-          <Group>
-          <Group ml={50} spacing={5} className={classes.links}>
-            {/* {items} */}
-          </Group>
-          <Autocomplete
-            className={classes.search}
-            placeholder="Search"
-            icon={<IconSearch size="1rem" stroke={1.5} />}
-            data={[]}
-          />
-        </Group>
 
-         {/* search  */}
-          {/* checking user */}
-         {
-            userLoginDetails ?  
-            <Group className={classes.hiddenMobile}>
-              <Button onClick={logOut} variant="default">Log Out</Button>
-              <Link to={'/profile'}>
-              <Button icon="pi pi-user" rounded severity="primary" aria-label="User" />
-            </Link>
+
+
+          </Group>
+            {/* search  */}
+            <Group>
+              <Group ml={50} spacing={5} className={classes.links}>
+                {/* {items} */}
+              </Group>
+              <Autocomplete
+                className={classes.search}
+                placeholder="Search"
+                icon={<IconSearch size="1rem" stroke={1.5} />}
+                data={[]}
+              />
+
+
+            {/* search  */}
+            {/* checking user */}
+            {
+              userLoginDetails ?
+                <Group className={classes.hiddenMobile}>
+
+                  <ProfileDropDown />
+
+                </Group>
+                :
+                <Group className={classes.hiddenMobile}>
+
+                  <Link to={'/login'}>
+                    <Button variant="default">Log in</Button>
+                  </Link>
+
+                  <Link to={'/signup'}>
+                    <Button>Sign up</Button>
+                  </Link>
+                </Group>
+            }
             </Group>
-            : 
-          <Group className={classes.hiddenMobile}>
 
-            <Link to={'/login'}>
-              <Button variant="default">Log in</Button>
-            </Link>
 
-            <Link to={'/signup'}>
-              <Button>Sign up</Button>
-            </Link>
-          </Group>
-         }
 
 
 

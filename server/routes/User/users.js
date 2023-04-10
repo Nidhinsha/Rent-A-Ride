@@ -57,4 +57,6 @@ router.route('/get-location').get(locationController.getLocations)
 
 router.route("/booking-bike").post(bookingController.bikeBookingController)
 
+router.route("/booked-bikes").get(protect,bookingController.userGetBookedBikeController)
+
 module.exports = router;

@@ -22,6 +22,7 @@ import EditBike from './Pages/Admin/EditBike/EditBike'
 import Coupons from './Pages/Admin/Coupons/Coupons'
 import Booking from './Pages/User/Booking/Booking'
 import BookingSuccess from './components/SuccessPage/BookingSuccess'
+import BookedBikes from './Pages/User/BookedBikes/BookedBikes'
 function App() {
 
   // const userData = useSelector((state)=> state.userL)
@@ -40,6 +41,7 @@ function App() {
       <Route path='/single-bike-view' exact element={<SingleBikeView/>} />
       <Route path='/rented-bikes' exact element={userData?<RentedBikes/>:<Login/>} />
       <Route path='/booking' exact element={userData ?<Booking/> : <Login/>} />
+      <Route path='/booked-bike' exact element={userData ? <BookedBikes/>:<Login/>}/>
       <Route path='/success' exact element={<BookingSuccess/>} />
       <Route path='/test' exact element={<Test />} /> 
       

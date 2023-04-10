@@ -1,231 +1,227 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { Grid, TextField, InputAdornment } from '@mui/material';
-import { AccountCircle, Email, Lock, GoogleIcon, } from '@mui/icons-material';
-import PhoneIcon from '@mui/icons-material/Phone';
+// import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Typography } from '@mui/material'
+// import React, { useState } from 'react'
+// import NavBar from '../../../components/NavBar/NavBar'
+// import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+// import BookmarkIcon from '@mui/icons-material/Bookmark';
+// import { useLocation } from 'react-router-dom';
+// import SportsMotorsportsOutlinedIcon from '@mui/icons-material/SportsMotorsportsOutlined';
+// import moment from "moment"
+// import { useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { userBookingBikeAction, userGetLocation } from '../../../Redux/Actions/userActions';
 
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-// import { userSignup } from '../../../Redux/Actions/userActions';
-import { updateUserProfileAction } from '../../../Redux/Actions/userActions'
-import { userEditProfileAPI } from '../../../Api/User/ApiCalls';
+// import StripePayButton from '../../../components/Button/StripePayButton/StripePayButton';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 20,
-  p: 4,
-};
+// import { DatePicker } from "antd"
+// const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+// const { RangePicker } = DatePicker
+
+// function Test() {
+
+//   const dispatch = useDispatch()
+//   const location = useLocation();
+//   const { bikesData } = location.state;
+//   const clickedBike = bikesData.find((bike) => bike.bikeName === location.state.bikeName);
+//   const branchLocation = useSelector((state) => state.userLocationReducer.locationData)
+//   console.log('brandch location', branchLocation);
 
 
-const schema = yup.object().shape({
-  firstName: yup
-    .string("first name should be string")
-    .min(3, "first name should have a min length of 3 letters")
-    .required("firstName is required"),
-  lastName: yup
-    .string("last name should be string")
-    .min(3, "last name should have a min length of 3 letters")
-    .required("lastName is required"),
-  email: yup
-    .string("email should be string")
-    .email("please provide a valid email")
-    .required("email address is required"),
-  phone: yup
-    .string(" number should be string")
-    .min(10, "number should have a min length of 10")
-    .max(10, "number should have a max length of 10")
-    .required("number is required"),
+//   const [startDate, setStartDate] = useState("");
+//   const [endDate, setEndDate] = useState("");
+//   const [totalHours, setTotalHours] = useState(0)
+//   const [needHelmet, setNeedHelmet] = useState(false)
+//   const [totalAmount, setTotalAmount] = useState(0)
+//   const [pickupLocation, setPickupLocation] = useState("")
+//   const [dropOffLocation, setDropOffLocation] = useState("")
 
-})
-const Test = ({ closeModal, details }) => {
+//   console.log(moment(startDate).format('DD MM yyyy HH:mm'), 'start date');
+//   console.log(moment(endDate).format('DD MM yyyy HH:mm'), 'end date');
 
-  // const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
+//   const selectTimeSlots = (values) => {
+//     setStartDate(moment(values[0]).format('DD MM yyyy HH:mm'));
+//     setEndDate(moment(values[1]).format('DD MM yyyy HH:mm'));
+//     setTotalHours(values[1].diff(values[0], 'hours'))
+//   }
 
-  const [basicModal, setBasicModal] = React.useState(true)
-  const [loading, setLoading] = React.useState(true)
-  const dispatch = useDispatch()
-  // const navigate = useNavigate()
+//   useEffect(() => {
+//     setTotalAmount(totalHours * clickedBike.price)
 
-  const toggleShow = () => setBasicModal(!basicModal)
+//     if (needHelmet) {
+//       setTotalAmount(totalAmount + 50)
+//     }
+//   }, [needHelmet, totalHours])
 
-  const { register, handleSubmit,
-    formState: { errors } } = useForm({
-      resolver: yupResolver(schema)
-    })
+//   useEffect(() => {
+//     dispatch(userGetLocation())
+//   }, [])
 
-  const submitHandler = async (data) => {
-    setLoading(true)
-    const firstName = data.firstName
-    const lastName = data.lastName
-    const email = data.email
-    const phone = data.phone
+//   const bookingData = {
+//     userId: JSON.parse(localStorage.getItem("userInfo")).id,
+//     userName: JSON.parse(localStorage.getItem("userInfo")).firstName,
+//     bikeId: clickedBike._id,
+//     bikeData: clickedBike,
+//     totalAmount,
+//     totalHours,
+//     needHelmet: needHelmet,
+//     bookedTimeSlots: {
+//       startDate,
+//       endDate
+//     },
+//     pickupLocation,
+//     dropOffLocation
+//   }
 
+//   const handleBookNow = () => {
+//     dispatch(userBookingBikeAction(bookingData))
+//   }
+//   return (
+//     <>
+//       <NavBar />
+//       <Container maxWidth="lg" >
+//         <Container maxWidth="md" sx={{ display: 'flex', gap: 2 }}>
+//           <Box maxWidth="md" sx={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
+//             <img src='https://images.unsplash.com/photo-1606907568152-58fcb0a0a4e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW90b3JiaWtlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
+//               height={300}
+//               alt='d' />
+//           </Box>
+//           <Box maxWidth="md" sx={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
+//             <Typography variant="h4" sx={{ textAlign: 'center', my: 1 }}>Bike Details</Typography>
+//             <Container maxWidth="md" >
+//               <Typography variant="h6" sx={{ fontSize: 20, fontWeight: 'bold' }}>Bike Name: Example Bike</Typography>
+//               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Bike Model: XYZ</Typography>
+//               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Typography>
+//               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Price: $1,000</Typography>
+//               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Fuel Type: Gasoline</Typography>
+//             </Container>
+//           </Box>
+//         </Container>
 
-    userEditProfileAPI(firstName, lastName, email, phone, details.id).then((data) => {
-      console.log('edited', data.data);
+//         <Container maxWidth="md">
+//           <Container>
+//             <Typography variant="h6" sx={{ textAlign: 'center', fontSize: 20, fontWeight: 'bold' }}>Book Your Bike</Typography>
+//           </Container>
+//           <Container maxWidth="md">
 
-      localStorage.setItem("userInfo", JSON.stringify(data.data))
-      dispatch(updateUserProfileAction(data.data))
-      setLoading(false)
-      closeModal(false)
-    })
-  }
+//             <Box sx={{ height: "50px", mt: 3 }}>
+//               <Typography>
+//                 Select Date Range
+//               </Typography>
+//               <RangePicker
+//                 showTime={{ format: "MM DD yyyy HH:mm" }}
+//                 format="MM DD yyyy HH:mm"
+//                 style={{ width: "100%", height: "100%" }}
+//                 onChange={selectTimeSlots}
+//               />
+//             </Box>
 
-  return (
+//             <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
+//               <FormControl fullWidth sx={{ mt: 3 }}>
+//                 <InputLabel id="demo-simple-select-label">start Off Location</InputLabel>
+//                 <Select
+//                   labelId="demo-simple-select-label"
+//                   id="demo-simple-select"
+//                   value={pickupLocation} // retrieve the selected value from React Hook Form
+//                   label="pickup location"
+//                   name='pickupLocation'
 
+//                   onChange={(e) => setPickupLocation(e.target.value)}
+//                 >
 
+//                   {branchLocation
+//                     ? branchLocation.map((x) => (
+//                       <MenuItem key={x._id} value={x.location}>
 
-    <div>
-      <Button >Open modal</Button>
-      <Modal
-        // open={open}
-        // onClose={handleClose}
+//                         {x.location}
+//                       </MenuItem>
+//                     ))
+//                     : (
+//                       <MenuItem >No locations available</MenuItem>
+//                     )}
+//                 </Select>
 
-        show={basicModal} setShow={setBasicModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style} component="form" onSubmit={handleSubmit(submitHandler)}>
-          <Box>
-            <Typography component="h1" variant="h5">
-              Edit Details
-            </Typography>
+//               </FormControl>
 
-            <Button className='btn-close' color='none' onClick={(e) => closeModal(false)}></Button>
-          </Box>
-          <TextField
-            autoFocus
-            label="First Name"
-            name='firstName'
-            id='firstName'
-            defaultValue={details.firstName}
-            fullWidth
+//               <FormControl fullWidth sx={{ mt: 3 }}>
+//                 <InputLabel id="demo-simple-select-label">Drop Off Location</InputLabel>
+//                 <Select
+//                   labelId="demo-simple-select-label"
+//                   id="demo-simple-select"
+//                   value={dropOffLocation} // retrieve the selected value from React Hook Form
+//                   label="drop Off location"
+//                   name='dropOffLocation'
 
-            error={!!errors.firstName}
-            helperText={errors.firstName ? errors.firstName.message : ""}
-            {...register("firstName")}
+//                   onChange={(e) => setDropOffLocation(e.target.value)}
+//                 >
 
-            sx={{ mb: 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
+//                   {branchLocation
+//                     ? branchLocation.map((x) => (
+//                       <MenuItem key={x._id} value={x.location}>
 
-            label="Last Name"
-            name='lastName'
-            id='lastName'
-            defaultValue={details.lastName}
-            fullWidth
+//                         {x.location}
+//                       </MenuItem>
+//                     ))
+//                     : (
+//                       <MenuItem >No locations available</MenuItem>
+//                     )}
+//                 </Select>
 
-            error={!!errors.lastName}
-            helperText={errors.lastName ? errors.lastName.message : ""}
-            {...register("lastName")}
+//               </FormControl>
+//             </Box>
+//             <Box sx={{ display: 'flex', justifyContent: 'end', mt: 3 }}>
+//               <Typography variant="h5">Rent per Hour : 20/hr</Typography>
+//             </Box>
+//             <Box sx={{ display: 'flex', justifyContent: 'end', mt: 3 }}>
+//               <Typography variant="h5">Total Hour : 20/hr</Typography>
+//             </Box>
+//             <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2 }}>
+//               <div>
+//                 <Checkbox
+//                   {...label}
+//                   icon={<BookmarkBorderIcon />}
+//                   checkedIcon={<BookmarkIcon />}
+//                   onChange={(e) => {
+//                     if (e.target.checked) {
+//                       setNeedHelmet(true)
+//                     } else {
+//                       setNeedHelmet(false)
+//                     }
+//                   }}
+//                 ></Checkbox>Do you want a Helmet for riding
+//               </div>
+//             </Box>
+//             <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2 }}>
+//               <Typography>Total Amount : 2000 $</Typography>
+//             </Box>
 
-            sx={{ mb: 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            label="Email"
-            name='email'
-            defaultValue={details.email}
-            fullWidth
+//             <Button
+//               variant="contained"
+//               fullWidth
+//               sx={{
+//                 mt: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
+//                   bgcolor: "#6366F1"
+//                 }
+//               }}
+//               size="large"
 
-            error={!!errors.email}
-            helperText={errors.email ? errors.email.message : ""}
-            {...register("email")}
+//             // onClick={handleBookNow} stripe it self work all out 
+//             >
+//               Book Now
+//             </Button>
 
+//             <StripePayButton bookingData={bookingData}
+//               fullWidth
+//               sx={{
+//                 mt: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
+//                   bgcolor: "#6366F1"
+//                 }
+//               }}
+//               size="large"
+//             >Ckeck Out</StripePayButton>
+//           </Container>
+//         </Container>
+//       </Container>
+//     </>
+//   )
+// }
 
-            sx={{ mb: 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start">
-                  <Email />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            label="Phone Number"
-            name='phone'
-            type="phone"
-            defaultValue={details.phone}
-            fullWidth
-
-            error={!!errors.phone}
-            helperText={errors.phone ? errors.phone.message : ""}
-            {...register("phone")}
-
-
-            sx={{ mb: 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start">
-                  <PhoneIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-
-
-          <Button type='submit' variant="contained" fullWidth sx={{
-            mb: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
-              bgcolor: "#6366F1"
-            }
-          }}
-            onClick={(e) => closeModal(false)} >
-            close
-          </Button>
-          {
-            loading ?
-
-              <Button type='submit' variant="contained" fullWidth sx={{
-                mb: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
-                  bgcolor: "#6366F1"
-                }
-              }}
-                disabled
-              >
-                edit
-              </Button> :
-              <Button type='submit' variant="contained" fullWidth sx={{
-                mb: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
-                  bgcolor: "#6366F1"
-                }
-              }}
-              >
-                edit
-              </Button>
-}
-        </Box>
-      </Modal>
-    </div>
-
-  )
-}
-
-export default Test
+// export default Test

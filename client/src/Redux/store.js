@@ -16,7 +16,8 @@ import {
   userGetPendingBikeReducer,
   userGetRejectedBikeReducer,
   userLocationReducer,
-  userBookingBikeReducer
+  userBookingBikeReducer,
+  userGetBookedBikeReducer
 
 
 } from "./Reducers/userReducers";
@@ -52,6 +53,7 @@ const reducer = combineReducers({
   userLocationReducer : userLocationReducer,
 
   userBookingBikeReducer : userBookingBikeReducer,
+  userGetBookedBikeReducer : userGetBookedBikeReducer,
 
 
 
