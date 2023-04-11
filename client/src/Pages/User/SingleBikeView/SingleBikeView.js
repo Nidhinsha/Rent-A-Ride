@@ -11,6 +11,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import NavBar from '../../../components/NavBar/NavBar';
 import { useLocation } from 'react-router-dom';
 import './SingleBikeView.css'
+import BookingButton from '../../../components/Button/BookingButton/BookingButton';
 
 function SingleBikeView() {
 
@@ -88,19 +89,8 @@ function SingleBikeView() {
                                 </Table>
                             </Box>
                         </Grid>
-                                <Button
-                                    variant="contained"
-                                    fullWidth
-                                    sx={{
-                                        mt: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
-                                          bgcolor: "#6366F1"
-                                        }
-                                      }}
-                                      size="large"
-                                    
-                                >
-                                  Book
-                                </Button>
+                              
+                                <BookingButton bikeName={clickedBike.bikeName} />
                     </Grid>
                 </Box>
             </Box>

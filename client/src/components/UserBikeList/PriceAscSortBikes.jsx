@@ -54,8 +54,8 @@ function PriceAscSortBikes({priceAsc}) {
                                             </CardContent>
                                         </CardActionArea>
                                         <CardActions>
-                                           <BookingButton onClick={(e)=>navigate("/booking",{ state: { bikesData,bikeName: data.bikeName  } })}/>
-
+                                           {/* <BookingButton onClick={(e)=>navigate("/booking",{ state: { bikesData,bikeName: data.bikeName  } })}/> */}
+                                           <BookingButton bikeName={data.bikeName} />
                                         </CardActions>
                                     </Card>
                                 )

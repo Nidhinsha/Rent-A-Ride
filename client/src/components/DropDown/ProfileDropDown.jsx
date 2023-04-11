@@ -26,9 +26,9 @@ function ProfileDropDown() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const user = useSelector((state)=>state.userLoginReducer)
-  const {userLoginDetails} = user
-  console.log('user',userLoginDetails);
+  const user = useSelector((state) => state.userLoginReducer)
+  const { userLoginDetails } = user
+  console.log('user', userLoginDetails);
 
 
   const handleClick = (event) => {
@@ -38,16 +38,16 @@ function ProfileDropDown() {
   const handleClose = () => {
     setAnchorEl(null);
   };
- 
 
-  const handleProfile=()=>{
+
+  const handleProfile = () => {
     navigate("/profile")
   }
-  const handleBooking=()=>{
+  const handleBooking = () => {
     navigate("/booked-bike")
   }
 
-  const handleRentedBike=()=>{
+  const handleRentedBike = () => {
     navigate("/rented-bikes")
   }
 
@@ -56,7 +56,7 @@ function ProfileDropDown() {
     dispatch(userLogOut())
     navigate("/login")
   }
-  
+
   return (
     <React.Fragment>
 
@@ -70,7 +70,14 @@ function ProfileDropDown() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 150, height: 32, borderRadius: 1,backgroundColor:'#6366F1' }}>{userLoginDetails.firstName}</Avatar>
+            <Avatar sx={{ height: 32 }}>
+              <img src={userLoginDetails.photo} alt="user profile"   style={{ borderRadius: '50%', width: '100%', height: '100%' }} 
+              onError={(e) => {
+                e.target.src = '/path/to/default/image.png'; // Set default image path here
+              }}
+              />
+
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -126,7 +133,7 @@ function ProfileDropDown() {
           </ListItemIcon>
           Booking
         </MenuItem>
-       
+
         <Divider />
 
         <MenuItem onClick={handleRentedBike}>
@@ -135,10 +142,10 @@ function ProfileDropDown() {
           </ListItemIcon>
           Rented Bike
         </MenuItem>
-       
+
         <Divider />
 
-       
+
         <MenuItem onClick={logOut}>
           <ListItemIcon>
             <Logout fontSize="small" />

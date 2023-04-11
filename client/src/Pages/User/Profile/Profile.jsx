@@ -52,7 +52,7 @@ function Profile() {
   const addphoto = (e) => {
     e.preventDefault();
     const data = new FormData();
-    
+
     data.append("file", photo);
 
     data.append("upload_preset", "RentAndRide");
@@ -97,8 +97,6 @@ function Profile() {
         dispatch(userProofAction(data.url))
       })
   }
-
-
   const handleLogOut = () => {
     dispatch(userLogOut())
     navigate("/login")
@@ -139,6 +137,9 @@ function Profile() {
                 {imgTypeError && <Alert severity="error">{imgTypeError}</Alert>}
 
                 <TextField size='md' type='file' className='mt-4' id='formFileLg' onChange={(e) => setPhoto(e.target.files[0])}
+                inputProps={{
+                  accept: '.jpg, .jpeg, .png'
+                }}
                 />
                 <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-3">
                   <Button
@@ -146,6 +147,10 @@ function Profile() {
                     label="Add Photo"
                     icon="pi pi-upload"
                     onClick={addphoto} />
+                  {/* <Button variant="contained" component="label" >
+                    Upload
+                    <input hidden accept="image/*" multiple type="file" />
+                  </Button> */}
                 </div>
               </form>
 
@@ -220,7 +225,7 @@ function Profile() {
               <div className="p-3 py-5 shadow-lg p-3 mb-5 bg-white rounded">
                 <div className="col-md-12  ">
                   <label htmlFor="">Proof</label>
-                  <div className="card">
+                  {/* <div className="card">
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
 
 
@@ -265,8 +270,107 @@ function Profile() {
                         Cancel
                       </Button>
                     </div>
+                  </div> */}
+
+                  <div className="card" style={{
+                    backgroundColor: "#FFFFFF",
+                    borderRadius: "10px",
+                    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+                    padding: "16px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      width: "100%",
+                    }}>
+                      <TextField
+                        sx={{
+                          mb: 2,
+                          width: "100%",
+                          "& .MuiInputBase-input": {
+                            color: "#4B5563",
+                            fontSize: "14px",
+                            fontWeight: "normal",
+                          },
+                        }}
+                        required
+                        id="outlined-required"
+                        type='file'
+                        inputProps={{
+                          accept: '.jpg, .jpeg, .png'
+                        }}
+
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        variant="outlined"
+                        onChange={(e) => setProof(e.target.files[0])}
+                      />
+                    </div>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                      width: "100%",
+                    }}>
+                      <Button
+                        type='submit'
+                        variant="contained"
+                        size='small'
+                        onClick={addProof}
+                        sx={{
+                          mb: 2,
+                          backgroundColor: "#6366F1",
+                          "&.MuiButtonBase-root:hover": {
+                            bgcolor: "#4F46E5",
+                          },
+                          "& .MuiButton-label": {
+                            color: "#FFFFFF",
+                            fontSize: "14px",
+                            fontWeight: "600",
+                          },
+                          mr: "16px",
+                          borderRadius: "4px",
+                          padding: "8px 16px",
+                        }}
+                      >
+                        <UploadIcon style={{ marginRight: "8px" }} />
+                        Upload
+                      </Button>
+
+                      <Button
+                        type='submit'
+                        variant="contained"
+                        size='small'
+                        onClick={() => setProof(null)}
+                        sx={{
+                          mb: 2,
+                          backgroundColor: "#E5E7EB",
+                          "&.MuiButtonBase-root:hover": {
+                            bgcolor: "#D1D5DB",
+                          },
+                          "& .MuiButton-label": {
+                            color: "#4B5563",
+                            fontSize: "14px",
+                            fontWeight: "600",
+                          },
+                          borderRadius: "4px",
+                          padding: "8px 16px",
+                        }}
+                      >
+                        <CancelIcon style={{ marginRight: "8px" }} />
+                        Cancel
+                      </Button>
+                    </div>
                   </div>
-               
+
+
+
                   <div className="card" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "20px" }}>
                     {profileData?.proof ? (
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px" }}>

@@ -289,11 +289,17 @@ function RentBike() {
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             type="file"
+                            inputProps={{
+                                accept: '.jpg, .jpeg, .png'
+                              }}
                             helperText={errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
 
                             onChange={(e) => setImages([...images, e.target.files[0]])} />
                         <TextField sx={{ mr: 2 }}
                             type="file"
+                            inputProps={{
+                                accept: '.jpg, .jpeg, .png'
+                              }}
                             helperText={errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image2",
                                 {
@@ -305,6 +311,9 @@ function RentBike() {
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             type="file"
+                            inputProps={{
+                                accept: '.jpg, .jpeg, .png'
+                              }}
                             helperText={errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image3",
                                 {
@@ -313,6 +322,9 @@ function RentBike() {
                             onChange={(e) => setImages([...images, e.target.files[0]])} />
                         <TextField sx={{ mr: 2 }}
                             type="file"
+                            inputProps={{
+                                accept: '.jpg, .jpeg, .png'
+                              }}
                             helperText={errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image4",
                                 {

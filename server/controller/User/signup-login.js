@@ -4,7 +4,6 @@ const generateToken = require('../../Middlewares/generateToken')
 
 // Sign UP
 exports.SignUpPost = async(req,res)=>{
-    console.log(req.body);
     try {
         let details = {
             firstName,
@@ -21,15 +20,12 @@ exports.SignUpPost = async(req,res)=>{
         userSchema.findOne({email : details.email}).then((userData)=>{
             if (userData) {
                 res.status(400).json("User Already Exists")
-                console.log('user already exists');
             }else{
                 userSchema.create(details).then((userData)=>{
                     let details = {
                         firstName : userData.firstName ,
                         lastName : userData.lastName , 
                         email : userData.email ,
-                        // isGoogle,
-                        // picture: userData.picture,
                         token : generateToken(userData.id)
                     }
                     res.status(201).json(details)
@@ -37,7 +33,6 @@ exports.SignUpPost = async(req,res)=>{
                     // throw new Error("Error occured ! ")
                 }).catch((err)=>{
                     res.status(400)
-                    console.log('err',err);
                 })
             }
         })
@@ -49,7 +44,6 @@ exports.SignUpPost = async(req,res)=>{
 // Login 
 
 exports.LoginPost= async(req,res)=>{
-    console.log(req.body,'login body');
 
     try {
         userSchema.findOne({email: req.body.email}).then((userData)=>{
@@ -68,11 +62,9 @@ exports.LoginPost= async(req,res)=>{
                             proof : userData.proof,
                             token : generateToken(userData.id)
                         }
-                        console.log('details in login',details);
                         res.status(200).json(details)
                         }else{
                             res.status(401).json("Incorrect Password")
-                            console.log("password incorrect !");
                         }
                     })
                 }else{
@@ -81,7 +73,6 @@ exports.LoginPost= async(req,res)=>{
                 
             }else{
                 res.status(400).json("User Does Not Exits")
-                console.log(" No User ");
             }
         }).
         catch((error)=>{
@@ -95,7 +86,6 @@ exports.LoginPost= async(req,res)=>{
 // google signup 
 
 exports.googleSingup = async(req,res)=>{
-    console.log(req.body,'body');
 
     userSchema.findOne(
         {
@@ -117,12 +107,10 @@ exports.googleSingup = async(req,res)=>{
                 }
 
                 res.status(200).json(userDetails)
-                console.log('already existing user login');
             }else{
                 res.status(401).json("Account is Suspended")
             }
         } else {
-            console.log('req.body in the crea user side',req.body);
             
             const userDetails ={
                 firstName :req.body.firstName,
@@ -143,11 +131,9 @@ exports.googleSingup = async(req,res)=>{
                     isGoogle : true
                 }
                 res.status(201).json(details)
-                console.log('the user created',data);
             })
             .catch((error)=>{
                 console.log('error in google with signup create',error);
-                res.status(400).json("error while creating user with google !!!")
             })
         }
     })

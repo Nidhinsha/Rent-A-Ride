@@ -36,7 +36,7 @@ exports.bikeBookingController = async (req, res) => {
             },
         ],
         mode: 'payment',
-        success_url: 'http://localhost:3000/success',
+        success_url: 'http://localhost:3000/booked-bike',
         cancel_url: 'http://localhost:4242/cancel',
     });
 
@@ -69,7 +69,7 @@ exports.bikeBookingController = async (req, res) => {
         if (!bike.bookedTimeSlots) {
             bike.bookedTimeSlots = [bookedTimeSlots];
             await bike.save();
-            console.log('Booking slot created successfully');
+            
         }
 
         res.send({ url: session.url })

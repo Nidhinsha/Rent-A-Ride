@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
-import {  Email, Lock } from '@mui/icons-material';
+import { Email, Lock } from '@mui/icons-material';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -68,14 +68,14 @@ function Login() {
     }
   }
 
-  const googleLogin =()=>{
-    signInWithPopup(auth,provider).then((data)=>{
+  const googleLogin = () => {
+    signInWithPopup(auth, provider).then((data) => {
       const fullName = data.user.displayName
-      const [firstName,lastName] = fullName.split(' ')
+      const [firstName, lastName] = fullName.split(' ')
       // console.log('google data',data.user.displayName,data.user.email,data.user.photoURL,data.user.phoneNumber,firstName,lastName);
-      dispatch(googleSignupAction(firstName,lastName,data.user.email,data.user.phoneNumber,data.user.photoURL))
+      dispatch(googleSignupAction(firstName, lastName, data.user.email, data.user.phoneNumber, data.user.photoURL))
       navigate("/")
-      console.log('google data',data);
+      console.log('google data', data);
     })
   }
 
@@ -85,11 +85,13 @@ function Login() {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <Box boxShadow={3} borderRadius={4} p={2} m={4}>
+      <Box boxShadow={3} borderRadius={4} p={2} m={4} sx={{ maxWidth: "800px" }}>
         <Grid container justifyContent="center" spacing={2}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{mt:5}}>
             <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1089765405301669919/pekka_a_person_sitting_on_a_scooter_with_color_light_blue_and_b_555f7a57-94cd-4851-95a9-8dbbe7933355.png"
-              className="img-fluid" alt="Phone" />
+              className="img-fluid " alt="Phone"
+             
+               />
           </Grid>
           <Grid item xs={12} md={6} direction="column" alignItems="flex-end">
             <Box mb={15}>
@@ -105,7 +107,7 @@ function Login() {
               {
                 userLoginError ? <p className='p-error' style={{ color: 'red' }}>{userLoginError}</p> : ""
               }
-              
+
               <TextField
                 label="Email"
                 name='email'
@@ -128,7 +130,6 @@ function Login() {
               {
                 loading ? <Loading /> : ""
               }
-
               <TextField
                 label="Password"
                 name='password'
@@ -182,7 +183,7 @@ function Login() {
               >
                 login with Google
               </Button>
-              
+
             </Box>
 
           </Grid>
