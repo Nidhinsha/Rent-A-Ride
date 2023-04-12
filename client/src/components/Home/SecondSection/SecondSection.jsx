@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from '@mui/material'
+import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -44,8 +44,8 @@ function SecondSection() {
                 <Typography variant="h6" textAlign='center' >We offer bikes and electric scooters for renting at low prices</Typography>
             </Box>
             <Container maxWidth="lg" sx={{mt:5}}>
-                <Box sx={{ display: 'flex', gap: '20px' }}>
-                    <Box>
+                <Grid  className='d-flex flex-wrap justify-content-center' sx={{gap:'25px'}} >
+                    <Box >
                         <Card sx={{ maxWidth: 350 }}>
                             <CardHeader
                                 // avatar={
@@ -67,7 +67,7 @@ function SecondSection() {
                                 image="https://yorindia.com/backend/web/imageupload/PEUVgxVeyz0ZRLv-4BRBlhxrVj6cn8Rs.jpg"
                                 alt="Paella dish"
                             />
-                            <CardContent>
+                            <CardContent className='card-container'>
                                 <Typography variant="body1" color="text.secondary">
                                    fule type : petrol 
                                 </Typography>
@@ -119,7 +119,7 @@ function SecondSection() {
                             </CardContent>
                         </Card>
                     </Box>
-                    <Box>
+                    <Box >
                         <Card sx={{ maxWidth: 350 }}>
                             <CardHeader
                                 // avatar={
@@ -156,7 +156,7 @@ function SecondSection() {
                             </CardContent>
                         </Card>
                     </Box>
-                </Box>
+                </Grid>
                 {/* <Container maxWidth="lg">
                     <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
                         <Button variant="outlined">Start your search</Button>

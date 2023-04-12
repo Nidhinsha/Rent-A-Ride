@@ -28,7 +28,7 @@ function AllBikes({allBikes}) {
     return (
         <>
             <Box>
-                <div className='d-flex flex-wrap justify-content-center  '>
+                <div className='d-flex flex-wrap justify-content-center'>
                     {
                         bikesDataLoading ? <Loading /> :
                         allBikes ? allBikes.map((data, index) => {
