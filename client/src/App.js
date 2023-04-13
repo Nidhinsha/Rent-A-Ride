@@ -23,6 +23,7 @@ import Coupons from './Pages/Admin/Coupons/Coupons'
 import Booking from './Pages/User/Booking/Booking'
 import BookingSuccess from './components/SuccessPage/BookingSuccess'
 import BookedBikes from './Pages/User/BookedBikes/BookedBikes'
+import ViewBookedBike from './Pages/Admin/ViewBookedBike/ViewBookedBike'
 function App() {
 
   // const userData = useSelector((state)=> state.userL)
@@ -54,6 +55,7 @@ function App() {
       <Route path='/admin/bike-request' exact element={adminData ? <BikeRequest/> : <AdminLogin/>} />
       <Route path='/admin/location' exact element={adminData ? <Location/>:<AdminLogin/>} />
       <Route path='/admin/coupons' exact element={adminData ? <Coupons/> :<AdminLogin/>} />
+      <Route path='/admin/view-booked-bike' exact element={adminData ? <ViewBookedBike/> : <AdminLogin/>} />
       {/* <Route path='/admin/bikes' element={adminData ? } */}
       </Routes>
     </div>

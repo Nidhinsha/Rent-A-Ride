@@ -280,3 +280,24 @@ export const adminCouponsReducer =(state={},action)=>{
       return state;
   }
 }
+
+export const adminGetBookedBikeReducer =(state={},action)=>{
+  switch(action.type){
+    case adminActionType.ADMIN_GET_BOOKED_BIKE_REQUEST:
+      return {
+        loading : true
+      }
+    case adminActionType.ADMIN_GET_BOOKED_BIKE_SUCCESS:
+      return {
+        loading : false,
+        bookedData : action.payload
+      }
+    case adminActionType.ADMIN_GET_BOOKED_BIKE_FAIL:
+      return{
+        loading : false,
+        bookedDataError : action.payload
+      }
+    default :
+      return state
+  }
+}

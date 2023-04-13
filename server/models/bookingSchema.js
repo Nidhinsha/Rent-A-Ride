@@ -5,7 +5,7 @@ const bookingSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId // Change the type to ObjectId
     },
     userId :{
-        type : String
+        type : mongoose.Schema.Types.ObjectId
     },
     bookedTimeSlots:{
        startDate : {

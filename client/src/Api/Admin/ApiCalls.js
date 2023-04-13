@@ -50,3 +50,5 @@ export const addCouponAPI =(couponName,couponCode)=> API.post("/add-coupon",{cou
 export const getCouponsAPI =()=>API.get("/coupons",configToken)
 export const editCouponAPI =(id,couponName,couponCode)=>API.put("/edit-coupon?id="+id,{couponName,couponCode},configToken)
 export const deleteCouponAPI =(id)=>API.delete("/delete-coupon?id="+id,configToken)
+
+export const getBookedBikeAPI =()=>API.get("/view-booked-bike",configToken)

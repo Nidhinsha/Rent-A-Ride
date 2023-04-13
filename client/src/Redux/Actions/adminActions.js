@@ -1,5 +1,5 @@
 import { adminActionType } from '../Constants/adminConstants'
-import { acceptBikeAPI, addCouponAPI, addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteCouponAPI, deleteLocationAPI, editCouponAPI, editLocationAPI, getAllBikeAPI, getCouponsAPI, getLocationAPI, getPendingBikeAPI, getUsersApi, rejectBikeAPI } from "../../Api/Admin/ApiCalls"
+import { acceptBikeAPI, addCouponAPI, addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteCouponAPI, deleteLocationAPI, editCouponAPI, editLocationAPI, getAllBikeAPI, getBookedBikeAPI, getCouponsAPI, getLocationAPI, getPendingBikeAPI, getUsersApi, rejectBikeAPI } from "../../Api/Admin/ApiCalls"
 
 
 export const adminLogin = (email, password) => async (dispatch) => {
@@ -340,4 +340,23 @@ export const adminDeleteCouponAction=(id)=>async(dispatch)=>{
             payload :error.response.message
         })
     ])
+}
+
+export const adminGetBookedBikeAction =()=>async(dispatch)=>{
+    dispatch({
+        type : adminActionType.ADMIN_GET_BOOKED_BIKE_REQUEST
+    })
+
+    getBookedBikeAPI().then((data)=>{
+        dispatch({
+            type : adminActionType.ADMIN_GET_BOOKED_BIKE_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type : adminActionType.ADMIN_GET_BOOKED_BIKE_FAIL,
+            payload : error.response.message
+        })
+    })
 }
