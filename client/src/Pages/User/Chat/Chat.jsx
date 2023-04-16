@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { userGetContactAction } from '../../../Redux/Actions/userActions'
 import Contacts from '../../../components/Chat/Contacts/Contacts'
 import Welcome from '../../../components/Chat/Welcome/Welcome'
+import ChatContainer from '../../../components/Chat/ChatContainer/ChatContainer'
 
 function Chat() {
   
@@ -22,15 +23,15 @@ function Chat() {
 
   useEffect(()=>{
     if(user){
-      const details =async () =>{
+      // const details =async() =>{
        dispatch(userGetContactAction(user.id)).then(()=>{
         if(contactData){
           setContacts(contactData)
         }
        })
       }
-      details()
-    }
+    //   details()
+    // }
   },[dispatch,user])
 
   const handleChatChange = (chat) =>{
@@ -42,7 +43,11 @@ function Chat() {
     <Container>
       <div className="container">
        <Contacts contacts={contacts} currentUser={user} changeChat={handleChatChange} />
-       <Welcome currentUser={user}/> 
+       {
+        currentChat === undefined ?
+        (<Welcome currentUser={user}/>) :
+        (<ChatContainer currentChat={currentChat}/>)
+       }
       </div>
     </Container>
     </>
