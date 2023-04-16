@@ -1,5 +1,6 @@
 import { userActionType } from '../Constants/userConstants'
 import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { getAllUserContacts } from '../../Api/User/ApiCalls'
 
 
 
@@ -388,6 +389,26 @@ export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_BOOKED_BIKE_FAIL,
+      payload : error.response.message
+    })
+  })
+}
+
+export const userGetContactAction =(id)=> async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_GET_CONTACT_REQUEST
+  })
+
+  getAllUserContacts(id).then((data)=>{
+    console.log(data.data,'data in reducer contact');
+    dispatch({
+      type : userActionType.USER_GET_CONTACT_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.USER_GET_CONTACT_FAIL,
       payload : error.response.message
     })
   })

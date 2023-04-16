@@ -24,6 +24,8 @@ import Booking from './Pages/User/Booking/Booking'
 import BookingSuccess from './components/SuccessPage/BookingSuccess'
 import BookedBikes from './Pages/User/BookedBikes/BookedBikes'
 import ViewBookedBike from './Pages/Admin/ViewBookedBike/ViewBookedBike'
+import Chat from './Pages/User/Chat/Chat'
+
 function App() {
 
   // const userData = useSelector((state)=> state.userL)
@@ -44,6 +46,7 @@ function App() {
       <Route path='/booking' exact element={userData ?<Booking/> : <Login/>} />
       <Route path='/booked-bike' exact element={userData ? <BookedBikes/>:<Login/>}/>
       <Route path='/success' exact element={<BookingSuccess/>} />
+      <Route path='/chat' exact element={userData ? <Chat/> : <Login/>} />
       <Route path='/test' exact element={<Test />} /> 
       
       <Route path='/admin/login' element={ adminData ?<Dashboard/>: <AdminLogin />} />

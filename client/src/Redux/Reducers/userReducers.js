@@ -349,3 +349,29 @@ export const userGetBookedBikeReducer =(state={},action)=>{
     
   }
 }
+
+// chat 
+
+// contacts 
+
+export const userGetContactReducer =(state={},action)=>{
+  switch (action.type) {
+    case userActionType.USER_GET_CONTACT_REQUEST:
+      return{
+        contactLoading : true
+      }
+    case userActionType.USER_GET_CONTACT_SUCCESS:
+      return{
+        contactLoading : false,
+        contactData : action.payload
+      }
+    case userActionType.USER_GET_CONTACT_FAIL:
+      return {
+        contactLoading : false,
+        contactDataError : action.payload
+      }
+  
+    default:
+      return state
+  }
+}

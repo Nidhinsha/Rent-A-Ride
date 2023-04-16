@@ -12,6 +12,7 @@ const searchBikesController = require("../../controller/User/bikes/searchBikeCon
 const rentedBikeController = require("../../controller/User/bikes/rentedBikesController")
 const locationController = require("../../controller/User/locationController")
 const bookingController = require("../../controller/User/bookingController")
+const contactContoller = require("../../controller/User/chatController/userContactController")
 // signUp Route
 
 router.post('/user-signup',userSignupLogin.SignUpPost)
@@ -58,5 +59,9 @@ router.route('/get-location').get(locationController.getLocations)
 router.route("/booking-bike").post(bookingController.bikeBookingController)
 
 router.route("/booked-bikes").get(protect,bookingController.userGetBookedBikeController)
+
+// chat
+
+router.route("/contacts").get(protect,contactContoller.userContactController)
 
 module.exports = router;

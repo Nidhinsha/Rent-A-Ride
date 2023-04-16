@@ -49,3 +49,5 @@ export const userGetLocationAPI =()=>API.get('/get-location',config)
 export const userBookingBikeAPI =(bookingDetails)=>API.post("/booking-bike",{bookingDetails},configToken)
 
 export const userGetBookedBikeAPI =(id)=>API.get("/booked-bikes?id="+id,configToken)
+
+export const getAllUserContacts =(id) =>API.get("/contacts?id="+id,configToken)
