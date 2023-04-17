@@ -6,6 +6,7 @@ const bodyParser = require("body-parser")
 var logger = require('morgan');
 const cors = require('cors')
 const mongoose = require("mongoose")
+const socket = require("socket.io")
 let PORT = 5000 || process.env.PORT
 const dotenv = require('dotenv')
 dotenv.config()
@@ -17,20 +18,13 @@ const adminRouter = require('./routes/Admin/admin')
 var app = express();
 
 // cors 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true,
-  optionSuccessStatus: 200
-}
+// const corsOptions = {
+//   origin: 'http://localhost:3000',
+//   credentials: true,
+//   optionSuccessStatus: 200
+// }
 
-app.use(cors(corsOptions))
-
-// for image upload 
-
-// app.use(bodyParser.urlencoded({
-//   extended: false
-// }))
-// app.use(bodyParser.json())
+// app.use(cors(corsOptions))
 
 app.use(express.json())
 // view engine setup
@@ -50,6 +44,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// cors calling
+app.use(cors())
 // the routes 
 app.use('/api/user', usersRouter)
 app.use('/api/admin',adminRouter)
@@ -71,7 +67,30 @@ app.use(function (err, req, res, next) {
 });
 
 
-app.listen(PORT, (req, res) => {
+const server = app.listen(PORT, (req, res) => {
   console.log(`server is runnig http://localhost:${PORT}/`);
+})
+
+const io = socket(server,{
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true,
+  },
+})
+
+global.onlineUsers = new Map()
+
+io.on("connection",(socket)=>{
+  global.chatSocket = socket
+  socket.on("add-user",(userId)=>{
+    onlineUsers.set(userId,socket.id)
+  })
+
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-receive", data.message);
+    }
+  });
 })
 module.exports = app;

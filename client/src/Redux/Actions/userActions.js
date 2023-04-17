@@ -394,22 +394,22 @@ export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
   })
 }
 
-export const userGetContactAction =(id)=> async(dispatch)=>{
-  dispatch({
-    type : userActionType.USER_GET_CONTACT_REQUEST
-  })
+// export const userGetContactAction =(id)=> async(dispatch)=>{
+//   dispatch({
+//     type : userActionType.USER_GET_CONTACT_REQUEST
+//   })
 
-  getAllUserContacts(id).then((data)=>{
-    console.log(data.data,'data in reducer contact');
-    dispatch({
-      type : userActionType.USER_GET_CONTACT_SUCCESS,
-      payload : data.data
-    })
-  })
-  .catch((error)=>{
-    dispatch({
-      type : userActionType.USER_GET_CONTACT_FAIL,
-      payload : error.response.message
-    })
-  })
-}
+//   getAllUserContacts(id).then((data)=>{
+//     console.log(data.data,'data in reducer contact');
+//     dispatch({
+//       type : userActionType.USER_GET_CONTACT_SUCCESS,
+//       payload : data.data
+//     })
+//   })
+//   .catch((error)=>{
+//     dispatch({
+//       type : userActionType.USER_GET_CONTACT_FAIL,
+//       payload : error.response.message
+//     })
+//   })
+// }
