@@ -25,6 +25,11 @@ const schema = yup.object().shape({
         .min(5, "couponCode should hae min length of 5")
         .max(20, 'couponCode should have max length of 20')
         .required("couponCode is required"),
+    couponPrice: yup
+        .string("couponPrice should be a number")
+        .min(2, "couponPrice should hae min length of 2")
+        .max(4, 'couponPrice should have max length of 4')
+        .required("couponPrice is required"),
 })
 
 function AddCouponModal({ open, onClose }) {
@@ -43,8 +48,9 @@ function AddCouponModal({ open, onClose }) {
         console.log(data,'coupon data');
         const couponName = data.couponName
         const couponCode = data.couponCode
+        const couponPrice = data.couponPrice
 
-        dispatch(adminAddCouponAction(couponName, couponCode))
+        dispatch(adminAddCouponAction(couponName, couponCode,couponPrice))
         // console.log('kk', data.location);
         onClose(true)
     }
@@ -56,11 +62,8 @@ function AddCouponModal({ open, onClose }) {
             title="Add Coupons"
             content={
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}
-                // component="form" onSubmit={handleSubmit(submitHandler)}
                 >
                     <form style={{ width: '100%' }} onSubmit={handleSubmit(submitHandler)}>
-
-
 
                         <TextField
                             id="outlined-basic"
@@ -85,6 +88,19 @@ function AddCouponModal({ open, onClose }) {
                             error={!!errors.couponCode}
                             helperText={errors.couponCode ? errors.couponCode.message : ""}
                             {...register("couponCode")}
+                        />
+                        <TextField
+                            type='number'
+                            id="outlined-basic"
+                            label="couponPrice"
+                            variant="outlined"
+                            name='couponPrice'
+                            style={{ margin: '8px', width: '100%' }}
+                            fullWidth
+                            required
+                            error={!!errors.couponPrice}
+                            helperText={errors.couponPrice ? errors.couponPrice.message : ""}
+                            {...register("couponPrice")}
                         />
                         <Box style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
 

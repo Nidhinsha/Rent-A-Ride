@@ -29,8 +29,9 @@ function CouponTable({data}) {
 
                             <DataTable value={data} tableStyle={{ minWidth: '60rem' }} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} resizableColumns showGridlines>
 
-                                <Column field="couponName" header="Model" sortable></Column>
-                                <Column field="couponCode" header="Model" sortable></Column>
+                                <Column field="couponName" header="Name" sortable></Column>
+                                <Column field="couponCode" header="Code" sortable></Column>
+                                <Column field="couponPrice" header="Price" sortable></Column>
                                 <Column header="Action" body={(rowData) => (
                                     <div>
                                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>

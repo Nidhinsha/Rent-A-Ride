@@ -1,8 +1,6 @@
-import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Typography } from '@mui/material'
+import { Box, Button, Checkbox, Container, Divider, FormControl, FormControlLabel, Input, InputLabel, MenuItem, Paper, Select, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import NavBar from '../../../components/NavBar/NavBar'
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useLocation } from 'react-router-dom';
 import SportsMotorsportsOutlinedIcon from '@mui/icons-material/SportsMotorsportsOutlined';
 import moment from "moment"
@@ -12,8 +10,14 @@ import { userBookingBikeAction, userGetLocation } from '../../../Redux/Actions/u
 
 import StripePayButton from '../../../components/Button/StripePayButton/StripePayButton';
 
-import { DatePicker } from "antd"
+
+import { DatePicker, Grid } from "antd"
+import styled from '@emotion/styled';
+
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+const ariaLabel = { 'aria-label': 'description' };
+
+
 const { RangePicker } = DatePicker
 
 function Booking() {
@@ -23,7 +27,7 @@ function Booking() {
   const { bikesData } = location.state;
   const clickedBike = bikesData.find((bike) => bike.bikeName === location.state.bikeName);
   const branchLocation = useSelector((state) => state.userLocationReducer.locationData)
-  console.log('brandch location', branchLocation);
+
 
 
   const [startDate, setStartDate] = useState("");
@@ -77,130 +81,96 @@ function Booking() {
   return (
     <>
       <NavBar />
-      <Container maxWidth="lg" >
-        <Container maxWidth="md" sx={{ display: 'flex', gap: 2 }}>
-          <Box maxWidth="md" sx={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
-            <img src={clickedBike.photo[0]}
+      <Container sx={{ display: 'flex', gap: 2 }}>
+        <Container maxWidth="md">
+
+          <Box sx={{ backgroundColor: 'primary.dark', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
+            <img src={clickedBike.photo[0]} alt="bike"
               height={300}
               width={300}
-              alt='d' />
+            />
           </Box>
-          <Box maxWidth="md"  sx={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',width:"600px"}}>
-            <Typography variant="h4" sx={{ textAlign: 'center', my: 1 }}>Bike Details</Typography>
-            <Container maxWidth="md" >
-              <Typography variant="h6" sx={{ fontSize: 20, fontWeight: 'bold' }}>Bike Name: {clickedBike.bikeName}</Typography>
+
+          <Box sx={{ backgroundColor: 'error.dark', mt: 3 }}>
+            <Box>
+              <Typography variant="h5" sx={{ textAlign: 'center' }}>Bike Details</Typography>
+            </Box>
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="body1" sx={{ fontSize: 20, fontWeight: 'bold' }}>Bike Name: {clickedBike.bikeName}</Typography>
               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Bike Model: {clickedBike.bikeModel}</Typography>
               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Description: {clickedBike.description}.</Typography>
               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Rent Per Hour: ${clickedBike.price}</Typography>
               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Fuel Type: {clickedBike.fuel}</Typography>
-            </Container>
+            </Box>
+          </Box>
+
+        </Container>
+        <Container maxWidth="md">
+          <Box>
+            <Typography>Select Time Slots</Typography>
+            <RangePicker
+              showTime={{ format: "HH:mm" }}
+              format="MM DD YYYY HH:mm"
+              style={{ width: "100%", height: "100%" }}
+              onChange={selectTimeSlots}
+            />
+          </Box>
+
+          <Box sx={{ display: 'flex', mt: 2 }}>
+            <Box>
+              <Checkbox
+                {...label}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setNeedHelmet(true)
+                  } else {
+                    setNeedHelmet(false)
+                  }
+                }}
+              ></Checkbox>
+            </Box>
+            <Box sx={{ mt: 1.5 }}>
+              <h6>Do you want a Helmet for riding</h6>
+            </Box>
+          </Box>
+
+          <Box sx={{ display: 'flex', mt: 3 }}>
+            <Box maxWidth='lg' sx={{ width: "100%" }}>
+              <Input
+                placeholder="Placeholder"
+                inputProps={ariaLabel}
+                fullWidth
+
+              />
+            </Box>
+            <Box maxWidth='md'>
+              <Button variant="outlined">Apply Coupon</Button>
+            </Box>
+          </Box>
+          <Divider />
+
+          <Box>
+            <Box>
+
+              <Box sx={{ mt: 2 }}>
+                <Typography variant='h4'>Check out</Typography>
+              </Box>
+              <Container>
+                <Container sx={{display:'flex',justifyContent:'space-between',boxShadow: 3}}>
+                  <Box maxWidth='lg' sx={{backgroundColor:'yellow'}}>
+                    1
+                  </Box>
+                  <Box  maxWidth='lg' sx={{backgroundColor:'blueviolet'}}>
+                    1
+                  </Box>
+                </Container>
+              </Container>
+
+
+            </Box>
           </Box>
         </Container>
 
-        <Container maxWidth="md">
-          <Container>
-            <Typography variant="h6" sx={{ textAlign: 'center', fontSize: 20, fontWeight: 'bold',my:2}}>Book Your Bike</Typography>
-          </Container>
-          <Container maxWidth="md">
-
-            <Box sx={{ height: "50px", mt: 3 }}>
-              <Typography>
-                Select Date Range
-              </Typography>
-              <RangePicker
-                showTime={{ format: "MM DD yyyy HH:mm" }}
-                format="MM DD yyyy HH:mm"
-                style={{ width: "100%", height: "100%" }}
-                onChange={selectTimeSlots}
-              />
-            </Box>
-
-            <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
-              <FormControl fullWidth sx={{ mt: 3 }}>
-                <InputLabel id="demo-simple-select-label">start Off Location</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={pickupLocation} // retrieve the selected value from React Hook Form
-                  label="pickup location"
-                  name='pickupLocation'
-
-                  onChange={(e) => setPickupLocation(e.target.value)}
-                >
-
-                  {branchLocation
-                    ? branchLocation.map((x) => (
-                      <MenuItem key={x._id} value={x.location}>
-
-                        {x.location}
-                      </MenuItem>
-                    ))
-                    : (
-                      <MenuItem >No locations available</MenuItem>
-                    )}
-                </Select>
-
-              </FormControl>
-
-              <FormControl fullWidth sx={{ mt: 3 }}>
-                <InputLabel id="demo-simple-select-label">Drop Off Location</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={dropOffLocation} // retrieve the selected value from React Hook Form
-                  label="drop Off location"
-                  name='dropOffLocation'
-
-                  onChange={(e) => setDropOffLocation(e.target.value)}
-                >
-
-                  {branchLocation
-                    ? branchLocation.map((x) => (
-                      <MenuItem key={x._id} value={x.location}>
-
-                        {x.location}
-                      </MenuItem>
-                    ))
-                    : (
-                      <MenuItem >No locations available</MenuItem>
-                    )}
-                </Select>
-
-              </FormControl>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'end', mt: 3 }}>
-              <Typography variant="h5">Rent per Hour : {clickedBike.price}/hr</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'end', mt: 3 }}>
-              <Typography variant="h5">Total Hour :{totalHours}/hr</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2 }}>
-              <div>
-                <Checkbox
-                  {...label}
-                  icon={<BookmarkBorderIcon />}
-                  checkedIcon={<BookmarkIcon />}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setNeedHelmet(true)
-                    } else {
-                      setNeedHelmet(false)
-                    }
-                  }}
-                ></Checkbox>Do you want a Helmet for riding
-              </div>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2 }}>
-              <Typography>Total Amount : {totalAmount} $</Typography>
-            </Box>
-
-            
-
-            <StripePayButton bookingData={bookingData}
-             
-            >Ckeck Out</StripePayButton>
-          </Container>
-        </Container>
       </Container>
     </>
   )

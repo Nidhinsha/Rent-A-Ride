@@ -29,6 +29,8 @@ import { TextField } from '@mui/material';
 import ModalBox from '../../../components/Modal/ModalBox';
 import { configToken } from '../../../Api/User/ApiCalls';
 import { Box } from '@mui/system';
+import { Typography } from 'antd';
+import Wallet from '../Wallet/Wallet';
 
 function Profile() {
 
@@ -146,14 +148,10 @@ function Profile() {
                     severity="primary"
                     label="Add Photo"
                     icon="pi pi-upload"
-                    onClick={addphoto} />
-                  {/* <Button variant="contained" component="label" >
-                    Upload
-                    <input hidden accept="image/*" multiple type="file" />
-                  </Button> */}
+                    onClick={addphoto}/>
+                  
                 </div>
               </form>
-
 
               <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-5">
                 <Button severity="primary" label="Reset Password" icon="pi pi-lock" />
@@ -162,6 +160,8 @@ function Profile() {
                 <Button severity="primary" label="LogOut" icon="pi pi-arrow-left" onClick={handleLogOut} />
               </div>
             </div>
+
+            <Wallet/>
           </div>
 
           <div className="col-md-8 border-right">

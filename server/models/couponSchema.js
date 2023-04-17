@@ -6,6 +6,16 @@ const couponSchema = new mongoose.Schema({
     },
     couponCode: {
         type: String
+    },
+    couponPrice: {
+        type: Number
+    },
+    users :{
+        type :[
+            {
+                userId : String
+            }
+        ]
     }
 }  ,
     {

@@ -33,43 +33,43 @@ const style = {
 function Coupons() {
     const dispatch = useDispatch()
 
-    const[open,setOpen] = useState(false)
+    const [open, setOpen] = useState(false)
 
-    const coupons = useSelector((state)=>state.adminCouponsReducer.couponData)
+    const coupons = useSelector((state) => state.adminCouponsReducer.couponData)
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(adminGetCouponsAction())
-    },[open])
+    }, [open])
 
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <SideBar/>
-          <Box component="main" sx={{ flexGrow: 1, p: 3, mr: 1 }}>
-          <DrawerHeader />
-          <Container sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
+    return (
+        <Box sx={{ display: 'flex' }}>
+            <SideBar />
+            <Box component="main" sx={{ flexGrow: 1, p: 3, mr: 1 }}>
+                <DrawerHeader />
+                <Container sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
 
-<Box >
-    <h2>
-        Add Coupon
-    </h2>
-</Box>
-<Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', mb: 3 }}>
-    <Button
-        onClick={(e)=>setOpen(true)}
-        variant='contained'
-    >add Coupon</Button>
-    {
-        open ?  <AddCouponModal open={open} onClose={() => setOpen(false)} /> :""
-    }
-   
+                    <Box >
+                        <h2>
+                            Add Coupon
+                        </h2>
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', mb: 3 }}>
+                        <Button
+                            onClick={(e) => setOpen(true)}
+                            variant='contained'
+                        >add Coupon</Button>
+                        {
+                            open ? <AddCouponModal open={open} onClose={() => setOpen(false)} /> : ""
+                        }
 
-</Box>
-<CouponTable data={coupons}/>
 
-</Container>
-          </Box>
-    </Box>
-  )
+                    </Box>
+                    <CouponTable data={coupons} />
+
+                </Container>
+            </Box>
+        </Box>
+    )
 }
 
 export default Coupons

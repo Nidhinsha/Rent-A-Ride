@@ -1,6 +1,7 @@
 const couponSchema = require("../../models/couponSchema")
 
 exports.addCoupon =async(req,res)=>{
+    console.log(req.body,'body coupon');
     couponSchema.findOne({
         couponName : req.body.couponName
     })
@@ -37,7 +38,8 @@ exports.editCoupon = async(req,res)=>{
         {
             $set :{
                 couponName : req.body.couponName,
-                couponCode : req.body.couponCode
+                couponCode : req.body.couponCode,
+                couponPrice : req.body.couponPrice,
             }
         }
     )

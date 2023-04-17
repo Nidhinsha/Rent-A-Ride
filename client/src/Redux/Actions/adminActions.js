@@ -285,12 +285,12 @@ export const adminGetCouponsAction =()=>async(dispatch)=>{
     })
 }
 
-export const adminAddCouponAction=(couponName,couponCode)=>async(dispatch)=>{
+export const adminAddCouponAction=(couponName,couponCode,couponPrice)=>async(dispatch)=>{
     dispatch({
         type : adminActionType.ADMIN_ADD_COUPON_REQUEST
     })
 
-    addCouponAPI(couponName,couponCode).then((data)=>{
+    addCouponAPI(couponName,couponCode,couponPrice).then((data)=>{
         dispatch({
             type : adminActionType.ADMIN_ADD_COUPON_SUCCESS,
             payload : data.data

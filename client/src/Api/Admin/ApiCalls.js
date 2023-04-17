@@ -46,7 +46,7 @@ export const getLocationAPI = ()=> API.get('/locations',configToken)
 export const editLocationAPI = (id,location)=>API.put('/edit-location?id='+id,{location},configToken)
 export const deleteLocationAPI =(id)=> API.delete('/delete-location?id='+id,configToken)
 
-export const addCouponAPI =(couponName,couponCode)=> API.post("/add-coupon",{couponName,couponCode},configToken)
+export const addCouponAPI =(couponName,couponCode,couponPrice)=> API.post("/add-coupon",{couponName,couponCode,couponPrice},configToken)
 export const getCouponsAPI =()=>API.get("/coupons",configToken)
 export const editCouponAPI =(id,couponName,couponCode)=>API.put("/edit-coupon?id="+id,{couponName,couponCode},configToken)
 export const deleteCouponAPI =(id)=>API.delete("/delete-coupon?id="+id,configToken)
