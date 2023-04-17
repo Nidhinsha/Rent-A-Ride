@@ -1,12 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ChatInput from '../ChatInput/ChatInput'
 import Messages from '../Messages/Messages'
-function ChatContainer({ currentChat }) {
+import { getAllMessagesAPI, sendMessageAPI } from '../../../Api/User/ApiCalls'
+
+function ChatContainer({ currentChat,currentUser }) {
+
   const name = currentChat.firstName + " " + currentChat.lastName
 
-  const handleSendMessage=async(message)=>{
-    
+  const[messages,setMessages] = useState([])
+
+  useEffect(async()=>{
+    const response = await getAllMessagesAPI({
+      from : currentUser.id,
+      to:currentChat._id,
+    })
+    setMessages(response.data)
+  },[currentChat])
+
+  const handleSendMessage=async(msg)=>{
+    await sendMessageAPI({
+      from:currentUser.id,
+      to:currentChat._id,
+      message:msg
+    })
   }
   return (
     <Container>
@@ -21,10 +38,24 @@ function ChatContainer({ currentChat }) {
         </div>
       </div>
 
-      {/* <div className="chat-message"></div> */}
-      <Messages/>
+      <div className="chat-messages">
+        {
+          messages.map((message)=>{
+            return(
+              <div>
+                <div className={`message ${message.fromSelf ? "sended" :"received"}`}>
+                  <div className="content">
+                    <p>
+                      {message.message}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )
+          })
+        }
+      </div>
       <ChatInput handleSendMessage={handleSendMessage}/>
-      chat container
     </Container>
   )
 }
