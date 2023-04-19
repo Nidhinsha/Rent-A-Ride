@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const shortid = require('shortid');
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -32,7 +33,8 @@ const userSchema = new mongoose.Schema({
         default : false
     },
     referalCode:{
-        type :String
+        type :String,
+        default : shortid.generate()
     }
 }
     , {

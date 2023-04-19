@@ -2,17 +2,14 @@ import React from 'react';
 import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
 import { AccountCircle, Email, Lock, GoogleIcon, } from '@mui/icons-material';
 import PhoneIcon from '@mui/icons-material/Phone';
-// import Image from '../path/to/image.jpg';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { InputText } from "primereact/inputtext";
-// import { IconName } from "react-icons/bs";
 
-// import { Button } from 'primereact/button';
 // google
 import { auth, provider } from '../../../firebase/config';
 import { signInWithPopup } from 'firebase/auth'
@@ -53,6 +50,8 @@ const schema = yup.object().shape({
     .min(5, "password should have a min length of 5")
     .max(12, "password should have a max length of 12")
     .required("password is required"),
+  referalCode: yup
+    .string().optional()
 })
 
 function Signup() {
@@ -62,8 +61,8 @@ function Signup() {
   const { signUpError, loading, signUpData } = userSignupData
 
 
-  const googleSignupSelector = useSelector((state)=> state.googleSignupReducer)
-  const {googleLoading,googleSignupError} = googleSignupSelector
+  const googleSignupSelector = useSelector((state) => state.googleSignupReducer)
+  const { googleLoading, googleSignupError } = googleSignupSelector
 
   console.log('userSignupdata', userSignupData);
 
@@ -73,13 +72,13 @@ function Signup() {
 
   // google
 
-  const googleSignup = ()=>{
-    signInWithPopup(auth,provider).then((data)=>{
+  const googleSignup = () => {
+    signInWithPopup(auth, provider).then((data) => {
       const fullName = data.user.displayName
-      const [firstName,lastName] = fullName.split(' ')
+      const [firstName, lastName] = fullName.split(' ')
       // console.log('google data',data.user.displayName,data.user.email,data.user.photoURL,data.user.phoneNumber,firstName,lastName);
-      dispatch(googleSignupAction(firstName,lastName,data.user.email,data.user.phoneNumber,data.user.photoURL))
-      
+      dispatch(googleSignupAction(firstName, lastName, data.user.email, data.user.phoneNumber, data.user.photoURL))
+
     })
   }
 
@@ -94,9 +93,10 @@ function Signup() {
     const email = data.email
     const phone = data.phone
     const password = data.password
+    const referalCode = data?.referalCode
 
     try {
-      dispatch(userSignup(firstName, lastName, email, phone, password))
+      dispatch(userSignup(firstName, lastName, email, phone, password, referalCode))
       navigate('/login')
 
     } catch (error) {
@@ -118,7 +118,7 @@ function Signup() {
     <Box display="flex" justifyContent="center" alignItems="center">
       <Box boxShadow={3} borderRadius={4} p={2} m={4} sx={{ maxWidth: "800px" }}>
         <Grid container justifyContent="center" spacing={2} >
-          <Grid item xs={12} md={6} sx={{mt:15}}>
+          <Grid item xs={12} md={6} sx={{ mt: 15 }}>
             <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1089765405301669919/pekka_a_person_sitting_on_a_scooter_with_color_light_blue_and_b_555f7a57-94cd-4851-95a9-8dbbe7933355.png"
               className="img-fluid" alt="Phone" />
           </Grid>
@@ -138,7 +138,7 @@ function Signup() {
               }
 
               {
-                googleLoading ? <Loading/> : ""
+                googleLoading ? <Loading /> : ""
               }
               <TextField
                 autoFocus
@@ -235,6 +235,24 @@ function Signup() {
                   endAdornment: (
                     <InputAdornment position="start">
                       <Lock />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <TextField
+                label="referal code (optional)"
+                name='referalCode'
+                type="text"
+                fullWidth
+                {...register("referalCode")}
+
+
+                sx={{ mb: 2 }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <VpnKeyIcon />
                     </InputAdornment>
                   ),
                 }}

@@ -6,7 +6,7 @@ import { getAllUserContacts } from '../../Api/User/ApiCalls'
 
 // user signup
 
-export const userSignup = (firstName, lastName, email, phone, password) => async (dispatch) => {
+export const userSignup = (firstName, lastName, email, phone, password,referalCode) => async (dispatch) => {
   
   try {
 
@@ -14,7 +14,7 @@ export const userSignup = (firstName, lastName, email, phone, password) => async
       type: userActionType.USER_SIGNUP_REQUEST
     })
 
-    userSignUpAPI(firstName, lastName, email, phone, password)
+    userSignUpAPI(firstName, lastName, email, phone, password,referalCode)
       .then((data) => {
 
         dispatch({
