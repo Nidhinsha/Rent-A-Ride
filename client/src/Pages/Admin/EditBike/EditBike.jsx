@@ -29,7 +29,6 @@ function EditBike() {
     const [engineNumber, setEngineNumber] = useState('')
     const [brand, setBrand] = useState('')
     const [fuel, setFuel] = useState('')
-    const [loc, setLocation] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
     const [color, setColor] = useState('')
@@ -53,11 +52,7 @@ function EditBike() {
         setDescription(location.state.bikeData.description)
         setPrice(location.state.bikeData.price)
         setColor(location.state.bikeData.color)
-        setLocation(location.state.bikeData.location)
     }, [])
-
-    const locationData = useSelector((state) => state.adminGetLocationReducer.location)
-    
 
     const {
         register,
@@ -81,7 +76,6 @@ function EditBike() {
         formData.append("brand", brand)
         formData.append("price", price)
         formData.append("color", color)
-        formData.append("location", loc)
         formData.append("description", description)
 
      
@@ -116,7 +110,7 @@ function EditBike() {
 
                     component='form' onSubmit={handleSubmit(onSubmit)} >
 
-                    <h3>ADD BIKE</h3>
+                    <h3>EDIT BIKE</h3>
 
                     {
                         sucess ? <Alert severity="success">Done Bike Added !!!</Alert> : ''
@@ -132,7 +126,7 @@ function EditBike() {
                             defaultValue={location.state.bikeData.bikeName}
                             {...register("bikeName",
                                 {
-                                    required: "This is required", minLength: 3
+                                    required: "This is required", minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setBikeName(e.target.value)}
                             helperText={errors.bikeName && <div style={{ color: 'red' }}>Please enter the bike name</div>}
@@ -147,7 +141,7 @@ function EditBike() {
                             defaultValue={location.state.bikeData.bikeModel}
                             {...register("bikeModel",
                                 {
-                                    required: "This is required", minLength: 3
+                                    required: "This is required", minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setModel(e.target.value)}
                             helperText={errors.bikeModel && <div style={{ color: 'red' }}>Please enter the bike model</div>}
@@ -164,7 +158,7 @@ function EditBike() {
                             defaultValue={location.state.bikeData.engineNumber}
                             {...register("engineNumber",
                                 {
-                                    required: true, minLength: 3
+                                    required: true, minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setEngineNumber(e.target.value)}
                             helperText={errors.engineNumber && <div style={{ color: 'red' }}>Please enter the engine number</div>}
@@ -177,7 +171,7 @@ function EditBike() {
                             defaultValue={location.state.bikeData.brand}
                             {...register("brand",
                                 {
-                                    required: true, minLength: 3
+                                    required: true, minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setBrand(e.target.value)}
                             helperText={errors.brand && <p style={{ color: 'red' }}>Please enter the brand</p>}
@@ -193,7 +187,7 @@ function EditBike() {
                             defaultValue={location.state.bikeData.color}
                             {...register("color",
                                 {
-                                    required: true, minLength: 3
+                                    required: true, minLength: 3,maxLength:8
                                 }
                             )}
                             onChange={(e) => setColor(e.target.value)}
@@ -249,46 +243,7 @@ function EditBike() {
                             helperText={errors.price && <p style={{ color: 'red' }}>Please enter a price</p>}
                         />
 
-                        <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }} >
-                            <InputLabel id="demo-simple-select-label"  >Location</InputLabel>
-                         
-
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                defaultValue={location.state.bikeData.location}
-                                // value={location} // retrieve the selected value from React Hook Form
-                                label="Location"
-                                name='location'
-                                inputProps={{
-                                    name: 'age',
-                                    id: 'uncontrolled-native',
-                                }}
-                                {...register("location", { required: true })}
-                                onChange={(e) => setLocation(e.target.value)}
-                            >
-                             
-                                {locationData
-                                    ? locationData.map((x) => {
-                                        if (x !== location.state.bikeData.Location) {
-                                            return (
-                                                <MenuItem key={x._id} value={x.location}>
-                                                 
-                                                    {x.location}
-                                                </MenuItem>
-                                            )
-                                        }
-                                    })
-                                    : (
-                                        <MenuItem >No locations available</MenuItem>
-                                    )}
-                            </Select>
-
-
-                           
-
-                            {errors.location && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.location && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
-                        </FormControl>
+                       
 
                     </div>
 
@@ -302,7 +257,7 @@ function EditBike() {
                             maxRows={4}
                             {...register("description",
                                 {
-                                    required: true, minLength: 3
+                                    required: true, minLength: 3,maxLength:20
                                 }
                             )}
                             onChange={(e) => setDescription(e.target.value)}

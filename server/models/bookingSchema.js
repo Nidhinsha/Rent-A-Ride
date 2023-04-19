@@ -5,8 +5,9 @@ const bookingSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId // Change the type to ObjectId
     },
     userId :{
-        type : mongoose.Schema.Types.ObjectId
+        type : String
     },
+    
     bookedTimeSlots:{
        startDate : {
         type :String
@@ -31,6 +32,15 @@ const bookingSchema = new mongoose.Schema({
         type :Number
     },
     stripeSessionId :{
+        type : String
+    },
+    status:{
+        type : String
+    },
+    paymentType :{
+        type :String
+    },
+    bookedAt:{
         type : String
     }
 },{

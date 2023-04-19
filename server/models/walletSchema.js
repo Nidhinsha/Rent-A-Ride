@@ -11,7 +11,7 @@ const walletSchema = new mongoose.Schema({
     walletHistory: {
         type: [
             {
-                Type: {
+                transactionType: {
                     type: String
                 },
                 amountAdded: {
@@ -23,7 +23,6 @@ const walletSchema = new mongoose.Schema({
                 Date: {
                     type: String,
                     default: moment().format('MMMM Do YYYY, h:mm:ss a')
-
                 }
             }
         ]

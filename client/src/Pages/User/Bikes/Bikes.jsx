@@ -17,6 +17,7 @@ import { styled } from '@mui/material/styles';
 import AllBikes from '../../../components/UserBikeList/AllBikes';
 import PriceAscSortBikes from '../../../components/UserBikeList/PriceAscSortBikes';
 import PriceDescSortBikes from '../../../components/UserBikeList/PriceDescSortBikes';
+import Footer from '../../../components/Home/Footer/Footer';
 
 function TabPanel(props) {
 
@@ -123,6 +124,7 @@ function Bikes() {
                   <PriceDescSortBikes priceDesc={bikesData}/>
                 </TabPanel>
             </Box>
+            <Footer/>
         </>
     )
 }

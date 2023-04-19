@@ -9,6 +9,7 @@ import ChatContainer from '../../../components/Chat/ChatContainer/ChatContainer'
 import { io } from "socket.io-client"
 import { getAllUserContacts } from '../../../Api/User/ApiCalls'
 import NavBar from '../../../components/NavBar/NavBar'
+import Footer from '../../../components/Home/Footer/Footer'
 const socket = io("http://localhost:5000")
 
 function Chat() {
@@ -20,21 +21,12 @@ function Chat() {
 
   const user = useSelector((state) => state.userLoginReducer.userLoginDetails)
   const contactData = useSelector((state) => state?.userGetContactReducer?.contactData)
-  console.log(contactData, 'gggggggggggggggggggggggggg')
   const [contacts, setContacts] = useState([])
   const [currentChat, setCurrentChat] = useState(undefined)
-  console.log(contacts, 'ooooooo')
 
 
   useEffect(() => {
-    // if (user) {
-    //   const details = async () => {
-    //     dispatch(userGetContactAction(user.id))
-    //       if (contactData) {
-    //         setContacts(contactData)
-    //       }
-    //   }
-    //   details()
+   
     if (user) {
       const details = async () => {
        getAllUserContacts(user.id).then((data)=>{
@@ -70,6 +62,7 @@ function Chat() {
           }
         </div>
       </Container>
+      <Footer/>
     </>
   )
 }
@@ -82,7 +75,7 @@ const Container = styled.div`
     justify-content: center;
     gap: 1rem;
     align-items: center;
-    background-color: lightblue;
+    
     .container {
       padding:0;
       height: 85vh;

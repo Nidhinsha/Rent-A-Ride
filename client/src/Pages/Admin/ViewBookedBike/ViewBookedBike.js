@@ -65,15 +65,15 @@ function ViewBookedBike() {
                 borderRadius: '30%',
               }} />} />
               <Column field="bikeName" header="BikeName" sortable ></Column>
-              <Column field="userName" header="User" sortable></Column>
+              <Column field="bikeModel" header="User" sortable></Column>
               <Column field="pickupLocation" header="PickUp" sortable></Column>
               <Column field="dropOffLocation" header="Drop" sortable></Column>
-              <Column field="startDate" header="Start Date" sortable style={{ width: '25%' }}
-                body={(rowData) => rowData.bookedTimeSlots.startDate} />
-              <Column field="endDate" header="End Date" sortable style={{ width: '25%' }}
-                body={(rowData) => rowData.bookedTimeSlots.endDate} />
+              <Column field="startingTime" header="Start Date" sortable style={{ width: '25%' }}
+              />
+              <Column field="endingTime" header="End Date" sortable style={{ width: '25%' }}
+              />
 
-              <Column field="rentPerHour" header="rent Per Hour" sortable ></Column>
+              {/* <Column field="rentPerHour" header="rent Per Hour" sortable ></Column> */}
               <Column field='totalHours' header="total Hours" sortable></Column>
               <Column field='totalAmount' header="Total" sortable></Column>
               {/* <Column field='status' header="status" body={statusBodyTemplate} sortable ></Column> */}

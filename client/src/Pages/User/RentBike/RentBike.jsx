@@ -14,6 +14,7 @@ import NavBar from '../../../components/NavBar/NavBar';
 import { FormHelperText } from '@mui/material'
 import { useForm } from "react-hook-form"
 import { userGetLocation } from '../../../Redux/Actions/userActions';
+import Footer from '../../../components/Home/Footer/Footer';
 
 function RentBike() {
 
@@ -129,7 +130,7 @@ function RentBike() {
                             label="Owner Name"
                             {...register("ownerName",
                                 {
-                                    required: "This is required", minLength: 3
+                                    required: "This is required", minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setOwnerName(e.target.value)}
                             helperText={errors.ownerName && <div style={{ color: 'red' }}>Please enter the owner name</div>}
@@ -140,7 +141,7 @@ function RentBike() {
                             label="Bike Name"
                             {...register("bikeName",
                                 {
-                                    required: "This is required", minLength: 3
+                                    required: "This is required", minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setBikeName(e.target.value)}
                             helperText={errors.bikeName && <div style={{ color: 'red' }}>Please enter the bike name</div>}
@@ -151,7 +152,7 @@ function RentBike() {
                             label="Bike Model"
                             {...register("bikeModel",
                                 {
-                                    required: "This is required", minLength: 3
+                                    required: "This is required", minLength: 3,maxLength:8
                                 })}
 
                             onChange={(e) => setModel(e.target.value)}
@@ -165,7 +166,7 @@ function RentBike() {
                             label="Engine Number"
                             {...register("engineNumber",
                                 {
-                                    required: true, minLength: 3
+                                    required: true, minLength: 3,maxLength:8
                                 })}
 
                             onChange={(e) => setEngineNumber(e.target.value)}
@@ -177,7 +178,7 @@ function RentBike() {
                             label="Brand"
                             {...register("brand",
                                 {
-                                    required: true, minLength: 3
+                                    required: true, minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setBrand(e.target.value)}
                             helperText={errors.engineNumber && <p style={{ color: 'red' }}>Please enter the brand</p>}
@@ -191,7 +192,7 @@ function RentBike() {
                             label="Color"
                             {...register("color",
                                 {
-                                    required: true, minLength: 3
+                                    required: true, minLength: 3,maxLength:8
                                 }
                             )}
                             onChange={(e) => setColor(e.target.value)}
@@ -236,7 +237,7 @@ function RentBike() {
                             helperText={errors.price && <p style={{ color: 'red' }}>Please enter a price</p>}
                         />
 
-                        <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }}>
+                        {/* <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }}>
                             <InputLabel id="demo-simple-select-label">Location</InputLabel>
                            
 
@@ -262,7 +263,7 @@ function RentBike() {
                                     )}
                             </Select>
                             {errors.location && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.location && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
-                        </FormControl>
+                        </FormControl> */}
 
 
                     </div>
@@ -276,7 +277,7 @@ function RentBike() {
                             maxRows={4}
                             {...register("description",
                                 {
-                                    required: true, minLength: 3
+                                    required: true, minLength: 3,maxLength:20
                                 }
                             )}
 
@@ -357,8 +358,6 @@ function RentBike() {
                                     }}
                                     type='submit'
                                     onClick={handleSubmit}
-
-
                                 >
                                     ADD BIKE
                                 </Button>
@@ -370,7 +369,7 @@ function RentBike() {
 
             </Box>
 
-          
+          <Footer/>
         </>
 
     )

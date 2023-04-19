@@ -7,7 +7,6 @@ import { CardActionArea, CardActions } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { userGetBikeAction } from '../../Redux/Actions/userActions';
 import Loading from '../Loading/Loading';
-import { Button } from 'primereact/button';
 import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import BookingButton from '../Button/BookingButton/BookingButton';

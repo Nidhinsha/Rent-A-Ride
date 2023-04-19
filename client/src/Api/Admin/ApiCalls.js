@@ -16,8 +16,6 @@ const configToken = {
   headers : {
     "Content-Type": "application/json",
     Authorization:"Bearer"+' '+admin?.token,
-  
-
   }
 }
 
@@ -26,7 +24,6 @@ const configFormData = {
   headers : {
     "Content-Type": "multipart/form-data",
     authorization:"Bearer"+' '+admin?.token  
-
   }
 }
 export const adminLoginApi = (email,password) => API.post('/login',{email,password},config)

@@ -14,6 +14,7 @@ const locationController = require("../../controller/User/locationController")
 const bookingController = require("../../controller/User/bookingController")
 const chatContoller = require("../../controller/User/chatController/chatController")
 const walletController = require("../../controller/User/walletController")
+const userCouponController = require("../../controller/User/userCouponController")
 // signUp Route
 
 router.post('/user-signup',userSignupLogin.SignUpPost)
@@ -60,6 +61,11 @@ router.route('/get-location').get(locationController.getLocations)
 router.route("/booking-bike").post(bookingController.bikeBookingController)
 
 router.route("/booked-bikes").get(protect,bookingController.userGetBookedBikeController)
+
+router.route("/booking-success").post(protect,bookingController.userCreateOrderController)
+// coupons
+
+router.route("/user-coupons").get(protect,userCouponController.userGetCoupons)
 
 // wallet
 

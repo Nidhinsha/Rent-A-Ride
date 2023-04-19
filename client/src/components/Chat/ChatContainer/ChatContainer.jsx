@@ -115,6 +115,7 @@ display: grid;
       .avatar {
         img {
           height: 2.5rem;
+          border-radius:20px
         }
       }
       .username {

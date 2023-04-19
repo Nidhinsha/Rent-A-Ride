@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Container, Divider, FormControl, FormControlLabel, Input, InputLabel, MenuItem, Paper, Select, Typography } from '@mui/material'
+import { Box, Button, Checkbox, Container, Divider, FormControl, FormControlLabel, FormLabel, Input, InputLabel, MenuItem, Paper, Radio, RadioGroup, Select, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import NavBar from '../../../components/NavBar/NavBar'
 import { useLocation } from 'react-router-dom';
@@ -6,13 +6,14 @@ import SportsMotorsportsOutlinedIcon from '@mui/icons-material/SportsMotorsports
 import moment from "moment"
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userBookingBikeAction, userGetLocation } from '../../../Redux/Actions/userActions';
+import { userBookingBikeAction, userGetCouponsAction, userGetLocation } from '../../../Redux/Actions/userActions';
 
 import StripePayButton from '../../../components/Button/StripePayButton/StripePayButton';
 
 
 import { DatePicker, Grid } from "antd"
 import styled from '@emotion/styled';
+import Footer from '../../../components/Home/Footer/Footer';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const ariaLabel = { 'aria-label': 'description' };
@@ -28,38 +29,91 @@ function Booking() {
   const clickedBike = bikesData.find((bike) => bike.bikeName === location.state.bikeName);
   const branchLocation = useSelector((state) => state.userLocationReducer.locationData)
 
-
+  const coupons = useSelector((state) => state.userGetCouponReducer.couponData)
+  console.log(coupons, 'coupons in the booking page');
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [totalHours, setTotalHours] = useState(0)
   const [needHelmet, setNeedHelmet] = useState(false)
-  const [totalAmount, setTotalAmount] = useState(0)
+  // const [totalAmount, setTotalAmount] = useState(0)
   const [pickupLocation, setPickupLocation] = useState("")
   const [dropOffLocation, setDropOffLocation] = useState("")
 
-  console.log(moment(startDate).format('DD MM yyyy HH:mm'), 'start date');
-  console.log(moment(endDate).format('DD MM yyyy HH:mm'), 'end date');
+  const [coupon, setCoupon] = useState(null)
+  const [couponVerified, setCouponVerified] = useState(false)
+  const [couponApplied, setCouponApplied] = useState(false)
+  const [couponError, setCouponError] = useState(false)
+  const [getCouponPrice, setGetCouponPrice] = useState()
 
-  const selectTimeSlots = (values) => {
-    setStartDate(moment(values[0]).format('DD MM yyyy HH:mm'));
-    setEndDate(moment(values[1]).format('DD MM yyyy HH:mm'));
-    setTotalHours(values[1].diff(values[0], 'hours'))
-  }
+  const [stripe, setStripe] = useState(false)
+  const [value, setValue] = useState("")
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  // checking the booking date is valid
+  const validateDateOfBooking = useSelector((state) => state.userBookingBikeReducer)
+  const { bookingBikeLoading, bookingBikeData, bookingBikeDataError } = validateDateOfBooking
+  console.log(bookingBikeDataError, 'error');
 
   useEffect(() => {
-    setTotalAmount(totalHours * clickedBike.price)
-
-    if (needHelmet) {
-      setTotalAmount(totalAmount + 50)
-    }
-  }, [needHelmet, totalHours])
-
-  useEffect(() => {
+    dispatch(userGetCouponsAction())
     dispatch(userGetLocation())
   }, [])
 
-  const bookingData = {
+  const selectTimeSlots = (values) => {
+    setStartDate(moment(values[0].$d).format('MMMM Do YYYY, h:mm:ss a'));
+    setEndDate(moment(values[1].$d).format('MMMM Do YYYY, h:mm:ss a'));
+    setTotalHours(values[1].diff(values[0], 'hours'))
+  }
+
+  // coupon verify
+
+  const verifyCoupon = (coupon) => {
+    const checkCoupon = coupons.find(check => check.couponCode === coupon)
+    const userId = JSON.parse(localStorage.getItem("userInfo")).id
+
+    if (checkCoupon) {
+      const filteredCoupon = coupons.filter(x => x.couponCode === coupon)
+      if (filteredCoupon.length > 0) {
+        filteredCoupon.forEach(coupon => {
+          if (coupon.users.some(user => user.userId === userId)) {
+            console.log(` has already applied coupon `);
+            setCouponApplied(true)
+            setCouponError(false)
+          } else {
+            console.log(` has not applied coupon  yet`);
+            setCouponApplied(false)
+            setCouponVerified(true)
+            setCouponError(false)
+            setGetCouponPrice(coupons.find(x => x.couponCode === coupon)?.couponPrice || 0)
+            console.log('getCouponPrice', getCouponPrice);
+          }
+        })
+      } else {
+        console.log('nothing found');
+      }
+    } else {
+      setCouponVerified(false)
+      setCouponApplied(false)
+      setCouponError(true)
+    }
+
+  }
+
+
+  let totalAmount = needHelmet === true && couponVerified === true ?
+    (totalHours * clickedBike.price + 50) - (coupons.find((x) => x.couponCode === coupon)?.couponPrice || 0)
+    : needHelmet === true
+      ? totalHours * clickedBike.price + 50
+      : needHelmet === false && couponVerified === true
+        ? (totalHours * clickedBike.price) - (coupons.find((x) => x.couponCode === coupon)?.couponPrice || 0)
+        : totalHours * clickedBike.price
+
+
+  const stripeData = {
     userId: JSON.parse(localStorage.getItem("userInfo")).id,
     userName: JSON.parse(localStorage.getItem("userInfo")).firstName,
     bikeId: clickedBike._id,
@@ -72,12 +126,17 @@ function Booking() {
       endDate
     },
     pickupLocation,
-    dropOffLocation
+    dropOffLocation,
+    couponCode: coupon,
+    paymentType: "stripe"
   }
 
   const handleBookNow = () => {
-    dispatch(userBookingBikeAction(bookingData))
+    if (stripe === true) {
+      dispatch(userBookingBikeAction(stripeData))
+    }
   }
+
   return (
     <>
       <NavBar />
@@ -86,17 +145,17 @@ function Booking() {
 
           <Box sx={{ backgroundColor: 'primary.dark', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
             <img src={clickedBike.photo[0]} alt="bike"
-              height={300}
-              width={300}
+              height={400}
+              width={600}
             />
           </Box>
 
-          <Box sx={{ backgroundColor: 'error.dark', mt: 3 }}>
+          <Box sx={{ mt: 3, boxShadow: 3 }}>
             <Box>
               <Typography variant="h5" sx={{ textAlign: 'center' }}>Bike Details</Typography>
             </Box>
             <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="body1" sx={{ fontSize: 20, fontWeight: 'bold' }}>Bike Name: {clickedBike.bikeName}</Typography>
+              <Typography variant="body1" sx={{ fontSize: 20 }}>Bike Name: {clickedBike.bikeName}</Typography>
               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Bike Model: {clickedBike.bikeModel}</Typography>
               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Description: {clickedBike.description}.</Typography>
               <Typography variant="body1" sx={{ fontSize: 16, my: 1 }}>Rent Per Hour: ${clickedBike.price}</Typography>
@@ -108,12 +167,77 @@ function Booking() {
         <Container maxWidth="md">
           <Box>
             <Typography>Select Time Slots</Typography>
+            {
+              bookingBikeDataError ? <p style={{ color: "red" }}>{bookingBikeDataError}</p> : ""
+            }
             <RangePicker
               showTime={{ format: "HH:mm" }}
               format="MM DD YYYY HH:mm"
               style={{ width: "100%", height: "100%" }}
               onChange={selectTimeSlots}
             />
+          </Box>
+
+          {/* starting and droping location */}
+          <Box sx={{ mt: 3 }}>
+
+            <Typography variant='h6'>Select your location</Typography>
+
+
+            <Box sx={{ display: 'flex', gap: 2 }}>
+
+              <FormControl fullWidth sx={{ mt: 3 }}>
+                <InputLabel id="demo-simple-select-label">start Off Location</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={pickupLocation} // retrieve the selected value from React Hook Form
+                  label="pickup location"
+                  name='pickupLocation'
+
+                  onChange={(e) => setPickupLocation(e.target.value)}
+                >
+
+                  {branchLocation
+                    ? branchLocation.map((x) => (
+                      <MenuItem key={x._id} value={x.location}>
+
+                        {x.location}
+                      </MenuItem>
+                    ))
+                    : (
+                      <MenuItem >No locations available</MenuItem>
+                    )}
+                </Select>
+
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mt: 3 }}>
+                <InputLabel id="demo-simple-select-label">Drop Off Location</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={dropOffLocation} // retrieve the selected value from React Hook Form
+                  label="drop Off location"
+                  name='dropOffLocation'
+
+                  onChange={(e) => setDropOffLocation(e.target.value)}
+                >
+
+                  {branchLocation
+                    ? branchLocation.map((x) => (
+                      <MenuItem key={x._id} value={x.location}>
+
+                        {x.location}
+                      </MenuItem>
+                    ))
+                    : (
+                      <MenuItem >No locations available</MenuItem>
+                    )}
+                </Select>
+
+              </FormControl>
+            </Box>
           </Box>
 
           <Box sx={{ display: 'flex', mt: 2 }}>
@@ -130,7 +254,7 @@ function Booking() {
               ></Checkbox>
             </Box>
             <Box sx={{ mt: 1.5 }}>
-              <h6>Do you want a Helmet for riding</h6>
+              <div>Do you want a Helmet for riding</div>
             </Box>
           </Box>
 
@@ -140,38 +264,151 @@ function Booking() {
                 placeholder="Placeholder"
                 inputProps={ariaLabel}
                 fullWidth
-
+                onChange={(e) => setCoupon(e.target.value)}
               />
             </Box>
             <Box maxWidth='md'>
-              <Button variant="outlined">Apply Coupon</Button>
+              <Button
+                variant="outlined"
+                onClick={(e) => {
+                  verifyCoupon(coupon)
+                }}
+              >Apply Coupon</Button>
             </Box>
+            {
+              couponError ? <p style={{ color: 'red' }}>Coupon Code is not valid</p> : ""
+            }
+            {
+              couponApplied ? <p style={{ color: 'red' }}>Coupon Has Already Applied</p> : ""
+            }
           </Box>
           <Divider />
 
           <Box>
-            <Box>
+            {
+              startDate && endDate ?
 
-              <Box sx={{ mt: 2 }}>
-                <Typography variant='h4'>Check out</Typography>
-              </Box>
-              <Container>
-                <Container sx={{display:'flex',justifyContent:'space-between',boxShadow: 3}}>
-                  <Box maxWidth='lg' sx={{backgroundColor:'yellow'}}>
-                    1
+
+                <Box>
+
+                  <Box sx={{ mt: 2 }}>
+                    <Typography variant='h4'>Check out</Typography>
                   </Box>
-                  <Box  maxWidth='lg' sx={{backgroundColor:'blueviolet'}}>
-                    1
-                  </Box>
-                </Container>
-              </Container>
+
+                  <Container sx={{ boxShadow: 3 }}>
+                    {
+                      pickupLocation && dropOffLocation ?
+                        <>
+                          <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Box maxWidth='lg' >
+                              <Typography variant='h6'>Pickup Location</Typography>
+                            </Box>
+                            <Box maxWidth='lg'>
+                              <Typography variant='h6'>{pickupLocation}</Typography>
+
+                            </Box>
+                          </Container>
+
+                          <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Box maxWidth='lg'>
+                              <Typography variant='h6'> Drop Location</Typography>
+                            </Box>
+                            <Box maxWidth='lg' >
+                              <Typography variant='h6'>{dropOffLocation}</Typography>
+                            </Box>
+                          </Container>
+                        </>
+                        : ""
+                    }
+                    <Container sx={{ display: 'flex', justifyContent: 'space-between'}}>
+                      <Box maxWidth='lg' >
+                        <Typography variant='h6'>Rent Per Hour</Typography>
+
+                      </Box>
+                      <Box maxWidth='lg'>
+                        <Typography variant='h6'>{clickedBike.price}/hr</Typography>
+                      </Box>
+                    </Container>
+
+                    <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <Box maxWidth='lg' >
+                        <Typography variant='h6'>Total Hours</Typography>
+
+                      </Box>
+                      <Box maxWidth='lg' >
+                        <Typography variant='h6'>  {totalHours}/hr</Typography>
+
+                      </Box>
+                    </Container>
+
+                    <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <Box maxWidth='lg' >
+
+                        <Typography variant='h6'> Total Amount</Typography>
+
+                      </Box>
+                      <Box maxWidth='lg'>
+                        <Typography variant='h6'> Rs. {totalAmount}</Typography>
+                      </Box>
+                    </Container>
+
+                  </Container>
 
 
-            </Box>
+                  <Container sx={{ display: 'flex', mt: 2 }} >
+                    <Divider />
+                    <Box >
+                      <FormControl>
+                        <FormLabel id="demo-row-radio-buttons-group-label">Payment</FormLabel>
+                        <RadioGroup
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="row-radio-buttons-group"
+                          value={value}
+                          onChange={handleChange}
+                        >
+                          <FormControlLabel
+                            value="wallet"
+                            control={<Radio />}
+                            label="With Wallet"
+                          />
+                          <FormControlLabel
+                            value="stripe"
+                            control={<Radio />}
+                            label="With Stripe"
+                            onChange={() => setStripe(true)}
+                          />
+                          <FormControlLabel value="other" control={<Radio />} label="Other" />
+
+                        </RadioGroup>
+                      </FormControl>
+                    </Box>
+                  </Container>
+
+                  <Container>
+                    {
+                      stripe ? <Button
+                        variant='outlined'
+                        fullWidth
+                        onClick={handleBookNow}
+                      >CheckOut</Button>
+                        :
+                        <Button
+                          variant='outlined'
+                          fullWidth
+                          disabled
+                        >CheckOut</Button>
+                    }
+                  </Container>
+                </Box>
+                : ""
+            }
           </Box>
         </Container>
-
       </Container>
+      <Box sx={{mt:3}}>
+      <Footer/>
+      </Box>
     </>
   )
 }

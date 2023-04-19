@@ -20,6 +20,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Button } from '@mui/material';
 import Loading from '../../../components/Loading/Loading';
+import Footer from '../../../components/Home/Footer/Footer';
 
 function TabPanel(props) {
 
@@ -348,6 +349,7 @@ function RentedBikes() {
                     </TableContainer>
                 </TabPanel>
             </Box>
+            <Footer/>
         </>
     )
 }

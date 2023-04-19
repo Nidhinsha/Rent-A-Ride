@@ -86,7 +86,6 @@ function ViewBike() {
             <Column field="engineNumber" header="engineNumber" sortable ></Column>
             <Column field='fuel' header="fuel" sortable></Column>
             <Column field='price' header="price" sortable></Column>
-            <Column field='location' header="location" sortable></Column>
             <Column field='assured' header="assured" sortable ></Column>
             <Column field='status' header="status" body={statusBodyTemplate} sortable ></Column>
             <Column header="Action" body={(rowData) => (

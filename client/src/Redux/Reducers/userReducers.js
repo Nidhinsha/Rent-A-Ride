@@ -375,3 +375,27 @@ export const userGetContactReducer =(state={},action)=>{
       return state
   }
 }
+
+// coupons
+
+export const userGetCouponReducer =(state={},action)=>{
+  switch (action.type) {
+    case userActionType.USER_GET_COUPON_REQUEST:
+      return {
+        couponLoading : true
+      }
+    case userActionType.USER_GET_COUPON_SUCCESS:
+      return {
+        couponLoading : false,
+        couponData : action.payload
+      }
+    case userActionType.USER_GET_COUPON_FAIL:
+      return {
+        couponLoading : false,
+        couponDataError : action.payload
+      }
+  
+    default:
+      return state;
+  }
+}

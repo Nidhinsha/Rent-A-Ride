@@ -7,6 +7,7 @@ import NavBar from '../../../components/NavBar/NavBar';
 import { Container } from '@mui/material';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import Footer from '../../../components/Home/Footer/Footer';
 
 function BookedBikes() {
   const theme = useTheme();
@@ -33,20 +34,20 @@ function BookedBikes() {
 
 
           <DataTable value={bookedBike} className="p-d-flex p-jc-center"  paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
-          <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo} alt="User" style={{
+          <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo[0]} alt="User" style={{
                 width: '5rem',
                 height:'5rem',
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
                 borderRadius: '30%',
               }} />} />
             <Column field="bikeName" header="bikeName" sortable style={{ width: '25%' }}></Column>
-            <Column field="description" header="description" sortable style={{ width: '25%' }}></Column>
+            <Column field="bikeModel" header="bikeModel" sortable style={{ width: '25%' }}></Column>
             <Column field="pickupLocation" header="pickUp " sortable style={{ width: '25%' }}></Column>
             <Column field="dropOffLocation" header="dropOff" sortable style={{ width: '25%' }}></Column>
-            <Column field="startDate" header="Start Date" sortable style={{ width: '25%' }}
-             body={(rowData) => rowData.bookedTimeSlots.startDate} />
-            <Column field="endDate" header="End Date" sortable style={{ width: '25%' }}
-             body={(rowData) => rowData.bookedTimeSlots.endDate} />
+            <Column field="startingTime" header="Start Date" sortable style={{ width: '25%' }}
+              />
+            <Column field="endingTime" header="End Date" sortable style={{ width: '25%' }}
+             />
             {/* </Column> */}
 
             <Column field="needHelmet" header="Helmet" sortable style={{ width: '25%' }}></Column>
@@ -68,6 +69,7 @@ function BookedBikes() {
         </Container>
 
       </Container>
+      <Footer/>
     </>
   )
 }

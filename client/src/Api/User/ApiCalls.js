@@ -50,6 +50,11 @@ export const userBookingBikeAPI = (bookingDetails) => API.post("/booking-bike", 
 
 export const userGetBookedBikeAPI = (id) => API.get("/booked-bikes?id=" + id, configToken)
 
+// coupon
+export const userGetCouponAPI =()=>API.get("/user-coupons",configToken)
+
+// order
+export const userCreateOrderAPI =(bookingDetails)=>API.post("/booking-success",{bookingDetails},configToken)
 // chat
 export const getAllUserContacts = (id) => API.get("/contacts?id=" + id, configToken)
 export const sendMessageAPI = (data) => API.post("/add-message", { data }, configToken)

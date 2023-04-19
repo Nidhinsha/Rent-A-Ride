@@ -37,7 +37,7 @@ function Contacts({ contacts, currentUser ,changeChat }) {
                       onClick={()=>changeCurrentChat(index,contact)} 
                       >
                       <div className="avatar">
-                        <img src={contact.photo} alt="profile" />
+                        <img src={contact.photo} alt="profile" width={50} />
                       </div>
                       <div className="username">
                       <p className='mb-0'>{contact.firstName + " " + contact.lastName}</p>
@@ -77,6 +77,7 @@ grid-template-rows: 10% 78% 12%;
     justify-content: center;
     img {
       height: 3rem;
+      
     }
     p {
       color: white;
@@ -112,6 +113,7 @@ grid-template-rows: 10% 78% 12%;
       .avatar {
         img {
           height: 3rem;
+          border-radius:20px
         }
       }
       .username {
@@ -132,8 +134,9 @@ grid-template-rows: 10% 78% 12%;
     gap: 1rem;
     .avatar {
       img {
-        height: 3rem;
+        height: 4rem;
         max-inline-size: 100%;
+        border-radius:20px
       }
     }
     .username {

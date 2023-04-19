@@ -12,6 +12,7 @@ import NavBar from '../../../components/NavBar/NavBar';
 import { useLocation } from 'react-router-dom';
 import './SingleBikeView.css'
 import BookingButton from '../../../components/Button/BookingButton/BookingButton';
+import Footer from '../../../components/Home/Footer/Footer';
 
 function SingleBikeView() {
 
@@ -94,7 +95,7 @@ function SingleBikeView() {
                     </Grid>
                 </Box>
             </Box>
-
+          <Footer/>
         </Box>
     );
 }

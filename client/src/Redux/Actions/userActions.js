@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 import { getAllUserContacts } from '../../Api/User/ApiCalls'
 
 
@@ -361,18 +361,42 @@ export const userBookingBikeAction =(bookingData)=>async(dispatch)=>{
     type : userActionType.USER_BOOKING_BIKE_REQUEST
   })
 
-  // userBookingBikeAPI(bookingData).then((data)=>{
-  //   dispatch({
-  //     type : userActionType.USER_BOOKING_BIKE_SUCCESS,
-  //     payload : data.data
-  //   })
-  // })
-  // .catch((error)=>{
-  //   dispatch({
-  //     type : userActionType.USER_BOOKING_BIKE_FAIL,
-  //     payload : error.response.message
-  //   })
-  // })
+  userBookingBikeAPI(bookingData).then((data)=>{
+    console.log('booking api');
+
+    if(data.data.url){
+      console.log('stripe url');
+      window.location.href= data.data.url
+    }else{
+      console.log('wallet');
+    }
+    // dispatch({
+    //   type : userActionType.USER_BOOKING_BIKE_SUCCESS,
+    //   payload : data.data
+    // })
+  })
+  .catch((error)=>{
+    console.log('error in stripe',error);
+    dispatch({
+      type : userActionType.USER_BOOKING_BIKE_FAIL,
+      payload : error.response.data
+    })
+  })
+}
+
+// CREATE ORDER 
+
+export const userCreateOrderAction=(bookingDetails)=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_CREATE_ORDER_REQUEST
+  })
+
+  userCreateOrderAPI(bookingDetails).then((data)=>{
+    console.log('create order api',data.data);
+  })
+  .catch((error)=>{
+    console.log(error,'errror create order api');
+  })
 }
 
 export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
@@ -381,6 +405,7 @@ export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
   })
 
   userGetBookedBikeAPI(id).then((data)=>{
+    console.log(data.data,'the booked');
     dispatch({
       type : userActionType.USER_GET_BOOKED_BIKE_SUCCESS,
       payload : data.data
@@ -394,22 +419,21 @@ export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
   })
 }
 
-// export const userGetContactAction =(id)=> async(dispatch)=>{
-//   dispatch({
-//     type : userActionType.USER_GET_CONTACT_REQUEST
-//   })
+export const userGetCouponsAction =()=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_GET_COUPON_REQUEST
+})
 
-//   getAllUserContacts(id).then((data)=>{
-//     console.log(data.data,'data in reducer contact');
-//     dispatch({
-//       type : userActionType.USER_GET_CONTACT_SUCCESS,
-//       payload : data.data
-//     })
-//   })
-//   .catch((error)=>{
-//     dispatch({
-//       type : userActionType.USER_GET_CONTACT_FAIL,
-//       payload : error.response.message
-//     })
-//   })
-// }
+userGetCouponAPI().then((data)=>{
+    dispatch({
+        type : userActionType.USER_GET_COUPON_SUCCESS,
+        payload : data.data
+    })
+})
+.catch((error)=>{
+    dispatch({
+        type : userActionType.USER_GET_COUPON_FAIL,
+        payload : error.response.message
+    })
+})
+}

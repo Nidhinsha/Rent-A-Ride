@@ -31,6 +31,7 @@ import { configToken } from '../../../Api/User/ApiCalls';
 import { Box } from '@mui/system';
 import { Typography } from 'antd';
 import Wallet from '../Wallet/Wallet';
+import Footer from '../../../components/Home/Footer/Footer';
 
 function Profile() {
 
@@ -225,52 +226,7 @@ function Profile() {
               <div className="p-3 py-5 shadow-lg p-3 mb-5 bg-white rounded">
                 <div className="col-md-12  ">
                   <label htmlFor="">Proof</label>
-                  {/* <div className="card">
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-
-
-                      <TextField sx={{ mb: 2 }}
-                        required
-                        id="outlined-required"
-                        // label="Bike Name"
-                        type='file'
-                        fullWidth
-                        onChange={(e) => setProof(e.target.files[0])}
-                      />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'end' }}>
-
-
-                      <Button
-                        type='submit'
-                        variant="contained"
-                        size='small'
-                        onClick={addProof}
-                        sx={{
-                          mb: 2, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
-                            bgcolor: "#6366F1"
-                          }
-                        }}
-                      >
-                        <UploadIcon />
-                        Upload
-                      </Button>
-
-                      <Button
-                        type='submit'
-                        variant="contained"
-                        size='small'
-                        sx={{
-                          mb: 2, mr: 3, backgroundColor: "#6366F1", "&.MuiButtonBase-root:hover": {
-                            bgcolor: "#6366F1"
-                          }
-                        }}
-                      >
-                        <CancelIcon />
-                        Cancel
-                      </Button>
-                    </div>
-                  </div> */}
+               
 
                   <div className="card" style={{
                     backgroundColor: "#FFFFFF",
@@ -401,7 +357,9 @@ function Profile() {
         </div>
 
 
-      </div></>
+      </div>
+      <Footer/>
+      </>
   )
 }
 export default Profile
