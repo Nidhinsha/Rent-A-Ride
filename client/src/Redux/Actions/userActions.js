@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 import { getAllUserContacts } from '../../Api/User/ApiCalls'
 
 
@@ -436,4 +436,23 @@ userGetCouponAPI().then((data)=>{
         payload : error.response.message
     })
 })
+}
+
+export const userGetWalletAction =(id)=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_GET_WALLET_REQUEST
+  })
+
+  userGetWalletAPI(id).then((data)=>{
+    dispatch({
+      type : userActionType.USER_GET_WALLET_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type:userActionType.USER_GET_WALLET_FAIL,
+      payload : error.response.data
+    })
+  })
 }

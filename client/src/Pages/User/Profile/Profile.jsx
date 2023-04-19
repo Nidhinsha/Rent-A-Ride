@@ -1,37 +1,27 @@
 import React from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from "primereact/inputtext"
-import { FileUpload } from 'primereact/fileupload';
 import { InputMask } from "primereact/inputmask";
 import Alert from '@mui/material/Alert';
-import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import UploadIcon from '@mui/icons-material/Upload';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import { useState } from "react";
-// import "./Profile.css";
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
-  getUserProfileAction,
   userImageAction,
   userLogOut,
   userProofAction,
 } from "../../../Redux/Actions/userActions";
 
-import ErrorMessage from '../../../components/Alert/Error'
-import Loading from '../../../components/Loading/Loading'
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../../components/NavBar/NavBar';
 import { TextField } from '@mui/material';
 
 import ModalBox from '../../../components/Modal/ModalBox';
-import { configToken } from '../../../Api/User/ApiCalls';
-import { Box } from '@mui/system';
-import { Typography } from 'antd';
-import Wallet from '../Wallet/Wallet';
 import Footer from '../../../components/Home/Footer/Footer';
+import WalletCard from '../../../components/Wallet/WalletCard';
 
 function Profile() {
 
@@ -53,16 +43,12 @@ function Profile() {
 
 
   const addphoto = (e) => {
+    
     e.preventDefault();
     const data = new FormData();
-
     data.append("file", photo);
-
     data.append("upload_preset", "RentAndRide");
-
     data.append("cloud_name", "driuxmoax");
-    console.log(data);
-
 
     if (photo.type !== 'image/jpeg' && photo.type !== 'image/png') {
       setImgTypeError('Not Supported');
@@ -162,7 +148,7 @@ function Profile() {
               </div>
             </div>
 
-            <Wallet/>
+            <WalletCard/>
           </div>
 
           <div className="col-md-8 border-right">

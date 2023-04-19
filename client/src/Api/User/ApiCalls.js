@@ -25,7 +25,7 @@ const configFormData = {
     Authorization: "Bearer" + ' ' + user?.token
   }
 }
-export const userSignUpAPI = (firstName, lastName, email, phone, password,referalCode) => API.post('/user-signup', { firstName, lastName, email, phone, password }, config)
+export const userSignUpAPI = (firstName, lastName, email, phone, password,referalCode) => API.post('/user-signup', { firstName, lastName, email, phone, password,referalCode }, config)
 export const userLoginAPI = (email, password) => API.post('/user-login', { email, password }, config)
 export const userOtpLoginAPI = (phone) => API.post('/otp-login', { phone }, config)
 export const googleSignupAPI = (firstName, lastName, email, phone, photo) => API.post('/google-signup', { firstName, lastName, email, phone, photo }, config)
@@ -52,6 +52,8 @@ export const userGetBookedBikeAPI = (id) => API.get("/booked-bikes?id=" + id, co
 
 // coupon
 export const userGetCouponAPI =()=>API.get("/user-coupons",configToken)
+// wallet 
+export const userGetWalletAPI =(id)=> API.get("/get-wallet",configToken)
 
 // order
 export const userCreateOrderAPI =(bookingDetails)=>API.post("/booking-success",{bookingDetails},configToken)

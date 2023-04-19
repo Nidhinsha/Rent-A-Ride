@@ -29,6 +29,7 @@ const SingleBikeView = lazy(() => import("./Pages/User/SingleBikeView/SingleBike
 const Booking = lazy(() => import("./Pages/User/Booking/Booking"))
 const BookingSuccess = lazy(() => import("./components/SuccessPage/BookingSuccess"))
 const BookedBikes = lazy(() => import("./Pages/User/BookedBikes/BookedBikes"))
+const Wallet = lazy(()=>import("./Pages/User/Wallet/Wallet"))
 
 
 
@@ -60,6 +61,7 @@ function App() {
             <Route path='/booked-bike' exact element={userData ? <BookedBikes /> : <Login />} />
             <Route path='/booking-success' exact element={<BookingSuccess />} />
             <Route path='/chat' exact element={userData ? <Chat /> : <Login />} />
+            <Route path='/wallet' exact element={userData ? <Wallet/> : <Login/>} />
             <Route path='/test' exact element={<Test />} />
 
             <Route path='/admin/login' element={adminData ? <Dashboard /> : <AdminLogin />} />

@@ -399,3 +399,26 @@ export const userGetCouponReducer =(state={},action)=>{
       return state;
   }
 }
+
+// wallet 
+
+export const userGetWalletReducer =(state={},action)=>{
+  switch(action.type){
+    case userActionType.USER_GET_WALLET_REQUEST:
+      return {
+        walletLoading : true
+      }
+    case userActionType.USER_GET_WALLET_SUCCESS:
+      return {
+        walletLoading : false,
+        walletData : action.payload
+      }
+    case userActionType.USER_GET_WALLET_FAIL:
+      return {
+        walletLoading : false,
+        walletDataError : action.payload
+      }
+    default:
+      return state
+  }
+}
