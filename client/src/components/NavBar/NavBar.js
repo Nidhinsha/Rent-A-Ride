@@ -103,12 +103,8 @@ const useStyles = createStyles((theme) => ({
 
 function NavBar() {
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
   const user = useSelector((state) => state.userLoginReducer)
   const { userLoginDetails } = user
-  console.log('user', userLoginDetails);
 
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);

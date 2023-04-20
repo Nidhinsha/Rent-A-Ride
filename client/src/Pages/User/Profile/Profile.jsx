@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from "primereact/inputtext"
 import { InputMask } from "primereact/inputmask";
@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
+  userGetWalletAction,
   userImageAction,
   userLogOut,
   userProofAction,
@@ -148,7 +149,8 @@ function Profile() {
               </div>
             </div>
 
-            <WalletCard/>
+            {/* wallet */}
+            <WalletCard userId={profileData?.id}/>
           </div>
 
           <div className="col-md-8 border-right">

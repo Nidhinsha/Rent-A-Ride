@@ -69,7 +69,7 @@ router.route("/user-coupons").get(protect,userCouponController.userGetCoupons)
 
 // wallet
 
-router.route("/wallet").get(protect,walletController.getWalletController)
+router.route("/get-wallet").get(protect,walletController.getWalletController)
 
 // chat
 

@@ -28,7 +28,6 @@ function ProfileDropDown() {
 
   const user = useSelector((state) => state.userLoginReducer)
   const { userLoginDetails } = user
-  console.log('user', userLoginDetails);
 
 
   const handleClick = (event) => {

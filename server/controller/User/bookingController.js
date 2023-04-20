@@ -262,52 +262,6 @@ exports.userGetBookedBikeController = async (req, res) => {
         console.log(typeof userId,'type of');
        bookingSchema
             .aggregate(
-                // [
-                //     {
-                //       '$match': {
-                //         'userId': userId
-                //       }
-                //     }, {
-                //       '$lookup': {
-                //         'from': 'bikes', 
-                //         'localField': 'bikeId', 
-                //         'foreignField': '_id', 
-                //         'as': 'result'
-                //       }
-                //     }, {
-                //       '$project': {
-                //         'bikeData': {
-                //           '$arrayElemAt': [
-                //             '$result', 0
-                //           ]
-                //         }, 
-                //         'totalHours': 1, 
-                //         'totalAmount': 1, 
-                //         'pickupLocation': 1, 
-                //         'dropOffLocation': 1, 
-                //         'needHelmet': 1, 
-                //         'status' : 1,
-                //         'startingTime': '$bookedTimeSlots.startDate', 
-                //         'endingTime': '$bookedTimeSlots.endDate'
-                //       }
-                //     }, {
-                //       '$project': {
-                //         'bikeId' : '$bikeData._id',
-                //         'bikeName': '$bikeData.vehicleName', 
-                //         'bikeModel': '$bikeData.vehicleModel', 
-                //         'color': '$bikeData.Color', 
-                //         'totalHours': 1, 
-                //         'totalAmount': 1, 
-                //         'pickupLocation': 1, 
-                //         'dropOffLocation': 1, 
-                //         'needHelmet': 1, 
-                //         'startingTime': 1, 
-                //         'endingTime': 1, 
-                //         'status' : 1,
-                //         'photo': '$bikeData.photo', 
-                //       }
-                //     }
-                //   ]
                 [
                     {
                       '$match': {
@@ -357,7 +311,6 @@ exports.userGetBookedBikeController = async (req, res) => {
                   ]
                 )
                 .then((data)=>{
-                    // console.log('booking with bikes',data);
                     res.status(200).json(data)
                 })
     } catch (error) {

@@ -53,7 +53,7 @@ export const userGetBookedBikeAPI = (id) => API.get("/booked-bikes?id=" + id, co
 // coupon
 export const userGetCouponAPI =()=>API.get("/user-coupons",configToken)
 // wallet 
-export const userGetWalletAPI =(id)=> API.get("/get-wallet",configToken)
+export const userGetWalletAPI =(id)=> API.get("/get-wallet?id="+id,configToken)
 
 // order
 export const userCreateOrderAPI =(bookingDetails)=>API.post("/booking-success",{bookingDetails},configToken)
