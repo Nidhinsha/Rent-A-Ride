@@ -179,12 +179,7 @@ function NavBar() {
               <Group ml={50} spacing={5} className={classes.links}>
                 {/* {items} */}
               </Group>
-              <Autocomplete
-                className={classes.search}
-                placeholder="Search"
-                icon={<IconSearch size="1rem" stroke={1.5} />}
-                data={[]}
-              />
+             
 
 
             {/* search  */}
@@ -254,7 +249,27 @@ function NavBar() {
 
           <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
 
-          <Group position="center" grow pb="xl" px="md">
+          {
+              userLoginDetails ?
+                <Group position="center" grow pb="xl" px="md">
+                  <Link to='/profile'>
+                  <ProfileDropDown />
+                  </Link>
+
+                </Group>
+                :
+                <Group position="center" grow pb="xl" px="md">
+
+                  <Link to={'/login'}>
+                    <Button variant="default">Log in</Button>
+                  </Link>
+
+                  <Link to={'/signup'}>
+                    <Button>Sign up</Button>
+                  </Link>
+                </Group>
+            }
+          {/* <Group position="center" grow pb="xl" px="md">
             <Link to='/login'>
               <Button variant="default" >Log in
               </Button>
@@ -263,7 +278,7 @@ function NavBar() {
               <Button variant="default">Sign up</Button>
             </Link>
 
-          </Group>
+          </Group> */}
         </ScrollArea>
       </Drawer>
     </Box>
