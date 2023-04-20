@@ -69,25 +69,202 @@ exports.bikeBookingController = async (req, res) => {
                     cancel_url: 'http://localhost:3000/cancel',
                 });
                 res.status(200).json({ url: session?.url })
+            } else {
+                const booking = new bookingSchema({
+                    userId: userId,
+                    bikeId: bikeId,
+                    totalAmount: totalAmount,
+                    totalHours: totalHours,
+                    needHelmet: needHelmet,
+                    bookedTimeSlots: bookedTimeSlots,
+                    pickupLocation: pickupLocation,
+                    dropOffLocation: dropOffLocation,
+                    couponCode: couponCode,
+                    paymentType: paymentType,
+                    status: "booked",
+                    bookedAt: moment().format('MMMMM Do YYYY,h:mm:ss a')
+                })
+
+                try {
+                    await booking.save()
+                    console.log(booking,'booking saved successfully');
+
+                    const bike = await bikeSchema.findOneAndUpdate(
+                        { _id: bikeId },
+                        { $push: { bookedTimeSlots: bookedTimeSlots } },
+                        { new: true }
+                    )
+
+                    // if the bike does not have any booking slots, create a new array and add the booking slot
+                    if (!bike.bookedTimeSlots) {
+                        bike.bookedTimeSlots = [bookedTimeSlots];
+                        await bike.save();
+                    }
+
+                    // decremetn the amount from the wallet
+
+                    walletSchema.findOne(
+                        {
+                            userId : userId
+                        }
+                    )
+                    .then((data)=>{
+                        console.log('found the user');
+                    })
+
+                    // updating the wallet of the user
+
+                    walletSchema.updateOne(
+                        {
+                            userId : userId
+                        },
+                        {
+                            $inc:{
+                                walletAmount :  -totalAmount
+                            },
+                            $push:{
+                                walletHistory:{
+                                    transactionType : "bike rented",
+                                    amountDeducted : totalAmount
+                                }
+                            }
+                        }
+                    )
+                    .then(async(response)=>{
+                        const bikeData = await bikeSchema.findOne({
+                            $and: [
+                                {
+                                    _id: bikeId
+                                },
+                                {
+                                    ownerId: {
+                                        $exists: true
+                                    }
+                                }
+                            ]
+                        })
+
+                        if (bikeData) {
+                            let walletExists = await walletSchema.findOne({
+                                userId: bikeData.ownerId
+                            })
+                            let withOutCouponAmountToUser
+                            let bookingAmount
+                            let price
+            
+                            // checking if the coupon is applied
+                            console.log(typeof couponCode,'coupon ghghghgh');
+                            if (couponCode !== null) {
+                                couponSchema.findOne(
+                                    {
+                                        couponCode: couponCode
+                                    }
+                                )
+                                .then((couponData) => {
+                                    price = couponData?.couponPrice
+                                    withOutCouponAmountToUser = parseInt(totalAmount) + parseInt(price)
+                                    console.log(typeof withOutCouponAmountToUser,'llllllllllllll');
+                                    bookingAmount = withOutCouponAmountToUser * 0.25
+            
+                                    if (!walletExists) {
+                                        bookingAmount = totalAmount * 0.25
+                                        const newWallet = {
+                                            userId: bikeData.ownerId,
+                                            walletAmount: withOutCouponAmountToUser * 0.25,
+                                            walletHistory: [
+                                                {
+                                                    transactionType: "rented bike share",
+                                                    amountAdded: withOutCouponAmountToUser * 0.25
+                                                }
+                                            ]
+                                        }
+                                        walletSchema.create(newWallet)
+                                    } else {
+                                        walletSchema.updateOne(
+                                            {
+                                                userId: walletExists.userId
+                                            },
+                                            {
+                                                $inc: {
+                                                    walletAmount: withOutCouponAmountToUser * 0.25
+                                                },
+                                                $push: {
+                                                    walletHistory: {
+                                                    transactionType: "rented bike share",
+                                                    amountAdded: withOutCouponAmountToUser * 0.25
+                                                    }
+                                                }
+                                            }
+                                        )
+                                        .then((response) => {
+                                            console.log(response, 'response of money added to the wallet after rented it');
+                                            })
+                                        }
+                                    })
+                            } else if (couponCode === null) {
+                                if (!walletExists) {
+                                    bookingAmount = totalAmount * 0.25
+                                    console.log(typeof bookingAmount,'the type of == null');
+            
+                                    const newWallet = {
+                                        userId: bikeData.ownerId,
+                                        walletAmount: bookingAmount,
+                                        walletHistory: [
+                                            {
+                                                transactionType: "rented bike share",
+                                                amountAdded: bookingAmount
+                                            }
+                                        ]
+                                    }
+                                    walletSchema.create(newWallet)
+                                } else {
+                                    walletSchema.updateOne(
+                                        {
+                                            userId: walletExists.userId
+                                        },
+                                        {
+                                            $inc: {
+                                                walletAmount: totalAmount * 0.25
+                                            },
+                                            $push: {
+                                                walletHistory: {
+                                                    transactionType: "rented bike share",
+                                                    amountAdded: totalAmount * 0.25
+                                                }
+                                            }
+                                        }
+                                    )
+                                    .then((response) => {
+                                        console.log(response, 'the response yo');
+                                    })
+                                }
+                            }
+                        } 
+                        res.status(200).json("booking successfull")
+                    })
+                    .catch((error)=>{
+                        console.log(error,'cant update the wallet');
+                    })
+
+                } catch (error) {
+                    console.log(error,'booking not working');
+                }
             }
         } else {
             console.log('status fals');
             res.status(400).json("the slot is already booked.please select another slot thankyou")
         }
     } catch (error) {
-
+        console.log(error,'wallet error');
     }
 }
 
 exports.userCreateOrderController = async (req, res) => {
     try {
-        const { userId, userName, bikeId, bikeName, bikeModel, photo, totalAmount, totalHours, bookedTimeSlots, pickupLocation, dropOffLocation, needHelmet, paymentType, couponCode } = req.body.bookingDetails
+        const { userId, bikeData, bikeId, totalAmount, totalHours, bookedTimeSlots, pickupLocation, dropOffLocation, needHelmet, paymentType, couponCode } = req.body.bookingDetails
         const booking = new bookingSchema({
             userId: userId,
             bikeId: bikeId,
-            bikeName: bikeName,
-            bikeModel: bikeModel,
-            photo: photo,
             totalAmount: totalAmount,
             totalHours: totalHours,
             needHelmet: needHelmet,
@@ -115,9 +292,9 @@ exports.userCreateOrderController = async (req, res) => {
                 await bike.save();
             }
 
-           
+
             // checking coupon
-            if (couponCode !== "null" && couponCode !== '') {
+            if (couponCode !== null && couponCode !== '') {
                 couponSchema.updateOne(
                     {
                         couponCode: couponCode
@@ -161,53 +338,53 @@ exports.userCreateOrderController = async (req, res) => {
 
                 // checking if the coupon is applied
 
-                if (couponCode !== "null") {
+                if (couponCode !== null) {
                     couponSchema.findOne(
                         {
                             couponCode: couponCode
                         }
                     )
-                        .then((couponData) => {
-                            price = couponData.couponPrice
-                            withOutCouponAmountToUser = parseInt(totalAmount) + parseInt(price)
-                            bookingAmount = withOutCouponAmountToUser * 0.25
+                    .then((couponData) => {
+                        price = couponData.couponPrice
+                        withOutCouponAmountToUser = parseInt(totalAmount) + parseInt(price)
+                        bookingAmount = withOutCouponAmountToUser * 0.25
 
-                            if (!walletExists) {
-                                bookingAmount = totalAmount * 0.25
-                                const newWallet = {
-                                    userId: bikeData.ownerId,
-                                    walletAmount: withOutCouponAmountToUser * 0.25,
-                                    walletHistory: [
-                                        {
-                                            transactionType: "rented bike share",
-                                            amountAdded: withOutCouponAmountToUser * 0.25
-                                        }
-                                    ]
-                                }
-                                walletSchema.create(newWallet)
-                            } else {
-                                walletSchema.updateOne(
+                        if (!walletExists) {
+                            bookingAmount = totalAmount * 0.25
+                            const newWallet = {
+                                userId: bikeData.ownerId,
+                                walletAmount: withOutCouponAmountToUser * 0.25,
+                                walletHistory: [
                                     {
-                                        userId: walletExists.userId
+                                        transactionType: "rented bike share",
+                                        amountAdded: withOutCouponAmountToUser * 0.25
+                                    }
+                                ]
+                            }
+                            walletSchema.create(newWallet)
+                        } else {
+                            walletSchema.updateOne(
+                                {
+                                    userId: walletExists.userId
+                                },
+                                {
+                                    $inc: {
+                                        walletAmount: withOutCouponAmountToUser * 0.25
                                     },
-                                    {
-                                        $inc: {
-                                            walletAmount: withOutCouponAmountToUser * 0.25
-                                        },
-                                        $push: {
-                                            walletHistory: {
-                                                transactionType: "rented bike share",
-                                                amountAdded: withOutCouponAmountToUser * 0.25
-                                            }
+                                    $push: {
+                                        walletHistory: {
+                                        transactionType: "rented bike share",
+                                        amountAdded: withOutCouponAmountToUser * 0.25
                                         }
                                     }
-                                )
-                                    .then((response) => {
-                                        console.log(response, 'response of money added to the wallet after rented it');
-                                    })
+                                }
+                            )
+                            .then((response) => {
+                                console.log(response, 'response of money added to the wallet after rented it');
+                                })
                             }
                         })
-                } else if (couponCode === "null") {
+                } else if (couponCode === null) {
                     if (!walletExists) {
                         bookingAmount = totalAmount * 0.25
 
@@ -239,9 +416,9 @@ exports.userCreateOrderController = async (req, res) => {
                                 }
                             }
                         )
-                            .then((response) => {
-                                console.log(response, 'the response yo');
-                            })
+                        .then((response) => {
+                            console.log(response, 'the response yo');
+                        })
                     }
                 }
             } else {
@@ -252,67 +429,67 @@ exports.userCreateOrderController = async (req, res) => {
             res.status(500).json("server error")
         }
     } catch (error) {
-        console.log(error,'first try error');
+        console.log(error, 'first try error');
     }
 }
 
 exports.userGetBookedBikeController = async (req, res) => {
     try {
         const userId = req.query.id;
-        console.log(typeof userId,'type of');
-       bookingSchema
+        console.log(typeof userId, 'type of');
+        bookingSchema
             .aggregate(
                 [
                     {
-                      '$match': {
-                        'userId': userId
-                      }
+                        '$match': {
+                            'userId': userId
+                        }
                     }
                     , {
-                      '$lookup': {
-                        'from': 'bikes', 
-                        'localField': 'bikeId', 
-                        'foreignField': '_id', 
-                        'as': 'result'
-                      }
+                        '$lookup': {
+                            'from': 'bikes',
+                            'localField': 'bikeId',
+                            'foreignField': '_id',
+                            'as': 'result'
+                        }
                     }, {
-                      '$project': {
-                        'bikeData': {
-                          '$arrayElemAt': [
-                            '$result', 0
-                          ]
-                        }, 
-                        'totalHours': 1, 
-                        'totalAmount': 1, 
-                        'pickupLocation': 1, 
-                        'dropOffLocation':1,
-                        'needHelmet': 1, 
-                        'status' : 1,
-                        'startingTime': '$bookedTimeSlots.startDate', 
-                        'endingTime': '$bookedTimeSlots.endDate'
-                      }
+                        '$project': {
+                            'bikeData': {
+                                '$arrayElemAt': [
+                                    '$result', 0
+                                ]
+                            },
+                            'totalHours': 1,
+                            'totalAmount': 1,
+                            'pickupLocation': 1,
+                            'dropOffLocation': 1,
+                            'needHelmet': 1,
+                            'status': 1,
+                            'startingTime': '$bookedTimeSlots.startDate',
+                            'endingTime': '$bookedTimeSlots.endDate'
+                        }
                     }, {
-                      '$project': {
-                        'bikeId' : '$bikeData._id',
-                        'bikeName': '$bikeData.bikeName', 
-                        'bikeModel': '$bikeData.bikeModel', 
-                        'color': '$bikeData.Color', 
-                        'totalHours': 1, 
-                        'totalAmount': 1, 
-                        'pickupLocation': 1, 
-                        'dropOffLocation':1,
-                        'needHelmet': 1, 
-                        'startingTime': 1, 
-                        'endingTime': 1, 
-                        'status' : 1,
-                        'photo': '$bikeData.photo', 
-                      }
+                        '$project': {
+                            'bikeId': '$bikeData._id',
+                            'bikeName': '$bikeData.bikeName',
+                            'bikeModel': '$bikeData.bikeModel',
+                            'color': '$bikeData.Color',
+                            'totalHours': 1,
+                            'totalAmount': 1,
+                            'pickupLocation': 1,
+                            'dropOffLocation': 1,
+                            'needHelmet': 1,
+                            'startingTime': 1,
+                            'endingTime': 1,
+                            'status': 1,
+                            'photo': '$bikeData.photo',
+                        }
                     }
-                  ]
-                )
-                .then((data)=>{
-                    res.status(200).json(data)
-                })
+                ]
+            )
+            .then((data) => {
+                res.status(200).json(data)
+            })
     } catch (error) {
         res.json(400).json("error while getting data from the booked data")
 

@@ -16,6 +16,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import DescriptionIcon from '@mui/icons-material/Description';
+import BikeCards from '../../Cards/BikeCards';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -45,117 +46,9 @@ function SecondSection() {
             </Box>
             <Container maxWidth="lg" sx={{mt:5}}>
                 <Grid  className='d-flex flex-wrap justify-content-center' sx={{gap:'25px'}} >
-                    <Box >
-                        <Card sx={{ maxWidth: 350 }}>
-                            <CardHeader
-                                // avatar={
-                                //     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                //         R
-                                //     </Avatar>
-                                // }
-                                // action={
-                                //     <IconButton aria-label="settings">
-                                //         <MoreVertIcon />
-                                //     </IconButton>
-                                // }
-                                title="Shrimp and Chorizo Paella"
-                                subheader="model brand is duke"
-                            />
-                            <CardMedia
-                                component="img"
-                                height="194"
-                                image="https://yorindia.com/backend/web/imageupload/PEUVgxVeyz0ZRLv-4BRBlhxrVj6cn8Rs.jpg"
-                                alt="Paella dish"
-                            />
-                            <CardContent className='card-container'>
-                                <Typography variant="body1" color="text.secondary">
-                                   fule type : petrol 
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                   description : This impressive paella .
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                    Rent from : 28/hourly
-                                </Typography>
-                               
-                                <Button sx={{mt:2}} fullWidth variant="contained">Book Now</Button>
-                            </CardContent>
-                        </Card>
-                    </Box>
-                    <Box>
-                        <Card sx={{ maxWidth: 350 }}>
-                            <CardHeader
-                                // avatar={
-                                //     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                //         R
-                                //     </Avatar>
-                                // }
-                                // action={
-                                //     <IconButton aria-label="settings">
-                                //         <MoreVertIcon />
-                                //     </IconButton>
-                                // }
-                                title="Shrimp and Chorizo Paella"
-                                subheader="model brand is duke"
-                            />
-                            <CardMedia
-                                component="img"
-                                height="194"
-                                image="https://yorindia.com/backend/web/imageupload/PEUVgxVeyz0ZRLv-4BRBlhxrVj6cn8Rs.jpg"
-                                alt="Paella dish"
-                            />
-                            <CardContent>
-                                <Typography variant="body1" color="text">
-                                   fule type : petrol 
-                                </Typography>
-                                <Typography variant="body1" color="text">
-                                   description : This impressive paella .
-                                </Typography>
-                                <Typography variant="body1" color="text">
-                                    Rent from : <b> <span style={{ color: 'black' }}>28/hr</span> </b>
-                                </Typography>
-                               
-                                <Button sx={{mt:2}} fullWidth variant="contained">Book Now</Button>
-                            </CardContent>
-                        </Card>
-                    </Box>
-                    <Box >
-                        <Card sx={{ maxWidth: 350 }}>
-                            <CardHeader
-                                // avatar={
-                                //     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                //         R
-                                //     </Avatar>
-                                // }
-                                // action={
-                                //     <IconButton aria-label="settings">
-                                //         <MoreVertIcon />
-                                //     </IconButton>
-                                // }
-                                title="Shrimp and Chorizo Paella"
-                                subheader="model brand is duke"
-                            />
-                            <CardMedia
-                                component="img"
-                                height="194"
-                                image="https://yorindia.com/backend/web/imageupload/PEUVgxVeyz0ZRLv-4BRBlhxrVj6cn8Rs.jpg"
-                                alt="Paella dish"
-                            />
-                            <CardContent>
-                                <Typography variant="body1" color="text.secondary">
-                                   fule type : petrol 
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                   description : This impressive paella .
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                    Rent from : <b>  28/hourly</b>
-                                </Typography>
-                               
-                                <Button sx={{mt:2}} fullWidth variant="contained">Book Now</Button>
-                            </CardContent>
-                        </Card>
-                    </Box>
+                    <BikeCards/>
+                    <BikeCards/>
+                    <BikeCards/>
                 </Grid>
                 {/* <Container maxWidth="lg">
                     <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>

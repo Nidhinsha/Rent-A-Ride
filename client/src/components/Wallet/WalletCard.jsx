@@ -6,13 +6,13 @@ import WalletIcon from '@mui/icons-material/Wallet';
 import { useDispatch, useSelector } from 'react-redux';
 import { userGetWalletAction } from '../../Redux/Actions/userActions';
 
-function WalletCard({userId}) {
+function WalletCard() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const wallet = useSelector((state)=>state.userGetWalletReducer?.walletData)
 
   useEffect(()=>{
-    dispatch(userGetWalletAction(userId))
+    dispatch(userGetWalletAction())
   },[])
 
   return (

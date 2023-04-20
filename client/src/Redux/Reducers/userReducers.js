@@ -323,6 +323,11 @@ export const userBookingBikeReducer =(state={},action)=>{
         bookingBikeLoading: false,
         bookingBikeDataError : action.payload
       }
+    case userActionType.USER_WALLET_BOOKING_SUCCESS:
+      return {
+        bookingBikeLoading : false,
+        walletBookingSuccess : action.payload
+      }
     default:
      return state
   }

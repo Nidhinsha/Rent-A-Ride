@@ -1,20 +1,17 @@
 import { Box, Button, Checkbox, Container, Divider, FormControl, FormControlLabel, FormLabel, Input, InputLabel, MenuItem, Paper, Radio, RadioGroup, Select, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import NavBar from '../../../components/NavBar/NavBar'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SportsMotorsportsOutlinedIcon from '@mui/icons-material/SportsMotorsportsOutlined';
 import moment from "moment"
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userBookingBikeAction, userGetCouponsAction, userGetLocation } from '../../../Redux/Actions/userActions';
-
-import StripePayButton from '../../../components/Button/StripePayButton/StripePayButton';
-
+import { userBookingBikeAction, userGetCouponsAction, userGetLocation, userGetWalletAction } from '../../../Redux/Actions/userActions';
 
 import { DatePicker, Grid } from "antd"
-import styled from '@emotion/styled';
 import Footer from '../../../components/Home/Footer/Footer';
-
+import { userBookingBikeAPI } from '../../../Api/User/ApiCalls';
+import { Toaster, toast } from 'react-hot-toast';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -24,6 +21,7 @@ const { RangePicker } = DatePicker
 function Booking() {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const location = useLocation();
   const { bikesData } = location.state;
   const clickedBike = bikesData.find((bike) => bike.bikeName === location.state.bikeName);
@@ -49,6 +47,9 @@ function Booking() {
   const [stripe, setStripe] = useState(false)
   const [value, setValue] = useState("")
 
+  const [wallet, setWallet] = useState(false)
+  const [walletError,setWalletError] = useState(false)
+
   const handleChange = (event) => {
     setValue(event.target.value);
   };
@@ -56,11 +57,12 @@ function Booking() {
   // checking the booking date is valid
   const validateDateOfBooking = useSelector((state) => state.userBookingBikeReducer)
   const { bookingBikeLoading, bookingBikeData, bookingBikeDataError } = validateDateOfBooking
-  console.log(bookingBikeDataError, 'error');
+  const walletAmount = useSelector((state) => state.userGetWalletReducer?.walletData)
 
   useEffect(() => {
     dispatch(userGetCouponsAction())
     dispatch(userGetLocation())
+    dispatch(userGetWalletAction())
   }, [])
 
   const selectTimeSlots = (values) => {
@@ -130,10 +132,42 @@ function Booking() {
     couponCode: coupon,
     paymentType: "stripe"
   }
+  const walletBookingData = {
+    userId: JSON.parse(localStorage.getItem("userInfo")).id,
+    userName: JSON.parse(localStorage.getItem("userInfo")).firstName,
+    bikeId: clickedBike._id,
+    bikeData: clickedBike,
+    totalAmount,
+    totalHours,
+    needHelmet: needHelmet,
+    bookedTimeSlots: {
+      startDate,
+      endDate
+    },
+    pickupLocation,
+    dropOffLocation,
+    couponCode: coupon,
+    paymentType: "wallet",
+    walletId: walletAmount?._id
+  }
 
   const handleBookNow = () => {
-    if (stripe === true) {
+    // const checkAuthorized = JSON.parse(localStorage.getItem("userInfo"))
+    if (wallet === false && stripe === true) {
+      setWalletError(false)
       dispatch(userBookingBikeAction(stripeData))
+    } else if (wallet === true && stripe === false) {
+      if (walletAmount.walletAmount >= totalAmount) {
+        setWalletError(false)
+        userBookingBikeAPI(walletBookingData).then((data) => {
+          toast.success("🌟🌟🌟 booking successfull ")
+          setTimeout(() => {
+            navigate('/wallet')
+          }, 1500)
+        })
+      } else {
+          setWalletError(true)
+      }
     }
   }
 
@@ -141,6 +175,11 @@ function Booking() {
     <>
       <NavBar />
       <Container sx={{ display: 'flex', gap: 2 }}>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          toastOptions={{ duration: 4000 }}
+        />
         <Container maxWidth="md">
 
           <Box sx={{ backgroundColor: 'primary.dark', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
@@ -320,7 +359,7 @@ function Booking() {
                         </>
                         : ""
                     }
-                    <Container sx={{ display: 'flex', justifyContent: 'space-between'}}>
+                    <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
                       <Box maxWidth='lg' >
                         <Typography variant='h6'>Rent Per Hour</Typography>
 
@@ -329,6 +368,8 @@ function Booking() {
                         <Typography variant='h6'>{clickedBike.price}/hr</Typography>
                       </Box>
                     </Container>
+
+
 
                     <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
                       <Box maxWidth='lg' >
@@ -340,6 +381,26 @@ function Booking() {
 
                       </Box>
                     </Container>
+
+                    {
+                      couponVerified === true ?
+
+                        <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <Box maxWidth='lg' >
+                            <Typography variant='h6'>Coupon Offer</Typography>
+
+                          </Box>
+                          <Box maxWidth='lg'>
+                            <Typography variant='h6'>
+                              {
+                                coupons.find((x) => x.couponCode === coupon)?.couponPrice || 0
+                              }
+                            </Typography>
+                          </Box>
+                        </Container>
+                        :
+                        ""
+                    }
 
                     <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
                       <Box maxWidth='lg' >
@@ -371,14 +432,24 @@ function Booking() {
                             value="wallet"
                             control={<Radio />}
                             label="With Wallet"
+                            onChange={() => {
+                              setWallet(true)
+                              setStripe(false)
+                            }}
                           />
+                          {
+                            walletError ? <p style={{color:'red'}}>insufficient Anount</p> : ""
+                          }
                           <FormControlLabel
                             value="stripe"
                             control={<Radio />}
                             label="With Stripe"
-                            onChange={() => setStripe(true)}
+                            onChange={() => {
+                              setStripe(true)
+                              setWallet(false)
+                              setWalletError(false)
+                            }}
                           />
-                          <FormControlLabel value="other" control={<Radio />} label="Other" />
 
                         </RadioGroup>
                       </FormControl>
@@ -387,7 +458,7 @@ function Booking() {
 
                   <Container>
                     {
-                      stripe ? <Button
+                      wallet || stripe ? <Button
                         variant='outlined'
                         fullWidth
                         onClick={handleBookNow}
@@ -406,8 +477,8 @@ function Booking() {
           </Box>
         </Container>
       </Container>
-      <Box sx={{mt:3}}>
-      <Footer/>
+      <Box sx={{ mt: 3 }}>
+        <Footer />
       </Box>
     </>
   )

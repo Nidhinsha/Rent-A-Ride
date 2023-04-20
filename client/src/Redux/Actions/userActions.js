@@ -369,11 +369,11 @@ export const userBookingBikeAction =(bookingData)=>async(dispatch)=>{
       window.location.href= data.data.url
     }else{
       console.log('wallet');
+      dispatch({
+        type :userActionType.USER_WALLET_BOOKING_SUCCESS,
+        payload : data.data?.message
+      })
     }
-    // dispatch({
-    //   type : userActionType.USER_BOOKING_BIKE_SUCCESS,
-    //   payload : data.data
-    // })
   })
   .catch((error)=>{
     console.log('error in stripe',error);
@@ -438,12 +438,12 @@ userGetCouponAPI().then((data)=>{
 })
 }
 
-export const userGetWalletAction =(id)=>async(dispatch)=>{
+export const userGetWalletAction =()=>async(dispatch)=>{
   dispatch({
     type : userActionType.USER_GET_WALLET_REQUEST
   })
 
-  userGetWalletAPI(id).then((data)=>{
+  userGetWalletAPI().then((data)=>{
     dispatch({
       type : userActionType.USER_GET_WALLET_SUCCESS,
       payload : data.data

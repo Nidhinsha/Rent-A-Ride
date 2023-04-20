@@ -150,7 +150,7 @@ function Profile() {
             </div>
 
             {/* wallet */}
-            <WalletCard userId={profileData?.id}/>
+            <WalletCard />
           </div>
 
           <div className="col-md-8 border-right">
