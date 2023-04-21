@@ -11,7 +11,10 @@ const userDisplayBikes = require("../../controller/User/bikes/displayBikesContro
 const searchBikesController = require("../../controller/User/bikes/searchBikeController")
 const rentedBikeController = require("../../controller/User/bikes/rentedBikesController")
 const locationController = require("../../controller/User/locationController")
-const bookingController = require("../../controller/User/bookingController")
+const bookingController = require("../../controller/User/bookingController/bookingController")
+const getBookedBikeController = require("../../controller/User/bookingController/getBookedBikeController")
+const cancelBikeOrderController = require("../../controller/User/bookingController/cancelBikeController")
+const orderController = require("../../controller/User/orderController/orderController")
 const chatContoller = require("../../controller/User/chatController/chatController")
 const walletController = require("../../controller/User/walletController")
 const userCouponController = require("../../controller/User/userCouponController")
@@ -60,9 +63,12 @@ router.route('/get-location').get(locationController.getLocations)
 
 router.route("/booking-bike").post(bookingController.bikeBookingController)
 
-router.route("/booked-bikes").get(protect,bookingController.userGetBookedBikeController)
+router.route("/booked-bikes").get(protect,getBookedBikeController.userGetBookedBikeController)
 
-router.route("/booking-success").post(protect,bookingController.userCreateOrderController)
+router.route("/booking-success").post(protect,orderController.userCreateOrderController)
+
+// manage booking
+router.route("cancel-booking").get(protect,cancelBikeOrderController.cancelBikeOrder)
 // coupons
 
 router.route("/user-coupons").get(protect,userCouponController.userGetCoupons)

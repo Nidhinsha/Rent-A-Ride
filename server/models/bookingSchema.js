@@ -2,10 +2,12 @@ const mongoose = require("mongoose")
 
 const bookingSchema = new mongoose.Schema({
     bikeId : {
-        type : mongoose.Schema.Types.ObjectId // Change the type to ObjectId
+        type : mongoose.Schema.Types.ObjectId, // Change the type to ObjectId
+        ref:"bike"
     },
     userId :{
-        type : String
+        type : mongoose.Schema.Types.ObjectId,
+        ref:"User"
     },
     
     bookedTimeSlots:{
@@ -31,7 +33,7 @@ const bookingSchema = new mongoose.Schema({
     totalAmount :{
         type :Number
     },
-    stripeSessionId :{
+    couponCode :{
         type : String
     },
     status:{

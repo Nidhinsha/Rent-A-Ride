@@ -349,6 +349,20 @@ export const userGetBookedBikeReducer =(state={},action)=>{
         getBookedBikeLoading : false,
         bookedBikeDataError : action.payload
       }
+    case userActionType.USER_CANCEL_BOOKED_BIKE_REQUEST:
+      return{
+        getBookedBikeLoading :true,
+      }
+    case userActionType.USER_CANCEL_BOOKED_BIKE_SUCCESS:
+      return{
+        getBookedBikeLoading : false,
+        bookedBikeData :action.payload
+      }
+    case userActionType.USER_CANCEL_BOOKED_BIKE_FAIL:
+      return{
+        getBookedBikeLoading:false,
+        bookedBikeDataError:action.payload
+      }
     default :
       return state
     

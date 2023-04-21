@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Container, Typography, styled } from '@mui/material'
+import { Box, Container, Tooltip, Typography, styled } from '@mui/material'
 import SideBar from '../../../components/SideBar/SideBar'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
@@ -64,29 +64,85 @@ function ViewBookedBike() {
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
                 borderRadius: '30%',
               }} />} />
-              <Column field="bikeName" header="BikeName" sortable ></Column>
-              <Column field="bikeModel" header="User" sortable></Column>
-              <Column field="pickupLocation" header="PickUp" sortable></Column>
-              <Column field="dropOffLocation" header="Drop" sortable></Column>
-              <Column field="startingTime" header="Start Date" sortable style={{ width: '25%' }}
-              />
-              <Column field="endingTime" header="End Date" sortable style={{ width: '25%' }}
-              />
+              <Column 
+              body={(rowData) => (
+                <div>
+                  <Tooltip title={rowData.bikeName}>
+                    <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '50px' }}>
+                      {rowData.bikeName}
+                    </Typography>
+                  </Tooltip>
+                </div>
+              )}
+               header="BikeName" sortable ></Column>
 
-              {/* <Column field="rentPerHour" header="rent Per Hour" sortable ></Column> */}
-              <Column field='totalHours' header="total Hours" sortable></Column>
+              <Column 
+               body={(rowData) => (
+                <div>
+                  <Tooltip title={rowData.userName}>
+                    <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '50px' }}>
+                      {rowData.userName}
+                    </Typography>
+                  </Tooltip>
+                </div>
+              )}
+               header="User" sortable></Column>
+              <Column 
+              body={(rowData) => (
+                <div>
+                  <Tooltip title={rowData.pickupLocation}>
+                    <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '50px' }}>
+                      {rowData.pickupLocation}
+                    </Typography>
+                  </Tooltip>
+                </div>
+              )}
+               header="PickUp" sortable></Column>
+              <Column 
+               body={(rowData) => (
+                <div>
+                  <Tooltip title={rowData.dropOffLocation}>
+                    <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '50px' }}>
+                      {rowData.dropOffLocation}
+                    </Typography>
+                  </Tooltip>
+                </div>
+              )}
+              header="Drop" sortable></Column>
+              <Column 
+              body={(rowData) => (
+                <div>
+                  <Tooltip title={rowData.startDate}>
+                    <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100px' }}>
+                      {rowData.startDate}
+                    </Typography>
+                  </Tooltip>
+                </div>
+              )}
+               header="StartDate" sortable style={{ width: '25%' }}
+              />
+              <Column 
+              body={(rowData) => (
+                <div>
+                  <Tooltip title={rowData.endDate}>
+                    <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100px' }}>
+                      {rowData.endDate}
+                    </Typography>
+                  </Tooltip>
+                </div>
+              )}
+               header="EndDate" sortable style={{ width: '25%' }}
+              />
+              <Column field='totalHours' header="Hours" sortable></Column>
+              <Column field='status' header="Status" sortable></Column>
               <Column field='totalAmount' header="Total" sortable></Column>
-              {/* <Column field='status' header="status" body={statusBodyTemplate} sortable ></Column> */}
               <Column header="Action" body={(rowData) => (
                 <div>
                   <i className="pi pi-file-edit" style={{ fontSize: '1.5rem', marginRight: '5px', color: 'blue' }}
                     onClick={(e) => {
-                      //   navigate('/admin/edit-bike',{state:{bikeData:rowData}})
                     }} ></i>
                   <i className="pi pi-times" style={{ fontSize: '1.5rem', marginRight: '5px', color: 'red' }}
-                  // onClick={()=> handleDelete(rowData._id)}
                   >
-
                   </i>
                 </div>
               )} />

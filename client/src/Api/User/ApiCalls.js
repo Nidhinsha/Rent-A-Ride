@@ -48,6 +48,9 @@ export const searchBikesAPI = (searchTerm) => API.post('/search-bikes', { search
 export const userGetLocationAPI = () => API.get('/get-location', config)
 export const userBookingBikeAPI = (bookingDetails) => API.post("/booking-bike", { bookingDetails }, configToken)
 
+export const userCancelBookingAPI =(bikeId,bookingId,startTime,endTime,userId,price)=>
+  API.get(`/cancel-booking?bikeId=${bikeId}&bookingId=${bookingId}&startTime=${startTime}&endTime=${endTime}&price=${price}&userId=${userId}`,configToken)
+
 export const userGetBookedBikeAPI = (id) => API.get("/booked-bikes?id=" + id, configToken)
 
 // coupon
