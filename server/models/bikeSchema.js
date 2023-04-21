@@ -2,7 +2,8 @@ const mongoose = require("mongoose")
 
 const bikeSchema = new mongoose.Schema({
     ownerId : {
-        type:String
+        type:String,
+        ref:"User"
     },
     ownerName : {
         type:String

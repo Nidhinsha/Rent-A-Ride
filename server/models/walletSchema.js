@@ -3,7 +3,8 @@ const moment = require('moment')
 
 const walletSchema = new mongoose.Schema({
     userId: {
-        type: String
+        type: String,
+        ref:"User"
     },
     walletAmount: {
         type: Number

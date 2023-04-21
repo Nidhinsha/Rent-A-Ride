@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import { userGetBookedBikeAction } from '../../../Redux/Actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
 import NavBar from '../../../components/NavBar/NavBar';
-import { Container } from '@mui/material';
+import { Button, Container, Tooltip } from '@mui/material';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import Footer from '../../../components/Home/Footer/Footer';
@@ -28,48 +28,93 @@ function BookedBikes() {
       {/* <div> */}
       <Container maxWidth="lg">
         <Container >
-        <Typography variant='h5'>Booked Bikes</Typography>
+          <Typography variant='h5'>Booked Bikes</Typography>
         </Container>
         <Container fixed sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
 
 
-          <DataTable value={bookedBike} className="p-d-flex p-jc-center"  paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
-          <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo[0]} alt="User" style={{
-                width: '5rem',
-                height:'5rem',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                borderRadius: '30%',
-              }} />} />
-            <Column field="bikeName" header="bikeName" sortable style={{ width: '25%' }}></Column>
-            <Column field="bikeModel" header="bikeModel" sortable style={{ width: '25%' }}></Column>
-            <Column field="pickupLocation" header="pickUp " sortable style={{ width: '25%' }}></Column>
-            <Column field="dropOffLocation" header="dropOff" sortable style={{ width: '25%' }}></Column>
-            <Column field="startingTime" header="Start Date" sortable style={{ width: '25%' }}
-              />
-            <Column field="endingTime" header="End Date" sortable style={{ width: '25%' }}
-             />
+          <DataTable value={bookedBike} className="p-d-flex p-jc-center" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
+            <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo[0]} alt="User" style={{
+              width: '5rem',
+              height: '5rem',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+              borderRadius: '30%',
+            }} />} />
+            <Column header="bikeName"
+              body={(rowData) => (
+                <div>
+                  <Tooltip title={rowData.bikeName}>
+                    <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '50px' }}>
+                      {rowData.bikeName}
+                    </Typography>
+                  </Tooltip>
+                </div>
+              )}
+             sortable style={{ width: '25%' }}></Column>
+            <Column 
+            body={(rowData) => (
+              <div>
+                <Tooltip title={rowData.pickupLocation}>
+                  <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '50px' }}>
+                    {rowData.pickupLocation}
+                  </Typography>
+                </Tooltip>
+              </div>
+            )}
+             header="pickUp" sortable style={{ width: '25%' }}></Column>
+            <Column 
+             body={(rowData) => (
+              <div>
+                <Tooltip title={rowData.dropOffLocation}>
+                  <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '50px' }}>
+                    {rowData.dropOffLocation}
+                  </Typography>
+                </Tooltip>
+              </div>
+            )}
+             header="dropOff" sortable style={{ width: '25%' }}></Column>
+            <Column header="StartDate" 
+              body={(rowData) => (
+                <div>
+                  <Tooltip title={rowData.startingTime}>
+                    <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '80px' }}>
+                      {rowData.startingTime}
+                    </Typography>
+                  </Tooltip>
+                </div>
+              )}
+              sortable style={{ width: '25%' }}
+            />
+            <Column 
+             body={(rowData) => (
+              <div>
+                <Tooltip title={rowData.endingTime}>
+                  <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '80px' }}>
+                    {rowData.endingTime}
+                  </Typography>
+                </Tooltip>
+              </div>
+            )}
+             header="EndDate" sortable style={{ width: '25%' }}
+            />
             {/* </Column> */}
 
             <Column field="needHelmet" header="Helmet" sortable style={{ width: '25%' }}></Column>
             <Column field="totalHours" header="Hours" sortable style={{ width: '25%' }}></Column>
             <Column field="totalAmount" header="Amount" sortable style={{ width: '25%' }}></Column>
-            {/* <Column
-                body={(rowData) => (
-                  <>
-                    {rowData.status ? (
-                      <Button label="Block" severity="danger" outlined className="my-button" onClick={() => handleBlockUser(rowData._id)} />
-                    ) : (
-                      <Button label="Unblock" severity="success" outlined className="my-button" onClick={() => handleBlockUser(rowData._id)} />
-                    )}
-                  </>
-                )}
-              /> */}
 
+            <Column
+              header="Actions"
+              body={(rowData) => (
+                <Button >End Ride</Button>
+              )}
+              sortable style={{ width: '25%' }}
+            />
           </DataTable>
         </Container>
 
       </Container>
-      <Footer/>
+      <Footer />
     </>
   )
 }
