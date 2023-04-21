@@ -22,11 +22,16 @@ exports.bikeBookingController = async (req, res) => {
         let status = true
 
         const checkDate = await bikeSchema.findOne({ _id: bikeId })
-
+       
+        const isBooked = await bookingSchema.findOne({bikeId:bikeId})
+        console.log('starting time',startingTime);
+        console.log('startingeeeeeee time',typeof startingTime);
         for (let i = 0; i < checkDate.bookedTimeSlots.length; i++) {
+            console.log(checkDate.bookedTimeSlots[i],'chekc date');
+            console.log(typeof checkDate.bookedTimeSlots[i],'chekc ytpe date');
             if (startingTime > checkDate.bookedTimeSlots[i].endDate) {
                 status = true
-            } else if (startingTime && endingTime <= checkDate.bookedTimeSlots[i].endDate) {
+            } else if (startingTime && startingTime  <= checkDate.bookedTimeSlots[i].endDate && isBooked?.status !== 'completed' && isBooked?.status !== 'canceled') {
                 status = false
             }
 
@@ -154,7 +159,7 @@ exports.bikeBookingController = async (req, res) => {
             
                             // checking if the coupon is applied
                             console.log(typeof couponCode,'coupon ghghghgh');
-                            if (couponCode !== "null") {
+                            if (couponCode !== null) {
                                 couponSchema.findOne(
                                     {
                                         couponCode: couponCode
@@ -201,7 +206,7 @@ exports.bikeBookingController = async (req, res) => {
                                             })
                                         }
                                     })
-                            } else if (couponCode === "null") {
+                            } else if (couponCode === null) {
                                 if (!walletExists) {
                                     bookingAmount = totalAmount * 0.25
                                     console.log(typeof bookingAmount,'the type of == null');

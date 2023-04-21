@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userCancelBookingAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 import { getAllUserContacts } from '../../Api/User/ApiCalls'
 
 
@@ -415,6 +415,25 @@ export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
     dispatch({
       type : userActionType.USER_GET_BOOKED_BIKE_FAIL,
       payload : error.response.message
+    })
+  })
+}
+
+export const userCancelBookedBikeAction =(bikeId,userId,startTime,endTime,price,bookingId)=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_CANCEL_BOOKED_BIKE_REQUEST,
+  })
+
+  userCancelBookingAPI(bikeId,userId,bookingId,startTime,endTime,bookingId).then((data)=>{
+    dispatch({
+      type :userActionType.USER_CANCEL_BOOKED_BIKE_SUCCESS,
+      payload:data.bookingData
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type:userActionType.USER_CANCEL_BOOKED_BIKE_FAIL,
+      paylooad : error.data
     })
   })
 }

@@ -68,7 +68,7 @@ router.route("/booked-bikes").get(protect,getBookedBikeController.userGetBookedB
 router.route("/booking-success").post(protect,orderController.userCreateOrderController)
 
 // manage booking
-router.route("cancel-booking").put(protect,cancelBikeOrderController.cancelBikeOrder)
+router.route("cancel-booking").get(protect,cancelBikeOrderController.cancelBikeOrder)
 // coupons
 
 router.route("/user-coupons").get(protect,userCouponController.userGetCoupons)
