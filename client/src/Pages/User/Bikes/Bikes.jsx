@@ -18,6 +18,8 @@ import AllBikes from '../../../components/UserBikeList/AllBikes';
 import PriceAscSortBikes from '../../../components/UserBikeList/PriceAscSortBikes';
 import PriceDescSortBikes from '../../../components/UserBikeList/PriceDescSortBikes';
 import Footer from '../../../components/Home/Footer/Footer';
+import { MDBPagination, MDBPaginationItem, MDBPaginationLink } from 'mdb-react-ui-kit';
+import { Button } from '@mui/material';
 
 function TabPanel(props) {
 
@@ -53,6 +55,9 @@ function Bikes() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const [page, setPage] = useState(1)
+    const [pageCount, setPageCount] = useState(0)
+
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -62,9 +67,28 @@ function Bikes() {
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
 
+    const handlePrev = () => {
+
+        dispatch(userGetBikeAction(bikesData.pagination.currentPage - 1))
+        setPage(bikesData.pagination.currentPage - 1)
+    }
+    const handleNext = () => {
+
+        dispatch(userGetBikeAction(bikesData.pagination.currentPage + 1))
+        setPage(bikesData.pagination.currentPage + 1)
+    }
+
     useEffect(() => {
-        dispatch(userGetBikeAction())
-    }, [])
+        dispatch(userGetBikeAction(page))
+    },[dispatch, page])
+
+    useEffect(() => {
+        if(bikesData) {
+          setPageCount(bikesData.pagination.pageCount)
+        }
+      },[bikesData])
+
+    
 
     const [searchTerm, setSearchTerm] = useState('')
 
@@ -83,7 +107,6 @@ function Bikes() {
                     sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '80%' }}
 
                 >
-
                     <TextField
                         label="Search"
                         name='search'
@@ -107,24 +130,42 @@ function Bikes() {
 
 
             <Box sx={{ width: '100%' }}>
-                <Box  sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs aria-label="basic tabs example" value={value} onChange={handleChange} centered>
-                        <Tab label="All Bikes"  />
+                        <Tab label="All Bikes" />
                         <Tab label="Low to High" />
                         <Tab label="High to Low" />
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
-                    <AllBikes allBikes={bikesData}/>
+                    <AllBikes allBikes={bikesData} />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                   <PriceAscSortBikes priceAsc={bikesData}/>
+                    <PriceAscSortBikes priceAsc={bikesData} />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                  <PriceDescSortBikes priceDesc={bikesData}/>
+                    <PriceDescSortBikes priceDesc={bikesData} />
                 </TabPanel>
             </Box>
-            <Footer/>
+            {/* pagination */}
+            <MDBPagination className='mb-0'>
+                {
+                    page > 1 ? <MDBPaginationItem>
+                        <MDBPaginationLink aria-label='Previous'>
+                            <span aria-hidden='true' onClick={handlePrev}>« Prev</span>
+                        </MDBPaginationLink>
+                    </MDBPaginationItem> : ""
+                }
+                {
+                    page === pageCount ? "" : <MDBPaginationItem>
+                        <MDBPaginationLink aria-label='Next'>
+                            <span aria-hidden='true' onClick={handleNext}>Next »</span>
+                        </MDBPaginationLink>
+                    </MDBPaginationItem>
+                }
+
+            </MDBPagination>
+            <Footer />
         </>
     )
 }
