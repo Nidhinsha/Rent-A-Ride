@@ -212,7 +212,7 @@ export const updateUserProfileAction = (data)=>async(dispatch)=>{
   }
 }
 
-export const userGetBikeAction = () => async (dispatch)=>{
+export const userGetBikeAction = (page) => async (dispatch)=>{
 
   try {
     
@@ -220,7 +220,7 @@ export const userGetBikeAction = () => async (dispatch)=>{
       type : userActionType.USER_GET_BIKES_REQUEST
     })
 
-    userGetBikeAPI().then((data)=>{
+    userGetBikeAPI(page).then((data)=>{
 
       dispatch({
         type  : userActionType.USER_GET_BIKES_SUCCESS,
