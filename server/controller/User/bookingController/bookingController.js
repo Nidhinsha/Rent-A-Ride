@@ -24,17 +24,14 @@ exports.bikeBookingController = async (req, res) => {
         const checkDate = await bikeSchema.findOne({ _id: bikeId })
        
         const isBooked = await bookingSchema.findOne({bikeId:bikeId})
-        console.log('starting time',startingTime);
-        console.log('startingeeeeeee time',typeof startingTime);
+
         for (let i = 0; i < checkDate.bookedTimeSlots.length; i++) {
-            console.log(checkDate.bookedTimeSlots[i],'chekc date');
-            console.log(typeof checkDate.bookedTimeSlots[i],'chekc ytpe date');
+
             if (startingTime > checkDate.bookedTimeSlots[i].endDate) {
                 status = true
             } else if (startingTime && startingTime  <= checkDate.bookedTimeSlots[i].endDate && isBooked?.status !== 'completed' && isBooked?.status !== 'canceled') {
                 status = false
             }
-
         }
 
         // status true

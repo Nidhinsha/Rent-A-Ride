@@ -363,6 +363,11 @@ export const userGetBookedBikeReducer =(state={},action)=>{
         getBookedBikeLoading:false,
         bookedBikeDataError:action.payload
       }
+    case userActionType.USER_END_BOOKED_BIKE_SUCCESS:
+      return{
+        getBookedBikeLoading:false,
+        bookedBikeData : action.payload
+      }
     default :
       return state
     

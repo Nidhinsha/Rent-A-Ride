@@ -58,8 +58,7 @@ exports.userGetBookedBikeController = async (req, res) => {
                 ]
             )
            
-                res.status(200).json(booking)
-                console.log(booking,'user side boking data');
+            res.status(200).json(booking)
           
     } catch (error) {
         res.status(400).json("error while getting data from the booked data")

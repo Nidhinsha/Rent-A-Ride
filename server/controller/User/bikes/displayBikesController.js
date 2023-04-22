@@ -1,6 +1,7 @@
 const bikeSchema = require("../../../models/bikeSchema")
 
 exports.displayBikeController = async(req,res)=>{
+    console.log(req.query.page);
     try {
         bikeSchema.find({status :"accepted"}).then((data)=>{
            

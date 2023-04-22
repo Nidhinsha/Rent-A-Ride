@@ -14,6 +14,7 @@ const locationController = require("../../controller/User/locationController")
 const bookingController = require("../../controller/User/bookingController/bookingController")
 const getBookedBikeController = require("../../controller/User/bookingController/getBookedBikeController")
 const cancelBikeOrderController = require("../../controller/User/bookingController/cancelBikeController")
+const endBikeOrderController = require("../../controller/User/bookingController/endBikeOrderController")
 const orderController = require("../../controller/User/orderController/orderController")
 const chatContoller = require("../../controller/User/chatController/chatController")
 const walletController = require("../../controller/User/walletController")
@@ -68,7 +69,8 @@ router.route("/booked-bikes").get(protect,getBookedBikeController.userGetBookedB
 router.route("/booking-success").post(protect,orderController.userCreateOrderController)
 
 // manage booking
-router.route("cancel-booking").get(protect,cancelBikeOrderController.cancelBikeOrder)
+router.route("/cancel-booking").get(protect,cancelBikeOrderController.cancelBikeOrder)
+router.route("/end-booking").get(protect,endBikeOrderController.endBikeOrder)
 // coupons
 
 router.route("/user-coupons").get(protect,userCouponController.userGetCoupons)

@@ -419,12 +419,12 @@ export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
   })
 }
 
-export const userCancelBookedBikeAction =(bikeId,userId,startTime,endTime,price,bookingId)=>async(dispatch)=>{
+export const userCancelBookedBikeAction =(bikeId,bookingId,startTime,endTime,price,userId)=>async(dispatch)=>{
   dispatch({
-    type : userActionType.USER_CANCEL_BOOKED_BIKE_REQUEST,
+    type : userActionType.USER_CANCEL_BOOKED_BIKE_REQUEST
   })
 
-  userCancelBookingAPI(bikeId,userId,bookingId,startTime,endTime,bookingId).then((data)=>{
+  userCancelBookingAPI(bikeId,bookingId,startTime,endTime,price,userId,).then((data)=>{
     dispatch({
       type :userActionType.USER_CANCEL_BOOKED_BIKE_SUCCESS,
       payload:data.bookingData
@@ -436,6 +436,14 @@ export const userCancelBookedBikeAction =(bikeId,userId,startTime,endTime,price,
       paylooad : error.data
     })
   })
+}
+
+export const userEndBookedBikeAction =(data)=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_END_BOOKED_BIKE_SUCCESS,
+    payload : data
+  })
+  
 }
 
 export const userGetCouponsAction =()=>async(dispatch)=>{
