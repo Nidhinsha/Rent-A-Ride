@@ -39,7 +39,9 @@ export const userEditProfileAPI = (firstName, lastName, email, phone, id) => {
   )
 }
 export const userAddBikeAPI = (formdata) => API.post('/rent-bike?id=' + ID, formdata, configFormData)
-export const userGetBikeAPI = () => API.get('/bikes', config)
+
+export const userGetBikeAPI = (page) => API.get(`/bikes?page=`+page, config)
+
 export const userGetAllRentedBikeAPI = () => API.get('/all-bikes?id=' + ID, configToken)
 export const userGetAcceptedBikeAPI = () => API.get('/accepted-bikes?id=' + ID, configToken)
 export const userGetRejectedBikeAPI = () => API.get('/rejected-bikes?id=' + ID, configToken)
@@ -50,6 +52,8 @@ export const userBookingBikeAPI = (bookingDetails) => API.post("/booking-bike", 
 
 export const userCancelBookingAPI =(bikeId,bookingId,startTime,endTime,userId,price)=>
   API.get(`/cancel-booking?bikeId=${bikeId}&bookingId=${bookingId}&startTime=${startTime}&endTime=${endTime}&price=${price}&userId=${userId}`,configToken)
+export const userEndBookingAPI =(bikeId,bookingId,startTime,endTime,userId,price)=>
+  API.get(`/end-booking?bikeId=${bikeId}&bookingId=${bookingId}&startTime=${startTime}&endTime=${endTime}&price=${price}&userId=${userId}`,configToken)
 
 export const userGetBookedBikeAPI = (id) => API.get("/booked-bikes?id=" + id, configToken)
 

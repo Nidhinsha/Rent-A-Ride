@@ -11,6 +11,8 @@ exports.cancelBikeOrder = async (req, res) => {
         const endTime = req.query.endTime
         const price = req.query.price
 
+        console.log(bikeId,userId,bookingId,startTime,endTime,price);
+
         const removeBookedTimeFromBike= bikeSchema.updateOne(
             {
                 _id: bikeId
