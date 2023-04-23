@@ -20,9 +20,9 @@ function AllBikes({allBikes}) {
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
 
 
-    useEffect(() => {
-        dispatch(userGetBikeAction())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(userGetBikeAction())
+    // }, [])
 
     return (
         <>

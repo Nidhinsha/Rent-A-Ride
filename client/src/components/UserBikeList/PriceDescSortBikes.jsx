@@ -14,18 +14,20 @@ import BookingButton from '../Button/BookingButton/BookingButton';
 function PriceDescSortBikes({ priceDesc }) {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
 
     const descending = priceDesc?.data ? priceDesc?.data.sort((a, b) => b.price - a.price) : "error in descending"
+    
     return (
         <>
             <Box>
                 <div className='d-flex flex-wrap justify-content-center  '>
                     {
                         bikesDataLoading ? <Loading /> :
-                            descending ? descending.map((data, index) => {
+                            descending ? descending?.map((data, index) => {
                                 return (
                                     <Card key={index} sx={{ height: 350, width: 350, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
                                         <CardActionArea>

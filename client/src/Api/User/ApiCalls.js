@@ -43,7 +43,7 @@ export const userGetAllRentedBikeAPI = () => API.get('/all-bikes?id=' + ID, conf
 export const userGetAcceptedBikeAPI = () => API.get('/accepted-bikes?id=' + ID, configToken)
 export const userGetRejectedBikeAPI = () => API.get('/rejected-bikes?id=' + ID, configToken)
 export const userGetPendingBikeAPI = () => API.get('/pending-bikes?id=' + ID, configToken)
-export const searchBikesAPI = (searchTerm) => API.post('/search-bikes', { searchTerm }, config)
+export const searchBikesAPI = (searchTerm,page) => API.post(`/search-bikes?page=${page}`, { searchTerm }, config)
 export const userGetLocationAPI = () => API.get('/get-location', config)
 export const userBookingBikeAPI = (bookingDetails) => API.post("/booking-bike", { bookingDetails }, configToken)
 

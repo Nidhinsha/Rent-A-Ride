@@ -100,30 +100,26 @@ function Bikes() {
 
     
 
-    const [searchTerm, setSearchTerm] = useState('')
+    // const [searchTerm, setSearchTerm] = useState('')
 
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     formState:{errors}
-    // } = useForm({
-    //     resolver:yupResolver(schema)
-    // })
+    const {
+        register,
+        handleSubmit,
+        formState:{errors}
+    } = useForm({
+        resolver:yupResolver(schema)
+    })
 
-    // const submitHandler = async(data)=>{
-    //     const search = data.search
+    const submitHandler = async(data)=>{
+        const search = data.search
 
-    //     try {
-    //         dispatch(userBikeSearchAction(search))
-    //     } catch (error) {
-    //         console.log('some error ocured in search');
-    //     }
-    // }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        dispatch(userBikeSearchAction(searchTerm))
+        try {
+            dispatch(userBikeSearchAction(search,page))
+        } catch (error) {
+            console.log('some error ocured in search');
+        }
     }
+
 
     return (
         <>
@@ -132,34 +128,29 @@ function Bikes() {
                 <h1>Rent-A-Ride Bikes For You</h1>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                <Box component='form' onSubmit={handleSubmit}
-                // <Box component='form' onSubmit={handleSubmit(submitHandler)}
+                <Box component='form' onSubmit={handleSubmit(submitHandler)}
                     sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '80%' }}
 
                 >
                     <TextField
                         label="Search"
                         name='search'
-                        value={searchTerm}
                         fullWidth
 
-                        // error={!!errors.search}
-                        // helperText={errors.search ? errors.search.message : ""}
-                        // {...register("search")}
-
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        error={!!errors.search}
+                        helperText={errors.search ? errors.search.message : ""}
+                        {...register("search")}
 
                         sx={{ mb: 2 }}
                         InputProps={{
                             endAdornment: (
-                                // <Button type='submit'>
+                                <Button type='submit'>
                                 <InputAdornment position="start" style={{ cursor: 'pointer' }} >
-                                    <ImageSearchIcon   />
+                                    <ImageSearchIcon  />
                                 </InputAdornment>
-                                // </Button>
+                                </Button>
                             ),
                         }}
-                        helperText='enter the text here..'
                     />
                 </Box>
             </Box>
@@ -184,16 +175,18 @@ function Bikes() {
                 </TabPanel>
             </Box>
             {/* pagination */}
-            <MDBPagination className='mb-0'>
+            <MDBPagination className='mb-0 '>
                 {
-                    page > 1 ? <MDBPaginationItem>
+                    page > 1 ? 
+                    <MDBPaginationItem>
                         <MDBPaginationLink aria-label='Previous'>
                             <span aria-hidden='true' onClick={handlePrev}>« Prev</span>
                         </MDBPaginationLink>
                     </MDBPaginationItem> : ""
                 }
                 {
-                    page === pageCount ? "" : <MDBPaginationItem>
+                    page === pageCount ? "" : 
+                    <MDBPaginationItem>
                         <MDBPaginationLink aria-label='Next'>
                             <span aria-hidden='true' onClick={handleNext}>Next »</span>
                         </MDBPaginationLink>

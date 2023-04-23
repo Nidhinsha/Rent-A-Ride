@@ -24,16 +24,16 @@ exports.displayBikeController = async (req, res) => {
                 }
             ]
         })
-            .skip(skip)
-            .limit(itemsPerPage)
-            .then((data) => {
-                bikeSchema.countDocuments({
-                    $and: [
-                        {
-                            status: "accepted"
-                        },
-                        {
-                            $or: [
+        .skip(skip)
+        .limit(itemsPerPage)
+        .then((data) => {
+            bikeSchema.countDocuments({
+                $and: [
+                    {
+                        status: "accepted"
+                    },
+                    {
+                        $or: [
                                 {
                                     ownerId: { $ne: req.query.id }
                                 },
@@ -42,7 +42,7 @@ exports.displayBikeController = async (req, res) => {
                         }
                     ]
                 })
-                    .then((count) => {
+                .then((count) => {
                         pageCount = Math.ceil(count / itemsPerPage)
                         const response = {
                             data: data,
@@ -54,13 +54,13 @@ exports.displayBikeController = async (req, res) => {
                         }
                         res.status(200).json(response)
                     })
-                    .catch((error) => {
+                .catch((error) => {
                         res.status(400).json({ message: "cloud'nt fetch the data from the count" })
-                    })
-            })
-            .catch((error) => {
+                })
+        })
+        .catch((error) => {
                 res.status(400).json({ message: "cloud'nt fetch the data from the data" })
-            })
+    })
     } catch (error) {
         res.status(400).json({ message: "cloud'nt fetch the data from the store" })
     }

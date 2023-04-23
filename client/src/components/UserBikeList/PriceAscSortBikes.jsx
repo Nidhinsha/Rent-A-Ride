@@ -13,11 +13,12 @@ import BookingButton from '../Button/BookingButton/BookingButton';
 function PriceAscSortBikes({priceAsc}) {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
 
-    const ascending = priceAsc?.data ? priceAsc?.data.sort((a,b)=>a.price - b.price) :"error"
+    const ascending = priceAsc?.data ? priceAsc?.data.sort((a,b)=>a.price - b.price) :"error" 
 
     return (
         <>
@@ -25,7 +26,7 @@ function PriceAscSortBikes({priceAsc}) {
                 <div className='d-flex flex-wrap justify-content-center  '>
                     {
                         bikesDataLoading ? <Loading /> :
-                        ascending ? ascending.map((data, index) => {
+                        ascending ? ascending?.map((data, index) => {
                                 return (
                                     <Card key={index} sx={{ height: 350, width: 350, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
                                         <CardActionArea>

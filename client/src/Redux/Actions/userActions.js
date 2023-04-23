@@ -238,12 +238,12 @@ export const userGetBikeAction = (page) => async (dispatch)=>{
   }
 }
 
-export const userBikeSearchAction = (searchTerm)=>async(dispatch)=>{
+export const userBikeSearchAction = (searchTerm,page)=>async(dispatch)=>{
   dispatch({
     type : userActionType.USER_GET_SEARCH_BIKES_REQUEST
   })
 
-  searchBikesAPI(searchTerm).then((data)=>{
+  searchBikesAPI(searchTerm,page).then((data)=>{
     dispatch({
       type : userActionType.USER_GET_SEARCH_BIKES_SUCCESS,
       payload : data.data
