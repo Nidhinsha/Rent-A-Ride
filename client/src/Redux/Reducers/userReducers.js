@@ -4,7 +4,6 @@ import { userActionType } from "../Constants/userConstants";
 
 export const userSignupReducer = (state = {}, action) => {
     switch (action.type) {
-
         case userActionType.USER_SIGNUP_REQUEST:
 
             return { 
@@ -31,7 +30,6 @@ export const userSignupReducer = (state = {}, action) => {
 
 
 export const userLoginReducer = (state = {}, action) => {
-  console.log(action,'login reducer');
     switch (action.type) {
 
         case userActionType.USER_LOGIN_REQUEST:

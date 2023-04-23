@@ -97,7 +97,6 @@ export const adminGetAllBikeReducer = (state = {}, action) => {
 }
 
 export const adminRentRequestBikeReducer = (state = {}, action) => {
-  console.log('action',action.payload);
   switch (action.type) {
     case adminActionType.ADMIN_GET_PENDING_BIKE_REQUEST:
       return {
@@ -149,8 +148,7 @@ export const adminRentRequestBikeReducer = (state = {}, action) => {
 }
 
 export const adminGetLocationReducer = (state = {}, action) => {
-  console.log('get loc redu ', action?.payload)
-
+  
   switch (action) {
     case adminActionType.ADMIN_GET_LOCATION_REQUEST:
       return {

@@ -11,23 +11,21 @@ import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import BookingButton from '../Button/BookingButton/BookingButton';
 
-function PriceDescSortBikes({priceDesc}) {
+function PriceDescSortBikes({ priceDesc }) {
 
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
-    console.log('bikedata in dsc',bikesData)
 
-    const descending = priceDesc ? priceDesc.sort((a,b)=>b.price - a.price) : "error in descending"
+    const descending = priceDesc?.data ? priceDesc?.data.sort((a, b) => b.price - a.price) : "error in descending"
     return (
         <>
             <Box>
                 <div className='d-flex flex-wrap justify-content-center  '>
                     {
                         bikesDataLoading ? <Loading /> :
-                        descending?.data ? descending?.data.map((data, index) => {
+                            descending ? descending.map((data, index) => {
                                 return (
                                     <Card key={index} sx={{ height: 350, width: 350, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
                                         <CardActionArea>
@@ -51,8 +49,7 @@ function PriceDescSortBikes({priceDesc}) {
                                             </CardContent>
                                         </CardActionArea>
                                         <CardActions>
-                                           {/* <BookingButton onClick={(e)=>navigate("/booking",{ state: { bikesData,bikeName: data.bikeName  } })}/> */}
-                                           <BookingButton bikeName={data.bikeName} />
+                                            <BookingButton bikeName={data.bikeName} />
                                         </CardActions>
                                     </Card>
                                 )

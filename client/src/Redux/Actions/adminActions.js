@@ -48,16 +48,12 @@ export const adminUserFetchAction =() =>async(dispatch)=>{
         })
 
         getUsersApi().then((data)=>{
-          
-
             dispatch({
                 type:adminActionType.ADMIN_USER_FETCH_SUCCESS,
                 payload : data.data
             })
         })
         .catch((error)=>{
-         
-
             dispatch({
                 type:adminActionType.ADMIN_USER_FETCH_FAIL,
                 payload : error.response.message
@@ -70,8 +66,6 @@ export const adminUserFetchAction =() =>async(dispatch)=>{
 
 
 export const adminAddBikeAction = (data) => async(dispatch)=>{
-  
-
     dispatch({
         type : adminActionType.ADMIN_BIKE_ADD_SUCCESS,
         payload : data
@@ -107,8 +101,6 @@ export const adminGetAllBikeAction = () =>async(dispatch)=>{
     })
 
     getAllBikeAPI().then((data)=>{
-      
-
         dispatch({
             type:adminActionType.ADMIN_GET_BIKE_SUCCESS,
             payload : data.data
@@ -130,8 +122,6 @@ export const adminGetPendingBikeAction =() => async(dispatch)=>{
     })
 
     getPendingBikeAPI().then((data)=>{
-        console.log('pending data action',data.data);
-
         dispatch({
             type : adminActionType.ADMIN_GET_PENDING_BIKE_SUCCESS,
             payload : data.data
@@ -151,8 +141,6 @@ export const adminAcceptBikeAction =(id)=>async(dispatch)=>{
     })
 
     acceptBikeAPI(id).then((data)=>{
-        console.log('accept ',data.data);
-
         dispatch({
             type : adminActionType.ADMIN_ACCEPT_BIKE_SUCCESS,
             payload : data.data
@@ -192,7 +180,6 @@ export const adminAddLocationAction = (location)=>async(dispatch)=>{
     })
 
     addLocationAPI(location).then((data)=>{
-    
         dispatch({
             type : adminActionType.ADMIN_ADD_LOCATION_SUCCESS,
             payload : data.data

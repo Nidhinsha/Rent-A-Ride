@@ -11,7 +11,7 @@ const moment = require("moment")
 
 
 exports.bikeBookingController = async (req, res) => {
-    console.log(req.body.bookingDetails);
+
     const { userName, userId, bikeId, bikeData, totalAmount, totalHours, needHelmet, bookedTimeSlots, pickupLocation, dropOffLocation, couponCode, paymentType } = req.body.bookingDetails
 
 

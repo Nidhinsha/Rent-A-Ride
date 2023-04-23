@@ -1,32 +1,12 @@
-// import React, { useEffect } from 'react'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { userGetBikeAction } from '../../../Redux/Actions/userActions'
+import React from 'react'
 
-// function Test() {
+function Test() {
 
-//   const dispatch = useDispatch()
-//   const bikes = useSelector((state) => state.userGetBikeReducer)
-//   const { bikesDataLoading, bikesData, bikesDataError } = bikes
+  return (
+    <>
+      hi test
+    </>
+  )
+}
 
-//   useEffect(() => {
-//     dispatch(userGetBikeAction())
-// }, [])
-//   return (
-//     <>
-//       <div>
-//         {
-//           bikesData ? bikesData.map((data,i)=>{
-//             return(
-//               <div key={i}>
-//                 <p>{data.bikeName}</p>
-//                 </div>
-//             )
-//           })
-//           :""
-//         }
-//       </div>
-//     </>
-//   )
-// }
-
-// export default Test
+export default Test

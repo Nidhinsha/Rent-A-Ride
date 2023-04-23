@@ -1,7 +1,6 @@
 const bikeSchema = require("../../../models/bikeSchema")
 
 exports.userAllBikeController = async (req, res) => {
-    console.log('id of user', req.query.id);
     try {
         bikeSchema.find({ ownerId: req.query.id }).then((data) => {
             res.status(200).json(data)

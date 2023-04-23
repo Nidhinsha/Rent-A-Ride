@@ -344,8 +344,6 @@ export const userGetLocation =()=> async(dispatch)=>{
     })
   })
   .catch((error)=>{
-    console.log('user location err in action');
-
     dispatch({
       type : userActionType.USER_GET_LOCATION_FAIL,
       payload : error.response.message
@@ -356,19 +354,15 @@ export const userGetLocation =()=> async(dispatch)=>{
 // USER BOOKING BIKE
 
 export const userBookingBikeAction =(bookingData)=>async(dispatch)=>{
-  console.log('booking data in action',bookingData);
   dispatch({
     type : userActionType.USER_BOOKING_BIKE_REQUEST
   })
 
   userBookingBikeAPI(bookingData).then((data)=>{
-    console.log('booking api');
 
     if(data.data.url){
-      console.log('stripe url');
       window.location.href= data.data.url
     }else{
-      console.log('wallet');
       dispatch({
         type :userActionType.USER_WALLET_BOOKING_SUCCESS,
         payload : data.data?.message
@@ -376,7 +370,6 @@ export const userBookingBikeAction =(bookingData)=>async(dispatch)=>{
     }
   })
   .catch((error)=>{
-    console.log('error in stripe',error);
     dispatch({
       type : userActionType.USER_BOOKING_BIKE_FAIL,
       payload : error.response.data
@@ -392,10 +385,8 @@ export const userCreateOrderAction=(bookingDetails)=>async(dispatch)=>{
   })
 
   userCreateOrderAPI(bookingDetails).then((data)=>{
-    console.log('create order api',data.data);
   })
   .catch((error)=>{
-    console.log(error,'errror create order api');
   })
 }
 
@@ -405,7 +396,6 @@ export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
   })
 
   userGetBookedBikeAPI(id).then((data)=>{
-    console.log(data.data,'the booked');
     dispatch({
       type : userActionType.USER_GET_BOOKED_BIKE_SUCCESS,
       payload : data.data

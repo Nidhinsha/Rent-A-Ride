@@ -55,16 +55,13 @@ exports.displayBikeController = async (req, res) => {
                         res.status(200).json(response)
                     })
                     .catch((error) => {
-                        console.log(error, 'err paginati 1 catch');
                         res.status(400).json({ message: "cloud'nt fetch the data from the count" })
                     })
             })
             .catch((error) => {
-                console.log(error, 'err paginati 1 catch');
                 res.status(400).json({ message: "cloud'nt fetch the data from the data" })
             })
     } catch (error) {
-        console.log(error, 'err paginati 2 catch');
         res.status(400).json({ message: "cloud'nt fetch the data from the store" })
     }
 }

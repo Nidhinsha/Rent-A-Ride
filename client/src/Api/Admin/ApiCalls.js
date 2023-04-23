@@ -10,8 +10,7 @@ const config = {
 }
 
 const admin = JSON.parse(localStorage.getItem("adminInfo"))
-console.log(admin,'admin loggggggggggggggggg');
-console.log(admin?.token,'the token api');
+
 const configToken = {
   headers : {
     "Content-Type": "application/json",

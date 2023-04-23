@@ -10,7 +10,6 @@ const config = {
 let user = JSON.parse(localStorage.getItem('userInfo'))
 
 const ID = user?.id
-console.log(ID, 'userid');
 
 export const configToken = {
   headers: {

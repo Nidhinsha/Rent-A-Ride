@@ -19,18 +19,17 @@ function WalletCard() {
     <>
       <div className="d-flex flex-column align-items-center text-center p-3 py-5 shadow p-3 mb-5 bg-white rounded">
             <Box>
-                <Typography >
+                <Box >
                     <WalletIcon />
-                   <h4>Wallet</h4> 
-                </Typography>
+                   <Typography variant='h4'>Wallet</Typography> 
+                </Box>
             </Box>
             <Box>
                <Typography>wallet Amount : <span>{wallet?.walletAmount}$</span> </Typography> 
             </Box>
             <Box>
                 
-                <Button 
-                fullWidth 
+                <Button  
                 variant='contained'
                 onClick={(e)=>{
                   navigate('/wallet',{state:{wallet}})

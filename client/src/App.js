@@ -74,7 +74,6 @@ function App() {
             <Route path='/admin/location' exact element={adminData ? <Location /> : <AdminLogin />} />
             <Route path='/admin/coupons' exact element={adminData ? <Coupons /> : <AdminLogin />} />
             <Route path='/admin/view-booked-bike' exact element={adminData ? <ViewBookedBike /> : <AdminLogin />} />
-            {/* <Route path='/admin/bikes' element={adminData ? } */}
           </Routes>
         </Suspense>
       </Router>

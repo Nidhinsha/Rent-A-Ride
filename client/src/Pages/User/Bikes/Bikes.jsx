@@ -20,6 +20,9 @@ import PriceDescSortBikes from '../../../components/UserBikeList/PriceDescSortBi
 import Footer from '../../../components/Home/Footer/Footer';
 import { MDBPagination, MDBPaginationItem, MDBPaginationLink } from 'mdb-react-ui-kit';
 import { Button } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 function TabPanel(props) {
 
@@ -48,6 +51,14 @@ TabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
+// yup validation
+
+const schema = yup.object().shape({
+    search: yup
+        .string("search term should be string")
+        .required("searcg term is required")
+})
+
 
 
 function Bikes() {
@@ -68,12 +79,11 @@ function Bikes() {
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
 
     const handlePrev = () => {
-
         dispatch(userGetBikeAction(bikesData.pagination.currentPage - 1))
         setPage(bikesData.pagination.currentPage - 1)
     }
-    const handleNext = () => {
 
+    const handleNext = () => {
         dispatch(userGetBikeAction(bikesData.pagination.currentPage + 1))
         setPage(bikesData.pagination.currentPage + 1)
     }
@@ -92,10 +102,29 @@ function Bikes() {
 
     const [searchTerm, setSearchTerm] = useState('')
 
+    // const {
+    //     register,
+    //     handleSubmit,
+    //     formState:{errors}
+    // } = useForm({
+    //     resolver:yupResolver(schema)
+    // })
+
+    // const submitHandler = async(data)=>{
+    //     const search = data.search
+
+    //     try {
+    //         dispatch(userBikeSearchAction(search))
+    //     } catch (error) {
+    //         console.log('some error ocured in search');
+    //     }
+    // }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(userBikeSearchAction(searchTerm))
     }
+
     return (
         <>
             <NavBar />
@@ -104,6 +133,7 @@ function Bikes() {
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                 <Box component='form' onSubmit={handleSubmit}
+                // <Box component='form' onSubmit={handleSubmit(submitHandler)}
                     sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '80%' }}
 
                 >
@@ -113,14 +143,20 @@ function Bikes() {
                         value={searchTerm}
                         fullWidth
 
+                        // error={!!errors.search}
+                        // helperText={errors.search ? errors.search.message : ""}
+                        // {...register("search")}
+
                         onChange={(e) => setSearchTerm(e.target.value)}
 
                         sx={{ mb: 2 }}
                         InputProps={{
                             endAdornment: (
-                                <InputAdornment position="start" style={{ cursor: 'pointer' }} onClick={handleSubmit}>
-                                    <ImageSearchIcon />
+                                // <Button type='submit'>
+                                <InputAdornment position="start" style={{ cursor: 'pointer' }} >
+                                    <ImageSearchIcon   />
                                 </InputAdornment>
+                                // </Button>
                             ),
                         }}
                         helperText='enter the text here..'

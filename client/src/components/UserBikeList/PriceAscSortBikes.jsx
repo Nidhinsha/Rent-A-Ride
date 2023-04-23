@@ -6,23 +6,18 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../Loading/Loading';
-import { Button } from 'primereact/button';
 import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import BookingButton from '../Button/BookingButton/BookingButton';
 
 function PriceAscSortBikes({priceAsc}) {
-    console.log('priceAsc',priceAsc);
 
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
-    console.log('bikedata in asc',bikesData);
-    console.log('ggg');
 
-    const ascending = priceAsc ? priceAsc.sort((a,b)=>a.price - b.price) :"error"
+    const ascending = priceAsc?.data ? priceAsc?.data.sort((a,b)=>a.price - b.price) :"error"
 
     return (
         <>
@@ -30,7 +25,7 @@ function PriceAscSortBikes({priceAsc}) {
                 <div className='d-flex flex-wrap justify-content-center  '>
                     {
                         bikesDataLoading ? <Loading /> :
-                        ascending?.data ? ascending?.data.map((data, index) => {
+                        ascending ? ascending.map((data, index) => {
                                 return (
                                     <Card key={index} sx={{ height: 350, width: 350, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
                                         <CardActionArea>
