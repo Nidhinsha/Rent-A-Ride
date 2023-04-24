@@ -18,7 +18,7 @@ function SingleBikeView() {
 
     const location = useLocation();
     const { bikesData } = location.state;
-    const clickedBike = bikesData.find((bike) => bike.bikeName === location.state.bikeName);
+    const clickedBike = bikesData?.data.find((bike) => bike.bikeName === location.state.bikeName);
     return (
         <Box>
             <NavBar />

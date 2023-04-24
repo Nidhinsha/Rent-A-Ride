@@ -64,16 +64,18 @@ function FilterByBrand({page}) {
         <>
 
             <Typography variant='h6' sx={{ textAlign: 'center' }}>Filter by Brands</Typography>
-            <Box component="form" onSubmit={handleSubmit(submitHandler)}>
+            <Box component="form" onSubmit={handleSubmit(submitHandler)} sx={{mt:3}}> 
             <TextField 
+                fullWidth
                 id="standard-basic"
                 label="Enter Color"
-                variant="standard"
+                variant="outlined"
                 name='color'
                 onChange={(e)=>setColor(e.target.value)}
                 error={!!errors.color}
                 helperText={errors.color ? errors.color.message : ""}
                 {...register("color")}
+                sx={{mb:2}}
             />
             <Box>
 
@@ -102,7 +104,11 @@ function FilterByBrand({page}) {
                     </Select>
 
                 </FormControl>
-                <Button variant='outlined' type='submit'>filter</Button>
+                <Button 
+                variant='contained' 
+                type='submit'
+                sx={{mt:2}}
+                >filter</Button>
             </Box>
             </Box>
         </>

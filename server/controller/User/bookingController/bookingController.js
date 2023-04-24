@@ -155,7 +155,6 @@ exports.bikeBookingController = async (req, res) => {
                             let price
             
                             // checking if the coupon is applied
-                            console.log(typeof couponCode,'coupon ghghghgh');
                             if (couponCode !== null) {
                                 couponSchema.findOne(
                                     {
@@ -165,7 +164,6 @@ exports.bikeBookingController = async (req, res) => {
                                 .then((couponData) => {
                                     price = couponData?.couponPrice
                                     withOutCouponAmountToUser = parseInt(totalAmount) + parseInt(price)
-                                    console.log(typeof withOutCouponAmountToUser,'llllllllllllll');
                                     bookingAmount = withOutCouponAmountToUser * 0.25
             
                                     if (!walletExists) {
@@ -199,14 +197,12 @@ exports.bikeBookingController = async (req, res) => {
                                             }
                                         )
                                         .then((response) => {
-                                            console.log(response, 'response of money added to the wallet after rented it');
                                             })
                                         }
                                     })
                             } else if (couponCode === null) {
                                 if (!walletExists) {
                                     bookingAmount = totalAmount * 0.25
-                                    console.log(typeof bookingAmount,'the type of == null');
             
                                     const newWallet = {
                                         userId: bikeData.ownerId,
@@ -237,7 +233,6 @@ exports.bikeBookingController = async (req, res) => {
                                         }
                                     )
                                     .then((response) => {
-                                        console.log(response, 'the response yo');
                                     })
                                 }
                             }
@@ -245,19 +240,18 @@ exports.bikeBookingController = async (req, res) => {
                         res.status(200).json("booking successfull")
                     })
                     .catch((error)=>{
-                        console.log(error,'cant update the wallet');
+                        res.status(400).json("error while updating wallet ")
                     })
 
                 } catch (error) {
-                    console.log(error,'booking not working');
+                    res.status(400).json('booking not working');
                 }
             }
         } else {
-            console.log('status fals');
             res.status(400).json("the slot is already booked.please select another slot thankyou")
         }
     } catch (error) {
-        console.log(error,'wallet error');
+        res.status(400).json('wallet error');
     }
 }
 

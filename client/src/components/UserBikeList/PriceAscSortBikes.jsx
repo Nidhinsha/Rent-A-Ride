@@ -23,7 +23,7 @@ function PriceAscSortBikes({priceAsc}) {
     return (
         <>
             <Box>
-                <div className='d-flex flex-wrap justify-content-between'>
+                <div className='d-flex flex-wrap justify-content-around'>
                     {
                         bikesDataLoading ? <Loading /> :
                         ascending ? ascending?.map((data, index) => {

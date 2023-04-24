@@ -22,7 +22,7 @@ function ChatInput({handleSendMessage}) {
     const sendChat =(event)=>{
         event.preventDefault()
         if(msg.length > 0){
-            handleSendMessage(msg)
+            handleSendMessage(msg.trim())
             setMsg('')
         }
     }

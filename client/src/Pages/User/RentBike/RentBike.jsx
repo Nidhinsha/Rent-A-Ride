@@ -53,7 +53,6 @@ function RentBike() {
     } = useForm()
 
     const onSubmit = async () => {
-        console.log(bikeName, bikeModel, engineNumber, brand, fuel, location, description, price, color, images, 'form data for add bike the ');
         setLoading(true)
 
         // for using the form data
@@ -61,7 +60,6 @@ function RentBike() {
         const formdata = new FormData()
 
         // for image
-        console.log(images, ';;;;');
         images.forEach((value) => {
             console.log(value)
             formdata.append("images", value)
@@ -95,7 +93,6 @@ function RentBike() {
             }, 3000)
         })
             .catch((error) => {
-                console.log("some error", error);
                 setLoading(false)
             })
     }
@@ -107,16 +104,16 @@ function RentBike() {
     return (
         <>
             <NavBar />
-            <Box sx={{ display: 'flex', justifyContent: 'center', width: "100%" }} >
+            <Box sx={{ display: 'flex', justifyContent: 'center', width: "100%", }} >
 
                 <Box
                     sx={{
-                        '& .MuiTextField-root': { mt: 5, width: '100%' },
+                        '& .MuiTextField-root': { mt: 5,ml:3, width: '100%' },boxShadow:2
                     }}
                     component="form" onSubmit={handleSubmit(onSubmit)}
                 >
 
-                    <h3>ADD BIKE</h3>
+                    <h3 sx={{ml:3}}>ADD BIKE</h3>
 
                     {sucess ? <Alert severity="success">Done Bike Added !!!</Alert> : ''}
 
@@ -237,37 +234,8 @@ function RentBike() {
                             onChange={(e) => setPrice(e.target.value)}
                             helperText={errors.price && <p style={{ color: 'red' }}>Please enter a price</p>}
                         />
-
-                        {/* <FormControl fullWidth sx={{ marginTop: "40px", mr: 2 }}>
-                            <InputLabel id="demo-simple-select-label">Location</InputLabel>
-                           
-
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={location} // retrieve the selected value from React Hook Form
-                                label="Location"
-                                name='location'
-                                {...register("location", { required: true })}
-                                onChange={(e) => setLocation(e.target.value)}
-                            >
-                              
-                                {location
-                                    ? location.map((x) => (
-                                        <MenuItem key={x._id} value={x.location}>
-                                         
-                                            {x.location}
-                                        </MenuItem>
-                                    ))
-                                    : (
-                                        <MenuItem >No locations available</MenuItem>
-                                    )}
-                            </Select>
-                            {errors.location && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.location && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
-                        </FormControl> */}
-
-
                     </div>
+
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
 
                         <TextField sx={{ mr: 2 }}
@@ -355,7 +323,7 @@ function RentBike() {
                                     variant="contained"
                                     style={{ backgroundColor: '#6366f1' }}
                                     sx={{
-                                        mr: 2, mt: 5, width: '100%'
+                                        mr: 2,ml:3, mt: 5, width: '100%'
                                     }}
                                     type='submit'
                                     onClick={handleSubmit}

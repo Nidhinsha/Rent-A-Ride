@@ -24,7 +24,7 @@ function PriceDescSortBikes({ priceDesc }) {
     return (
         <>
             <Box>
-                <div className='d-flex flex-wrap justify-content-between'>
+                <div className='d-flex flex-wrap justify-content-around'>
                     {
                         bikesDataLoading ? <Loading /> :
                             descending ? descending?.map((data, index) => {

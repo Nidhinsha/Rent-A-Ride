@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions } from '@mui/material';
+import { CardActionArea, CardActions, CardHeader } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { userGetBikeAction } from '../../Redux/Actions/userActions';
 import Loading from '../Loading/Loading';
@@ -22,12 +22,12 @@ function AllBikes({allBikes}) {
     return (
         <>
             <Box>
-                <div className='d-flex flex-wrap justify-content-between'>
+                <div className='d-flex flex-wrap '>
                     {
                         bikesDataLoading ? <Loading /> :
                         allBikes?.data ? allBikes?.data.map((data, index) => {
                                 return (
-                                    <Card key={index} sx={{ height: 350, width: 275, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
+                                    <Card key={index} sx={{ height: 350, width: 275, m: 3,boxShadow:5 }}>
                                         <CardActionArea>
                                             <Typography gutterBottom variant="h6" textAlign='center' >
                                                 {data.bikeName}

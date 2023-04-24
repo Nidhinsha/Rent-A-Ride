@@ -9,7 +9,7 @@ function BookingButton({bikeName}) {
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
   return (
     <Button
-    label="Book Now" aria-label="Submit" icon="pi pi-shopping-bag" style={{ width: '100%', fontSize: 'large' }}
+    label="Book Now" variant='outlined'  icon="pi pi-shopping-bag" style={{ width: '100%', fontSize: 'large' }}
     onClick={() => navigate("/booking",{ state: { bikesData,bikeName:bikeName  } })}
 
     >

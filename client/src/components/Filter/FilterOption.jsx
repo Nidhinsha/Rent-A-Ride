@@ -4,15 +4,15 @@ import FilterByBrand from './FilterByBrand'
 
 
 
-function FilterOption({page}) {
+function FilterOption() {
     
   return (
     <>
+    <Box >
+        <Typography variant='h6' sx={{textAlign:'center'}}><b> Filter</b></Typography>
     <Box>
-        <Typography variant='h6' sx={{textAlign:'center'}}>Filter</Typography>
     <Box>
-    <Box>
-    <FilterByBrand page={page}/>
+    <FilterByBrand/>
     </Box>
     </Box>
     </Box>

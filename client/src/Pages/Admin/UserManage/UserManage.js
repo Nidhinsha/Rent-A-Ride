@@ -23,6 +23,7 @@ function UserManage() {
 
   const handleBlockUser = (id) => {
     userBlockUnblockApi(id).then((data) => {
+      localStorage.removeItem("userInfo")
       if (data) {
         dispatch(adminUserFetchAction())
       }

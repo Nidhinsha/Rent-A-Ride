@@ -24,7 +24,8 @@ function Booking() {
   const navigate = useNavigate()
   const location = useLocation();
   const { bikesData } = location.state;
-  const clickedBike = bikesData.find((bike) => bike.bikeName === location.state.bikeName);
+
+  const clickedBike = bikesData?.data.find((bike) => bike.bikeName === location.state.bikeName);
   const branchLocation = useSelector((state) => state.userLocationReducer.locationData)
 
   const coupons = useSelector((state) => state.userGetCouponReducer.couponData)
@@ -34,7 +35,7 @@ function Booking() {
   const [endDate, setEndDate] = useState("");
   const [totalHours, setTotalHours] = useState(0)
   const [needHelmet, setNeedHelmet] = useState(false)
-  // const [totalAmount, setTotalAmount] = useState(0)
+
   const [pickupLocation, setPickupLocation] = useState("")
   const [dropOffLocation, setDropOffLocation] = useState("")
 
@@ -152,7 +153,7 @@ function Booking() {
   }
 
   const handleBookNow = () => {
-    // const checkAuthorized = JSON.parse(localStorage.getItem("userInfo"))
+
     if (wallet === false && stripe === true) {
       setWalletError(false)
       dispatch(userBookingBikeAction(stripeData))

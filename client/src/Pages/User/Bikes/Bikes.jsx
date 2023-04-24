@@ -19,11 +19,19 @@ import PriceAscSortBikes from '../../../components/UserBikeList/PriceAscSortBike
 import PriceDescSortBikes from '../../../components/UserBikeList/PriceDescSortBikes';
 import Footer from '../../../components/Home/Footer/Footer';
 import { MDBPagination, MDBPaginationItem, MDBPaginationLink } from 'mdb-react-ui-kit';
-import { Button } from '@mui/material';
+import { Button, Grid, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import FilterOption from '../../../components/Filter/FilterOption';
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
 
 function TabPanel(props) {
 
@@ -91,31 +99,31 @@ function Bikes() {
 
     useEffect(() => {
         dispatch(userGetBikeAction(page))
-    },[dispatch, page])
+    }, [dispatch, page])
 
     useEffect(() => {
-        if(bikesData) {
-          setPageCount(bikesData.pagination.pageCount)
+        if (bikesData) {
+            setPageCount(bikesData.pagination.pageCount)
         }
-      },[bikesData])
+    }, [bikesData])
 
-    
+
 
     // const [searchTerm, setSearchTerm] = useState('')
 
     const {
         register,
         handleSubmit,
-        formState:{errors}
+        formState: { errors }
     } = useForm({
-        resolver:yupResolver(schema)
+        resolver: yupResolver(schema)
     })
 
-    const submitHandler = async(data)=>{
+    const submitHandler = async (data) => {
         const search = data.search
 
         try {
-            dispatch(userBikeSearchAction(search,page))
+            dispatch(userBikeSearchAction(search, page))
         } catch (error) {
             console.log('some error ocured in search');
         }
@@ -125,13 +133,10 @@ function Bikes() {
     return (
         <>
             <NavBar />
-          
+
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginBottom: 50 }}>
                 <h1>Rent-A-Ride Bikes For You</h1>
             </Box>
-            <Box sx={{display:'flex'}}>
-            <FilterOption page={page}/>
-            <Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                 <Box component='form' onSubmit={handleSubmit(submitHandler)}
@@ -151,57 +156,78 @@ function Bikes() {
                         InputProps={{
                             endAdornment: (
                                 <Button type='submit'>
-                                <InputAdornment position="start" style={{ cursor: 'pointer' }} >
-                                    <ImageSearchIcon  />
-                                </InputAdornment>
+                                    <InputAdornment position="start" style={{ cursor: 'pointer' }} >
+                                        <ImageSearchIcon />
+                                    </InputAdornment>
                                 </Button>
                             ),
                         }}
                     />
                 </Box>
             </Box>
+            
+
+            <Grid container spacing={2}>
+                <Grid item xs={6} md={3}>
+                    <Item sx={{boxShadow:3}}>
+                    <FilterOption page={page} />
+                    </Item>
+                </Grid>
+                <Grid item xs={6} md={9}>
+                    <Item sx={{boxShadow:3}}>
+                    <Box sx={{ width: '100%' }}>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Tabs aria-label="basic tabs example" value={value} onChange={handleChange} centered>
+                                <Tab label="All Bikes" />
+                                <Tab label="Low to High" />
+                                <Tab label="High to Low" />
+                            </Tabs>
+                        </Box>
+                        <TabPanel value={value} index={0}>
+                            <AllBikes allBikes={bikesData} />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <PriceAscSortBikes priceAsc={bikesData} />
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            <PriceDescSortBikes priceDesc={bikesData} />
+                        </TabPanel>
+                    </Box>
+                     {/* pagination */}
+             <MDBPagination className='mb-0 '>
+                        {
+                            page > 1 ?
+                                <MDBPaginationItem>
+                                    <MDBPaginationLink aria-label='Previous'>
+                                        <span aria-hidden='true' onClick={handlePrev}>« Prev</span>
+                                    </MDBPaginationLink>
+                                </MDBPaginationItem> : ""
+                        }
+                        {
+                            page === pageCount ? "" :
+                                <MDBPaginationItem>
+                                    <MDBPaginationLink aria-label='Next'>
+                                        <span aria-hidden='true' onClick={handleNext}>Next »</span>
+                                    </MDBPaginationLink>
+                                </MDBPaginationItem>
+                        }
+
+                    </MDBPagination>
+                    </Item>
+                </Grid>
+            </Grid>
+
+            {/* <Box sx={{ display: 'flex' }}> */}
+            
+               
 
 
-            <Box sx={{ width: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs aria-label="basic tabs example" value={value} onChange={handleChange} centered>
-                        <Tab label="All Bikes" />
-                        <Tab label="Low to High" />
-                        <Tab label="High to Low" />
-                    </Tabs>
-                </Box>
-                <TabPanel value={value} index={0}>
-                    <AllBikes allBikes={bikesData} />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <PriceAscSortBikes priceAsc={bikesData} />
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <PriceDescSortBikes priceDesc={bikesData} />
-                </TabPanel>
-            </Box>
-            {/* pagination */}
-            <MDBPagination className='mb-0 '>
-                {
-                    page > 1 ? 
-                    <MDBPaginationItem>
-                        <MDBPaginationLink aria-label='Previous'>
-                            <span aria-hidden='true' onClick={handlePrev}>« Prev</span>
-                        </MDBPaginationLink>
-                    </MDBPaginationItem> : ""
-                }
-                {
-                    page === pageCount ? "" : 
-                    <MDBPaginationItem>
-                        <MDBPaginationLink aria-label='Next'>
-                            <span aria-hidden='true' onClick={handleNext}>Next »</span>
-                        </MDBPaginationLink>
-                    </MDBPaginationItem>
-                }
+                    
+                   
+               
 
-            </MDBPagination>
-            </Box>
-            </Box>
+            {/* </Box> */}
+
             <Footer />
         </>
     )

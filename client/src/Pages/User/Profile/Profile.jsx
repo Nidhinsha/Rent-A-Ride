@@ -286,30 +286,6 @@ function Profile() {
                         <UploadIcon style={{ marginRight: "8px" }} />
                         Upload
                       </Button>
-
-                      <Button
-                        type='submit'
-                        variant="contained"
-                        size='small'
-                        onClick={() => setProof(null)}
-                        sx={{
-                          mb: 2,
-                          backgroundColor: "#E5E7EB",
-                          "&.MuiButtonBase-root:hover": {
-                            bgcolor: "#D1D5DB",
-                          },
-                          "& .MuiButton-label": {
-                            color: "#4B5563",
-                            fontSize: "14px",
-                            fontWeight: "600",
-                          },
-                          borderRadius: "4px",
-                          padding: "8px 16px",
-                        }}
-                      >
-                        <CancelIcon style={{ marginRight: "8px" }} />
-                        Cancel
-                      </Button>
                     </div>
                   </div>
 

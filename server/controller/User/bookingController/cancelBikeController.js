@@ -122,7 +122,7 @@ exports.cancelBikeOrder = async (req, res) => {
                         $push:{
                             walletHistory:{
                                 transactionType:"cancel refund",
-                                amountRefunded : price
+                                amountAdded : price
                             }
                         }
                     }
