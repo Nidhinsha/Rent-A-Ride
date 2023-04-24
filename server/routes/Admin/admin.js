@@ -15,6 +15,7 @@ const locationController = require("../../controller/Admin/locationController")
 const editBikeController = require("../../controller/Admin/bikeController/editBikeController")
 const couponController = require("../../controller/Admin/couponController")
 const bookingController = require("../../controller/Admin/bookingController")
+const dashboardController = require("../../controller/Admin/DashboardController/dashboardController")
 
 const { protect } = require("../../Middlewares/verifyToken")
 
@@ -45,5 +46,6 @@ router.route("/delete-coupon").delete(protect,couponController.deleteCoupon)
 
 router.route("/view-booked-bike").get(protect,bookingController.adminGetBookedBikeController)
 
+router.route("/get-dashboard-info").get(protect,dashboardController.getDashboardData)
 
 module.exports = router

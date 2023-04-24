@@ -1,5 +1,5 @@
 import { adminActionType } from '../Constants/adminConstants'
-import { acceptBikeAPI, addCouponAPI, addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteCouponAPI, deleteLocationAPI, editCouponAPI, editLocationAPI, getAllBikeAPI, getBookedBikeAPI, getCouponsAPI, getLocationAPI, getPendingBikeAPI, getUsersApi, rejectBikeAPI } from "../../Api/Admin/ApiCalls"
+import { acceptBikeAPI, addCouponAPI, addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteCouponAPI, deleteLocationAPI, editCouponAPI, editLocationAPI, getAllBikeAPI, getBookedBikeAPI, getCouponsAPI, getDashboardInfoAPI, getLocationAPI, getPendingBikeAPI, getUsersApi, rejectBikeAPI } from "../../Api/Admin/ApiCalls"
 
 
 export const adminLogin = (email, password) => async (dispatch) => {
@@ -344,6 +344,25 @@ export const adminGetBookedBikeAction =()=>async(dispatch)=>{
         dispatch({
             type : adminActionType.ADMIN_GET_BOOKED_BIKE_FAIL,
             payload : error.response.message
+        })
+    })
+}
+
+export const getDashboardInfoAction =()=>async(dispatch)=>{
+    dispatch({
+        type:adminActionType.ADMIN_GET_DASHBOARD_INFO_REQUST
+    })
+
+    getDashboardInfoAPI().then((data)=>{
+        dispatch({
+            type:adminActionType.ADMIN_GET_DASHBOARD_INFO_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type:adminActionType.ADMIN_GET_DASHBOARD_INFO_FAIL,
+            payload : error.data
         })
     })
 }

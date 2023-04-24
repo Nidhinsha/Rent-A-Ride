@@ -299,3 +299,25 @@ export const adminGetBookedBikeReducer =(state={},action)=>{
       return state
   }
 }
+
+export const getDashboardInfoReducer =(state={},action)=>{
+  switch (action.type) {
+    case adminActionType.ADMIN_GET_DASHBOARD_INFO_REQUST:
+      return{
+        loading:true
+      }
+    case adminActionType.ADMIN_GET_DASHBOARD_INFO_SUCCESS:
+      return{
+        loading:false,
+        dashboardData : action.payload
+      }
+    case adminActionType.ADMIN_GET_DASHBOARD_INFO_FAIL:
+      return{
+        loading:false,
+        dashboardDataError : action.payload
+      }
+  
+    default:
+     return state;
+  }
+}

@@ -48,3 +48,5 @@ export const editCouponAPI =(id,couponName,couponCode)=>API.put("/edit-coupon?id
 export const deleteCouponAPI =(id)=>API.delete("/delete-coupon?id="+id,configToken)
 
 export const getBookedBikeAPI =()=>API.get("/view-booked-bike",configToken)
+
+export const getDashboardInfoAPI =()=>API.get("/get-dashboard-info",configToken)
