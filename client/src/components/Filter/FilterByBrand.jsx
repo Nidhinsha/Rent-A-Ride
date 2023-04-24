@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, Button, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, Typography } from '@mui/material'
+import { Box, Button, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography } from '@mui/material'
 import { getBikeWithBrandAction, getBrandsAction } from '../../Redux/Actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -20,7 +20,9 @@ const MenuProps = {
 const schema = yup.object().shape({
     brand: yup
         .string("brand term should be string")
-        .required("searcg term is required")
+        .required("search term is required"),
+    color:yup
+        .string("colorshould be string")
 })
 
 function FilterByBrand({page}) {
@@ -29,6 +31,7 @@ function FilterByBrand({page}) {
     const brandsData = useSelector((state) => state.getBrandsReducer.brands)
 
     const [brand, setbrand] = React.useState('')
+    const [color,setColor] = React.useState(null)
 
     const {
         register,
@@ -40,9 +43,13 @@ function FilterByBrand({page}) {
 
     const submitHandler = async (data) => {
         const brandValue = data.brand
+        let colorValue = data.color
+        if (colorValue === '') {
+            colorValue = null
+        }
 
         try {
-            dispatch(getBikeWithBrandAction(brandValue,page))
+            dispatch(getBikeWithBrandAction(brandValue,colorValue,page))
         } catch (error) {
             console.log('some error ocured in bike brand bike listing');
         }
@@ -58,8 +65,19 @@ function FilterByBrand({page}) {
 
             <Typography variant='h6' sx={{ textAlign: 'center' }}>Filter by Brands</Typography>
             <Box component="form" onSubmit={handleSubmit(submitHandler)}>
+            <TextField 
+                id="standard-basic"
+                label="Enter Color"
+                variant="standard"
+                name='color'
+                onChange={(e)=>setColor(e.target.value)}
+                error={!!errors.color}
+                helperText={errors.color ? errors.color.message : ""}
+                {...register("color")}
+            />
+            <Box>
 
-                <FormControl fullWidth sx={{ m: 1, width: 300 }}>
+                <FormControl fullWidth >
                     <InputLabel id="demo-simple-select-label">Brands</InputLabel>
 
                     <Select
@@ -84,8 +102,8 @@ function FilterByBrand({page}) {
                     </Select>
 
                 </FormControl>
-
                 <Button variant='outlined' type='submit'>filter</Button>
+            </Box>
             </Box>
         </>
     )

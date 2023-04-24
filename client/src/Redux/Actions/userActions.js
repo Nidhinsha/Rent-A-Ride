@@ -493,12 +493,12 @@ export const getBrandsAction =()=>async(dispatch)=>{
   })
 }
 
-export const getBikeWithBrandAction =(brand,page)=>async(dispatch)=>{
+export const getBikeWithBrandAction =(brand,color,page)=>async(dispatch)=>{
   dispatch({
     type : userActionType.GET_BIKE_WITH_BRAND_REQUST
   })
 
-  getBikeWithBrandAPI(brand,page).then((data)=>{
+  getBikeWithBrandAPI(brand,color,page).then((data)=>{
     console.log(data.data,'data of brand dwith bike frontend');
     dispatch({
       type : userActionType.GET_BIKE_WITH_BRAND_SUCCESS,

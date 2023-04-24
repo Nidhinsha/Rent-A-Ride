@@ -20,114 +20,254 @@ exports.getBikeWithBrand = async (req, res) => {
 
     const brand = req.query.brand
     const userId = req.query.id
-    console.log(req.query.page, 'pgae');
+    const color = req.query.color
+    console.log(typeof req.query.color, req.query.color, 'colcolcocl');
 
     try {
-        if (brand !== null && userId !== undefined && userId !== "undefined") {
-            bikeSchema.find({
-                $and: [
-                    {
-                        brand: brand
-                    },
-                    {
-                        status: "accepted"
-                    },
-                    {
-                        $or: [
-                            {
-                                ownerId: { $ne: req.query.id }
-                            },
-                            { ownerId: { $exists: false } }
-                        ]
-                    }
-                ]
-            })
-            .skip(skip)
-            .limit(itemsPerPage)
-            .then((data) => {
-                bikeSchema.countDocuments({
+        if (userId !== "undefined") {
+
+            if (brand !== null &&  color !== "null") {
+
+                bikeSchema.find({
                     $and: [
+                        {
+                            color:
                             {
-                                brand: brand
-                            },
-                            {
-                                status: "accepted"
-                            },
-                            {
-                                $or: [
+                                $regex: color, $options: 'i'
+                            }
+                        },
+                        {
+                            brand: brand
+                        },
+                        {
+                            status: "accepted"
+                        },
+                        {
+                            $or: [
+                                {
+                                    ownerId: { $ne: req.query.id }
+                                },
+                                { ownerId: { $exists: false } }
+                            ]
+                        }
+                    ]
+                })
+                    .skip(skip)
+                    .limit(itemsPerPage)
+                    .then((data) => {
+                        bikeSchema.countDocuments({
+                            $and: [
+                                {
+                                    color:
                                     {
-                                        ownerId: { $ne: req.query.id }
-                                    },
-                                    { ownerId: { $exists: false } }
+                                        $regex: color, $options: 'i'
+                                    }
+                                },
+                                {
+                                    brand: brand
+                                },
+                                {
+                                    status: "accepted"
+                                },
+                                {
+                                    $or: [
+                                        {
+                                            ownerId: { $ne: req.query.id }
+                                        },
+                                        { ownerId: { $exists: false } }
                                     ]
-                            }
-                        ]
-                })
-                .then((count) => {
-                        pageCount = Math.ceil(count / itemsPerPage)
-                        const response = {
-                            data: data,
-                            pagination: {
-                                count: count,
-                                pageCount: pageCount,
-                                currentPage: currentPage
-                            }
-                        }
-                        res.status(200).json(response)
-                })
-                .catch((error) => {
-                    res.status(400).json({ message: "cloud'nt fetch the data from the count" })
-                })
-            })
-            .catch((error) => {
-                res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
-            })
+                                }
+                            ]
+                        })
+                            .then((count) => {
+                                pageCount = Math.ceil(count / itemsPerPage)
+                                const response = {
+                                    data: data,
+                                    pagination: {
+                                        count: count,
+                                        pageCount: pageCount,
+                                        currentPage: currentPage
+                                    }
+                                }
+                                res.status(200).json(response)
+                                console.log(response,'1 if');
+                            })
+                            .catch((error) => {
+                                res.status(400).json({ message: "cloud'nt fetch the data from the count" })
+                            })
+                    })
+                    .catch((error) => {
+                        res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
+                    })
 
-        } else if (brand !== null && (userId === undefined || userId === "undefined")) {
+            } else if (brand !== null && color === "null") {
 
-            bikeSchema.find({
-                $and: [
-                    {
-                        brand: brand
-                    },
-                    {
-                        status: "accepted"
-                    }
-                ]
-            })
-            .skip(skip)
-            .limit(itemsPerPage)
-            .then((data) => {
-                bikeSchema.countDocuments({
+                bikeSchema.find({
                     $and: [
-                            {
-                                brand: brand
-                            },
-                            {
-                                status: "accepted"
-                            }
-                        ]
-                })
-                .then((count) => {
-                        pageCount = Math.ceil(count / itemsPerPage)
-                        const response = {
-                            data: data,
-                            pagination: {
-                                count: count,
-                                pageCount: pageCount,
-                                currentPage: currentPage
-                            }
+                        {
+                            brand: brand
+                        },
+                        {
+                            status: "accepted"
+                        },
+                        {
+                            $or: [
+                                {
+                                    ownerId: { $ne: req.query.id }
+                                },
+                                { ownerId: { $exists: false } }
+                            ]
                         }
-                        res.status(200).json(response)
+                    ]
                 })
-                .catch((error) => {
-                    res.status(400).json({ message: "cloud'nt fetch the data from the count" })
+                    .skip(skip)
+                    .limit(itemsPerPage)
+                    .then((data) => {
+                        bikeSchema.countDocuments({
+                            $and: [
+                                {
+                                    color:
+                                    {
+                                        $regex: color, $options: 'i'
+                                    }
+                                },
+                                {
+                                    brand: brand
+                                },
+                                {
+                                    status: "accepted"
+                                }
+                            ]
+                        })
+                            .then((count) => {
+                                pageCount = Math.ceil(count / itemsPerPage)
+                                const response = {
+                                    data: data,
+                                    pagination: {
+                                        count: count,
+                                        pageCount: pageCount,
+                                        currentPage: currentPage
+                                    }
+                                }
+                                res.status(200).json(response)
+                                console.log(response,'1 else if');
+                            })
+                            .catch((error) => {
+                                res.status(400).json({ message: "cloud'nt fetch the data from the count" })
+                            })
+                    })
+                    .catch((error) => {
+                        res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
+                    })
+            }
+        } else if ( userId === "undefined") {
+            if (brand !== null && color !== "null") {
+
+                bikeSchema.find({
+                    $and: [
+                        {
+                            color:
+                            {
+                                $regex: color, $options: 'i'
+                            }
+                        },
+                        {
+                            brand: brand
+                        },
+                        {
+                            status: "accepted"
+                        }
+                    ]
                 })
-            })
-            .catch((error) => {
-                res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
-            })
+                    .skip(skip)
+                    .limit(itemsPerPage)
+                    .then((data) => {
+                        bikeSchema.countDocuments({
+                            $and: [
+                                {
+                                    color:
+                                    {
+                                        $regex: color, $options: 'i'
+                                    }
+                                },
+                                {
+                                    brand: brand
+                                },
+                                {
+                                    status: "accepted"
+                                },
+                            ]
+                        })
+                            .then((count) => {
+                                pageCount = Math.ceil(count / itemsPerPage)
+                                const response = {
+                                    data: data,
+                                    pagination: {
+                                        count: count,
+                                        pageCount: pageCount,
+                                        currentPage: currentPage
+                                    }
+                                }
+                                res.status(200).json(response)
+                                console.log(response,'2 if');
+                            })
+                            .catch((error) => {
+                                res.status(400).json({ message: "cloud'nt fetch the data from the count" })
+                            })
+                    })
+                    .catch((error) => {
+                        res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
+                    })
+
+            } else if (brand !== null && color === "null") {
+
+                bikeSchema.find({
+                    $and: [
+                        {
+                            brand: brand
+                        },
+                        {
+                            status: "accepted"
+                        }
+                    ]
+                })
+                    .skip(skip)
+                    .limit(itemsPerPage)
+                    .then((data) => {
+                        bikeSchema.countDocuments({
+                            $and: [
+                                {
+                                    brand: brand
+                                },
+                                {
+                                    status: "accepted"
+                                }
+                            ]
+                        }
+                        )
+                            .then((count) => {
+                                pageCount = Math.ceil(count / itemsPerPage)
+                                const response = {
+                                    data: data,
+                                    pagination: {
+                                        count: count,
+                                        pageCount: pageCount,
+                                        currentPage: currentPage
+                                    }
+                                }
+                                res.status(200).json(response)
+                                console.log(response,'2 elseif');
+                            })
+                            .catch((error) => {
+                                res.status(400).json({ message: "cloud'nt fetch the data from the count" })
+                            })
+                    })
+                    .catch((error) => {
+                        res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
+                    })
+            }
         }
+
 
     } catch (error) {
         res.status(400).json("error finding brand with bike")

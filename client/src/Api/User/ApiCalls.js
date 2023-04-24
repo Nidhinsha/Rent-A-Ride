@@ -68,4 +68,4 @@ export const getAllMessagesAPI = (data) => API.post("/get-all-messages", { data 
 // filter
 // brands
 export const getBrandsAPI =()=>API.get("/brands",config)
-export const getBikeWithBrandAPI =(brand,page)=>API.get(`/bike-with-brand?brand=${brand}&id=${ID}&page=${page}`,config)
+export const getBikeWithBrandAPI =(brand,color,page)=>API.get(`/bike-with-brand?brand=${brand}&id=${ID}&color=${color}&page=${page}`,config)
