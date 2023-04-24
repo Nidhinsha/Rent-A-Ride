@@ -114,7 +114,7 @@ function NavBar() {
 
 
   return (
-    <Box pb={100}>
+    <Box pb={100} >
       <Header height={70} px="md">
         <Group position="apart" sx={{ height: '100%' }}>
           {/* <MantineLogo size={30} /> */}

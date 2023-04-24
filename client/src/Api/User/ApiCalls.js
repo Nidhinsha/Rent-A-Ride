@@ -65,3 +65,7 @@ export const userCreateOrderAPI =(bookingDetails)=>API.post("/booking-success",{
 export const getAllUserContacts = (id) => API.get("/contacts?id=" + id, configToken)
 export const sendMessageAPI = (data) => API.post("/add-message", { data }, configToken)
 export const getAllMessagesAPI = (data) => API.post("/get-all-messages", { data }, configToken)
+// filter
+// brands
+export const getBrandsAPI =()=>API.get("/brands",config)
+export const getBikeWithBrandAPI =(brand,page)=>API.get(`/bike-with-brand?brand=${brand}&id=${ID}&page=${page}`,config)

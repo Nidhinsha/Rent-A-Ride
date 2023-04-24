@@ -19,6 +19,7 @@ const orderController = require("../../controller/User/orderController/orderCont
 const chatContoller = require("../../controller/User/chatController/chatController")
 const walletController = require("../../controller/User/walletController")
 const userCouponController = require("../../controller/User/userCouponController")
+const brandController = require("../../controller/User/FilterController/brandController")
 // signUp Route
 
 router.post('/user-signup',userSignupLogin.SignUpPost)
@@ -46,8 +47,10 @@ router.route("/userAddProof").post(protect,userProfile.addProof)
 
 // Add bike from the user
 router.route("/rent-bike").post(upload.array('images'),protect,userAddBike.userAddBike);
+
 // displaying the all bikes
 router.route("/bikes").get(userDisplayBikes.displayBikeController)
+
 // search bikes
 router.route("/search-bikes").post(searchBikesController.searchBikes)
 
@@ -56,35 +59,36 @@ router.route('/all-bikes').get(protect,rentedBikeController.userAllBikeControlle
 
 router.route("/sort-bike-asc").get()
 
+// manage bikes
 router.route("/accepted-bikes").get(protect,rentedBikeController.userGetAcceptedBikes)
 router.route("/rejected-bikes").get(protect,rentedBikeController.userGetRejectedBikes)
 router.route("/pending-bikes").get(protect,rentedBikeController.userGetPendingBikes)
 
+// location
 router.route('/get-location').get(locationController.getLocations)
 
+// booking
 router.route("/booking-bike").post(bookingController.bikeBookingController)
-
 router.route("/booked-bikes").get(protect,getBookedBikeController.userGetBookedBikeController)
-
 router.route("/booking-success").post(protect,orderController.userCreateOrderController)
 
 // manage booking
 router.route("/cancel-booking").get(protect,cancelBikeOrderController.cancelBikeOrder)
 router.route("/end-booking").get(protect,endBikeOrderController.endBikeOrder)
-// coupons
 
+// coupons
 router.route("/user-coupons").get(protect,userCouponController.userGetCoupons)
 
 // wallet
-
 router.route("/get-wallet").get(protect,walletController.getWalletController)
 
 // chat
-
 router.route("/contacts").get(protect,chatContoller.userContactController)
-
 router.route("/add-message").post(protect,chatContoller.addMessageController)
-
 router.route("/get-all-messages").post(protect,chatContoller.getAllMessageController)
+
+// filter
+router.route("/brands").get(brandController.getBrands)
+router.route("/bike-with-brand").get(brandController.getBikeWithBrand)
 
 module.exports = router;

@@ -191,6 +191,20 @@ export const userGetBikeReducer =(state={},action)=>{
         searchLoading : false,
         bikesDataError : action.payload
       }
+    case userActionType.GET_BIKE_WITH_BRAND_REQUST:
+      return {
+        loading : true
+      }
+    case userActionType.GET_BIKE_WITH_BRAND_SUCCESS:
+      return {
+        loading : false,
+        bikesData : action.payload
+      }
+    case userActionType.GET_BIKE_WITH_BRAND_FAIL:
+      return {
+        loading : false,
+        brandBikeError : action.payload
+      }
     default :
       return state
   }
@@ -442,5 +456,26 @@ export const userGetWalletReducer =(state={},action)=>{
       }
     default:
       return state
+  }
+}
+
+export const getBrandsReducer =(state={},action)=>{
+  switch (action.type) {
+    case userActionType.GET_BRANDS_REQUEST:
+      return{
+        brandLoading:true
+      }
+    case userActionType.GET_BRANDS_SUCCESS:
+      return{
+        brandLoading:false,
+        brands : action.payload
+      }
+    case userActionType.GET_BRANDS_FAIL:
+      return{
+        brandLoading:false,
+        brandError : action.payload
+      }
+    default:
+      return state;
   }
 }

@@ -107,9 +107,6 @@ function RentBike() {
     return (
         <>
             <NavBar />
-         
-
-
             <Box sx={{ display: 'flex', justifyContent: 'center', width: "100%" }} >
 
                 <Box
@@ -124,6 +121,7 @@ function RentBike() {
                     {sucess ? <Alert severity="success">Done Bike Added !!!</Alert> : ''}
 
                     <div style={{ display: 'flex', flexDirection: 'row' }} >
+
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
@@ -135,6 +133,7 @@ function RentBike() {
                             onChange={(e) => setOwnerName(e.target.value)}
                             helperText={errors.ownerName && <div style={{ color: 'red' }}>Please enter the owner name</div>}
                         />
+
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
@@ -146,6 +145,7 @@ function RentBike() {
                             onChange={(e) => setBikeName(e.target.value)}
                             helperText={errors.bikeName && <div style={{ color: 'red' }}>Please enter the bike name</div>}
                         />
+
                         <TextField sx={{ mr: 2 }}
                             required
                             id="outlined-required"
@@ -159,6 +159,7 @@ function RentBike() {
                             helperText={errors.bikeModel && <div style={{ color: 'red' }}>Please enter the bike model</div>}
                         />
                     </div>
+                    
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
                             required

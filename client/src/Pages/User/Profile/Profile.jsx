@@ -95,7 +95,7 @@ function Profile() {
   return (
     <>
       <NavBar />
-      <div className="container rounded bg-white mb-5 ">
+      <div className="container rounded bg-white mb-5" >
         {
           modal ? <ModalBox closeModal={setModal} details={profileData} /> : ""
         }

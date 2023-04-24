@@ -23,6 +23,7 @@ import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import FilterOption from '../../../components/Filter/FilterOption';
 
 function TabPanel(props) {
 
@@ -124,9 +125,14 @@ function Bikes() {
     return (
         <>
             <NavBar />
+          
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginBottom: 50 }}>
                 <h1>Rent-A-Ride Bikes For You</h1>
             </Box>
+            <Box sx={{display:'flex'}}>
+            <FilterOption page={page}/>
+            <Box>
+
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                 <Box component='form' onSubmit={handleSubmit(submitHandler)}
                     sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '80%' }}
@@ -194,6 +200,8 @@ function Bikes() {
                 }
 
             </MDBPagination>
+            </Box>
+            </Box>
             <Footer />
         </>
     )

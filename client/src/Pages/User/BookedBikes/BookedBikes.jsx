@@ -64,7 +64,7 @@ function BookedBikes() {
     <>
       <NavBar />
       {/* <div> */}
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" >
         <Container >
           <Typography variant='h5'>Booked Bikes</Typography>
         </Container>

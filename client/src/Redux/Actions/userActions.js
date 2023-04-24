@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userCancelBookingAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { getBikeWithBrandAPI, getBrandsAPI, googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userCancelBookingAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 import { getAllUserContacts } from '../../Api/User/ApiCalls'
 
 
@@ -470,6 +470,45 @@ export const userGetWalletAction =()=>async(dispatch)=>{
     dispatch({
       type:userActionType.USER_GET_WALLET_FAIL,
       payload : error.response.data
+    })
+  })
+}
+
+export const getBrandsAction =()=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.GET_BRANDS_REQUEST
+  })
+
+  getBrandsAPI().then((data)=>{
+    dispatch({
+      type : userActionType.GET_BRANDS_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+     type:userActionType.GET_BRANDS_FAIL,
+     payload : error.data
+    })
+  })
+}
+
+export const getBikeWithBrandAction =(brand,page)=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.GET_BIKE_WITH_BRAND_REQUST
+  })
+
+  getBikeWithBrandAPI(brand,page).then((data)=>{
+    console.log(data.data,'data of brand dwith bike frontend');
+    dispatch({
+      type : userActionType.GET_BIKE_WITH_BRAND_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type:userActionType.GET_BIKE_WITH_BRAND_FAIL,
+      payload : error.data
     })
   })
 }

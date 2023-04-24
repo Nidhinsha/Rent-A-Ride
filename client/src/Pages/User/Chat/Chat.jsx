@@ -50,7 +50,7 @@ function Chat() {
   return (
     <>
     <NavBar/>
-      <Container>
+      <Container >
         <div className="container">
          
               <Contacts contacts={contacts} currentUser={user} changeChat={handleChatChange} />

@@ -19,20 +19,15 @@ function AllBikes({allBikes}) {
     const bikes = useSelector((state) => state.userGetBikeReducer)
     const { bikesDataLoading, bikesData, bikesDataError } = bikes
 
-
-    // useEffect(() => {
-    //     dispatch(userGetBikeAction())
-    // }, [])
-
     return (
         <>
             <Box>
-                <div className='d-flex flex-wrap justify-content-center'>
+                <div className='d-flex flex-wrap justify-content-between'>
                     {
                         bikesDataLoading ? <Loading /> :
                         allBikes?.data ? allBikes?.data.map((data, index) => {
                                 return (
-                                    <Card key={index} sx={{ height: 350, width: 350, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
+                                    <Card key={index} sx={{ height: 350, width: 275, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
                                         <CardActionArea>
                                             <Typography gutterBottom variant="h6" textAlign='center' >
                                                 {data.bikeName}

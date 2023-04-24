@@ -10,7 +10,7 @@ function Home() {
   return (
     <div>
      <Navbar/>
-     <SliderBanner/>
+     <SliderBanner />
      <SecondSection/>
      <ThirdSection/>
      <Footer/>
