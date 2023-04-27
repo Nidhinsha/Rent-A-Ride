@@ -203,8 +203,30 @@ export const userGetBikeReducer =(state={},action)=>{
     case userActionType.GET_BIKE_WITH_BRAND_FAIL:
       return {
         loading : false,
-        brandBikeError : action.payload
+        brandBikesDataError : action.payload
       }
+    default :
+      return state
+  }
+}
+
+export const homeBikeReducer = (state={},action)=>{
+  switch(action.type){
+    case userActionType.HOME_BIKE_REQUEST:
+      return {
+        loading : true
+      }
+    case userActionType.HOME_BIKE_SUCCESS:
+      return {
+        loading : false,
+        bikesData : action.payload
+      }
+    case userActionType.HOME_BIKE_FAIL:
+      return {
+        loading : false,
+        bikeDataError : action.payload
+      }
+    
     default :
       return state
   }

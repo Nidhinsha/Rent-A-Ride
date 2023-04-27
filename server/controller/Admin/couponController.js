@@ -1,13 +1,12 @@
 const couponSchema = require("../../models/couponSchema")
 
 exports.addCoupon =async(req,res)=>{
-    console.log(req.body,'body coupon');
     couponSchema.findOne({
         couponName : req.body.couponName
     })
     .then((couponData)=>{
         if(couponData){
-            res.status(400).json("Coupon Already exits !!")
+            res.status(400).json({message:"Coupon Already exits !!"})
         }else{
             couponSchema.create(req.body).then(()=>{
                 couponSchema.find().then((data)=>{
@@ -17,7 +16,7 @@ exports.addCoupon =async(req,res)=>{
         }
     })
     .catch((error)=>{
-        res.status(400).json("error in creation of coupon")
+        res.status(400).json({message:"error in creation of coupon"})
     })
 }
 
@@ -26,7 +25,7 @@ exports.getCoupons = async(req,res)=>{
         res.status(200).json(data)
     })
     .catch((error)=>{
-        res.status(400).json("error in finding coupons")
+        res.status(400).json({message:"error in finding coupons"})
     })
 }
 
@@ -49,7 +48,7 @@ exports.editCoupon = async(req,res)=>{
         })
     })
     .catch(()=>{
-        res.status(400).json("error in updation of coupon")
+        res.status(400).json({message:"error in updation of coupon"})
     })
 }
 
@@ -65,6 +64,6 @@ exports.deleteCoupon = async(req,res)=>{
         })
     })
     .catch(()=>{
-        res.status(400).json("error in coupon deletion !!")
+        res.status(400).json({message:"error in coupon deletion !!"})
     })
 }

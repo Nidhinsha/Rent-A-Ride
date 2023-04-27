@@ -47,15 +47,7 @@ function SecondSection() {
             <Container maxWidth="lg" sx={{mt:5}}>
                 <Grid  className='d-flex flex-wrap justify-content-center' sx={{gap:'25px'}} >
                     <BikeCards/>
-                    <BikeCards/>
-                    <BikeCards/>
                 </Grid>
-                {/* <Container maxWidth="lg">
-                    <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-                        <Button variant="outlined">Start your search</Button>
-                    </Box>
-                </Container> */}
-
             </Container>
         </Container>
     )

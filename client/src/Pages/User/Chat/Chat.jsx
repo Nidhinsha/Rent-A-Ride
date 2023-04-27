@@ -72,14 +72,15 @@ const Container = styled.div`
     width: 100vw;
     display: flex;
     flex-direction: column;
+    border-radius:50px;
     justify-content: center;
     gap: 1rem;
     align-items: center;
     
     .container {
       padding:0;
-      height: 85vh;
-      width: 85vw;
+      height: 100vh;
+      width: 100vw;
       background-color: #e3e3e3;
       display: grid;
       grid-template-columns: 25% 75%;

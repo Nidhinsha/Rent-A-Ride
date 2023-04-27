@@ -20,8 +20,10 @@ const chatContoller = require("../../controller/User/chatController/chatControll
 const walletController = require("../../controller/User/walletController")
 const userCouponController = require("../../controller/User/userCouponController")
 const brandController = require("../../controller/User/FilterController/brandController")
-// signUp Route
+const homeController = require("../../controller/User/homeController")
 
+
+// signUp Route
 router.post('/user-signup',userSignupLogin.SignUpPost)
 
 router.post('/user-login',userSignupLogin.LoginPost)
@@ -51,13 +53,14 @@ router.route("/rent-bike").post(upload.array('images'),protect,userAddBike.userA
 // displaying the all bikes
 router.route("/bikes").get(userDisplayBikes.displayBikeController)
 
+// displaying bike for home page
+router.route("/home-bikes").get(homeController.homeBikeController)
+
 // search bikes
 router.route("/search-bikes").post(searchBikesController.searchBikes)
 
 // displaying user rented bikes like rejected and accepted and in that page the edit of that item
 router.route('/all-bikes').get(protect,rentedBikeController.userAllBikeController)
-
-router.route("/sort-bike-asc").get()
 
 // manage bikes
 router.route("/accepted-bikes").get(protect,rentedBikeController.userGetAcceptedBikes)

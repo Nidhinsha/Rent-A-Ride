@@ -56,6 +56,7 @@ function AllBikes({allBikes}) {
                                 )
                             }) : ""
                     }
+                   
                 </div>
             </Box>
         </>

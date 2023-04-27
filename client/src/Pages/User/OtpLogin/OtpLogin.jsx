@@ -55,7 +55,7 @@ function OtpLogin() {
         toast.success("OTP sended successfully!");
       })
       .catch((error) => {
-        console.log('otp error', error);
+        toast.error("an error occured!");
 
       });
   }
@@ -65,18 +65,14 @@ function OtpLogin() {
     window.confirmationResult
       .confirm(otp)
       .then(async (result) => {
-        console.log('result', result);
-        console.log("mobile", result.user.phoneNumber);
         const phone = result.user.phoneNumber.substring(3)
-        console.log("MOBILE", phone);
 
         dispatch(userOtpLoginAction(phone))
         toast.success('Logged in successfully!')
 
       })
       .catch((err) => {
-        console.log(err);
-
+         toast.error("an error occured!");
       });
   }
 
@@ -86,9 +82,6 @@ function OtpLogin() {
     <div className='otp-login'>
       <div id='recaptcha-container'></div>
       <Toaster toastOptions={{ duration: 4000 }}></Toaster>
-
-
-
 
       <div className='login-box'>
 

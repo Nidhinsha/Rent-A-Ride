@@ -58,15 +58,21 @@ exports.searchBikes = (req,res)=>{
                 })
                 .then((count) => {
                         pageCount = Math.ceil(count / itemsPerPage)
-                        const response = {
-                            data: data,
-                            pagination: {
-                                count: count,
-                                pageCount: pageCount,
-                                currentPage: currentPage
+                        if (data.length === 0) {
+                            res.status(404).json({
+                              message: "No matching results were found",
+                            });
+                        }else{
+                            const response = {
+                                data: data,
+                                pagination: {
+                                    count: count,
+                                    pageCount: pageCount,
+                                    currentPage: currentPage
+                                }
                             }
+                            res.status(200).json(response)
                         }
-                        res.status(200).json(response)
                     })
                 .catch((error) => {
                     res.status(400).json({ message: "cloud'nt fetch the data from the count in search " })

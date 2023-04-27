@@ -16,7 +16,7 @@ const editBikeController = require("../../controller/Admin/bikeController/editBi
 const couponController = require("../../controller/Admin/couponController")
 const bookingController = require("../../controller/Admin/bookingController")
 const dashboardController = require("../../controller/Admin/DashboardController/dashboardController")
-
+const bikeReportController = require("../../controller/Admin/bikeReportController/bikeReportController")
 const { protect } = require("../../Middlewares/verifyToken")
 
 
@@ -48,4 +48,5 @@ router.route("/view-booked-bike").get(protect,bookingController.adminGetBookedBi
 
 router.route("/get-dashboard-info").get(protect,dashboardController.getDashboardData)
 
+router.route("/bikes-report").get(protect,bikeReportController.bikesReportData)
 module.exports = router

@@ -70,7 +70,10 @@ function ProfileDropDown() {
             aria-expanded={open ? 'true' : undefined}
           >
             <Avatar sx={{ height: 32 }}>
-              <img src={userLoginDetails.photo} alt="user profile"   style={{ borderRadius: '50%', width: '100%', height: '100%' }} 
+              <img src={userLoginDetails?.photo
+                        ? userLoginDetails?.photo
+                        :"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+              } alt="user profile"   style={{ borderRadius: '50%', width: '100%', height: '100%' }} 
               onError={(e) => {
                 e.target.src = '/path/to/default/image.png'; // Set default image path here
               }}

@@ -2,12 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Container } from '@mantine/core';
 import { Box, styled } from '@mui/material'
 import SideBar from '../../../components/SideBar/SideBar';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
-import BasicModal from '../../../components/BasicModal/BasicModal';
 import AddLocationModal from '../../../components/Modal/AddLocationModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminDeleteLocation, adminGetLocation } from '../../../Redux/Actions/adminActions';
@@ -27,18 +22,6 @@ function Location() {
         ...theme.mixins.toolbar,
     }));
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        // border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
-
     const [open, setOpen] = React.useState(false);
     const [editModalOpen, setEditModalOpen] = React.useState(false);
     const [locationId, setLocationId] = useState('')
@@ -46,30 +29,25 @@ function Location() {
 
     const dispatch = useDispatch()
 
-    const location = useSelector((state) => state.adminGetLocationReducer.location)
-    console.log('location page',location);
+    const locationData = useSelector((state) => state.adminGetLocationReducer?.location)
 
     const addLocation = () => {
         setOpen(true)
     }
 
-    const handleSubmit = () => {
-        console.log('hi')
-    }
+
     const handleEdit = (id) => {
-       
         setEditModalOpen(true);
         setLocationId(id)
       
     }
     const handleDelete = (id) => {
         dispatch(adminDeleteLocation(id))
-       
     }
 
     useEffect(() => {
         dispatch(adminGetLocation())
-    }, [dispatch, adminGetLocation])
+    }, [dispatch])
 
 
     return (
@@ -100,11 +78,11 @@ function Location() {
 
                             {/* <div className="card"> */}
                             {
-                                location ?
+                                locationData ?
 
-                                    <DataTable value={location} tableStyle={{ minWidth: '60rem' }} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} resizableColumns showGridlines>
+                                    <DataTable value={locationData} tableStyle={{ minWidth: '60rem' }} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} resizableColumns showGridlines>
 
-                                        <Column field="location" header="Model" sortable></Column>
+                                        <Column field="location" header="Location" sortable></Column>
                                         <Column header="Action" body={(rowData) => (
                                             <div>
                                                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>

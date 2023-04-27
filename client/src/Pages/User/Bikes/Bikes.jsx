@@ -65,7 +65,9 @@ TabPanel.propTypes = {
 const schema = yup.object().shape({
     search: yup
         .string("search term should be string")
-        .required("searcg term is required")
+        .required("search term is required")
+        .trim()
+        .test('contains-no-spaces', 'Search cannot contain only spaces', value => value.trim() !== ''),
 })
 
 
@@ -85,7 +87,8 @@ function Bikes() {
     };
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
-    const { bikesDataLoading, bikesData, bikesDataError } = bikes
+    const { bikesDataLoading, bikesData, bikesDataError,brandBikesDataError } = bikes
+
 
     const handlePrev = () => {
         dispatch(userGetBikeAction(bikesData.pagination.currentPage - 1))
@@ -107,9 +110,6 @@ function Bikes() {
         }
     }, [bikesData])
 
-
-
-    // const [searchTerm, setSearchTerm] = useState('')
 
     const {
         register,
@@ -165,8 +165,7 @@ function Bikes() {
                     />
                 </Box>
             </Box>
-            
-
+          
             <Grid container spacing={2}>
                 <Grid item xs={6} md={3}>
                     <Item sx={{boxShadow:3}}>
@@ -183,6 +182,12 @@ function Bikes() {
                                 <Tab label="High to Low" />
                             </Tabs>
                         </Box>
+                        {
+                            bikesDataError && <Typography variant='h5' sx={{color:'red'}}>{bikesDataError}</Typography>
+                        }{
+
+                        brandBikesDataError && <Typography variant='h5' sx={{color:'red'}}>{brandBikesDataError}</Typography>
+                        }
                         <TabPanel value={value} index={0}>
                             <AllBikes allBikes={bikesData} />
                         </TabPanel>
@@ -216,18 +221,6 @@ function Bikes() {
                     </Item>
                 </Grid>
             </Grid>
-
-            {/* <Box sx={{ display: 'flex' }}> */}
-            
-               
-
-
-                    
-                   
-               
-
-            {/* </Box> */}
-
             <Footer />
         </>
     )

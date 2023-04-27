@@ -61,7 +61,6 @@ function Login() {
     try {
       console.log("form", data);
       dispatch(userLogin(email, password))
-      // navigate('/')
 
     } catch (error) {
 
@@ -72,10 +71,10 @@ function Login() {
     signInWithPopup(auth, provider).then((data) => {
       const fullName = data.user.displayName
       const [firstName, lastName] = fullName.split(' ')
-      // console.log('google data',data.user.displayName,data.user.email,data.user.photoURL,data.user.phoneNumber,firstName,lastName);
+     
       dispatch(googleSignupAction(firstName, lastName, data.user.email, data.user.phoneNumber, data.user.photoURL))
       navigate("/")
-      console.log('google data', data);
+
     })
   }
 

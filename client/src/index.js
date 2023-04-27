@@ -22,11 +22,8 @@ import "primeicons/primeicons.css";
 const element = document.getElementById("root")
 const root = ReactDOM.createRoot(element)
 root.render(
-    // <BrowserRouter>
     <Provider store={store}>
-      {/* <React.StrictMode> */}
         <App />
-      {/* </React.StrictMode> */}
     </Provider>
-  // </BrowserRouter>
+
 )

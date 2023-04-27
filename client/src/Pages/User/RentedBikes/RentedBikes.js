@@ -21,6 +21,10 @@ import TableRow from '@mui/material/TableRow';
 import { Button } from '@mui/material';
 import Loading from '../../../components/Loading/Loading';
 import Footer from '../../../components/Home/Footer/Footer';
+import AllRentedBikes from '../../../components/RentedBikes/AllRentedBikes';
+import RejectedReq from '../../../components/RentedBikes/RejectedReq';
+import AcceptedReq from '../../../components/RentedBikes/AcceptedReq';
+import PendingReq from '../../../components/RentedBikes/PendingReq';
 
 function TabPanel(props) {
 
@@ -83,26 +87,23 @@ function RentedBikes() {
     }
 
     const getRejectedData = () => {
-        console.log("getAccepted");
         dispatch(userGetRejectedBikes())
     }
 
-
-    
 
     const rentedBikes = useSelector((state) => state.userGetAllRentedBikesReducer.rentedBikesData)
 
     const rejected = useSelector((state) => state.userGetRejectedBikeReducer.rejectedBikesData)
 
     const pending = useSelector((state) => state.userGetPendingBikeReducer.pendingBikesData)
-    console.log("pendign", pending);
 
     const accepted = useSelector((state) => state.userGetAcceptedBikeReducer.acceptedBikesData)
-    // console.log(accepted.length,'rrrr');
+
 
     useEffect(() => {
         dispatch(userGetAllRentedBikes())
     }, [dispatch])
+
     return (
         <>
             <NavBar />
@@ -124,229 +125,19 @@ function RentedBikes() {
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Sl No</TableCell>
-                                    <TableCell align="center">Image</TableCell>
-                                    <TableCell align="center">Bike Name</TableCell>
-                                    <TableCell align="center">Status</TableCell>
-                                 
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              
-                                {
-                                    rentedBikes ? rentedBikes.map((x, i) => {
-                                        return (
-                                            <TableRow
-                                                key={i + 1}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell component="th" scope="row">
-                                                    {x.bikeName}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <Figure>
-                                                        <Figure.Image
-                                                            width={171}
-                                                            height={180}
-                                                            alt="171x180"
-                                                            src={x.photo[0]}
-                                                        />
-                                                        <Figure.Caption>
-                                                         
-                                                        </Figure.Caption>
-                                                    </Figure>
-                                                </TableCell>
-                                                <TableCell align="center">{x.brand}</TableCell>
-                                                <TableCell align="center">{x.status}</TableCell>
-                                              
-                                            </TableRow>
-                                        )
-                                    }) : "No Data Available..."
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    <AllRentedBikes rentedBikes={rentedBikes}/>
                 </TabPanel>
-
 
                 <TabPanel value={value} index={1}>
-                   
-                          
-                        <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-
-                           
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Sl No</TableCell>
-                                    <TableCell align="center">Image</TableCell>
-                                    <TableCell align="center">Bike Name</TableCell>
-                                    <TableCell align="center">Status</TableCell>
-                                
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                
-                             
-                                {
-                                 accepted && accepted.length > 0 ? accepted.map((x, i) => {
-                                        return (
-                                            <TableRow
-                                                key={i + 1}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell component="th" scope="row">
-                                                    {x.bikeName}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <Figure>
-                                                        <Figure.Image
-                                                            width={171}
-                                                            height={180}
-                                                            alt="171x180"
-                                                            src={x.photo[0]}
-                                                        />
-                                                        <Figure.Caption>
-                                                          
-                                                        </Figure.Caption>
-                                                    </Figure>
-                                                </TableCell>
-                                                <TableCell align="center">{x.brand}</TableCell>
-                                                <TableCell align="center">{x.status}</TableCell>
-                                             
-                                            </TableRow>
-                                        )
-                                    }) : (
-                                        <TableRow>
-                                        <TableCell colSpan={4} align="center">
-                                          No data available
-                                        </TableCell>
-                                      </TableRow>
-                                    )
-                                }
-
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                     
+                  <AcceptedReq acceptedReq={accepted}/>
                 </TabPanel>
-
 
                 <TabPanel value={value} index={2}>
-                <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Sl No</TableCell>
-                                    <TableCell align="center">Image</TableCell>
-                                    <TableCell align="center">Bike Name</TableCell>
-                                    <TableCell align="center">Status</TableCell>
-                                    {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {/* {rows.map((row) => ( */}
-                                {
-                                   pending && pending.length > 0 ? pending.map((x, i) => {
-                                        return (
-                                            <TableRow
-                                                key={i + 1}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell component="th" scope="row">
-                                                    {x.bikeName}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <Figure>
-                                                        <Figure.Image
-                                                            width={171}
-                                                            height={180}
-                                                            alt="171x180"
-                                                            src={x.photo[0]}
-                                                        />
-                                                        <Figure.Caption>
-                                                            {/* Nulla vitae elit libero, a pharetra augue mollis interdum. */}
-                                                        </Figure.Caption>
-                                                    </Figure>
-                                                </TableCell>
-                                                <TableCell align="center">{x.brand}</TableCell>
-                                                <TableCell align="center">{x.status}</TableCell>
-                                                {/* <TableCell align="right">{row.protein}</TableCell> */}
-                                            </TableRow>
-                                        )
-                                    }) : (
-                                        <TableRow>
-                                        <TableCell colSpan={4} align="center">
-                                          No data available
-                                        </TableCell>
-                                      </TableRow>
-                                    )
-                                }
-
-                                {/* ))} */}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                <PendingReq pendingReq={pending}/>
                 </TabPanel>
-                <TabPanel value={value} index={3}>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Sl No</TableCell>
-                                    <TableCell align="center">Image</TableCell>
-                                    <TableCell align="center">Bike Name</TableCell>
-                                    <TableCell align="center">Status</TableCell>
-                                    {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {/* {rows.map((row) => ( */}
-                                {
-                                   rejected && rejected.length > 0 ? rejected.map((x, i) => {
-                                        return (
-                                            <TableRow
-                                                key={i + 1}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell component="th" scope="row">
-                                                    {x.bikeName}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <Figure>
-                                                        <Figure.Image
-                                                            width={171}
-                                                            height={180}
-                                                            alt="171x180"
-                                                            src={x.photo[0]}
-                                                        />
-                                                        <Figure.Caption>
-                                                            {/* Nulla vitae elit libero, a pharetra augue mollis interdum. */}
-                                                        </Figure.Caption>
-                                                    </Figure>
-                                                </TableCell>
-                                                <TableCell align="center">{x.brand}</TableCell>
-                                                <TableCell align="center">{x.status}</TableCell>
-                                                {/* <TableCell align="right">{row.protein}</TableCell> */}
-                                            </TableRow>
-                                        )
-                                    }) : (
-                                        <TableRow>
-                                        <TableCell colSpan={4} align="center">
-                                          No data available
-                                        </TableCell>
-                                      </TableRow>
-                                    )
-                                }
 
-                                {/* ))} */}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                <TabPanel value={value} index={3}>
+                <RejectedReq rejectedReq={rejected} />
                 </TabPanel>
             </Box>
             <Footer/>

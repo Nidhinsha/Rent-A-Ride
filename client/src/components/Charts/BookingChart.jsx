@@ -1,6 +1,7 @@
 import React from 'react'
 import {Bar} from "react-chartjs-2"
 import {Chart as ChartJS,BarElement,CategoryScale,LinearScale,Tooltip,Legend } from "chart.js"
+import {Box, Typography} from "@mui/material"
 
 ChartJS.register(
     BarElement,
@@ -10,7 +11,7 @@ ChartJS.register(
     Legend
 )
 
-function BookingChart({completed,onRide,pending,cancelled,rejected,accepted}) {
+function BookingChart({completed,onRide,pending,cancelled,rejected,accepted,title}) {
     const data = {
         labels :[''],
         datasets :[
@@ -35,13 +36,6 @@ function BookingChart({completed,onRide,pending,cancelled,rejected,accepted}) {
                 borderColor :  'rgb(255, 205, 86)',
                 borderWidth : 1
             },
-            // {
-            //     label : 'Rejected',
-            //     data:[rejected],
-            //     backgroundColor : 'rgba(255, 159, 64, 0.2)',
-            //     borderColor :  'rgb(255, 159, 64)',
-            //     borderWidth : 1
-            // },
             {
                 label : 'Cancelled',
                 data:[cancelled],
@@ -60,10 +54,16 @@ function BookingChart({completed,onRide,pending,cancelled,rejected,accepted}) {
     }
   return (
     <>
+    <Box sx={{ width:'50vw',mr:5,}}>
+      <Typography variant='h5'>{title}</Typography>
+      <Box sx={{mt:5}}>
       <Bar
         data={data}
         options={options}
       />
+
+      </Box>
+    </Box>
     </>
   )
 }

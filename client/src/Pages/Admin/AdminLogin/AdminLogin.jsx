@@ -55,12 +55,11 @@ function AdminLogin() {
     const password = data.password
 
     try {
-      console.log("form", data);
       dispatch(adminLogin(email, password))
       // navigate('/')
 
     } catch (error) {
-
+      console.log(error,'error in login');
     }
   }
 

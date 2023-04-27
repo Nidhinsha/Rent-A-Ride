@@ -3,28 +3,23 @@ const userSchema = require("../../models/userSchema")
 
 exports.profileGet = async (req,res)=>{
     try {
-        console.log(req.query.id,'profile query');
         userSchema.findOne({_id : req.query.id}).then((data)=>{
             res.status(200).json(data)
            
         })
     } catch (error) {
-        // console.log(error,'user profile feching eror');
+        res.status(400).json({message:"error in finding user profile"})
     }
 }
 
 exports.addPhoto = async (req, res) => {
     let id = req.query.id;
     let pic = req.body.image;
-    console.log(id + "THIS IS THE PHOYO");
-    console.log("TJHO O _ JAFDKAJSFHD FJLKLJKDSHF KHFJKLSDH FJSKDHF ");
-    console.log(req.body);
   
     try {
       userSchema
         .updateOne({ _id: id }, { $set: { photo: pic } })
         .then((result) => {
-          console.log(result,'updated');
 
           userSchema.findOne({_id : id}).then((data)=>{
             const {id,firstName,lastName,phone,email,status,photo,proof} = data
@@ -40,8 +35,6 @@ exports.addPhoto = async (req, res) => {
               token : generateToken(id)
             }
 
-            console.log(result,'result is the user profile update data fetch');
-
             res.status(200).json(result)
           })
         })
@@ -49,8 +42,7 @@ exports.addPhoto = async (req, res) => {
           res.status(400).json(err);
         });
     } catch (error) {
-      // res.status(401).json(error)
-      console.log('error',error,'eroor in udpate prodile');
+     res.status(400).json({message:"error while adding profile image"})
     }
   };
 
@@ -58,14 +50,11 @@ exports.addPhoto = async (req, res) => {
     const id = req.query.id
     const theProof = req.body.image
 
-    console.log(id,'the proof id');
-    console.log(req.body,'the req bidy');
 
     try {
       userSchema
         .updateOne({_id : id},{$set : {proof : theProof}})
         .then((result)=>{
-          console.log(result,'the proof reult');
 
           userSchema
             .findOne({_id : id}).then((data)=>{
@@ -91,50 +80,47 @@ exports.addPhoto = async (req, res) => {
                 proof,
                 token : generateToken(id)
               }
-
-              console.log(result,'the result after the proof added');
-
               res.status(200).json(result)
             })
         })
     } catch (error) {
-      res.status(400).json(error)
-      console.log('error in the prrof side',error);
+      res.status(400).json({message:"error in adding proof "})
+     
     }
 
   }
 
   exports.editProfile = async(req,res)=>{
-    console.log(req.body,'the data for edit');
-    console.log(req.query.id,'id');
-
-    userSchema.updateOne({_id : req.query.id},
-      {
-        $set : {
-          firstName : req.body.firstName,
-          lastName : req.body.lastName,
-          phone : req.body.phone,
-          email : req.body.email
-        }
-      }).then(()=>{
-        userSchema.findOne({_id : req.query.id}).then((data)=>{
-          console.log("updated data",data);
-
-          const {id,firstName,lastName,phone,email,status,photo} = data
-
-          const result = {
-            id,
-            firstName,
-            lastName,
-            email,
-            phone,
-            photo,
-            status,
-            token : generateToken(id)
+    try {
+      userSchema.updateOne({_id : req.query.id},
+        {
+          $set : {
+            firstName : req.body.firstName,
+            lastName : req.body.lastName,
+            phone : req.body.phone,
+            email : req.body.email
           }
-
-          console.log('result of user ipdate',result);
-          res.status(200).json(result)
+        }).then(()=>{
+          userSchema.findOne({_id : req.query.id}).then((data)=>{
+  
+            const {id,firstName,lastName,phone,email,status,photo} = data
+  
+            const result = {
+              id,
+              firstName,
+              lastName,
+              email,
+              phone,
+              photo,
+              status,
+              token : generateToken(id)
+            }
+            res.status(200).json(result)
+          })
         })
-      })
+    } catch (error) {
+      res.status(400).json({message:"error while editing profile"})
+    }
+
+    
   }

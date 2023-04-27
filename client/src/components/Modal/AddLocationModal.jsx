@@ -38,7 +38,6 @@ function AddLocationModal({ open, onClose }) {
         const location = data.location
 
         dispatch(adminAddLocationAction(location))
-        console.log('kk', data.location);
         onClose(true)
     }
 

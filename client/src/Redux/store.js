@@ -21,7 +21,8 @@ import {
   userGetContactReducer,
   userGetCouponReducer,
   userGetWalletReducer,
-  getBrandsReducer
+  getBrandsReducer,
+  homeBikeReducer
 
 
 } from "./Reducers/userReducers";
@@ -36,7 +37,8 @@ import {
   adminRentRequestBikeReducer,
   adminCouponsReducer,
   adminGetBookedBikeReducer,
-  getDashboardInfoReducer
+  getDashboardInfoReducer,
+  bikeReportDataReducer
 
 
 } from './Reducers/adminReducers'
@@ -52,6 +54,7 @@ const reducer = combineReducers({
   userProofUploadReducer:userProofUploadReducer,
   
   userGetBikeReducer: userGetBikeReducer,
+  homeBikeReducer:homeBikeReducer,
   userGetAllRentedBikesReducer : userGetAllRentedBikesReducer,
   userGetAcceptedBikeReducer : userGetAcceptedBikeReducer,
   userGetPendingBikeReducer : userGetPendingBikeReducer,
@@ -86,6 +89,7 @@ const reducer = combineReducers({
 
   getDashboardInfoReducer:getDashboardInfoReducer,
   
+  bikeReportDataReducer:bikeReportDataReducer
 });
 
 

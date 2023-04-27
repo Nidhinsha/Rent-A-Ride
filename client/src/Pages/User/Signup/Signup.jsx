@@ -97,7 +97,7 @@ function Signup() {
 
     try {
       dispatch(userSignup(firstName, lastName, email, phone, password, referalCode))
-      navigate('/login')
+      // navigate('/login')
 
     } catch (error) {
 

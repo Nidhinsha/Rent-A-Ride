@@ -12,6 +12,8 @@ import CompletedRides from '../../../components/BookedBikes/CompletedRides';
 import PendingRides from '../../../components/BookedBikes/PendingRides';
 import CancelledRides from '../../../components/BookedBikes/CancelledRides';
 import PropTypes from 'prop-types';
+import ErrorMessage from '../../../components/Alert/Error';
+import Loading from "../../../components/Loading/Loading"
 
 function TabPanel(props) {
 
@@ -51,13 +53,13 @@ function BookedBikes() {
   };
 
   const userId = JSON.parse(localStorage.getItem("userInfo")).id
-  const bookedBike = useSelector((state) => state.userGetBookedBikeReducer.bookedBikeData)
+  const {bookedBikeData,getBookedBikeLoading,bookedBikeDataError} = useSelector((state) => state.userGetBookedBikeReducer)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(userGetBookedBikeAction(userId))
-  }, [])
+  }, [dispatch])
 
 
   return (
@@ -68,7 +70,14 @@ function BookedBikes() {
         <Container >
           <Typography variant='h5'>Booked Bikes</Typography>
         </Container>
+        {
+            bookedBikeDataError && <ErrorMessage bookedBikeDataError={bookedBikeDataError} />
+        }
+        {
+          getBookedBikeLoading ? <Loading/>
+          :
         <Box sx={{ width: '100%' }}>
+          
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs aria-label="basic tabs example" value={value} onChange={handleChange} centered>
               <Tab label="All Rides" />
@@ -78,24 +87,25 @@ function BookedBikes() {
               <Tab label="Cancel Ride" />
             </Tabs>
           </Box>
+          
           <TabPanel value={value} index={0}>
-            <AllRides data={bookedBike} />
+            <AllRides data={bookedBikeData} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <OnRides data={bookedBike} />
+            <OnRides data={bookedBikeData} />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <CompletedRides data={bookedBike} />
+            <CompletedRides data={bookedBikeData} />
           </TabPanel>
           <TabPanel value={value} index={3}>
-            <PendingRides data={bookedBike} />
+            <PendingRides data={bookedBikeData} />
           </TabPanel>
           <TabPanel value={value} index={4}>
-            <CancelledRides data={bookedBike} />
+            <CancelledRides data={bookedBikeData} />
           </TabPanel>
         </Box>
-        <Container fixed sx={{ mt: 1 }} style={{ maxWidth: '100rem' }}>
-        </Container>
+        }
+        
       </Container>
       <Footer />
     </>

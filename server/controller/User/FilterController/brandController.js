@@ -21,7 +21,6 @@ exports.getBikeWithBrand = async (req, res) => {
     const brand = req.query.brand
     const userId = req.query.id
     const color = req.query.color
-    console.log(typeof req.query.color, req.query.color, 'colcolcocl');
 
     try {
         if (userId !== "undefined") {
@@ -81,23 +80,29 @@ exports.getBikeWithBrand = async (req, res) => {
                         })
                             .then((count) => {
                                 pageCount = Math.ceil(count / itemsPerPage)
-                                const response = {
-                                    data: data,
-                                    pagination: {
-                                        count: count,
-                                        pageCount: pageCount,
-                                        currentPage: currentPage
+                                if (data.length === 0) {
+                                    res.status(404).json({
+                                      message: "No matching results were found",
+                                    });
+                                }else{
+                                    const response = {
+                                        data: data,
+                                        pagination: {
+                                            count: count,
+                                            pageCount: pageCount,
+                                            currentPage: currentPage
+                                        }
                                     }
+                                    res.status(200).json(response)
                                 }
-                                res.status(200).json(response)
-                                console.log(response,'1 if');
+                                
                             })
                             .catch((error) => {
-                                res.status(400).json({ message: "cloud'nt fetch the data from the count" })
+                                res.status(400).json({ message: "couldn't fetch the data from the count" })
                             })
                     })
                     .catch((error) => {
-                        res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
+                        res.status(400).json({ message: "couldn't fetch the data from the branded bike" })
                     })
 
             } else if (brand !== null && color === "null") {
@@ -141,23 +146,28 @@ exports.getBikeWithBrand = async (req, res) => {
                         })
                             .then((count) => {
                                 pageCount = Math.ceil(count / itemsPerPage)
-                                const response = {
-                                    data: data,
-                                    pagination: {
-                                        count: count,
-                                        pageCount: pageCount,
-                                        currentPage: currentPage
+                                if (data.length === 0) {
+                                    res.status(404).json({
+                                      message: "No matching results were found",
+                                    });
+                                }else{
+                                    const response = {
+                                        data: data,
+                                        pagination: {
+                                            count: count,
+                                            pageCount: pageCount,
+                                            currentPage: currentPage
+                                        }
                                     }
+                                    res.status(200).json(response)
                                 }
-                                res.status(200).json(response)
-                                console.log(response,'1 else if');
                             })
                             .catch((error) => {
-                                res.status(400).json({ message: "cloud'nt fetch the data from the count" })
+                                res.status(400).json({ message: "couldn't fetch the data from the count" })
                             })
                     })
                     .catch((error) => {
-                        res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
+                        res.status(400).json({ message: "couldn't fetch the data from the branded bike" })
                     })
             }
         } else if ( userId === "undefined") {
@@ -200,23 +210,28 @@ exports.getBikeWithBrand = async (req, res) => {
                         })
                             .then((count) => {
                                 pageCount = Math.ceil(count / itemsPerPage)
-                                const response = {
-                                    data: data,
-                                    pagination: {
-                                        count: count,
-                                        pageCount: pageCount,
-                                        currentPage: currentPage
+                                if (data.length === 0) {
+                                    res.status(404).json({
+                                      message: "No matching results were found",
+                                    });
+                                }else{
+                                    const response = {
+                                        data: data,
+                                        pagination: {
+                                            count: count,
+                                            pageCount: pageCount,
+                                            currentPage: currentPage
+                                        }
                                     }
+                                    res.status(200).json(response)
                                 }
-                                res.status(200).json(response)
-                                console.log(response,'2 if');
                             })
                             .catch((error) => {
-                                res.status(400).json({ message: "cloud'nt fetch the data from the count" })
+                                res.status(400).json({ message: "couldn't fetch the data from the count" })
                             })
                     })
                     .catch((error) => {
-                        res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
+                        res.status(400).json({ message: "couldn't fetch the data from the branded bike" })
                     })
 
             } else if (brand !== null && color === "null") {
@@ -247,23 +262,28 @@ exports.getBikeWithBrand = async (req, res) => {
                         )
                             .then((count) => {
                                 pageCount = Math.ceil(count / itemsPerPage)
-                                const response = {
-                                    data: data,
-                                    pagination: {
-                                        count: count,
-                                        pageCount: pageCount,
-                                        currentPage: currentPage
+                                if (data.length === 0) {
+                                    res.status(404).json({
+                                      message: "No matching results were found",
+                                    });
+                                }else{
+                                    const response = {
+                                        data: data,
+                                        pagination: {
+                                            count: count,
+                                            pageCount: pageCount,
+                                            currentPage: currentPage
+                                        }
                                     }
+                                    res.status(200).json(response)
                                 }
-                                res.status(200).json(response)
-                                console.log(response,'2 elseif');
                             })
                             .catch((error) => {
-                                res.status(400).json({ message: "cloud'nt fetch the data from the count" })
+                                res.status(400).json({ message: "couldn't fetch the data from the count" })
                             })
                     })
                     .catch((error) => {
-                        res.status(400).json({ message: "cloud'nt fetch the data from the branded bike" })
+                        res.status(400).json({ message: "couldn't fetch the data from the branded bike" })
                     })
             }
         }

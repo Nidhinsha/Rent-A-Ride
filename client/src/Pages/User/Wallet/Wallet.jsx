@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import NavBar from '../../../components/NavBar/NavBar';
 import Footer from '../../../components/Home/Footer/Footer';
 import WalletTable from '../../../components/Table/WalletTable';
+import { Center } from '@mantine/core';
 
 function Wallet() {
     const location = useLocation()
@@ -22,7 +23,13 @@ function Wallet() {
                 </Box>
                 <Divider />
                 <Box>
-                    <WalletTable walletHistory={walletHistory} />
+                    {
+                        walletHistory 
+                        ? <WalletTable walletHistory={walletHistory} />
+                        : <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <img src={require('../../../assests/images/walletHistroy.jpg')} alt="wallet history" style={{ maxWidth: '100%', maxHeight: '100%', width: '300px', height: '300px' }}/>
+                        </Box>
+                    }
                 </Box>
             </Container>
             <Footer />

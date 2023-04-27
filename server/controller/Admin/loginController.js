@@ -18,11 +18,11 @@ exports.adminLogin = async (req, res) => {
                     }
                     res.status(200).json(details)
                 } else {
-                    res.status(401).json("Invalid Password")
+                    res.status(401).json({message:"Invalid Password"})
                 }
             })
         }else{
-            res.status(401).json("Admin Not Valid")
+            res.status(401).json({message:"Admin Not Valid"})
         }
     })
 }

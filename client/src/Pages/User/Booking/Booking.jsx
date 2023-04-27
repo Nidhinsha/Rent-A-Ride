@@ -161,9 +161,9 @@ function Booking() {
       if (walletAmount.walletAmount >= totalAmount) {
         setWalletError(false)
         userBookingBikeAPI(walletBookingData).then((data) => {
-          toast.success("🌟🌟🌟 booking successfull ")
+          toast.success("booking successfull ")
           setTimeout(() => {
-            navigate('/wallet')
+            navigate('/booked-bike')
           }, 1500)
         })
       } else {

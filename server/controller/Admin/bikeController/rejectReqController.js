@@ -2,18 +2,22 @@ const bikeSchema = require("../../../models/bikeSchema")
 
 
 exports.rejectReqController = async(req,res)=>{
-
-    bikeSchema.updateOne({_id : req.query.id},
-        {
-            $set :{
-                status : "rejected"
-            }
-        }).then(()=>{
-            bikeSchema.find({
-               status :"pending"
-            }).then((data)=>{
-                console.log('pending data in reject',data);
-                res.status(200).json(data)
+    try {
+      await  bikeSchema.updateOne({_id : req.query.id},
+            {
+                $set :{
+                    status : "rejected"
+                }
             })
-        })
+            
+            const pendingData = await bikeSchema.find({
+                   status :"pending"
+                })
+            res.status(200).json(pendingData)
+           
+    } catch (error) {
+        res.status(500).json({message:"error in rejecting user"})
+    }
+
+   
 }

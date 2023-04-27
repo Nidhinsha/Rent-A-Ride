@@ -1,6 +1,7 @@
 import Carousel from 'react-bootstrap/Carousel';
 
 function SliderBanner() {
+  
   return (
     <Carousel >
     <Carousel.Item interval={1000}>
@@ -10,8 +11,8 @@ function SliderBanner() {
         alt="First slide"
       />
       <Carousel.Caption>
-        <h3>First slide label</h3>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        <h3>Best Site For Rent</h3>
+        <p>One of the main attraction is the price.</p>
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item interval={500}>
@@ -22,8 +23,8 @@ function SliderBanner() {
         // height="500"
       />
       <Carousel.Caption>
-        <h3>Second slide label</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h3>Best Site For Rent</h3>
+        <p>One of the main attraction is the price.</p>
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
@@ -34,10 +35,9 @@ function SliderBanner() {
         // height="500"
       />
       <Carousel.Caption>
-        <h3>Third slide label</h3>
-        <p>
-          Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-        </p>
+      <h3>Best Site For Rent</h3>
+        <p>One of the main attraction is the price.</p>
+       
       </Carousel.Caption>
     </Carousel.Item>
   </Carousel>

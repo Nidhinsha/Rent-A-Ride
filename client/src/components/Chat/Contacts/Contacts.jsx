@@ -1,3 +1,4 @@
+import { Divider } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
@@ -17,7 +18,7 @@ function Contacts({ contacts, currentUser ,changeChat }) {
     setCurrentSelected(index)
     changeChat(contact)
   }
-  console.log(contacts, 'in the cotact comp')
+ 
   return (
     <>
       {
@@ -31,6 +32,7 @@ function Contacts({ contacts, currentUser ,changeChat }) {
               {
                 contacts ? contacts.map((contact, index) => {
                   return (
+                    <>
                     <div 
                       className={`contact ${index === currentSelected ? "selected" : "Not selected"}`}
                       key={index}
@@ -43,6 +45,8 @@ function Contacts({ contacts, currentUser ,changeChat }) {
                       <p className='mb-0'>{contact.firstName + " " + contact.lastName}</p>
                       </div>
                     </div>
+                    <Divider/>
+                    </>
                   )
                 })
                   : "No contacts"

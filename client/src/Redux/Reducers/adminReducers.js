@@ -148,8 +148,9 @@ export const adminRentRequestBikeReducer = (state = {}, action) => {
 }
 
 export const adminGetLocationReducer = (state = {}, action) => {
+
   
-  switch (action) {
+  switch (action.type) {
     case adminActionType.ADMIN_GET_LOCATION_REQUEST:
       return {
         loading: true
@@ -157,7 +158,7 @@ export const adminGetLocationReducer = (state = {}, action) => {
     case adminActionType.ADMIN_GET_LOCATION_SUCCESS:
       return {
         loading: false,
-        location: action.payload
+        location:action.payload
       }
     case adminActionType.ADMIN_GET_LOCATION_FAIL:
       return {
@@ -319,5 +320,27 @@ export const getDashboardInfoReducer =(state={},action)=>{
   
     default:
      return state;
+  }
+}
+
+export const bikeReportDataReducer =(state={},action)=>{
+  switch (action.type) {
+    case adminActionType.BIKE_REPORT_DATA_REQUEST:
+      return{
+        loading:true
+      }
+    case adminActionType.BIKE_REPORT_DATA_SUCCESS:
+      return{
+        loading:false,
+        reportData : action.payload
+      }
+    case adminActionType.BIKE_REPORT_DATA_FAIL:
+      return{
+        loading:false,
+        reportDataError : action.payload
+      }
+  
+    default:
+      return state;
   }
 }

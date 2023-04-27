@@ -63,9 +63,6 @@ exports.adminGetBookedBikeController = async(req,res)=>{
             }
           ]
         )
-
-        console.log(data,'data username is no r in it');
-
  
         let currentTime = moment().format('X')
 
@@ -75,7 +72,6 @@ exports.adminGetBookedBikeController = async(req,res)=>{
           let endTime = moment(data[i].endingTime,'MMMM Do YYYY, h:mm:ss a').unix()
 
           if(currentTime > endTime){
-            console.log('time exceeded');
   
             bookingSchema.findOneAndUpdate(
               {
@@ -88,7 +84,7 @@ exports.adminGetBookedBikeController = async(req,res)=>{
               }
             )
             .then((response)=>{
-              console.log(response,'exceded response');
+              res.status(400).json({message:"time exceeded"})
             })
           }else if(currentTime < startTime && data[i].status !== 'cancelled'){
             bookingSchema.findOneAndUpdate(
@@ -102,7 +98,7 @@ exports.adminGetBookedBikeController = async(req,res)=>{
               }
             )
             .then((response)=>{
-              console.log(response,'booked response');
+              res.status(200).json({message:"response after booked"})
             })
           }else if(currentTime >= startTime && currentTime <= endTime && data[i].status !== "completed"){
             bookingSchema.findOneAndUpdate(
@@ -116,15 +112,14 @@ exports.adminGetBookedBikeController = async(req,res)=>{
               }
             )
             .then((response)=>{
-              console.log(response,'OnRide response');
+              res.status(200).json({message:"on Ride Bikes"})
             })
           }
         }
 
         res.status(200).json(data)
-        // console.log(data,'final data in admin booking vieww');
 
     } catch (error) {
-        res.status(400).json("error while fetching data")
+        res.status(400).json({message:"error while fetching data"})
     }
 }

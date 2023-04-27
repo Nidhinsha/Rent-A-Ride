@@ -6,6 +6,7 @@ const upload = require("../../../utils/multer")
 
 exports.editBike = async(req,res)=>{
     const uploader = async (path) => await cloudinary.uploads(path,'Images')
+try {
 
     if(req.method === 'POST'){
         const urls = []
@@ -77,4 +78,9 @@ exports.editBike = async(req,res)=>{
             })
         }
     }
+    
+} catch (error) {
+    res.status(500).json({message:"error in updating bike"})
+}
+    
 }

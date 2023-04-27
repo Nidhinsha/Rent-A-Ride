@@ -144,7 +144,7 @@ function AddBike() {
                                     required: "This is required", minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setModel(e.target.value)}
-                            helperText={errors.bikeModel && <div style={{ color: 'red' }}>Please enter the bike model</div>}
+                            helperText={errors.bikeModel && <div style={{ color: 'red' }}>Please enter the correct bike model</div>}
                         />
 
 
@@ -160,7 +160,7 @@ function AddBike() {
                                     required: true, minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setEngineNumber(e.target.value)}
-                            helperText={errors.engineNumber && <div style={{ color: 'red' }}>Please enter the engine number</div>}
+                            helperText={errors.engineNumber && <div style={{ color: 'red' }}>Please enter the correct engine number</div>}
                         />
 
                         <TextField sx={{ mr: 2 }}
@@ -172,7 +172,7 @@ function AddBike() {
                                     required: true, minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setBrand(e.target.value)}
-                            helperText={errors.brand && <p style={{ color: 'red' }}>Please enter the brand</p>}
+                            helperText={errors.brand && <p style={{ color: 'red' }}>Please enter the correct brand</p>}
                         />
 
                     </div>
@@ -188,7 +188,7 @@ function AddBike() {
                                 }
                             )}
                             onChange={(e) => setColor(e.target.value)}
-                            helperText={errors.color && <div style={{ color: 'red' }}>Please enter the color</div>}
+                            helperText={errors.color && <div style={{ color: 'red' }}>Please enter the correct color</div>}
                         />
 
 
@@ -211,7 +211,7 @@ function AddBike() {
                                 <MenuItem value="diesel" >Diesel</MenuItem>
                                 <MenuItem value="electric" >Electric</MenuItem>
                             </Select>
-                            {errors.fuel && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.fuel && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
+                            {errors.fuel && <p style={{ color: 'red' }}>Please enter the correct fuel type</p> ? errors.fuel && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
                         </FormControl>
                     </div>
 
@@ -232,7 +232,7 @@ function AddBike() {
                                 }
                             )}
                             onChange={(e) => setPrice(e.target.value)}
-                            helperText={errors.price && <p style={{ color: 'red' }}>Please enter a price</p>}
+                            helperText={errors.price && <p style={{ color: 'red' }}>Please enter a correct price</p>}
                         />
 
                       
@@ -252,7 +252,7 @@ function AddBike() {
                                 }
                             )}
                             onChange={(e) => setDescription(e.target.value)}
-                            helperText={errors.description && <p style={{ color: 'red' }}>Please add a description</p>}
+                            helperText={errors.description && <p style={{ color: 'red' }}>Please add a correct description</p>}
                         />
                     </div>
 

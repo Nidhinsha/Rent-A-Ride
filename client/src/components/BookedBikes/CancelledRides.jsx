@@ -1,25 +1,38 @@
 import { Tooltip, Typography } from '@mui/material'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import React from 'react'
+import React, { useState } from 'react'
+import ViewBikeModal from '../Modal/ViewBikeModal';
+import { Button } from 'primereact/button';
 
 function CancelledRides({data}) {
 
-  const cancelledRides = data.filter((ride) => ride.status === "cancelled");
+  const cancelledRides = data?.filter((ride) => ride?.status === "cancelled");
+  const [viewBike, setViewBike] = useState(false)
+  const [bikeImage,setBikeImage] = useState([])
 
-  if (cancelledRides.length === 0) {
+  if (cancelledRides?.length === 0) {
     return <div>No canceled rides</div>
   }
   
   return (
     <>
       <DataTable value={cancelledRides} className="p-d-flex p-jc-center" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
-            <Column field="photo" header="Photo" body={(rowData) => <img src={rowData.photo[0]} alt="User" style={{
-                width: '5rem',
-                height: '5rem',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                borderRadius: '30%',
-            }} />} />
+      <Column header="Photo"
+                    body={(rowData) =>
+                    (
+                        <Button
+                            icon="pi pi-image"
+                          
+                            onClick={() => {
+                                setViewBike(true)
+                                setBikeImage(rowData?.photo)
+                            }}
+                        />
+                    )} />
+
+                    <ViewBikeModal open={viewBike} onClose={()=> setViewBike(false)}/>
+
             <Column header="bikeName"
                 body={(rowData) => (
                     <div>
@@ -84,6 +97,19 @@ function CancelledRides({data}) {
             <Column field="totalAmount" header="Amount" sortable style={{ width: '25%' }}></Column>
 
         </DataTable>
+
+        {/* modal */}
+
+        {
+                viewBike 
+                    ? 
+                    <ViewBikeModal
+                        open={viewBike}
+                        bikeImage={bikeImage}
+                        onClose={(e) => setViewBike(false)}
+                    />
+                    :""
+            }
     </>
   )
 }

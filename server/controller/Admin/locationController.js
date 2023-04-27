@@ -9,14 +9,13 @@ exports.addLocation = async(req,res)=>{
             })
         })
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json({message:"error in adding location"})
     }
 }
 
 exports.getLocation = async(req,res)=>{
     try {
         locationSchema.find().then((data)=>{
-
             res.status(200).json(data)
         })
     } catch (error) {
@@ -26,9 +25,7 @@ exports.getLocation = async(req,res)=>{
 
 exports.editLocation = async(req,res)=>{
     try {
-
-        const findLocation = await  locationSchema.findOne({_id : req.query.id})
-        await  locationSchema.updateOne(
+        const updateLocation = await  locationSchema.updateOne(
                 {
                     _id : req.query.id
                 },

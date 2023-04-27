@@ -1,6 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { getBikeWithBrandAPI, getBrandsAPI, googleSignupAPI, searchBikesAPI, userBookingBikeAPI, userCancelBookingAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
-import { getAllUserContacts } from '../../Api/User/ApiCalls'
+import { getBikeWithBrandAPI, getBrandsAPI, googleSignupAPI, homeBikeDataAPI, searchBikesAPI, userBookingBikeAPI, userCancelBookingAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 
 
 
@@ -16,7 +15,7 @@ export const userSignup = (firstName, lastName, email, phone, password,referalCo
 
     userSignUpAPI(firstName, lastName, email, phone, password,referalCode)
       .then((data) => {
-
+        window.location.href = "/login"
         dispatch({
           type: userActionType.USER_SIGNUP_SUCCESS,
           payload: data
@@ -25,7 +24,7 @@ export const userSignup = (firstName, lastName, email, phone, password,referalCo
       .catch((error) => {
         dispatch({
           type: userActionType.USER_SIGNUP_FAIL,
-          payload: error.response.data
+          payload: error.response.data.message
         })
       })
   } catch (error) {
@@ -55,9 +54,7 @@ export const userLogin = (email, password) => async (dispatch) => {
 
         dispatch({
           type: userActionType.USER_LOGIN_FAIL,
-          payload: error.response && error.response.data.message
-            ? error.response.data.message
-            : error.response.data
+          payload: error.response.data.message
         })
       })
   } catch (error) {
@@ -85,10 +82,11 @@ export const googleSignupAction = (firstName, lastName, email, phone, photo) => 
 
     // navigate to home page after localStorage operation is complete
     window.location.href = "/"
+
   } catch (error) {
     dispatch({
       type: userActionType.GOOGLE_SIGNUP_FAIL,
-      payload: error.response.message,
+      payload: error.response.data.message
     })
   }
 }
@@ -111,7 +109,7 @@ export const userOtpLoginAction =(phone) =>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_LOGIN_FAIL,
-      payload : error.response
+      payload :error.response.data.message
     })
   })
 }
@@ -151,7 +149,7 @@ export const getUserProfileAction = () => async (dispatch) => {
       .catch((error) => {
         dispatch({
           type: userActionType.GET_USER_PROFILE_FAIL,
-          payload: error.response.data
+          payload: error.response.data.message
         })
       })
   } catch (error) {
@@ -230,12 +228,31 @@ export const userGetBikeAction = (page) => async (dispatch)=>{
     .catch((error)=>{
       dispatch({
         type : userActionType.USER_GET_BIKES_FAIL,
-        payload : error.response.message
+        payload : error.response.data.message
       })
     })
   } catch (error) {
     
   }
+}
+
+export const homeBikeAction=()=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.HOME_BIKE_REQUEST
+  })
+
+  homeBikeDataAPI().then((data)=>{
+    dispatch({
+      type : userActionType.HOME_BIKE_SUCCESS,
+      payload : data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type : userActionType.HOME_BIKE_FAIL,
+      payload : error.response.data.message
+    })
+  })
 }
 
 export const userBikeSearchAction = (searchTerm,page)=>async(dispatch)=>{
@@ -252,7 +269,7 @@ export const userBikeSearchAction = (searchTerm,page)=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_SEARCH_BIKES_FAIL,
-      payload : error.response.message
+      payload : error.response.data.message
     })
   })
 }
@@ -272,7 +289,7 @@ export const userGetAllRentedBikes =() => async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_ALL_RENTED_BIKES_FAIL,
-      payload : error.response.message
+      payload : error.response.data.message
     })
   })
 }
@@ -291,7 +308,7 @@ export const userGetAcceptedBikes =()=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_ACCEPTED_BIKES_FAIL,
-      payload : error.response.message
+      payload :error.response.data.message
     })
   })
 }
@@ -309,7 +326,7 @@ export const userGetRejectedBikes =()=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_REJECTED_BIKES_FAIL,
-      payload : error.response.message
+      payload :error.response.data.message
     })
   })
 }
@@ -327,7 +344,7 @@ export const userGetPendingBikes =()=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_PENDING_BIKES_FAIL,
-      payload : error.response.message
+      payload :error.response.data.message
     })
   })
 }
@@ -346,7 +363,7 @@ export const userGetLocation =()=> async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_LOCATION_FAIL,
-      payload : error.response.message
+      payload :error.response.data.message
     })
   })
 }
@@ -372,7 +389,7 @@ export const userBookingBikeAction =(bookingData)=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_BOOKING_BIKE_FAIL,
-      payload : error.response.data
+      payload : error.response.data.message
     })
   })
 }
@@ -404,7 +421,7 @@ export const userGetBookedBikeAction =(id)=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type : userActionType.USER_GET_BOOKED_BIKE_FAIL,
-      payload : error.response.message
+      payload : error.response.data.message
     })
   })
 }
@@ -423,7 +440,7 @@ export const userCancelBookedBikeAction =(bikeId,bookingId,startTime,endTime,pri
   .catch((error)=>{
     dispatch({
       type:userActionType.USER_CANCEL_BOOKED_BIKE_FAIL,
-      paylooad : error.data
+      paylooad : error.response.data.message
     })
   })
 }
@@ -450,7 +467,7 @@ userGetCouponAPI().then((data)=>{
 .catch((error)=>{
     dispatch({
         type : userActionType.USER_GET_COUPON_FAIL,
-        payload : error.response.message
+        payload : error.response.data.message
     })
 })
 }
@@ -469,7 +486,7 @@ export const userGetWalletAction =()=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type:userActionType.USER_GET_WALLET_FAIL,
-      payload : error.response.data
+      payload : error.response.data.message
     })
   })
 }
@@ -488,7 +505,7 @@ export const getBrandsAction =()=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
      type:userActionType.GET_BRANDS_FAIL,
-     payload : error.data
+     payload : error.response.data.message
     })
   })
 }
@@ -499,7 +516,7 @@ export const getBikeWithBrandAction =(brand,color,page)=>async(dispatch)=>{
   })
 
   getBikeWithBrandAPI(brand,color,page).then((data)=>{
-    console.log(data.data,'data of brand dwith bike frontend');
+   
     dispatch({
       type : userActionType.GET_BIKE_WITH_BRAND_SUCCESS,
       payload : data.data
@@ -508,7 +525,7 @@ export const getBikeWithBrandAction =(brand,color,page)=>async(dispatch)=>{
   .catch((error)=>{
     dispatch({
       type:userActionType.GET_BIKE_WITH_BRAND_FAIL,
-      payload : error.data
+      payload : error.response.data.message
     })
   })
 }

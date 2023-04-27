@@ -23,7 +23,6 @@ const schema = yup.object().shape({
 })
 
 function EditLocationModal({ open, onClose, locationId }) {
-    console.log(locationId,'id form loc page');
     const dispatch = useDispatch()
 
     

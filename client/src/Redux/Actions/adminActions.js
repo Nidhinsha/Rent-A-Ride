@@ -1,5 +1,5 @@
 import { adminActionType } from '../Constants/adminConstants'
-import { acceptBikeAPI, addCouponAPI, addLocationAPI, adminDeleteBikeAPI, adminLoginApi, deleteCouponAPI, deleteLocationAPI, editCouponAPI, editLocationAPI, getAllBikeAPI, getBookedBikeAPI, getCouponsAPI, getDashboardInfoAPI, getLocationAPI, getPendingBikeAPI, getUsersApi, rejectBikeAPI } from "../../Api/Admin/ApiCalls"
+import { acceptBikeAPI, addCouponAPI, addLocationAPI, adminDeleteBikeAPI, adminLoginApi, bikesReportAPI, deleteCouponAPI, deleteLocationAPI, editCouponAPI, editLocationAPI, getAllBikeAPI, getBookedBikeAPI, getCouponsAPI, getDashboardInfoAPI, getLocationAPI, getPendingBikeAPI, getUsersApi, rejectBikeAPI } from "../../Api/Admin/ApiCalls"
 
 
 export const adminLogin = (email, password) => async (dispatch) => {
@@ -16,7 +16,9 @@ export const adminLogin = (email, password) => async (dispatch) => {
         })
 
         localStorage.setItem("adminInfo",JSON.stringify(data.data))
-        
+        setTimeout(function() {
+            window.location.href = '/admin/dashboard';
+          }, 500);
 
         
     })
@@ -56,7 +58,7 @@ export const adminUserFetchAction =() =>async(dispatch)=>{
         .catch((error)=>{
             dispatch({
                 type:adminActionType.ADMIN_USER_FETCH_FAIL,
-                payload : error.response.message
+                payload :error.response.data.message
             })
         })
     } catch (error) {
@@ -86,7 +88,7 @@ export const adminDeleteBikeAction =(id)=> async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_DELETE_BIKE_FAIL,
-            payload : error.response.message
+            payload :error.response.data.message
         })
     })
 }
@@ -109,7 +111,7 @@ export const adminGetAllBikeAction = () =>async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type: adminActionType.ADMIN_GET_BIKE_FAIL,
-            payload : error.response.message
+            payload : error.response.data.message
         })
     })
 }
@@ -130,7 +132,7 @@ export const adminGetPendingBikeAction =() => async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_GET_PENDING_BIKE_FAIL,
-            payload : error.response.message
+            payload : error.response.data.message
         })
     })
 }
@@ -149,7 +151,7 @@ export const adminAcceptBikeAction =(id)=>async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_ACCEPT_BIKE_FAIL,
-            payload : error.response.message
+            payload : error.response.data.message
         })
     })
 }
@@ -168,7 +170,7 @@ export const adminRejectBikeAction =(id)=>async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_REJECT_BIKE_FAIL,
-            payload : error.response.message
+            payload : error.response.data.message
         })
     })
 }
@@ -189,7 +191,7 @@ export const adminAddLocationAction = (location)=>async(dispatch)=>{
    
         dispatch({
             type : adminActionType.ADMIN_ADD_LOCATION_FAIL,
-            payload : error.response.message
+            payload : error.response.data.message
         })
     })
 }
@@ -208,7 +210,7 @@ export const adminGetLocation = ()=>async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_GET_LOCATION_FAIL,
-            payload : error.response.message
+            payload :error.response.data.message
         })
     })
 }
@@ -228,7 +230,7 @@ export const adminEditLocation =(id,locationData)=> async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_EDIT_LOCATION_FAIL,
-            payload : error.response.message
+            payload : error.response.data.message
         })
     })
 }
@@ -248,7 +250,7 @@ export const adminDeleteLocation =(id)=> async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_DELETE_LOCATION_FAIL,
-            payload :error.response.message
+            payload :error.response.data.message
         })
     })
 }
@@ -267,7 +269,7 @@ export const adminGetCouponsAction =()=>async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_GET_COUPON_FAIL,
-            payload : error.response.message
+            payload : error.response.data.message
         })
     })
 }
@@ -286,7 +288,7 @@ export const adminAddCouponAction=(couponName,couponCode,couponPrice)=>async(dis
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_ADD_COUPON_FAIL,
-            payload : error.response.message
+            payload : error.response.data.message
         })
     })
 }
@@ -305,7 +307,7 @@ export const adminEditCouponAction=(id,couponName,couponCode)=>async(dispatch)=>
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_EDIT_COUPON_FAIL,
-            payload :error.response.message
+            payload :error.response.data.message
         })
     })
 }
@@ -324,7 +326,7 @@ export const adminDeleteCouponAction=(id)=>async(dispatch)=>{
     .catch((error)=>[
         dispatch({
             type : adminActionType.ADMIN_DELETE_COUPON_FAIL,
-            payload :error.response.message
+            payload : error.response.data.message
         })
     ])
 }
@@ -343,7 +345,7 @@ export const adminGetBookedBikeAction =()=>async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type : adminActionType.ADMIN_GET_BOOKED_BIKE_FAIL,
-            payload : error.response.message
+            payload : error.response.data.message
         })
     })
 }
@@ -362,7 +364,26 @@ export const getDashboardInfoAction =()=>async(dispatch)=>{
     .catch((error)=>{
         dispatch({
             type:adminActionType.ADMIN_GET_DASHBOARD_INFO_FAIL,
-            payload : error.data
+            payload : error.response.data.message
+        })
+    })
+}
+
+export const bikeReportDataAction =()=>async(dispatch)=>{
+    dispatch({
+        type : adminActionType.BIKE_REPORT_DATA_REQUEST
+    })
+
+    bikesReportAPI().then((data)=>{
+        dispatch({
+            type:adminActionType.BIKE_REPORT_DATA_SUCCESS,
+            payload : data.data
+        })
+    })
+    .catch((error)=>{
+        dispatch({
+            type:adminActionType.BIKE_REPORT_DATA_FAIL,
+            payload : error.response.data.message
         })
     })
 }

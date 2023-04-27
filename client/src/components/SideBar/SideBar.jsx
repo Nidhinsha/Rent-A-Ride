@@ -190,7 +190,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                                         text2 === "bike rent request"  && navigate('/admin/bike-request')
                                         text2 === "view booked bike"  && navigate('/admin/view-booked-bike')
                                         text2 === "location"  && navigate('/admin/location')
-                                        text2 === "bike report"  && navigate('/admin/bike-report')
+                                        text2 === "bike report"  && navigate('/admin/bikes-report')
                                         text2 === "coupons"  && navigate('/admin/coupons')
                                         text2 === "logout"  && handleLogout() 
                                         

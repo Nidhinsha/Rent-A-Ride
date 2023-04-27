@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import SideBar from '../../../components/SideBar/SideBar'
-import { Avatar, FormHelperText, Grid, styled } from '@mui/material'
+import { Avatar, Box, FormHelperText, Grid, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { getDashboardInfoAction } from '../../../Redux/Actions/adminActions';
 import BookingChart from "../../../components/Charts/BookingChart"
+import UserPieChart from '../../../components/Charts/UserPieChart';
+import BikeChart from '../../../components/Charts/BikeChart';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -18,26 +20,42 @@ function Dashboard() {
   const dispatch = useDispatch()
 
   const details = useSelector((state)=>state.getDashboardInfoReducer?.dashboardData)
-  console.log(details,'detailsss');
 
   useEffect(()=>{
     dispatch(getDashboardInfoAction())
   },[])
 
   return (
-    <div>
-      <DrawerHeader />
+    <Box  sx={{ display: 'flex' }}>
       <SideBar/>
-      <>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, mr: 1 }}>
+      <DrawerHeader />
+      <Box sx={{display:'flex'}}>
       <BookingChart
         pending = {details ? details?.pendingBooking : 0}
         total = {details ? details?.totalBooking : 0}
         completed = {details ? details?.completedBooking : 0}
         cancelled = {details ? details?.cancelledBooking : 0}
         onRide = {details ? details?.onRideBooking : 0}
+        title={"Booking Data"}
       />
-      </>
-    </div>
+      <UserPieChart
+        title={"Users Data"}
+        totalUser={details ? details?.totalUser :0}
+        blockedUser={details ? details?.blockedUser :0}
+        unBlockedUser={details ? details?.unBlockedUser :0}
+        totalOwners={details ? details?.totalOwners :0}
+      />
+      </Box>
+      <BikeChart
+      title={"Bikes Data"}
+        allBikes={details ? details?.allBikes :0}
+        rendRequest={details ? details?.rendRequest :0}
+        rejectRequest={details ? details?.rejectRequest :0}
+      />
+      </Box>
+
+    </Box>
   )
 }
 

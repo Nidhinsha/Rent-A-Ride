@@ -8,6 +8,8 @@ import Signup from './Pages/User/Signup/Signup'
 import Test from './Pages/User/Test/Test'
 import OtpLogin from './Pages/User/OtpLogin/OtpLogin'
 import { CircularProgress } from '@mui/material'
+import NotFoundPage from './components/NotFoundPage/NotFoundPage'
+import PaymentCancel from './components/Stripe/PaymentCancel/PaymentCancel'
 
 const Dashboard = lazy(() => import("./Pages/Admin/Dashboard/Dashboard"))
 const AddBike = lazy(() => import("./Pages/Admin/AddBike/AddBike"))
@@ -30,6 +32,7 @@ const Booking = lazy(() => import("./Pages/User/Booking/Booking"))
 const BookingSuccess = lazy(() => import("./components/SuccessPage/BookingSuccess"))
 const BookedBikes = lazy(() => import("./Pages/User/BookedBikes/BookedBikes"))
 const Wallet = lazy(()=>import("./Pages/User/Wallet/Wallet"))
+const BikesReport = lazy(()=>import("./Pages/Admin/BikesReport/BikesReport"))
 
 
 
@@ -63,6 +66,8 @@ function App() {
             <Route path='/chat' exact element={userData ? <Chat /> : <Login />} />
             <Route path='/wallet' exact element={userData ? <Wallet/> : <Login/>} />
             <Route path='/test' exact element={<Test />} />
+            <Route path='cancel-page' exact element={<PaymentCancel/>} />
+
 
             <Route path='/admin/login' element={adminData ? <Dashboard /> : <AdminLogin />} />
             <Route path='/admin/user-manage' exact element={adminData ? <UserManage /> : <AdminLogin />} />
@@ -74,6 +79,10 @@ function App() {
             <Route path='/admin/location' exact element={adminData ? <Location /> : <AdminLogin />} />
             <Route path='/admin/coupons' exact element={adminData ? <Coupons /> : <AdminLogin />} />
             <Route path='/admin/view-booked-bike' exact element={adminData ? <ViewBookedBike /> : <AdminLogin />} />
+            <Route path='/admin/bikes-report' exact element={adminData ? <BikesReport/> : <AdminLogin/>} />
+
+            <Route path='*' element={<NotFoundPage />} />
+
           </Routes>
         </Suspense>
       </Router>
