@@ -1,6 +1,6 @@
 const adminSchema = require("../../models/adminSchema")
 const userSchema = require("../../models/userSchema")
-
+// wowwowowow
 exports.adminUser = async (req,res) => {
   try {
     userSchema.find().then((data)=>{
