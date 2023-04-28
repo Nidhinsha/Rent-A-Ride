@@ -39,8 +39,6 @@ const schema = yup.object().shape({
 
 function Login() {
 
-
-
   const userLoginData = useSelector(state => state.userLoginReducer)
   const { userLoginError, loading, userLoginDetails } = userLoginData
 

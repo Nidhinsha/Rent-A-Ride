@@ -6,7 +6,6 @@ exports.userGetBookedBikeController = async (req, res) => {
     try {
         const userId = new mongoose.Types.ObjectId(req.query.id.toString());
 
-        console.log(typeof userId,userId, 'type of userod');
        const booking =await  bookingSchema
             .aggregate(
                 [

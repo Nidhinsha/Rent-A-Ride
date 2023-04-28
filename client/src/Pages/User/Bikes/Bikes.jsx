@@ -166,15 +166,15 @@ function Bikes() {
                 </Box>
             </Box>
           
-            <Grid container spacing={2}>
-                <Grid item xs={6} md={3}>
+            <Grid container justifyContent="space-between" spacing={2}>
+                <Grid item xs={12} md={3}>
                     <Item sx={{boxShadow:3}}>
                     <FilterOption page={page} />
                     </Item>
                 </Grid>
-                <Grid item xs={6} md={9}>
+                <Grid item xs={12} md={9}  alignItems="flex-start">
                     <Item sx={{boxShadow:3}}>
-                    <Box sx={{ width: '100%' }}>
+                    <Box  >
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs aria-label="basic tabs example" value={value} onChange={handleChange} centered>
                                 <Tab label="All Bikes" />

@@ -34,8 +34,8 @@ function Contacts({ contacts, currentUser ,changeChat }) {
                   return (
                     <>
                     <div 
-                      className={`contact ${index === currentSelected ? "selected" : "Not selected"}`}
                       key={index}
+                      className={`contact ${index === currentSelected ? "selected" : "Not selected"}`}
                       onClick={()=>changeCurrentChat(index,contact)} 
                       >
                       <div className="avatar">

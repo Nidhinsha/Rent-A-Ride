@@ -4,7 +4,11 @@ const chatSchema = new mongoose.Schema({
     message:{
         text:{
             type:String,
-            required:true
+            default:''
+        },
+        image:{
+            type:String,
+            default:''
         }
     },
     users: {

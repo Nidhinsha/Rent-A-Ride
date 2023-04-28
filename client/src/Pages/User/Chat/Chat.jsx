@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { userGetContactAction } from '../../../Redux/Actions/userActions'
 import Contacts from '../../../components/Chat/Contacts/Contacts'
@@ -13,11 +12,6 @@ import Footer from '../../../components/Home/Footer/Footer'
 const socket = io("http://localhost:5000")
 
 function Chat() {
-
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
-
 
   const user = useSelector((state) => state.userLoginReducer.userLoginDetails)
   const contactData = useSelector((state) => state?.userGetContactReducer?.contactData)

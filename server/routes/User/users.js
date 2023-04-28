@@ -68,7 +68,7 @@ router.route("/rejected-bikes").get(protect,rentedBikeController.userGetRejected
 router.route("/pending-bikes").get(protect,rentedBikeController.userGetPendingBikes)
 
 // location
-router.route('/get-location').get(locationController.getLocations)
+router.route('/get-location').get(protect,locationController.getLocations)
 
 // booking
 router.route("/booking-bike").post(bookingController.bikeBookingController)
@@ -89,6 +89,7 @@ router.route("/get-wallet").get(protect,walletController.getWalletController)
 router.route("/contacts").get(protect,chatContoller.userContactController)
 router.route("/add-message").post(protect,chatContoller.addMessageController)
 router.route("/get-all-messages").post(protect,chatContoller.getAllMessageController)
+router.route("/send-image").post(protect,chatContoller.sendImageController)
 
 // filter
 router.route("/brands").get(brandController.getBrands)

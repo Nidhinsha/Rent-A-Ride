@@ -1,7 +1,7 @@
 const bikeSchema = require("../../../models/bikeSchema")
 
 exports.searchBikes = (req,res)=>{
-    const itemsPerPage = 4
+    const itemsPerPage = 3
     const page = req.query.page || 1
     let pageCount
     let count

@@ -1,12 +1,13 @@
 import { userActionType } from '../Constants/userConstants'
 import { getBikeWithBrandAPI, getBrandsAPI, googleSignupAPI, homeBikeDataAPI, searchBikesAPI, userBookingBikeAPI, userCancelBookingAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import {  useNavigate } from 'react-router-dom'
 
 
 
 // user signup
 
 export const userSignup = (firstName, lastName, email, phone, password,referalCode) => async (dispatch) => {
-  
+  const navigate = useNavigate()
   try {
 
     dispatch({
@@ -16,6 +17,7 @@ export const userSignup = (firstName, lastName, email, phone, password,referalCo
     userSignUpAPI(firstName, lastName, email, phone, password,referalCode)
       .then((data) => {
         window.location.href = "/login"
+        // navigate("/login")
         dispatch({
           type: userActionType.USER_SIGNUP_SUCCESS,
           payload: data

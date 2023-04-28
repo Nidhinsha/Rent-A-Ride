@@ -4,9 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Loading from '../Loading/Loading';
-import { Button } from 'primereact/button';
 import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import BookingButton from '../Button/BookingButton/BookingButton';
@@ -14,20 +13,19 @@ import BookingButton from '../Button/BookingButton/BookingButton';
 function PriceDescSortBikes({ priceDesc }) {
 
     const navigate = useNavigate()
-    const dispatch = useDispatch()
 
     const bikes = useSelector((state) => state.userGetBikeReducer)
-    const { bikesDataLoading, bikesData, bikesDataError } = bikes
+    const { bikesDataLoading, bikesData } = bikes
 
     const descending = priceDesc?.data ? priceDesc?.data.sort((a, b) => b.price - a.price) : "error in descending"
     
     return (
         <>
             <Box>
-                <div className='d-flex flex-wrap justify-content-around'>
+                <div className='d-flex flex-wrap '>
                     {
                         bikesDataLoading ? <Loading /> :
-                            descending ? descending?.map((data, index) => {
+                            descending && Array.isArray(descending) ? descending?.map((data, index) => {
                                 return (
                                     <Card key={index} sx={{ height: 350, width: 275, m: 3, boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)' }}>
                                         <CardActionArea>
@@ -55,7 +53,7 @@ function PriceDescSortBikes({ priceDesc }) {
                                         </CardActions>
                                     </Card>
                                 )
-                            }) : ""
+                            }) : "No data available"
                     }
                 </div>
             </Box>
