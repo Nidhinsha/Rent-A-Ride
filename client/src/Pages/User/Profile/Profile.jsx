@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from "primereact/inputtext"
 import { InputMask } from "primereact/inputmask";
 import Alert from '@mui/material/Alert';
 import UploadIcon from '@mui/icons-material/Upload';
-import CancelIcon from '@mui/icons-material/Cancel';
 
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
-  userGetWalletAction,
   userImageAction,
   userLogOut,
   userProofAction,
@@ -26,8 +24,6 @@ import WalletCard from '../../../components/Wallet/WalletCard';
 
 function Profile() {
 
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
@@ -37,31 +33,26 @@ function Profile() {
 
   const profileData = useSelector((state) => state.userLoginReducer.userLoginDetails);
 
-
-
   const [photo, setPhoto] = useState("");
-
-
 
   const addphoto = (e) => {
     
     e.preventDefault();
     const data = new FormData();
     data.append("file", photo);
-    data.append("upload_preset", "RentAndRide");
-    data.append("cloud_name", "driuxmoax");
+    data.append("upload_preset",process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+    data.append("cloud_name",process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
 
     if (photo.type !== 'image/jpeg' && photo.type !== 'image/png') {
       setImgTypeError('Not Supported');
     } else {
       setImgTypeError('');
-      fetch("https://api.cloudinary.com/v1_1/driuxmoax/image/upload", {
+      fetch(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`, {
         method: "post",
         body: data,
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           dispatch(userImageAction(data.url));
         });
     }
@@ -75,10 +66,10 @@ function Profile() {
     const data = new FormData()
 
     data.append("file", proof)
-    data.append("upload_preset", "RentAndRide")
-    data.append("cloud_name", "driuxmoax")
+    data.append("upload_preset",process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+    data.append("cloud_name",process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
 
-    fetch("https://api.cloudinary.com/v1_1/driuxmoax/image/upload", {
+    fetch(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`, {
       method: "post",
       body: data,
     })
