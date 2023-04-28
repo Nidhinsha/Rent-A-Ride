@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NavBar from '../../../components/NavBar/NavBar';
 // import { getAccepted, getRentedBikesAction } from '../../../REDUX/Actions/USER_ACTIONS/getRentedBikes'
-import {userGetAcceptedBikes,userGetRejectedBikes,userGetPendingBikes,userGetAllRentedBikes} from '../../../Redux/Actions/userActions'
+import { userGetAcceptedBikes, userGetRejectedBikes, userGetPendingBikes, userGetAllRentedBikes } from '../../../Redux/Actions/userActions'
 import Figure from 'react-bootstrap/Figure';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -80,10 +80,10 @@ function RentedBikes() {
     const dispatch = useDispatch()
 
     const getAcceptedData = () => {
-       dispatch(userGetAcceptedBikes()) 
+        dispatch(userGetAcceptedBikes())
     }
     const getPendingData = () => {
-       dispatch(userGetPendingBikes()) 
+        dispatch(userGetPendingBikes())
     }
 
     const getRejectedData = () => {
@@ -110,13 +110,36 @@ function RentedBikes() {
             <Box sx={{ width: '100%' }}>
                 <Stack spacing={2} className='mt-3'>
                     <Item><h3>Rented Bikes</h3></Item>
-                  
+
                 </Stack>
             </Box>
 
             <Box sx={{ width: '100%' }} className='mt-3 container'>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="basic tabs example"
+                        centered
+                        // variant="scrollable"
+                        scrollButtons="auto"
+                        sx={{
+                            // Set the styles for the Tab indicator
+                            '& .MuiTabs-indicator': {
+                                backgroundColor: 'primary.main',
+                                height: 3,
+                            },
+                            // Set the styles for the Tab label
+                            '& .MuiTab-root': {
+                                textTransform: 'none',
+                                minWidth: 'auto',
+                                padding: '12px 16px',
+                                fontWeight: '600',
+                                fontSize: '1rem',
+                                
+                            },
+                        }}
+                    >
                         <Tab label="All " />
 
                         <Tab label="Accepted Requests" onClick={getAcceptedData} ></Tab>
@@ -125,22 +148,22 @@ function RentedBikes() {
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
-                    <AllRentedBikes rentedBikes={rentedBikes}/>
+                    <AllRentedBikes rentedBikes={rentedBikes} />
                 </TabPanel>
 
                 <TabPanel value={value} index={1}>
-                  <AcceptedReq acceptedReq={accepted}/>
+                    <AcceptedReq acceptedReq={accepted} />
                 </TabPanel>
 
                 <TabPanel value={value} index={2}>
-                <PendingReq pendingReq={pending}/>
+                    <PendingReq pendingReq={pending} />
                 </TabPanel>
 
                 <TabPanel value={value} index={3}>
-                <RejectedReq rejectedReq={rejected} />
+                    <RejectedReq rejectedReq={rejected} />
                 </TabPanel>
             </Box>
-            <Footer/>
+            <Footer />
         </>
     )
 }

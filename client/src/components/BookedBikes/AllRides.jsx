@@ -1,4 +1,4 @@
-import { Container, Tooltip, Typography } from '@mui/material'
+import { Box, Container, Tooltip, Typography } from '@mui/material'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import { Button } from 'primereact/button'
@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import CancelRideModal from '../Modal/CancelRideModal'
 import EndRideModal from '../Modal/EndRideModal'
 import ViewBikeModal from '../Modal/ViewBikeModal'
+import NoData from '../Error/NoData'
 
 function AllRides({ data }) {
 
@@ -23,6 +24,8 @@ function AllRides({ data }) {
 
     return (
         <>
+        {
+            data?.length > 0 ?
             <DataTable value={data} className="p-d-flex p-jc-center" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
                 <Column header="Photo"
                     body={(rowData) =>
@@ -118,7 +121,7 @@ function AllRides({ data }) {
                                             setPrice(rowData.totalAmount)
 
                                         }}
-                                    >cancel ride</Button>
+                                    >Cancel </Button>
                                     :
                                     rowData.status === "onRide" ?
 
@@ -133,7 +136,7 @@ function AllRides({ data }) {
                                             }}
                                         >end ride</Button>
 
-                                        : ""
+                                        : "No action"
 
                             }
                         </>
@@ -141,6 +144,9 @@ function AllRides({ data }) {
                     sortable style={{ width: '25%' }}
                 />
             </DataTable>
+            :<Box display="flex" justifyContent="center"><NoData/></Box>
+
+        }
 
 
             {/* Modal  */}

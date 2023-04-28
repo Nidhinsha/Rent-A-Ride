@@ -2,14 +2,17 @@ import React, { useState } from 'react'
 import ViewBikeModal from '../Modal/ViewBikeModal'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import { Tooltip, Typography } from '@mui/material'
+import { Box, Tooltip, Typography } from '@mui/material'
 import { Button } from 'primereact/button'
+import NoData from '../Error/NoData'
 
 function PendingReq({pendingReq}) {
     const [viewBike, setViewBike] = useState(false)
     const [bikeImage, setBikeImage] = useState([])
   return (
     <>
+    {
+        pendingReq?.length >0 ?
        <DataTable value={pendingReq} className="p-d-flex p-jc-center" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
                 <Column header="Photo"
                     body={(rowData) =>
@@ -74,6 +77,9 @@ function PendingReq({pendingReq}) {
                 <Column field="status" header="Status" sortable ></Column>
 
             </DataTable>
+            : <Box display="flex" justifyContent="center"><NoData/></Box> 
+
+    }
 
             {
                 viewBike

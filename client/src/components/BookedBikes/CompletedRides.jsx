@@ -1,9 +1,10 @@
-import { Tooltip, Typography } from '@mui/material';
+import { Box, Tooltip, Typography } from '@mui/material';
 import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import React, { useState } from 'react'
 import ViewBikeModal from '../Modal/ViewBikeModal';
+import NoData from '../Error/NoData';
 
 function CompletedRides({data}) {
 
@@ -13,11 +14,12 @@ function CompletedRides({data}) {
   const [bikeImage,setBikeImage] = useState([])
 
   if (completedRides?.length === 0) {
-    return <div>No canceled rides</div>
+    return <Box display="flex" justifyContent="center"><NoData/></Box>
   }
 
   return (
     <>
+   
       <DataTable value={completedRides} className="p-d-flex p-jc-center" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
       <Column header="Photo"
                     body={(rowData) =>
@@ -98,6 +100,7 @@ function CompletedRides({data}) {
             <Column field="totalAmount" header="Amount" sortable style={{ width: '25%' }}></Column>
 
         </DataTable>
+         
 
         {/* Modal  */}
 

@@ -29,7 +29,6 @@ function Booking() {
   const branchLocation = useSelector((state) => state.userLocationReducer.locationData)
 
   const coupons = useSelector((state) => state.userGetCouponReducer.couponData)
-  console.log(coupons, 'coupons in the booking page');
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -83,20 +82,16 @@ function Booking() {
       if (filteredCoupon.length > 0) {
         filteredCoupon.forEach(coupon => {
           if (coupon.users.some(user => user.userId === userId)) {
-            console.log(` has already applied coupon `);
             setCouponApplied(true)
             setCouponError(false)
           } else {
-            console.log(` has not applied coupon  yet`);
             setCouponApplied(false)
             setCouponVerified(true)
             setCouponError(false)
             setGetCouponPrice(coupons.find(x => x.couponCode === coupon)?.couponPrice || 0)
-            console.log('getCouponPrice', getCouponPrice);
           }
         })
       } else {
-        console.log('nothing found');
       }
     } else {
       setCouponVerified(false)

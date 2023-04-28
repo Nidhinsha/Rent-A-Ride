@@ -56,7 +56,7 @@ function BookingSuccess() {
     <Box display="flex" justifyContent="center" alignItems="center">
     <Box boxShadow={8} borderRadius={3} p={2} m={4} sx={{ maxWidth: "800px" }}>
     <Grid container justifyContent="center" spacing={2}>
-      <img src="https://media.istockphoto.com/id/1225955320/vector/happy-tiny-man-and-woman-with-big-open-wallet.jpg?s=612x612&w=0&k=20&c=0XP8aZHBcYLSPRr71Q7LEwCax6BwAOfXU5uNrkGKnI0=" alt="" />
+      <img src={require("../../assests/images/successPhoto.jpg")} alt="success" />
     </Grid>
     <Box container justifyContent="center" >
       Your Bike Has Been Booked Return To the page
@@ -64,7 +64,6 @@ function BookingSuccess() {
     </Box>
     </Box>
     </Box>
-      your booking succesFull fdgdg
     </>
   )
 }

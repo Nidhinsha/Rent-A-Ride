@@ -79,7 +79,28 @@ function BookedBikes() {
         <Box sx={{ width: '100%' }}>
           
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs aria-label="basic tabs example" value={value} onChange={handleChange} centered>
+            <Tabs 
+              aria-label="basic tabs example" 
+              value={value} 
+              onChange={handleChange} 
+              centered
+              sx={{
+                // Set the styles for the Tab indicator
+                '& .MuiTabs-indicator': {
+                    backgroundColor: 'primary.main',
+                    height: 3,
+                },
+                // Set the styles for the Tab label
+                '& .MuiTab-root': {
+                    textTransform: 'none',
+                    minWidth: 'auto',
+                    padding: '12px 16px',
+                    fontWeight: '600',
+                    fontSize: '1rem',
+                    
+                },
+            }}
+              >
               <Tab label="All Rides" />
               <Tab label="on Ride" />
               <Tab label="Complted Ride" />

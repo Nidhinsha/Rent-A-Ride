@@ -24,6 +24,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import FilterOption from '../../../components/Filter/FilterOption';
+import NoData from '../../../components/Error/NoData';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -183,10 +184,9 @@ function Bikes() {
                             </Tabs>
                         </Box>
                         {
-                            bikesDataError && <Typography variant='h5' sx={{color:'red'}}>{bikesDataError}</Typography>
+                            bikesDataError && <NoData/>
                         }{
-
-                        brandBikesDataError && <Typography variant='h5' sx={{color:'red'}}>{brandBikesDataError}</Typography>
+                        brandBikesDataError && <NoData/>
                         }
                         <TabPanel value={value} index={0}>
                             <AllBikes allBikes={bikesData} />

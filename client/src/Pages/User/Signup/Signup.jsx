@@ -119,7 +119,7 @@ function Signup() {
       <Box boxShadow={3} borderRadius={4} p={2} m={4} sx={{ maxWidth: "800px" }}>
         <Grid container justifyContent="center" spacing={2} >
           <Grid item xs={12} md={6} sx={{ mt: 15 }}>
-            <img src="https://cdn.discordapp.com/attachments/1008571132938555432/1089765405301669919/pekka_a_person_sitting_on_a_scooter_with_color_light_blue_and_b_555f7a57-94cd-4851-95a9-8dbbe7933355.png"
+            <img src={require("../../../assests/images/loginImage.png")}
               className="img-fluid" alt="Phone" />
           </Grid>
           <Grid item xs={12} md={6} direction="column" alignItems="flex-end">
