@@ -54,7 +54,7 @@ function AllBikes({allBikes}) {
                                         </CardActions>
                                     </Card>
                                 )
-                            }) : ""
+                            }) : "No bike"
                     }
                    
                 </div>

@@ -25,7 +25,7 @@ function NotFoundPage() {
                     </Grid>
                     <Grid xs={6}>
                         <img
-                            src={require('../../assests/images/404page.png')}
+                            src={require('../../assests/images/404Error.jpg')}
                             alt="404 page"
                             width='100%'
                         />

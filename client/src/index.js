@@ -17,13 +17,16 @@ import "primereact/resources/primereact.min.css";
 
 //icons
 import "primeicons/primeicons.css";    
+import ErrorBoundary from './components/ErrorBoundaryState/ErrorBoundaryState'
 
 
 const element = document.getElementById("root")
 const root = ReactDOM.createRoot(element)
 root.render(
     <Provider store={store}>
-        <App />
+        <ErrorBoundary>
+            <App />
+        </ErrorBoundary>
     </Provider>
 
 )

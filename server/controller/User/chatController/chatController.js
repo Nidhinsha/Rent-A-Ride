@@ -16,7 +16,7 @@ exports.userContactController = async(req,res)=>{
             return res.status(200).json(contacts)
             
     } catch (error) {
-        res.status(400).json("error while finding contacts")
+        res.status(400).json({message:"error while finding contacts"})
     }
 }
 
@@ -26,8 +26,7 @@ exports.addMessageController =async(req,res)=>{
 
         const data = await chatSchema.create({
             message :{
-                text:message,
-                image:""
+                text:message
             },
             users:[from,to],
             sender:from

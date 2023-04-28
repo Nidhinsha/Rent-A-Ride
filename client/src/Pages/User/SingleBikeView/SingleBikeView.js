@@ -17,8 +17,14 @@ import Footer from '../../../components/Home/Footer/Footer';
 function SingleBikeView() {
 
     const location = useLocation();
-    const { bikesData } = location.state;
-    const clickedBike = bikesData?.data.find((bike) => bike.bikeName === location.state.bikeName);
+
+    const bikesData = location?.state?.bikesData;
+    const bikeName = location?.state?.bikeName;
+
+    const clickedBike = Array.isArray(bikesData)
+        ? bikesData?.find(bike => bike?.bikeName === bikeName)
+        : bikesData?.data.find(bike => bike?.bikeName === bikeName);
+
 
     return (
         <Box>
@@ -43,7 +49,7 @@ function SingleBikeView() {
                         </Grid>
                         <Grid item xs={12} md={6} direction="column" alignItems="flex-end">
                             <Box >
-                                <Typography variant="h5" align="center" sx={{mt:2}}  >
+                                <Typography variant="h5" align="center" sx={{ mt: 2 }}  >
                                     Bike Details
                                 </Typography>
                             </Box>
@@ -91,12 +97,12 @@ function SingleBikeView() {
                                 </Table>
                             </Box>
                         </Grid>
-                              
-                                <BookingButton bikeName={clickedBike.bikeName} />
+
+                        <BookingButton bikeName={clickedBike.bikeName} />
                     </Grid>
                 </Box>
             </Box>
-          <Footer/>
+            <Footer />
         </Box>
     );
 }

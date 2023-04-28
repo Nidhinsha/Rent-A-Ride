@@ -19,7 +19,7 @@ function BikeCards() {
 
     return (
         <>
-            
+
                 {
                     loading ? <Loading/> :
 
@@ -37,6 +37,7 @@ function BikeCards() {
                                         height="194"
                                         image={bike.photo[0]}
                                         alt="bike"
+                                        onClick={(e)=>navigate(`/single-bike-view`, { state: { bikesData,bikeName: bike?.bikeName  } })}
                                     />
                                     <CardContent>
                                         <Typography variant="body1" color="text">
@@ -49,11 +50,11 @@ function BikeCards() {
                                             Rent from : <b> <span style={{ color: 'black' }}>{bike.price}/hr</span> </b>
                                         </Typography>
 
-                                        <Button 
+                                        {/* <Button 
                                         sx={{ mt: 2 }} 
                                         fullWidth 
                                         variant="contained"
-                                        >Book Now</Button>
+                                        >Book Now</Button> */}
                                     </CardContent>
                                 </Card>
                                 </Box>
