@@ -59,7 +59,7 @@ const Container = styled.div`
 display: grid;
   align-items: center;
   grid-template-columns: 5% 95%;
-  background-color: #080420;
+  background-color: #b4c7dd;
   padding: 0 2rem;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     padding: 0 1rem;
@@ -83,7 +83,7 @@ display: grid;
         box-shadow: 0 5px 10px #054D60;
         border-color: #054D60;
         .emoji-scroll-wrapper::-webkit-scrollbar {
-          background-color: #080420;
+          background-color: #ffff;
           width: 5px;
           &-thumb {
             background-color: #054D60;
@@ -110,12 +110,12 @@ display: grid;
     display: flex;
     align-items: center;
     gap: 2rem;
-    background-color: #ffffff34;
+    background-color: #ffffff;
     input {
       width: 90%;
       height: 60%;
       background-color: transparent;
-      color: white;
+      color: #737373;
       border: none;
       padding-left: 1rem;
       font-size: 1.2rem;

@@ -68,7 +68,7 @@ function App() {
             <Route path='/chat' exact element={userData ? <Chat /> : <Login />} />
             <Route path='/wallet' exact element={userData ? <Wallet/> : <Login/>} />
             <Route path='/test' exact element={<Test />} />
-            <Route path='cancel-page' exact element={<PaymentCancel/>} />
+            <Route path='/cancel' exact element={<PaymentCancel/>} />
 
 
             <Route path='/admin/login' element={adminData ? <Dashboard /> : <AdminLogin />} />

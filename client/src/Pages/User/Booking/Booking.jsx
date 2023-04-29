@@ -26,7 +26,7 @@ function Booking() {
   const { bikesData } = location.state;
 
   const clickedBike = bikesData?.data.find((bike) => bike.bikeName === location.state.bikeName);
-  const branchLocation = useSelector((state) => state.userLocationReducer.locationData)
+  const branchLocation = useSelector((state) => state?.userLocationReducer?.locationData)
 
   const coupons = useSelector((state) => state.userGetCouponReducer.couponData)
 
@@ -229,6 +229,7 @@ function Booking() {
                   value={pickupLocation} // retrieve the selected value from React Hook Form
                   label="pickup location"
                   name='pickupLocation'
+                  required
 
                   onChange={(e) => setPickupLocation(e.target.value)}
                 >
@@ -255,6 +256,7 @@ function Booking() {
                   value={dropOffLocation} // retrieve the selected value from React Hook Form
                   label="drop Off location"
                   name='dropOffLocation'
+                  required
 
                   onChange={(e) => setDropOffLocation(e.target.value)}
                 >

@@ -9,6 +9,6 @@ exports.homeBikeController = async (req,res)=>{
         .limit(3)
         res.status(200).json(bikeData)
     } catch (error) {
-        res.status(400).json("error finding bikes")
+        res.status(400).json({message:"error finding bikes"})
     }
 }

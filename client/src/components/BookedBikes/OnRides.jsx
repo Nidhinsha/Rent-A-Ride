@@ -12,12 +12,11 @@ function OnRides({data}) {
   const [viewBike, setViewBike] = useState(false)
   const [bikeImage,setBikeImage] = useState([])
 
-  if (onRides?.length === 0) {
-    return <Box display="flex" justifyContent="center"><NoData/></Box>
-  }
+
   return (
     <>
-    
+    {
+        onRides?.length > 0 ?
       <DataTable value={onRides} className="p-d-flex p-jc-center" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
       <Column header="Photo"
                     body={(rowData) =>
@@ -98,6 +97,9 @@ function OnRides({data}) {
             <Column field="totalAmount" header="Amount" sortable style={{ width: '25%' }}></Column>
 
         </DataTable>
+        :<Box display="flex" justifyContent="center"><NoData/></Box>
+
+    }
        
         {/* Modal  */}
 

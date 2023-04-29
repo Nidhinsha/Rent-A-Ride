@@ -6,36 +6,21 @@ import {
   Group,
 
   UnstyledButton,
-  Text,
-  SimpleGrid,
-  ThemeIcon,
-  Anchor,
+  
   Divider,
   Center,
   Box,
   Burger,
   Drawer,
-  Collapse,
   ScrollArea,
-  Autocomplete,
   rem,
 } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
+
 import { useDisclosure } from '@mantine/hooks';
-import {
-  IconNotification,
-  IconCode,
-  IconBook,
-  IconChartPie3,
-  IconFingerprint,
-  IconCoin,
-  IconChevronDown,
-  IconSearch
-} from '@tabler/icons-react';
+
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { userLogOut } from '../../Redux/Actions/userActions';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { Button } from 'primereact/button';
 import ProfileDropDown from '../DropDown/ProfileDropDown';
@@ -107,7 +92,7 @@ function NavBar() {
   const { userLoginDetails } = user
 
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
+  const [ { toggle: toggleLinks }] = useDisclosure(false);
   const { classes, theme } = useStyles();
 
 
@@ -115,7 +100,7 @@ function NavBar() {
 
   return (
     <Box pb={100} >
-      <Header height={70} px="md">
+      <Header height={70} px="md"  style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1 }}>
         <Group position="apart" sx={{ height: '100%' }}>
           {/* <MantineLogo size={30} /> */}
           <h3 size={30}>Rent&Ride</h3>

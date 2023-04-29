@@ -103,10 +103,11 @@ display: grid;
        grid-template-rows: 10% 78% 12%;
   }
   .chat-header {
-    background-color:#054D60;
+    background-color:#0070C0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height:60px;
     padding: 0 2rem;
     .user-details {
       display: flex;

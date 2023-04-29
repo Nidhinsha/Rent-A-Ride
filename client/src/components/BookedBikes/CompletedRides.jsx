@@ -13,13 +13,12 @@ function CompletedRides({data}) {
   const [viewBike, setViewBike] = useState(false)
   const [bikeImage,setBikeImage] = useState([])
 
-  if (completedRides?.length === 0) {
-    return <Box display="flex" justifyContent="center"><NoData/></Box>
-  }
+  
 
   return (
     <>
-   
+    {
+        completedRides?.length > 0 ?
       <DataTable value={completedRides} className="p-d-flex p-jc-center" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
       <Column header="Photo"
                     body={(rowData) =>
@@ -100,6 +99,9 @@ function CompletedRides({data}) {
             <Column field="totalAmount" header="Amount" sortable style={{ width: '25%' }}></Column>
 
         </DataTable>
+        :<Box display="flex" justifyContent="center"><NoData/></Box>
+
+    }
          
 
         {/* Modal  */}

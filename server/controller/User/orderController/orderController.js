@@ -54,7 +54,7 @@ exports.userCreateOrderController = async (req, res) => {
                     }
                 )
                 .then((response) => {
-                    console.log(response, 'respones');
+                   res.status(200).json({message:"user added to wallet"})
                 })
             }
 
@@ -91,7 +91,6 @@ exports.userCreateOrderController = async (req, res) => {
                         }
                     )
                     .then((couponData) => {
-                        console.log(couponData?.couponPrice,'coupon price  when couponcoe !== null');
                         price = couponData?.couponPrice
                         withOutCouponAmountToUser = parseInt(totalAmount) + parseInt(price)
                         bookingAmount = withOutCouponAmountToUser * 0.25
@@ -127,12 +126,12 @@ exports.userCreateOrderController = async (req, res) => {
                                 }
                             )
                             .then((response) => {
-                                console.log(response, 'response of money added to the wallet after rented it');
+                                res.status(200).json({message:'response of money added to the wallet after rented it'}) 
                                 })
                             }
                         })
                 } else if (couponCode === "null") {
-                    console.log(couponData?.couponPrice,'coupon price  when couponcoe === null');
+                    
                     if (!walletExists) {
                         bookingAmount = totalAmount * 0.25
 
@@ -165,16 +164,16 @@ exports.userCreateOrderController = async (req, res) => {
                             }
                         )
                         .then((response) => {
-                            console.log(response,'the response yo');
+                            res.status(200).json({message:"wallet updated"})
                         })
                     }
                 }
             } else {
-                console.log('nothing ');
+                res.status(400).json({message:"No Data Available"})
             }
 
         } catch (error) {
-            res.status(500).json("server error")
+            res.status(500).json({message:"server error"})
         }
     } catch (error) {
         console.log(error, 'first try error');

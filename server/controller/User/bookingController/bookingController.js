@@ -237,21 +237,21 @@ exports.bikeBookingController = async (req, res) => {
                                 }
                             }
                         } 
-                        res.status(200).json("booking successfull")
+                        res.status(200).json({message:"booking successfull"})
                     })
                     .catch((error)=>{
-                        res.status(400).json("error while updating wallet ")
+                        res.status(400).json({message:"error while updating wallet "})
                     })
 
                 } catch (error) {
-                    res.status(400).json('booking not working');
+                    res.status(400).json({message:'booking not working'});
                 }
             }
         } else {
-            res.status(400).json("the slot is already booked.please select another slot thankyou")
+            res.status(400).json({message:"the slot is already booked.please select another slot thankyou"})
         }
     } catch (error) {
-        res.status(400).json('wallet error');
+        res.status(400).json({message:'wallet error'});
     }
 }
 

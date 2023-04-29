@@ -12,13 +12,13 @@ function CancelledRides({data}) {
   const [viewBike, setViewBike] = useState(false)
   const [bikeImage,setBikeImage] = useState([])
 
-  if (cancelledRides?.length === 0) {
-    return <Box display="flex" justifyContent="center"><NoData/></Box>
-
-  }
+ 
   
   return (
     <>
+
+    {
+        cancelledRides?.length > 0 ?
 
       <DataTable value={cancelledRides} className="p-d-flex p-jc-center" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
       <Column header="Photo"
@@ -100,6 +100,8 @@ function CancelledRides({data}) {
             <Column field="totalAmount" header="Amount" sortable style={{ width: '25%' }}></Column>
 
         </DataTable>
+        :<Box display="flex" justifyContent="center"><NoData/></Box>
+    }
 
         {/* modal */}
 

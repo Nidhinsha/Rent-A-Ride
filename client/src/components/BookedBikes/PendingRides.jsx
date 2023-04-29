@@ -10,12 +10,11 @@ function PendingRides({data}) {
   const pendingRides = data?.filter((ride) => ride?.status === "pending");
   const [viewBike, setViewBike] = useState(false)
   const [bikeImage,setBikeImage] = useState([])
-  if (pendingRides?.length === 0) {
-    return  <Box display="flex" justifyContent="center"><NoData/></Box>
-  }
+ 
   return (
     <>
-   
+   {
+    pendingRides?.length ?
      <DataTable value={pendingRides} className="p-d-flex p-jc-center" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} >
      <Column header="Photo"
                     body={(rowData) =>
@@ -96,6 +95,9 @@ function PendingRides({data}) {
             <Column field="totalAmount" header="Amount" sortable style={{ width: '25%' }}></Column>
 
         </DataTable>
+        : <Box display="flex" justifyContent="center"><NoData/></Box>
+
+   }
        
 
 
