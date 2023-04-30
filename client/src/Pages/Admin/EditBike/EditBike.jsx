@@ -4,15 +4,14 @@ import TextField from '@mui/material/TextField';
 import { Avatar, FormHelperText, Grid, styled } from '@mui/material'
 import SideBar from '../../../components/SideBar/SideBar';
 import Button from '@mui/material/Button';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { adminGetLocation } from '../../../Redux/Actions/adminActions';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Figure } from 'react-bootstrap';
 
 import { useForm } from "react-hook-form"
 import { adminEditBikeAPI} from '../../../Api/Admin/ApiCalls'
@@ -20,7 +19,6 @@ import { adminEditBikeAPI} from '../../../Api/Admin/ApiCalls'
 function EditBike() {
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const [images1, setImages1] = useState([])
     const [images, setImages] = useState([])
@@ -77,9 +75,6 @@ function EditBike() {
         formData.append("price", price)
         formData.append("color", color)
         formData.append("description", description)
-
-     
-
     
         const id= location.state.bikeData._id
         adminEditBikeAPI(id,formData).then((data) => {

@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function Welcome({currentUser}) {
-    const name = currentUser.firstName + " " + currentUser.lastName
+function Welcome({ currentUser }) {
+  const name = currentUser.firstName + " " + currentUser.lastName
   return (
     <Container>
-    <h1>welcome, <span>{name}!</span></h1>
-    <h3>Please select a chat to Start messaging.</h3>
+      <h1>welcome, <span>{name}!</span></h1>
+      <h3>Please select a chat to Start messaging.</h3>
     </Container>
   )
 }

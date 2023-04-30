@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import SideBar from '../../../components/SideBar/SideBar';
-import { Box, Container, Tab, Tabs, Typography, styled } from '@mui/material';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+import { Box,Tab, Tabs, Typography, styled } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bikeReportDataAction } from '../../../Redux/Actions/adminActions';

@@ -2,13 +2,12 @@ import { Box, Button, Checkbox, Container, Divider, FormControl, FormControlLabe
 import React, { useState } from 'react'
 import NavBar from '../../../components/NavBar/NavBar'
 import { useLocation, useNavigate } from 'react-router-dom';
-import SportsMotorsportsOutlinedIcon from '@mui/icons-material/SportsMotorsportsOutlined';
 import moment from "moment"
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userBookingBikeAction, userGetCouponsAction, userGetLocation, userGetWalletAction } from '../../../Redux/Actions/userActions';
 
-import { DatePicker, Grid } from "antd"
+import { DatePicker } from "antd"
 import Footer from '../../../components/Home/Footer/Footer';
 import { userBookingBikeAPI } from '../../../Api/User/ApiCalls';
 import { Toaster, toast } from 'react-hot-toast';
@@ -23,10 +22,10 @@ function Booking() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation();
-  const { bikesData } = location.state;
+  const { bikesData, bikeId, bikes } = location.state
 
-  const clickedBike = bikesData?.data.find((bike) => bike.bikeName === location.state.bikeName);
-  console.log(clickedBike,'cliked bike adata');
+  const clickedBike = bikesData?.data.find(bike => bike._id === bikeId) || bikes.find(bike => bike._id === bikeId)
+
   const branchLocation = useSelector((state) => state?.userLocationReducer?.locationData)
 
   const coupons = useSelector((state) => state.userGetCouponReducer.couponData)
@@ -72,6 +71,12 @@ function Booking() {
     setStartDate(moment(values[0].$d).format('MMMM Do YYYY, h:mm:ss a'));
     setEndDate(moment(values[1].$d).format('MMMM Do YYYY, h:mm:ss a'));
     setTotalHours(values[1].diff(values[0], 'hours'))
+  }
+
+  // disable date
+  function disabledDate(current) {
+    // Disable dates before today's date
+    return current && current < moment().startOf('day');
   }
 
   // coupon verify
@@ -129,14 +134,14 @@ function Booking() {
     : needHelmet === true
       ? totalHours * clickedBike?.price + 50
       : needHelmet === false && couponVerified === true
-        ? (totalHours * clickedBike?.price) - (coupons.find((x) => x.couponCode === coupon)?.couponPrice || 0)
+        ? (totalHours * clickedBike?.price) - (coupons.find((x) => x?.couponCode === coupon)?.couponPrice || 0)
         : totalHours * clickedBike?.price
 
 
   const stripeData = {
-    userId: JSON.parse(localStorage.getItem("userInfo")).id,
-    userName: JSON.parse(localStorage.getItem("userInfo")).firstName,
-    bikeId: clickedBike._id,
+    userId: JSON.parse(localStorage.getItem("userInfo"))?.id,
+    userName: JSON.parse(localStorage.getItem("userInfo"))?.firstName,
+    bikeId: clickedBike?._id,
     bikeData: clickedBike,
     totalAmount,
     totalHours,
@@ -241,6 +246,7 @@ function Booking() {
               format="MM DD YYYY HH:mm"
               style={{ width: "100%", height: "100%" }}
               onChange={selectTimeSlots}
+              disabledDate={disabledDate} // Set the disabledDate function
             />
           </Box>
 

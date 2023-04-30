@@ -36,12 +36,12 @@ function Profile() {
   const [photo, setPhoto] = useState("");
 
   const addphoto = (e) => {
-    
+
     e.preventDefault();
     const data = new FormData();
     data.append("file", photo);
-    data.append("upload_preset",process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
-    data.append("cloud_name",process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
+    data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+    data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
 
     if (photo.type !== 'image/jpeg' && photo.type !== 'image/png') {
       setImgTypeError('Not Supported');
@@ -66,8 +66,8 @@ function Profile() {
     const data = new FormData()
 
     data.append("file", proof)
-    data.append("upload_preset",process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
-    data.append("cloud_name",process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
+    data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+    data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
 
     fetch(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`, {
       method: "post",
@@ -118,17 +118,17 @@ function Profile() {
                 {imgTypeError && <Alert severity="error">{imgTypeError}</Alert>}
 
                 <TextField size='md' type='file' className='mt-4' id='formFileLg' onChange={(e) => setPhoto(e.target.files[0])}
-                inputProps={{
-                  accept: '.jpg, .jpeg, .png'
-                }}
+                  inputProps={{
+                    accept: '.jpg, .jpeg, .png'
+                  }}
                 />
                 <div className="card flex flex-wrap justify-content-center gap-3 col-md-12 mt-3">
                   <Button
                     severity="primary"
                     label="Add Photo"
                     icon="pi pi-upload"
-                    onClick={addphoto}/>
-                  
+                    onClick={addphoto} />
+
                 </div>
               </form>
 
@@ -205,7 +205,7 @@ function Profile() {
               <div className="p-3 py-5 shadow-lg p-3 mb-5 bg-white rounded">
                 <div className="col-md-12  ">
                   <label htmlFor="">Proof</label>
-               
+
 
                   <div className="card" style={{
                     backgroundColor: "#FFFFFF",
@@ -313,8 +313,8 @@ function Profile() {
 
 
       </div>
-      <Footer/>
-      </>
+      <Footer />
+    </>
   )
 }
 export default Profile

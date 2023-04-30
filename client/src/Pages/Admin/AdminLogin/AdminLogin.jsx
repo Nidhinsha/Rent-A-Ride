@@ -1,19 +1,14 @@
 import React from 'react';
 import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
-import { AccountCircle, Email, Lock, GoogleIcon } from '@mui/icons-material';
+import { Email, Lock } from '@mui/icons-material';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-
-import { Link } from 'react-router-dom';
-
-import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { adminLogin } from '../../../Redux/Actions/adminActions'
-import ErrorMessage from '../../../components/Alert/Error'
 import Loading from '../../../components/Loading/Loading'
 import './AdminLogin.css'
 
@@ -35,10 +30,7 @@ const schema = yup.object().shape({
 
 function AdminLogin() {
 
-
-
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const admin = useSelector((state) => state.adminLoginReducer)
   const { loading, adminLoginError, adminLoginData } = admin
@@ -56,10 +48,8 @@ function AdminLogin() {
 
     try {
       dispatch(adminLogin(email, password))
-      // navigate('/')
-
     } catch (error) {
-      console.log(error,'error in login');
+      
     }
   }
 

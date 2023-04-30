@@ -4,7 +4,6 @@ import { Box, Container, Tooltip, Typography, styled } from '@mui/material'
 import SideBar from '../../../components/SideBar/SideBar'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import { Tag } from 'primereact/tag'
 import { adminGetBookedBikeAction } from '../../../Redux/Actions/adminActions';
 import ViewBikeModal from '../../../components/Modal/ViewBikeModal'
 import { Button } from 'primereact/button';
@@ -30,10 +29,7 @@ function ViewBookedBike() {
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   }));
-
-  const statusBodyTemplate = (bikeData) => {
-    return <Tag value={bikeData.status} severity={getSeverity(bikeData)}></Tag>;
-  };
+;
 
   const getSeverity = (bikeData) => {
     switch (bikeData.status) {

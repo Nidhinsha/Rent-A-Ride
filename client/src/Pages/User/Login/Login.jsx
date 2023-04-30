@@ -6,15 +6,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
-
-
-
-import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { googleSignupAction, userLogin, userSignup } from '../../../Redux/Actions/userActions'
-import ErrorMessage from '../../../components/Alert/Error'
+import { googleSignupAction, userLogin } from '../../../Redux/Actions/userActions'
 import Loading from '../../../components/Loading/Loading'
 import './Login.css'
 
@@ -53,11 +47,9 @@ function Login() {
   const submitHandler = async (data) => {
 
     const email = data.email
-
     const password = data.password
 
     try {
-      console.log("form", data);
       dispatch(userLogin(email, password))
 
     } catch (error) {

@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NavBar from '../../../components/NavBar/NavBar';
-// import { getAccepted, getRentedBikesAction } from '../../../REDUX/Actions/USER_ACTIONS/getRentedBikes'
 import { userGetAcceptedBikes, userGetRejectedBikes, userGetPendingBikes, userGetAllRentedBikes } from '../../../Redux/Actions/userActions'
-import Figure from 'react-bootstrap/Figure';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -12,14 +10,6 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import { Button } from '@mui/material';
-import Loading from '../../../components/Loading/Loading';
 import Footer from '../../../components/Home/Footer/Footer';
 import AllRentedBikes from '../../../components/RentedBikes/AllRentedBikes';
 import RejectedReq from '../../../components/RentedBikes/RejectedReq';
@@ -52,13 +42,6 @@ TabPanel.propTypes = {
     index: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,
 };
-
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -136,7 +119,7 @@ function RentedBikes() {
                                 padding: '12px 16px',
                                 fontWeight: '600',
                                 fontSize: '1rem',
-                                
+
                             },
                         }}
                     >

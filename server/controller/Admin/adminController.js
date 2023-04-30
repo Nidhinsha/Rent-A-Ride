@@ -7,7 +7,7 @@ exports.adminUser = async (req,res) => {
       res.status(200).json(data)
   })
   } catch (error) {
-    res.status(400).json("error in finding users")
+    res.status(400).json({message:"error in finding users"})
   }
   
 }

@@ -1,18 +1,7 @@
-import { Box, Container, Tooltip, Typography, styled } from '@mui/material';
+
 import React from 'react'
-import { Column } from 'primereact/column'
-import { DataTable } from 'primereact/datatable'
-import SideBar from '../SideBar/SideBar';
 import MUIDataTable from "mui-datatables";
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-}));
 
 function AllReport({ bikeReport }) {
     const columns = [

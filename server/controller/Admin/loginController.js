@@ -8,9 +8,7 @@ exports.adminLogin = async (req, res) => {
     adminSchema.findOne({ email: req.body.email }).then((data) => {
         if (data) {
             bcrypt.compare(req.body.password, data.password, function (err, response) {
-                console.log(response);
-
-
+                
                 if (response) {
                     const details = {
                         email: data.email,

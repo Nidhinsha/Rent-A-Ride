@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { userGetContactAction } from '../../../Redux/Actions/userActions'
 import Contacts from '../../../components/Chat/Contacts/Contacts'
 import Welcome from '../../../components/Chat/Welcome/Welcome'
 import ChatContainer from '../../../components/Chat/ChatContainer/ChatContainer'

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import ChatInput from '../ChatInput/ChatInput'
 import Messages from '../Messages/Messages'
 import { getAllMessagesAPI, sendMessageAPI } from '../../../Api/User/ApiCalls'
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid"
 
 function ChatContainer({ currentChat, currentUser, socket }) {
 
@@ -45,19 +45,19 @@ function ChatContainer({ currentChat, currentUser, socket }) {
 
   useEffect(() => {
     if (socket) {
-        socket.on("msg-receive", (msg) => {
-            setArrivalMessage({ fromSelf: false, message: msg })
-        })
+      socket.on("msg-receive", (msg) => {
+        setArrivalMessage({ fromSelf: false, message: msg })
+      })
     }
-}, [])
+  }, [])
 
-useEffect(() => {
-  arrivalMessage && setMessages((prev) => [...prev, arrivalMessage])
-}, [arrivalMessage])
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage])
+  }, [arrivalMessage])
 
-useEffect(() => {
-  scrollRef.current?.scrollIntoView({ behaviour: "smooth" })
-}, [messages])
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behaviour: "smooth" })
+  }, [messages])
 
   return (
     <Container>

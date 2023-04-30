@@ -6,11 +6,8 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
@@ -37,7 +34,6 @@ function ProfileDropDown() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
 
   const handleProfile = () => {
     navigate("/profile")
@@ -71,12 +67,12 @@ function ProfileDropDown() {
           >
             <Avatar sx={{ height: 32 }}>
               <img src={userLoginDetails?.photo
-                        ? userLoginDetails?.photo
-                        :"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-              } alt="user profile"   style={{ borderRadius: '50%', width: '100%', height: '100%' }} 
-              onError={(e) => {
-                e.target.src = '/path/to/default/image.png'; // Set default image path here
-              }}
+                ? userLoginDetails?.photo
+                : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+              } alt="user profile" style={{ borderRadius: '50%', width: '100%', height: '100%' }}
+                onError={(e) => {
+                  e.target.src = '/path/to/default/image.png'; // Set default image path here
+                }}
               />
 
             </Avatar>

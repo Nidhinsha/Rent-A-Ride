@@ -2,7 +2,7 @@ import { Divider } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-function Contacts({ contacts, currentUser ,changeChat }) {
+function Contacts({ contacts, currentUser, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined)
   const [currentUserPhoto, setCurrentUserPhoto] = useState(undefined)
   const [currentSelected, setCurrentSelected] = useState(undefined)
@@ -18,11 +18,11 @@ function Contacts({ contacts, currentUser ,changeChat }) {
     setCurrentSelected(index)
     changeChat(contact)
   }
- 
+
   return (
     <>
       {
-       currentUserName && (
+        currentUserName && (
           <Container>
             <div className="brand">
               <img src='https://cdn.pixabay.com/photo/2016/04/07/06/53/bmw-1313343_960_720.jpg' alt="logo" />
@@ -33,19 +33,19 @@ function Contacts({ contacts, currentUser ,changeChat }) {
                 contacts ? contacts.map((contact, index) => {
                   return (
                     <>
-                    <div 
-                      key={index}
-                      className={`contact ${index === currentSelected ? "selected" : "Not selected"}`}
-                      onClick={()=>changeCurrentChat(index,contact)} 
+                      <div
+                        key={index}
+                        className={`contact ${index === currentSelected ? "selected" : "Not selected"}`}
+                        onClick={() => changeCurrentChat(index, contact)}
                       >
-                      <div className="avatar">
-                        <img src={contact.photo} alt="profile" width={50} />
+                        <div className="avatar">
+                          <img src={contact.photo} alt="profile" width={50} />
+                        </div>
+                        <div className="username">
+                          <p className='mb-0'>{contact.firstName + " " + contact.lastName}</p>
+                        </div>
                       </div>
-                      <div className="username">
-                      <p className='mb-0'>{contact.firstName + " " + contact.lastName}</p>
-                      </div>
-                    </div>
-                    <Divider/>
+                      <Divider />
                     </>
                   )
                 })

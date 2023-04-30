@@ -9,8 +9,6 @@ function Wallet() {
     const location = useLocation()
     const walletHistory = location.state.wallet?.walletHistory
 
- 
-
     return (
         <>
             <NavBar />

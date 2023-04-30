@@ -14,7 +14,6 @@ import { Container } from '@mantine/core';
 import { ConfirmPopup } from 'primereact/confirmpopup'; // To use <ConfirmPopup> tag
 import { confirmPopup } from 'primereact/confirmpopup'; // To use confirmPopup method
 
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { adminAcceptBikeAction, adminGetPendingBikeAction, adminRejectBikeAction } from '../../../Redux/Actions/adminActions';
 function BikeRequest() {
@@ -28,23 +27,16 @@ function BikeRequest() {
     // const [pendingData, setPendingData] = useState([])
     const pendingDataList = useSelector((state) => state.adminRentRequestBikeReducer)
     const { loading, bikeRequestData, bikeRequestDataError } = pendingDataList
-    console.log('pendign data selector', pendingDataList);
-
 
     // accept and reject bikes
-
     const handleAccept = (id) => {
         // Handle accept logic here
-
         dispatch(adminAcceptBikeAction(id))
-        // console.log("Accepted", id);
-
     };
 
     const handleReject = (id) => {
         // Handle reject logic here
         dispatch(adminRejectBikeAction(id))
-        console.log("Rejected", id);
     };
 
     useEffect(() => {

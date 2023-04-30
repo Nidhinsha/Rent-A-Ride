@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { adminBlockUserAction, adminLogOut, adminUserFetchAction } from "../../../Redux/Actions/adminActions";
+import { adminUserFetchAction } from "../../../Redux/Actions/adminActions";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from "primereact/button";
@@ -14,8 +14,7 @@ import { userBlockUnblockApi } from '../../../Api/Admin/ApiCalls';
 
 
 function UserManage() {
-
-  const navigate = useNavigate();
+  
   const dispatch = useDispatch();
 
   const adminUserDataList = useSelector((state) => state.adminUserFetchReducer);

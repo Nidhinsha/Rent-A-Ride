@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Alert, CircularProgress } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,7 +13,6 @@ import { userAddBikeAPI } from '../../../Api/User/ApiCalls';
 import NavBar from '../../../components/NavBar/NavBar';
 import { FormHelperText } from '@mui/material'
 import { useForm } from "react-hook-form"
-import { userGetLocation } from '../../../Redux/Actions/userActions';
 import Footer from '../../../components/Home/Footer/Footer';
 
 function RentBike() {
@@ -24,7 +23,6 @@ function RentBike() {
     const [engineNumber, setEngineNumber] = useState('')
     const [brand, setBrand] = useState('')
     const [fuel, setFuel] = useState('')
-    const [loc, setLocation] = useState([])
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
     const [color, setColor] = useState('')
@@ -32,19 +30,7 @@ function RentBike() {
     const [loading, setLoading] = useState(false)
     const [sucess, setSuccess] = useState(false);
 
-
-
-    const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    useEffect(() => {
-        dispatch(userGetLocation())
-    }, [])
-
-    const location = useSelector((state) => state.userLocationReducer.locationData)
-   
-
-
 
     const {
         register,
@@ -61,12 +47,8 @@ function RentBike() {
 
         // for image
         images.forEach((value) => {
-            console.log(value)
             formdata.append("images", value)
         })
-
-
-      
 
         // the form data 
         formdata.append("ownerName", ownerName)
@@ -77,7 +59,6 @@ function RentBike() {
         formdata.append("brand", brand)
         formdata.append("price", price)
         formdata.append("color", color)
-        formdata.append("location", loc)
         formdata.append("description", description)
 
         userAddBikeAPI(formdata).then((data) => {
@@ -96,10 +77,6 @@ function RentBike() {
                 setLoading(false)
             })
     }
-
-
-
-
 
     return (
         <>

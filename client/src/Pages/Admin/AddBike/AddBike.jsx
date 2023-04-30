@@ -4,10 +4,10 @@ import TextField from '@mui/material/TextField';
 import { FormHelperText, styled } from '@mui/material'
 import SideBar from '../../../components/SideBar/SideBar';
 import Button from '@mui/material/Button';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { adminAddBikeAPI } from '../../../Api/Admin/ApiCalls';
 import { adminAddBikeAction, adminGetLocation } from '../../../Redux/Actions/adminActions';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -51,12 +51,10 @@ function AddBike() {
         setLoading(true)
 
         // for using the form data
-
         const formdata = new FormData()
 
         // for image
         images.forEach((value) => {
-            console.log(value)
             formdata.append("images", value)
         })
 
@@ -126,7 +124,7 @@ function AddBike() {
                             label="Bike Name"
                             {...register("bikeName",
                                 {
-                                    required: "This is required", minLength: 3,maxLength:8
+                                    required: "This is required", minLength: 3, maxLength: 8
                                 })}
                             onChange={(e) => setBikeName(e.target.value)}
                             helperText={errors.bikeName && <div style={{ color: 'red' }}>Please enter the bike name</div>}
@@ -141,7 +139,7 @@ function AddBike() {
 
                             {...register("bikeModel",
                                 {
-                                    required: "This is required", minLength: 3,maxLength:8
+                                    required: "This is required", minLength: 3, maxLength: 8
                                 })}
                             onChange={(e) => setModel(e.target.value)}
                             helperText={errors.bikeModel && <div style={{ color: 'red' }}>Please enter the correct bike model</div>}
@@ -157,7 +155,7 @@ function AddBike() {
                             label="Engine Number"
                             {...register("engineNumber",
                                 {
-                                    required: true, minLength: 3,maxLength:8
+                                    required: true, minLength: 3, maxLength: 8
                                 })}
                             onChange={(e) => setEngineNumber(e.target.value)}
                             helperText={errors.engineNumber && <div style={{ color: 'red' }}>Please enter the correct engine number</div>}
@@ -169,7 +167,7 @@ function AddBike() {
                             label="Brand"
                             {...register("brand",
                                 {
-                                    required: true, minLength: 3,maxLength:8
+                                    required: true, minLength: 3, maxLength: 8
                                 })}
                             onChange={(e) => setBrand(e.target.value)}
                             helperText={errors.brand && <p style={{ color: 'red' }}>Please enter the correct brand</p>}
@@ -184,7 +182,7 @@ function AddBike() {
                             label="Color"
                             {...register("color",
                                 {
-                                    required: true, minLength: 3,maxLength:8
+                                    required: true, minLength: 3, maxLength: 8
                                 }
                             )}
                             onChange={(e) => setColor(e.target.value)}
@@ -201,7 +199,7 @@ function AddBike() {
                                 label="Fuel"
                                 {...register("fuel",
                                     {
-                                        required: true, minLength: 3,maxLength:8
+                                        required: true, minLength: 3, maxLength: 8
                                     }
                                 )}
                                 onChange={(e) => setFuel(e.target.value)}
@@ -218,12 +216,12 @@ function AddBike() {
 
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField sx={{ mr: 2 }}
-                        InputProps={{
-                            inputProps: { min: 0 }
-                          }}
+                            InputProps={{
+                                inputProps: { min: 0 }
+                            }}
                             required
                             id="outlined-required"
-                            
+
                             label="Price"
                             type="number"
                             {...register("price",
@@ -235,7 +233,7 @@ function AddBike() {
                             helperText={errors.price && <p style={{ color: 'red' }}>Please enter a correct price</p>}
                         />
 
-                      
+
 
                     </div>
 
@@ -248,7 +246,7 @@ function AddBike() {
                             maxRows={4}
                             {...register("description",
                                 {
-                                    required: true, minLength: 3,maxLength:20
+                                    required: true, minLength: 3, maxLength: 20
                                 }
                             )}
                             onChange={(e) => setDescription(e.target.value)}
@@ -262,7 +260,7 @@ function AddBike() {
                             type="file"
                             inputProps={{
                                 accept: '.jpg, .jpeg, .png'
-                              }}
+                            }}
                             helperText={errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image1",
                                 {
@@ -277,7 +275,7 @@ function AddBike() {
                             type="file"
                             inputProps={{
                                 accept: '.jpg, .jpeg, .png'
-                              }}
+                            }}
                             helperText={errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image2",
                                 {
@@ -292,7 +290,7 @@ function AddBike() {
                             type="file"
                             inputProps={{
                                 accept: '.jpg, .jpeg, .png'
-                              }}
+                            }}
                             helperText={errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image3",
                                 {
@@ -306,7 +304,7 @@ function AddBike() {
                             type="file"
                             inputProps={{
                                 accept: '.jpg, .jpeg, .png'
-                              }}
+                            }}
                             helperText={errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image4",
                                 {

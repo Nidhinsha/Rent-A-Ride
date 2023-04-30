@@ -3,14 +3,14 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-function BookingButton({bikeName}) {
+function BookingButton({bikeId,bikes}) {
     const navigate = useNavigate()
-    const bikes = useSelector((state) => state.userGetBikeReducer)
-    const { bikesDataLoading, bikesData, bikesDataError } = bikes
+    const { bikesDataLoading, bikesData, bikesDataError }= useSelector((state) => state.userGetBikeReducer)
+    
   return (
     <Button
     label="Book Now" variant='outlined'  icon="pi pi-shopping-bag" style={{ width: '100%', fontSize: 'large' }}
-    onClick={() => navigate("/booking",{ state: { bikesData,bikeName:bikeName  } })}
+    onClick={() => navigate("/booking",{ state: { bikesData,bikeId,bikes  } })}
 
     >
         Book Now

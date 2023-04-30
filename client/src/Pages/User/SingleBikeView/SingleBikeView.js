@@ -1,9 +1,8 @@
 import React from 'react';
-import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
+import { Grid, Box, Typography,} from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Loading from '../../../components/Loading/Loading'
@@ -17,13 +16,9 @@ import Footer from '../../../components/Home/Footer/Footer';
 function SingleBikeView() {
 
     const location = useLocation();
+    const {bikesData,bikeId,bikes} = location.state
 
-    const bikesData = location?.state?.bikesData;
-    const bikeName = location?.state?.bikeName;
-
-    const clickedBike = Array.isArray(bikesData)
-        ? bikesData?.find(bike => bike?.bikeName === bikeName)
-        : bikesData?.data.find(bike => bike?.bikeName === bikeName);
+    const clickedBike =  bikesData?.data.find((bike) => bike._id === bikeId) || bikes.find((bike) => bike._id === bikeId)
 
 
     return (
@@ -34,7 +29,7 @@ function SingleBikeView() {
                     <Grid container justifyContent="center" spacing={2}>
                         <Grid item xs={12} md={6} mt={4}>
                             <Carousel variant="dark">
-                                {clickedBike.photo.map((pic, index) => (
+                                {clickedBike?.photo?.map((pic, index) => (
                                     <Carousel.Item key={index}>
                                         <img
                                             className="d-block  w-100 "
@@ -93,7 +88,7 @@ function SingleBikeView() {
                             </Box>
                         </Grid>
 
-                        <BookingButton bikeName={clickedBike.bikeName} />
+                        <BookingButton bikeId={clickedBike._id} bikes={bikes} />
                     </Grid>
                 </Box>
             </Box>

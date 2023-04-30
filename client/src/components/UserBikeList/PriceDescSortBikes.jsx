@@ -38,7 +38,7 @@ function PriceDescSortBikes({ priceDesc }) {
                                                 width="140"
                                                 image={data.photo[0]}
                                                 alt={data.bikeName}
-                                                onClick={(e) => navigate('/single-bike-view', { state: { bikesData } })}
+                                                onClick={(e) => navigate('/single-bike-view', { state: { bikesData,bikeId: data._id } })}
                                             />
                                             <CardContent>
 

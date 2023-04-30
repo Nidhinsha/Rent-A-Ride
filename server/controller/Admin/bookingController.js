@@ -69,9 +69,6 @@ exports.adminGetBookedBikeController = async (req, res) => {
 
       for (let i = 0; i < data.length; i++) {
 
-
-        // let startTime = data[i].startDate
-        // let endTime = data[i].endDate
         let startTime = moment(data[i].startDate, 'MMMM Do YYYY, h:mm:ss a').unix()
         let endTime = moment(data[i].endDate, 'MMMM Do YYYY, h:mm:ss a').unix()
 
@@ -140,12 +137,11 @@ exports.adminGetBookedBikeController = async (req, res) => {
 
       res.status(200).json(data)
     } catch (error) {
-      console.log(error, 'onride manage error');
+      res.status(400).json({message:"error in booking"})
     }
 
 
   } catch (error) {
-    console.log(error, ';iiiiiiiiiiiiiiiiii');
     res.status(400).json({ message: "error while fetching data" })
   }
 }

@@ -7,7 +7,6 @@ import ViewBikeModal from '../../../components/Modal/ViewBikeModal'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { Box, Tooltip, Typography, styled } from '@mui/material'
 import { Container } from '@mantine/core';

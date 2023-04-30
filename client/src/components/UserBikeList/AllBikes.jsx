@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions, CardHeader } from '@mui/material';
+import { CardActionArea, CardActions } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { userGetBikeAction } from '../../Redux/Actions/userActions';
 import Loading from '../Loading/Loading';
 import { Box } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
@@ -38,7 +37,7 @@ function AllBikes({allBikes}) {
                                                 width="140"
                                                 image={data.photo[0]}
                                                 alt={data.bikeName}
-                                                onClick={(e) => navigate(`/single-bike-view`, { state: { bikesData,bikeName: data.bikeName  } })}
+                                                onClick={(e) => navigate(`/single-bike-view`, { state: { bikesData,bikeId: data._id  } })}
                                             />
                                             <CardContent>
 

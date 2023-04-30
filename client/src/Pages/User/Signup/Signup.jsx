@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
-import { AccountCircle, Email, Lock, GoogleIcon, } from '@mui/icons-material';
+import { AccountCircle, Email, Lock } from '@mui/icons-material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { useForm } from "react-hook-form";
@@ -14,19 +14,14 @@ import { useNavigate } from 'react-router-dom';
 import { auth, provider } from '../../../firebase/config';
 import { signInWithPopup } from 'firebase/auth'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { googleSignupAction, userSignup } from '../../../Redux/Actions/userActions';
 import { Link } from 'react-router-dom'
 import Loading from '../../../components/Loading/Loading';
-import ErrorMessage from '../../../components/Alert/Error';
 import './Signup.css'
 
-
-
 // yup
-
-
 const schema = yup.object().shape({
   firstName: yup
     .string("first name should be string")
@@ -64,9 +59,6 @@ function Signup() {
   const googleSignupSelector = useSelector((state) => state.googleSignupReducer)
   const { googleLoading, googleSignupError } = googleSignupSelector
 
-  console.log('userSignupdata', userSignupData);
-
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -76,7 +68,6 @@ function Signup() {
     signInWithPopup(auth, provider).then((data) => {
       const fullName = data.user.displayName
       const [firstName, lastName] = fullName.split(' ')
-      // console.log('google data',data.user.displayName,data.user.email,data.user.photoURL,data.user.phoneNumber,firstName,lastName);
       dispatch(googleSignupAction(firstName, lastName, data.user.email, data.user.phoneNumber, data.user.photoURL))
 
     })
@@ -97,8 +88,6 @@ function Signup() {
 
     try {
       dispatch(userSignup(firstName, lastName, email, phone, password, referalCode))
-      // navigate('/login')
-
     } catch (error) {
 
     }
