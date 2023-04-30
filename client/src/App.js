@@ -30,6 +30,7 @@ const RentedBikes = lazy(() => import("./Pages/User/RentedBikes/RentedBikes"))
 const SingleBikeView = lazy(() => import("./Pages/User/SingleBikeView/SingleBikeView"))
 const Booking = lazy(() => import("./Pages/User/Booking/Booking"))
 const BookingSuccess = lazy(() => import("./components/SuccessPage/BookingSuccess"))
+const FineSuccessPage =lazy(()=>import("./components/SuccessPage/FineSuccessPage"))
 const BookedBikes = lazy(() => import("./Pages/User/BookedBikes/BookedBikes"))
 const Wallet = lazy(()=>import("./Pages/User/Wallet/Wallet"))
 const BikesReport = lazy(()=>import("./Pages/Admin/BikesReport/BikesReport"))
@@ -65,6 +66,7 @@ function App() {
             <Route path='/booking' exact element={userData ? <Booking /> : <Login />} />
             <Route path='/booked-bike' exact element={userData ? <BookedBikes /> : <Login />} />
             <Route path='/booking-success' exact element={<BookingSuccess />} />
+            <Route path='/userFine-payment-success' exact element={<FineSuccessPage/>} />
             <Route path='/chat' exact element={userData ? <Chat /> : <Login />} />
             <Route path='/wallet' exact element={userData ? <Wallet/> : <Login/>} />
             <Route path='/test' exact element={<Test />} />

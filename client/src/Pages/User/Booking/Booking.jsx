@@ -26,6 +26,7 @@ function Booking() {
   const { bikesData } = location.state;
 
   const clickedBike = bikesData?.data.find((bike) => bike.bikeName === location.state.bikeName);
+  console.log(clickedBike,'cliked bike adata');
   const branchLocation = useSelector((state) => state?.userLocationReducer?.locationData)
 
   const coupons = useSelector((state) => state.userGetCouponReducer.couponData)
@@ -124,12 +125,12 @@ function Booking() {
 
 
   let totalAmount = needHelmet === true && couponVerified === true ?
-    (totalHours * clickedBike.price + 50) - (coupons.find((x) => x.couponCode === coupon)?.couponPrice || 0)
+    (totalHours * clickedBike?.price + 50) - (coupons.find((x) => x.couponCode === coupon)?.couponPrice || 0)
     : needHelmet === true
-      ? totalHours * clickedBike.price + 50
+      ? totalHours * clickedBike?.price + 50
       : needHelmet === false && couponVerified === true
-        ? (totalHours * clickedBike.price) - (coupons.find((x) => x.couponCode === coupon)?.couponPrice || 0)
-        : totalHours * clickedBike.price
+        ? (totalHours * clickedBike?.price) - (coupons.find((x) => x.couponCode === coupon)?.couponPrice || 0)
+        : totalHours * clickedBike?.price
 
 
   const stripeData = {

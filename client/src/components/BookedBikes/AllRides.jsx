@@ -7,9 +7,12 @@ import CancelRideModal from '../Modal/CancelRideModal'
 import EndRideModal from '../Modal/EndRideModal'
 import ViewBikeModal from '../Modal/ViewBikeModal'
 import NoData from '../Error/NoData'
+import { useDispatch } from 'react-redux'
+import { userPayFineAction } from '../../Redux/Actions/userActions'
 
 function AllRides({ data }) {
 
+    const dispatch = useDispatch()
     const userId = JSON.parse(localStorage.getItem("userInfo")).id
 
     const [viewBike, setViewBike] = useState(false)
@@ -21,6 +24,19 @@ function AllRides({ data }) {
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [price, setPrice] = useState('')
+
+    const handlePayFine =(bikeId,bookingId,startTime,endTime,price,photo,bikeName)=>{
+       const fineData ={
+        bikeId,
+        bookingId,
+        startTime,
+        endTime,
+        price,
+        photo,
+        bikeName
+       }
+       dispatch(userPayFineAction(fineData))
+    }
 
     return (
         <>
@@ -136,7 +152,22 @@ function AllRides({ data }) {
                                             }}
                                         >end ride</Button>
 
-                                        : "No action"
+                                        : 
+                                        rowData.status === "time exceeded" ?
+
+                                        <Button
+                                            onClick={(e) => {
+                                                handlePayFine(rowData.bikeId,
+                                                    rowData._id,
+                                                    rowData.startingTime,
+                                                    rowData.endingTime,
+                                                    rowData.totalAmount,
+                                                    rowData.photo,
+                                                    rowData.bikeName)
+                                            }}
+                                        >pay fine</Button>
+                                        :"No Action"
+
 
                             }
                         </>

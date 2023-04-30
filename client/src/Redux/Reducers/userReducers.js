@@ -408,6 +408,29 @@ export const userGetBookedBikeReducer =(state={},action)=>{
   }
 }
 
+// fine reducer
+
+export const userPayFineReducer =(state={},action)=>{
+  switch(action.type){
+    case userActionType.USER_PAY_FINE_REQUEST:
+      return {
+        loading:true
+      }
+    case userActionType.USER_PAY_FINE_SUCCESS:
+      return {
+        loading:false,
+        payFineData:action.payload
+      }
+    case userActionType.USER_PAY_FINE_FAIL:
+      return {
+        loading:false,
+        payFineDataError:action.payload
+      }
+    default:
+      return state
+  }
+}
+
 // chat 
 
 // contacts 

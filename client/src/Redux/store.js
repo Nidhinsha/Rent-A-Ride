@@ -22,7 +22,8 @@ import {
   userGetCouponReducer,
   userGetWalletReducer,
   getBrandsReducer,
-  homeBikeReducer
+  homeBikeReducer,
+  userPayFineReducer
 
 
 } from "./Reducers/userReducers";
@@ -67,11 +68,11 @@ const reducer = combineReducers({
 
   userBookingBikeReducer : userBookingBikeReducer,
   userGetBookedBikeReducer : userGetBookedBikeReducer,
+  userPayFineReducer:userPayFineReducer,
 
   userGetContactReducer : userGetContactReducer,
 
   userGetCouponReducer : userGetCouponReducer,
-
 
   adminLoginReducer: adminLoginReducer,
 

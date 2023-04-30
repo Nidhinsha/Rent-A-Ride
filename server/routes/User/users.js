@@ -21,7 +21,7 @@ const walletController = require("../../controller/User/walletController")
 const userCouponController = require("../../controller/User/userCouponController")
 const brandController = require("../../controller/User/FilterController/brandController")
 const homeController = require("../../controller/User/homeController")
-
+const fineController = require("../../controller/User/payFineController/payFineController")
 
 // signUp Route
 router.post('/user-signup',userSignupLogin.SignUpPost)
@@ -79,6 +79,9 @@ router.route("/booking-success").post(protect,orderController.userCreateOrderCon
 router.route("/cancel-booking").get(protect,cancelBikeOrderController.cancelBikeOrder)
 router.route("/end-booking").get(protect,endBikeOrderController.endBikeOrder)
 
+// fine
+router.route("/pay-fine").post(protect,fineController.payFine)
+router.route("/userFine-payment-success").post(protect,fineController.finePaymentSuccess)
 // coupons
 router.route("/user-coupons").get(protect,userCouponController.userGetCoupons)
 

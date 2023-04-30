@@ -14,7 +14,6 @@ exports.bikeBookingController = async (req, res) => {
 
     const { userName, userId, bikeId, bikeData, totalAmount, totalHours, needHelmet, bookedTimeSlots, pickupLocation, dropOffLocation, couponCode, paymentType } = req.body.bookingDetails
 
-
     let session
     try {
         const startingTime = bookedTimeSlots.startDate

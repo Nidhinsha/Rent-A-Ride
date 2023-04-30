@@ -55,7 +55,9 @@ export const userEndBookingAPI =(bikeId,bookingId,startTime,endTime,userId,price
   API.get(`/end-booking?bikeId=${bikeId}&bookingId=${bookingId}&startTime=${startTime}&endTime=${endTime}&price=${price}&userId=${userId}`,configToken)
 
 export const userGetBookedBikeAPI = (id) => API.get("/booked-bikes?id=" + id, configToken)
-
+// add finr option
+export const userPayFineAPI =(fineData)=>API.post("/pay-fine?id="+ID,{fineData},configToken)
+export const userFinePaymentSuccessAPI=(fineData)=>API.post("/userFine-payment-success",{fineData},configToken)
 // coupon
 export const userGetCouponAPI =()=>API.get("/user-coupons",configToken)
 // wallet 
@@ -68,6 +70,7 @@ export const getAllUserContacts = (id) => API.get("/contacts?id=" + id, configTo
 export const sendMessageAPI = (data) => API.post("/add-message", { data }, configToken)
 export const getAllMessagesAPI = (data) => API.post("/get-all-messages", { data }, configToken)
 export const sendImageAPI =(data) =>API.post("/send-image",{data},configToken)
+
 // filter
 // brands
 export const getBrandsAPI =()=>API.get("/brands",config)

@@ -1,5 +1,5 @@
 import { userActionType } from '../Constants/userConstants'
-import { getBikeWithBrandAPI, getBrandsAPI, googleSignupAPI, homeBikeDataAPI, searchBikesAPI, userBookingBikeAPI, userCancelBookingAPI, userCreateOrderAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
+import { getBikeWithBrandAPI, getBrandsAPI, googleSignupAPI, homeBikeDataAPI, searchBikesAPI, userBookingBikeAPI, userCancelBookingAPI, userCreateOrderAPI, userFinePaymentSuccessAPI, userGetAcceptedBikeAPI, userGetAllRentedBikeAPI, userGetBikeAPI, userGetBookedBikeAPI, userGetCouponAPI, userGetLocationAPI, userGetPendingBikeAPI, userGetRejectedBikeAPI, userGetWalletAPI, userHomeAPI, userImageUploadAPI, userLoginAPI, userOtpLoginAPI, userPayFineAPI, userProfileAPI, userProofUploadAPI, userSignUpAPI } from '../../Api/User/ApiCalls'
 // import {  useNavigate } from 'react-router-dom'
 
 
@@ -453,6 +453,39 @@ export const userEndBookedBikeAction =(data)=>async(dispatch)=>{
     payload : data
   })
   
+}
+// pay fine
+export const userPayFineAction =(fineData)=>async(dispatch)=>{
+  dispatch({
+    type : userActionType.USER_PAY_FINE_REQUEST
+  })
+
+  userPayFineAPI(fineData).then((data)=>{
+    if(data.data.url){
+      window.location.href = data.data.url
+    }
+  })
+  .catch((error)=>{
+    dispatch({
+      type:userActionType.USER_PAY_FINE_FAIL,
+      payload:error.response.data.message
+    })
+  })
+}
+
+export const userFinePaymentSuccessAction =(fineData)=>async(dispatch)=>{
+  userFinePaymentSuccessAPI(fineData).then((data)=>{
+    dispatch({
+      type:userActionType.USER_FINE_PAYMENT_SUCCESS,
+      payload:data.data
+    })
+  })
+  .catch((error)=>{
+    dispatch({
+      type:userActionType.USER_FINE_PAYMENT_FAIL,
+      payload:error.response.data.message
+    })
+  })
 }
 
 export const userGetCouponsAction =()=>async(dispatch)=>{
