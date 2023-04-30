@@ -6,7 +6,7 @@ import {
   Group,
 
   UnstyledButton,
-  
+
   Divider,
   Center,
   Box,
@@ -20,10 +20,11 @@ import { useDisclosure } from '@mantine/hooks';
 
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { Button } from 'primereact/button';
+// import { Button } from 'primereact/button';
 import ProfileDropDown from '../DropDown/ProfileDropDown';
+import { Button } from '@mui/material';
 
 
 const useStyles = createStyles((theme) => ({
@@ -88,37 +89,44 @@ const useStyles = createStyles((theme) => ({
 
 function NavBar() {
 
+  const navigate = useNavigate()
+
   const user = useSelector((state) => state.userLoginReducer)
   const { userLoginDetails } = user
 
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [ { toggle: toggleLinks }] = useDisclosure(false);
+  const [{ toggle: toggleLinks }] = useDisclosure(false);
   const { classes, theme } = useStyles();
 
-
+  const handleHome = () => {
+    navigate("/")
+  }
 
 
   return (
     <Box pb={100} >
-      <Header height={70} px="md"  style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1 }}>
+      <Header height={70} px="md" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1 }}>
         <Group position="apart" sx={{ height: '100%' }}>
           {/* <MantineLogo size={30} /> */}
           <h3 size={30}>Rent&Ride</h3>
 
           <Group sx={{ height: '100%' }} spacing={0} className={classes.hiddenMobile}>
-            <a href="/" className={classes.link}>
-              Home
-            </a>
+
+            <Link to='/' className={classes.link}>
+              <p>Home</p>
+            </Link>
             <HoverCard width={300} position="bottom" radius="md" shadow="md" withinPortal>
               <HoverCard.Target>
-                <a href="/bikes" className={classes.link}>
+
+                <Link to='/bikes' className={classes.link}>
                   <Center inline>
                     <Box component="span" mr={5}>
                       Bikes
                     </Box>
                     {/* <IconChevronDown size={16} color={theme.fn.primaryColor()} /> */}
                   </Center>
-                </a>
+                </Link>
+
               </HoverCard.Target>
               {/* hover */}
 
@@ -145,13 +153,14 @@ function NavBar() {
 
               {/* hover */}
             </HoverCard>
-            <a href="/rent-bike" className={classes.link}>
+            <Link to='/rent-bike' className={classes.link}>
               Rent-Bike
-            </a>
+           </Link>
             {/* <Link to='/rent-bike'> */}
-            <a href='/chat' className={classes.link}>
+            <Link to='/chat' className={classes.link}>
               Chat
-            </a>
+            </Link>
+            
 
             {/* </Link> */}
 
@@ -159,12 +168,12 @@ function NavBar() {
 
 
           </Group>
-            {/* search  */}
-            <Group>
-              <Group ml={50} spacing={5} className={classes.links}>
-                {/* {items} */}
-              </Group>
-             
+          {/* search  */}
+          <Group>
+            <Group ml={50} spacing={5} className={classes.links}>
+              {/* {items} */}
+            </Group>
+
 
 
             {/* search  */}
@@ -188,7 +197,7 @@ function NavBar() {
                   </Link>
                 </Group>
             }
-            </Group>
+          </Group>
 
 
 
@@ -211,9 +220,10 @@ function NavBar() {
         <ScrollArea h={`calc(100vh - ${rem(60)})`} mx="-md">
           <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
 
-          <a href="/" className={classes.link}>
+          <Link to='/bikes' className={classes.link}>
             Home
-          </a>
+          </Link>
+         
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
             <Center inline>
               <Box component="span" mr={5}>
@@ -225,35 +235,35 @@ function NavBar() {
             </Center>
           </UnstyledButton>
           {/* <Collapse in={linksOpened}>{links}</Collapse> */}
-          <a href="/bikes" className={classes.link}>
-            Bikes
-          </a>
-          <a href="/rent-bike" className={classes.link}>
-            Rent-Bike
-          </a>
+          <Link to='/rent-bikes' className={classes.link}>
+            rent-bikes
+          </Link>
+          <Link to='/chat' className={classes.link}>
+            Chat
+          </Link>
 
           <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
 
           {
-              userLoginDetails ?
-                <Group position="center" grow pb="xl" px="md">
-                  <Link to='/profile'>
+            userLoginDetails ?
+              <Group position="center" grow pb="xl" px="md">
+                <Link to='/profile'>
                   <ProfileDropDown />
-                  </Link>
+                </Link>
 
-                </Group>
-                :
-                <Group position="center" grow pb="xl" px="md">
+              </Group>
+              :
+              <Group position="center" grow pb="xl" px="md">
 
-                  <Link to={'/login'}>
-                    <Button variant="default">Log in</Button>
-                  </Link>
+                <Link to={'/login'}>
+                  <Button variant="default">Log in</Button>
+                </Link>
 
-                  <Link to={'/signup'}>
-                    <Button>Sign up</Button>
-                  </Link>
-                </Group>
-            }
+                <Link to={'/signup'}>
+                  <Button>Sign up</Button>
+                </Link>
+              </Group>
+          }
           {/* <Group position="center" grow pb="xl" px="md">
             <Link to='/login'>
               <Button variant="default" >Log in

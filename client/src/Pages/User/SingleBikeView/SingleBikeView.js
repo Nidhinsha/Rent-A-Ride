@@ -27,10 +27,10 @@ function SingleBikeView() {
 
 
     return (
-        <Box>
+        <><Box sx={{ maxWidth: '800px', margin: '0 auto' }}>
             <NavBar />
-            <Box display="flex" justifyContent="center" alignItems="center"  >
-                <Box boxShadow={3} borderRadius={4} p={5} width="100%" maxWidth={1200} display="flex" justifyContent="center" >
+            <Box display="flex" justifyContent="center" alignItems="center">
+                <Box boxShadow={3} borderRadius={4} p={5} width="100%" maxWidth={1200} display="flex" justifyContent="center">
                     <Grid container justifyContent="center" spacing={2}>
                         <Grid item xs={12} md={6} mt={4}>
                             <Carousel variant="dark">
@@ -40,23 +40,21 @@ function SingleBikeView() {
                                             className="d-block  w-100 "
                                             src={pic}
                                             alt={`Slide ${index}`}
-                                            style={{ height: "410px", borderRadius: "10px" }}
-                                        />
+                                            style={{ height: "400px", borderRadius: "10px" }} />
                                     </Carousel.Item>
                                 ))}
                             </Carousel>
 
                         </Grid>
-                        <Grid item xs={12} md={6} direction="column" alignItems="flex-end">
-                            <Box >
-                                <Typography variant="h5" align="center" sx={{ mt: 2 }}  >
-                                    Bike Details
-                                </Typography>
-                            </Box>
+                        <Grid item xs={12} md={6} sx={{mb:5}}  direction="column" alignItems="flex-end">
 
-                            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" boxShadow={3} borderRadius={4} >
-
-                                <Table >
+                            <Box style={{marginTop:'35px'}} display="flex" flexDirection="column" alignItems="center" justifyContent="center" boxShadow={3} borderRadius={4}>
+                                <Box>
+                                    <Typography variant="h5" align="center" sx={{ mt: 2 }}>
+                                        Bike Details
+                                    </Typography>
+                                </Box>
+                                <Table>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align='center'>Bike Name :</TableCell>
@@ -81,16 +79,13 @@ function SingleBikeView() {
                                             <TableCell align='center'>Bike Color : </TableCell>
                                             <TableCell align='center'>{clickedBike.color}</TableCell>
                                         </TableRow>
+
                                         <TableRow>
-                                            <TableCell align='center'>Type : </TableCell>
-                                            <TableCell align='center'>{clickedBike.assured}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell align='center' >Description :  </TableCell>
+                                            <TableCell align='center'>Description :  </TableCell>
                                             <TableCell align='center'>{clickedBike.description} </TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell align='center' >Price : </TableCell>
+                                            <TableCell align='center'>Price : </TableCell>
                                             <TableCell align='center'>{clickedBike.price} Rs/Hr </TableCell>
                                         </TableRow>
                                     </TableBody>
@@ -102,8 +97,8 @@ function SingleBikeView() {
                     </Grid>
                 </Box>
             </Box>
-            <Footer />
-        </Box>
+        </Box><Footer />
+        </>
     );
 }
 

@@ -31,12 +31,12 @@ app.use(express.json())
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// Mongoose Connect
-mongoose.connect('mongodb://localhost:27017/RentAndRide').then((data)=>{
-  console.log("Connected");
-}).catch((err)=>{
-  console.log("error");
-})
+// MongoDb connnection
+const uri = `mongodb+srv://nidhinshavs:${process.env.MONGO_DB_PASSWORD}@cluster0.t1py4ir.mongodb.net/Rent-A-Ride?retryWrites=true&w=majority`;
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(error => console.log("Error connecting to MongoDB", error));
 
 app.use(logger('dev'));
 app.use(express.json());

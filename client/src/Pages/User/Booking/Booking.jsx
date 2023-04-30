@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Container, Divider, FormControl, FormControlLabel, FormLabel, Input, InputLabel, MenuItem, Paper, Radio, RadioGroup, Select, Typography } from '@mui/material'
+import { Box, Button, Checkbox, Container, Divider, FormControl, FormControlLabel, FormHelperText, FormLabel, Input, InputLabel, MenuItem, Paper, Radio, RadioGroup, Select, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import NavBar from '../../../components/NavBar/NavBar'
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -37,6 +37,8 @@ function Booking() {
 
   const [pickupLocation, setPickupLocation] = useState("")
   const [dropOffLocation, setDropOffLocation] = useState("")
+  const [pickupError, setPickupError] = useState(false)
+  const [dropOffError, setDropOffError] = useState(false)
 
   const [coupon, setCoupon] = useState(null)
   const [couponVerified, setCouponVerified] = useState(false)
@@ -48,7 +50,7 @@ function Booking() {
   const [value, setValue] = useState("")
 
   const [wallet, setWallet] = useState(false)
-  const [walletError,setWalletError] = useState(false)
+  const [walletError, setWalletError] = useState(false)
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -101,6 +103,25 @@ function Booking() {
 
   }
 
+  // location 
+  const handlePickupLocation = (e) => {
+    if (e.target.value !== '') {
+      setPickupLocation(e.target.value)
+      setPickupError(false)
+    } else {
+      setPickupError(true)
+    }
+  }
+
+  const handleDropOffLocation = (e) => {
+    if (e.target.value !== '') {
+      setDropOffLocation(e.target.value)
+      setDropOffError(false)
+    } else {
+      setPickupError(true)
+    }
+  }
+
 
   let totalAmount = needHelmet === true && couponVerified === true ?
     (totalHours * clickedBike.price + 50) - (coupons.find((x) => x.couponCode === coupon)?.couponPrice || 0)
@@ -148,13 +169,22 @@ function Booking() {
   }
 
   const handleBookNow = () => {
-
+    if (pickupLocation === '' || dropOffLocation === '') {
+      setPickupError(true)
+      setDropOffError(true)
+      return
+    }
     if (wallet === false && stripe === true) {
       setWalletError(false)
+      setPickupError(false)
+      setDropOffError(false)
+
       dispatch(userBookingBikeAction(stripeData))
     } else if (wallet === true && stripe === false) {
       if (walletAmount.walletAmount >= totalAmount) {
         setWalletError(false)
+        setPickupError(false)
+        setDropOffError(false)
         userBookingBikeAPI(walletBookingData).then((data) => {
           toast.success("booking successfull ")
           setTimeout(() => {
@@ -162,7 +192,7 @@ function Booking() {
           }, 1500)
         })
       } else {
-          setWalletError(true)
+        setWalletError(true)
       }
     }
   }
@@ -231,7 +261,7 @@ function Booking() {
                   name='pickupLocation'
                   required
 
-                  onChange={(e) => setPickupLocation(e.target.value)}
+                  onChange={handlePickupLocation}
                 >
 
                   {branchLocation
@@ -245,7 +275,9 @@ function Booking() {
                       <MenuItem >No locations available</MenuItem>
                     )}
                 </Select>
-
+                {
+                  pickupError && <FormHelperText style={{ color: 'red' }}>Please select a pickUp location</FormHelperText>
+                }
               </FormControl>
 
               <FormControl fullWidth sx={{ mt: 3 }}>
@@ -257,8 +289,7 @@ function Booking() {
                   label="drop Off location"
                   name='dropOffLocation'
                   required
-
-                  onChange={(e) => setDropOffLocation(e.target.value)}
+                  onChange={handleDropOffLocation}
                 >
 
                   {branchLocation
@@ -272,6 +303,9 @@ function Booking() {
                       <MenuItem >No locations available</MenuItem>
                     )}
                 </Select>
+                {
+                  dropOffError && <FormHelperText style={{ color: 'red' }}>Please select a drop-off location</FormHelperText>
+                }
 
               </FormControl>
             </Box>
@@ -436,7 +470,7 @@ function Booking() {
                             }}
                           />
                           {
-                            walletError ? <p style={{color:'red'}}>insufficient Anount</p> : ""
+                            walletError ? <p style={{ color: 'red' }}>insufficient Anount</p> : ""
                           }
                           <FormControlLabel
                             value="stripe"
