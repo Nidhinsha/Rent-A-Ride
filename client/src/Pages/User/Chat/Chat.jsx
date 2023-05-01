@@ -8,7 +8,7 @@ import { io } from "socket.io-client"
 import { getAllUserContacts } from '../../../Api/User/ApiCalls'
 import NavBar from '../../../components/NavBar/NavBar'
 import Footer from '../../../components/Home/Footer/Footer'
-const socket = io("http://localhost:5000")
+const socket = io("https://rentaride.online")
 
 function Chat() {
 

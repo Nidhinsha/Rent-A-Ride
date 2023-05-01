@@ -116,9 +116,6 @@ function Login() {
                   ),
                 }}
               />
-              {
-                loading ? <Loading /> : ""
-              }
               <TextField
                 label="Password"
                 name='password'
