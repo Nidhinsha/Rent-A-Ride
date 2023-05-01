@@ -111,24 +111,21 @@ function Bikes() {
         }
     }, [bikesData])
 
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm({
-        resolver: yupResolver(schema)
-    })
-
-    const submitHandler = async (data) => {
-        const search = data.search
+    const submitHandler =  () => {
 
         try {
-            dispatch(userBikeSearchAction(search, page))
+            dispatch(userBikeSearchAction(searchTerm, page))
+            searchTerm(null)
         } catch (error) {
             console.log('some error ocured in search');
         }
     }
+
+    const [searchTerm,setSearchTerm] = useState("")
+
+    useEffect(()=>{
+        submitHandler()
+    },[searchTerm])
 
 
     return (
@@ -139,8 +136,11 @@ function Bikes() {
                 <h1>Rent-A-Ride Bikes For You</h1>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                <Box component='form' onSubmit={handleSubmit(submitHandler)}
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}
+            component='form' onSubmit={submitHandler}
+            >
+                {/* <Box component='form' onSubmit={handleSubmit(submitHandler)} */}
+                <Box 
                     sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '80%' }}
 
                 >
@@ -149,14 +149,12 @@ function Bikes() {
                         name='search'
                         fullWidth
 
-                        error={!!errors.search}
-                        helperText={errors.search ? errors.search.message : ""}
-                        {...register("search")}
+                       onChange={(e)=>setSearchTerm(e.target.value)}
 
                         sx={{ mb: 2 }}
                         InputProps={{
                             endAdornment: (
-                                <Button type='submit'>
+                                <Button >
                                     <InputAdornment position="start" style={{ cursor: 'pointer' }} >
                                         <ImageSearchIcon />
                                     </InputAdornment>
