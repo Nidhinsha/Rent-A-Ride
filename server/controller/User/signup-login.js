@@ -74,9 +74,7 @@ exports.SignUpPost = async (req, res) => {
                                     ]
                                 }
 
-                                walletSchema.create(newWallet).then((data) => {
-                                    console.log(data, 'data of creating wallet');
-                                })
+                                walletSchema.create(newWallet)
                             } else {
                                 walletSchema.updateOne(
                                     {
@@ -94,13 +92,11 @@ exports.SignUpPost = async (req, res) => {
                                         }
                                     }
                                 )
-                                    .then((data) => {
-                                        console.log(data, 'data of wallet exist add money to it');
-                                    })
+
                             }
                         })
                         .catch((error) => {
-                            console.log(error, 'error in wallet setting in signup');
+                           res.status({message:"error in referal setting"})
                         })
 
                     const newUserWallet = {

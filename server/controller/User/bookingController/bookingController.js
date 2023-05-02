@@ -88,7 +88,6 @@ exports.bikeBookingController = async (req, res) => {
 
                 try {
                     await booking.save()
-                    console.log(booking,'booking saved successfully');
 
                     const bike = await bikeSchema.findOneAndUpdate(
                         { _id: bikeId },
@@ -110,7 +109,7 @@ exports.bikeBookingController = async (req, res) => {
                         }
                     )
                     .then((data)=>{
-                        console.log('found the user');
+                       
                     })
 
                     // updating the wallet of the user
@@ -250,7 +249,7 @@ exports.bikeBookingController = async (req, res) => {
             res.status(400).json({message:"the slot is already booked.please select another slot thankyou"})
         }
     } catch (error) {
-        res.status(400).json({message:'wallet error'});
+        res.status(400).json({message:'bookig error'});
     }
 }
 

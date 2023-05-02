@@ -22,8 +22,6 @@ exports.userAddBike = async (req,res)=>{
                 fs.unlinkSync(path)
             }
 
-            console.log("urls from user",urls);
-
             let photo = []
 
             for(let i = 0;i<urls.length;i++){
@@ -45,10 +43,8 @@ exports.userAddBike = async (req,res)=>{
                 photo,
                 status : "pending",
             }
-            console.log(bikeDetails,'hfhfhfffh');
 
             bikeSchema.create(bikeDetails).then((data)=>{
-                console.log('bike data',data);
                 res.status(200).json(data)
             })
 
@@ -58,6 +54,6 @@ exports.userAddBike = async (req,res)=>{
             })
         }
     } catch (error) {
-        
+        res.status(400).json({message:"error in adding bike"})
     }
 }

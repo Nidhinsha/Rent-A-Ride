@@ -46,7 +46,6 @@ exports.payFine = async (req, res) => {
         });
         res.status(200).json({ url: session.url })
     } catch (error) {
-        console.log(error, 'eror payment acton backend');
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
@@ -79,7 +78,6 @@ exports.finePaymentSuccess = async (req, res) => {
             }
         )
     } catch (error) {
-        console.log(error, 'fine paymet success error');
         res.status(400).json({ message: "error while fine payment" })
     }
 }
