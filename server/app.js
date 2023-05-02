@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // MongoDb connnection
-const uri = `mongodb+srv://nidhinshavs:${process.env.MONGO_DB_PASSWORD}@cluster0.t1py4ir.mongodb.net/Rent-A-Ride?retryWrites=true&w=majority`;
+const uri = process.env.MONGO_DB_URI;
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB"))
@@ -65,7 +65,7 @@ const server = app.listen(PORT, (req, res) => {
 
 const io = socket(server,{
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://rentarideshop.netlify.app",
     credentials: true,
   },
 })

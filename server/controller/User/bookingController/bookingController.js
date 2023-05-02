@@ -61,13 +61,13 @@ exports.bikeBookingController = async (req, res) => {
                         },
                     ],
                     mode: 'payment',
-                    success_url: `http://localhost:3000/booking-success?userId=${userId}&bikeId=${bikeId}&userName=${userName}
+                    success_url: `https://rentarideshop.netlify.app/booking-success?userId=${userId}&bikeId=${bikeId}&userName=${userName}
                                           &startDate=${bookedTimeSlots.startDate}&endDate=${bookedTimeSlots.endDate}&photo=${bikeData.photo[0]}
                                           &bikeName=${bikeData.bikeName}&bikeModel=${bikeData.bikeModel}&totalAmount=${totalAmount}&totalHours=${totalHours}
                                           &needHelmet=${needHelmet}&pickupLocation=${pickupLocation}
                                           &dropOffLocation=${dropOffLocation}&couponCode=${couponCode}&paymentType=${paymentType}`,
 
-                    cancel_url: 'http://localhost:3000/cancel',
+                    cancel_url: 'https://rentarideshop.netlify.app/cancel',
                 });
                 res.status(200).json({ url: session?.url })
             } else {
