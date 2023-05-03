@@ -65,7 +65,8 @@ const server = app.listen(PORT, (req, res) => {
 
 const io = socket(server,{
   cors: {
-    origin: "https://rentarideshop.netlify.app",
+    // origin: "https://rentarideshop.netlify.app",
+    origin: "http://localhost:3000",
     credentials: true,
   },
 })

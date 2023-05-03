@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 import {  useSelector } from 'react-redux';
 import Loading from '../Loading/Loading';
 import { Box } from '@mantine/core';
@@ -49,7 +49,12 @@ function PriceAscSortBikes({priceAsc}) {
                                             </CardContent>
                                         </CardActionArea>
                                         <CardActions>
-                                           <BookingButton bikeName={data?.bikeName} />
+                                        <Button
+                                             label="Book Now" variant='outlined'  icon="pi pi-shopping-bag" style={{ width: '100%', fontSize: 'large' }}
+                                             onClick={(e)=>navigate('/booking',{
+                                                state:{bikesData,bikeId:data?._id}
+                                             })}
+                                              >Book Now </Button>
                                         </CardActions>
                                     </Card>
                                 )

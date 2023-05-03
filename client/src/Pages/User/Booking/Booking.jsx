@@ -6,7 +6,7 @@ import moment from "moment"
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userBookingBikeAction, userGetCouponsAction, userGetLocation, userGetWalletAction } from '../../../Redux/Actions/userActions';
-
+import Swal from "sweetalert2"
 import { DatePicker } from "antd"
 import Footer from '../../../components/Home/Footer/Footer';
 import { userBookingBikeAPI } from '../../../Api/User/ApiCalls';
@@ -24,7 +24,7 @@ function Booking() {
   const location = useLocation();
   const { bikesData, bikeId, bikes } = location.state
 
-  const clickedBike = bikesData?.data.find(bike => bike._id === bikeId) || bikes.find(bike => bike._id === bikeId)
+  const clickedBike = bikesData?.data?.find(bike => bike?._id === bikeId) || bikes?.find(bike => bike?._id === bikeId)
 
   const branchLocation = useSelector((state) => state?.userLocationReducer?.locationData)
 
@@ -187,15 +187,20 @@ function Booking() {
 
       dispatch(userBookingBikeAction(stripeData))
     } else if (wallet === true && stripe === false) {
-      if (walletAmount.walletAmount >= totalAmount) {
+      if (walletAmount?.walletAmount >= totalAmount) {
         setWalletError(false)
         setPickupError(false)
         setDropOffError(false)
         userBookingBikeAPI(walletBookingData).then((data) => {
-          toast.success("booking successfull ")
-          setTimeout(() => {
+
+          Swal.fire(
+            'Congrats!',
+            'You booking is successfull!',
+            'success'
+          ).then(() => {
             navigate('/booked-bike')
-          }, 1500)
+          })
+
         })
       } else {
         setWalletError(true)

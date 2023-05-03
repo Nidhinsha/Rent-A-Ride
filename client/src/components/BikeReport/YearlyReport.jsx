@@ -1,25 +1,26 @@
 import moment from 'moment';
 import React from 'react'
 import MUIDataTable from "mui-datatables";
-
+import { get } from "lodash";
 
 function YearlyReport({ bikeReport }) {
 
   const columns = [
     {
-      name: "bikeId",
-      label: "Bike ID",
+      name:"bikeId",
+      label: "Bike Name",
       options: {
         filter: true,
         sort: true,
         customHeadLabelStyle: {
-          fontWeight: 'bold',
-          fontSize: '16px',
-          textAlign: 'center',
-        },
-        customBodyRender: (value, tableMeta, updateValue) => {
-          return <div style={{ textAlign: 'center' }}>{value}</div>;
-        },
+            fontWeight: 'bold',
+            fontSize: '16px',
+            textAlign: 'center',
+          },
+          customBodyRender: (value, tableMeta, updateValue) => {
+            const brand = get(value, "bikeName");
+            return <div style={{ textAlign: 'center' }}>{brand}</div>;
+          },
       }
     },
     {

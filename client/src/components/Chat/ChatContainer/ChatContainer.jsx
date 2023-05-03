@@ -116,6 +116,7 @@ display: grid;
       .avatar {
         img {
           height: 2.5rem;
+          width:45px;
           border-radius:20px
         }
       }

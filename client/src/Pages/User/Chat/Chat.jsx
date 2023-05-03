@@ -9,6 +9,7 @@ import { getAllUserContacts } from '../../../Api/User/ApiCalls'
 import NavBar from '../../../components/NavBar/NavBar'
 import Footer from '../../../components/Home/Footer/Footer'
 const socket = io("https://rentaride.online")
+// const socket = io("http://localhost:5000")
 
 function Chat() {
 

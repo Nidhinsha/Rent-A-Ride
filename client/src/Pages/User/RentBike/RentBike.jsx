@@ -14,6 +14,7 @@ import NavBar from '../../../components/NavBar/NavBar';
 import { FormHelperText } from '@mui/material'
 import { useForm } from "react-hook-form"
 import Footer from '../../../components/Home/Footer/Footer';
+import Swal from 'sweetalert2';
 
 function RentBike() {
 
@@ -62,16 +63,15 @@ function RentBike() {
         formdata.append("description", description)
 
         userAddBikeAPI(formdata).then((data) => {
-
-            // dispatch(adminAddBikeAction(data.data))
             setLoading(false)
 
-            setSuccess(true)
-
-            setTimeout(() => {
-                navigate("/profile", { state: { bikeAdded: true } })
-                setSuccess(false)
-            }, 3000)
+            Swal.fire(
+                'Congrats!',
+                'You booking is successfull!',
+                'success'
+              ).then(() => {
+                navigate('/rented-bikes')
+              })
         })
             .catch((error) => {
                 setLoading(false)
@@ -105,7 +105,7 @@ function RentBike() {
                                     required: "This is required", minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setOwnerName(e.target.value)}
-                            helperText={errors.ownerName && <div style={{ color: 'red' }}>Please enter the owner name</div>}
+                            helperText={errors.ownerName && <div style={{ color: 'red' }}>Please check the owner name</div>}
                         />
 
                         <TextField sx={{ mr: 2 }}
@@ -117,7 +117,7 @@ function RentBike() {
                                     required: "This is required", minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setBikeName(e.target.value)}
-                            helperText={errors.bikeName && <div style={{ color: 'red' }}>Please enter the bike name</div>}
+                            helperText={errors.bikeName && <div style={{ color: 'red' }}>Please check the bike name</div>}
                         />
 
                         <TextField sx={{ mr: 2 }}
@@ -130,7 +130,7 @@ function RentBike() {
                                 })}
 
                             onChange={(e) => setModel(e.target.value)}
-                            helperText={errors.bikeModel && <div style={{ color: 'red' }}>Please enter the bike model</div>}
+                            helperText={errors.bikeModel && <div style={{ color: 'red' }}>Please check the bike model</div>}
                         />
                     </div>
                     
@@ -145,7 +145,7 @@ function RentBike() {
                                 })}
 
                             onChange={(e) => setEngineNumber(e.target.value)}
-                            helperText={errors.engineNumber && <div style={{ color: 'red' }}>Please enter the engine number</div>} />
+                            helperText={errors.engineNumber && <div style={{ color: 'red' }}>Please check the engine number</div>} />
 
                         <TextField sx={{ mr: 2 }}
                             required
@@ -156,7 +156,7 @@ function RentBike() {
                                     required: true, minLength: 3,maxLength:8
                                 })}
                             onChange={(e) => setBrand(e.target.value)}
-                            helperText={errors.engineNumber && <p style={{ color: 'red' }}>Please enter the brand</p>}
+                            helperText={errors.engineNumber && <p style={{ color: 'red' }}>Please check the brand</p>}
                         />
                     </div>
 
@@ -171,7 +171,7 @@ function RentBike() {
                                 }
                             )}
                             onChange={(e) => setColor(e.target.value)}
-                            helperText={errors.color && <div style={{ color: 'red' }}>Please enter the color</div>}
+                            helperText={errors.color && <div style={{ color: 'red' }}>Please check the color</div>}
                         />
 
 
@@ -194,7 +194,7 @@ function RentBike() {
                                 <MenuItem value="diesel">Diesel</MenuItem>
                                 <MenuItem value="electric">Electric</MenuItem>
                             </Select>
-                            {errors.fuel && <p style={{ color: 'red' }}>Please enter the fuel type</p> ? errors.fuel && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
+                            {errors.fuel && <p style={{ color: 'red' }}>Please check the fuel type</p> ? errors.fuel && <small style={{ color: 'red' }}>Please enter the fuel type</small> : <FormHelperText></FormHelperText>}
                         </FormControl>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -209,7 +209,7 @@ function RentBike() {
                                 }
                             )}
                             onChange={(e) => setPrice(e.target.value)}
-                            helperText={errors.price && <p style={{ color: 'red' }}>Please enter a price</p>}
+                            helperText={errors.price && <p style={{ color: 'red' }}>Please check the price</p>}
                         />
                     </div>
 
@@ -223,12 +223,12 @@ function RentBike() {
                             maxRows={4}
                             {...register("description",
                                 {
-                                    required: true, minLength: 3,maxLength:20
+                                    required: true, minLength: 3,maxLength:100
                                 }
                             )}
 
                             onChange={(e) => setDescription(e.target.value)}
-                            helperText={errors.description && <p style={{ color: 'red' }}>Please add a description</p>}
+                            helperText={errors.description && <p style={{ color: 'red' }}>Please check the description</p>}
                         />
                     </div>
 
@@ -239,7 +239,7 @@ function RentBike() {
                             inputProps={{
                                 accept: '.jpg, .jpeg, .png'
                               }}
-                            helperText={errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
+                            helperText={errors.image1 && <p style={{ color: 'red' }}>Please check the choosen image</p> ? errors.image1 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
 
                             onChange={(e) => setImages([...images, e.target.files[0]])} />
                         <TextField sx={{ mr: 2 }}
@@ -247,7 +247,7 @@ function RentBike() {
                             inputProps={{
                                 accept: '.jpg, .jpeg, .png'
                               }}
-                            helperText={errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
+                            helperText={errors.image2 && <p style={{ color: 'red' }}>Please check the choosen image</p> ? errors.image2 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image2",
                                 {
                                     required: true, minLength: 1
@@ -261,7 +261,7 @@ function RentBike() {
                             inputProps={{
                                 accept: '.jpg, .jpeg, .png'
                               }}
-                            helperText={errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
+                            helperText={errors.image3 && <p style={{ color: 'red' }}>Please check the choosen image</p> ? errors.image3 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image3",
                                 {
                                     required: true, minLength: 1
@@ -272,7 +272,7 @@ function RentBike() {
                             inputProps={{
                                 accept: '.jpg, .jpeg, .png'
                               }}
-                            helperText={errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> ? errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
+                            helperText={errors.image4 && <p style={{ color: 'red' }}>Please check the choosen image</p> ? errors.image4 && <p style={{ color: 'red' }}>Please choose an image</p> : "Please select the image"}
                             {...register("image4",
                                 {
                                     required: true, minLength: 1

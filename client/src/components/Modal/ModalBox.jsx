@@ -42,7 +42,7 @@ const schema = yup.object().shape({
 })
 
 export default function ModalBox({ closeModal, details }) {
-  console.log("DETILAS", details);
+
   const [basicModal, setBasicModal] = useState(true);
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()

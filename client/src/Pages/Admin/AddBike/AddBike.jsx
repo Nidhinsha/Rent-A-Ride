@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { useForm } from "react-hook-form"
+import Swal from 'sweetalert2';
 
 
 function AddBike() {
@@ -73,12 +74,15 @@ function AddBike() {
             dispatch(adminAddBikeAction(data.data))
             setLoading(false)
 
-            setSuccess(true)
+            Swal.fire(
+                'Congrats!',
+                'You booking is successfull!',
+                'success'
+              ).then(() => {
+                navigate('/admin/view-bike')
+              })
 
-            setTimeout(() => {
-                navigate("/admin/view-bike", { state: { bikeAdded: true } })
-                setSuccess(false)
-            }, 3000)
+           
         })
             .catch((error) => {
                 setLoading(false)

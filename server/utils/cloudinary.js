@@ -10,7 +10,6 @@ cloudinary.config({
 })
 
 exports.uploads = (file, folder) => {
-    console.log('cloudniary');
     try {
         return new Promise(resolve => {
             cloudinary.uploader.upload(file, (result) => {
@@ -26,7 +25,7 @@ exports.uploads = (file, folder) => {
             )
         })
     } catch (error) {
-
+       console.log(error,'eror in adding image into cloudinary');
     }
 
 }

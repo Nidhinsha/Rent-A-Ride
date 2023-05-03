@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const bookingSchema = new mongoose.Schema({
     bikeId : {
         type : mongoose.Schema.Types.ObjectId, // Change the type to ObjectId
-        ref:"bike"
+        ref:"bikes"
     },
     userId :{
         type : mongoose.Schema.Types.ObjectId,

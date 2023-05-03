@@ -1,6 +1,8 @@
 const bookingSchema = require("../../../models/bookingSchema")
 const bikeSchema = require("../../../models/bikeSchema")
 const walletSchema = require("../../../models/walletSchema")
+const mongoose = require('mongoose');
+const objectId = new mongoose.Types.ObjectId();
 
 exports.cancelBikeOrder = async (req, res) => {
     try {
@@ -12,7 +14,7 @@ exports.cancelBikeOrder = async (req, res) => {
         const price = req.query.price
 
 
-        const removeBookedTimeFromBike= bikeSchema.updateOne(
+        const removeBookedTimeFromBike = bikeSchema.updateOne(
             {
                 _id: bikeId
             },
@@ -25,115 +27,78 @@ exports.cancelBikeOrder = async (req, res) => {
                 }
             }
         )
-        .catch((error)=>{
-            res.status(400).json("error while remove time from bike collection")
-        })
+            .catch((error) => {
+                res.status(400).json({ message: "error while remove time from bike collection" })
+            })
 
         const updateStateToCancel = bookingSchema.updateOne(
             {
-                _id : bookingId
+                _id: bookingId
             },
             {
-                $set:{
-                    status:"cancelled"
+                $set: {
+                    status: "cancelled"
                 }
             }
         )
-        .catch((error)=>{
-            res.status(400).json("error while update to cancel")
-        })
+            .catch((error) => {
+                res.status(400).json({ message: "error while update to cancel" })
+            })
 
-        await Promise.all([removeBookedTimeFromBike,updateStateToCancel])
 
-       bookingSchema.aggregate(
-        [
+        await Promise.all([removeBookedTimeFromBike, updateStateToCancel])
+
+        const walletExist = await walletSchema.findOne(
             {
-              '$match': {
-                'userId': userId
-              }
-            }, {
-              '$lookup': {
-                'from': 'bikes', 
-                'localField': 'bikeId', 
-                'foreignField': '_id', 
-                'as': 'bikeData'
-              }
-            }, {
-              '$project': {
-                'bikeData': {
-                  '$arrayElemAt': [
-                    '$bikeData', 0
-                  ]
-                }, 
-                'totalAmount': 1, 
-                'totalHours': 1, 
-                'startDate': '$bookedTimeSlots.startDate', 
-                'endDate': '$bookedTimeSlots.endDate', 
-                'pickupLocation': 1, 
-                'dropOffLocation': 1, 
-                'needHelmet': 1, 
-                'status': 1
-              }
-            }, {
-              '$project': {
-                'bikeName': '$bikeData.bikeName', 
-                'bikeModel': '$bikeData.bikeModel', 
-                'color': '$bikeData.color', 
-                'totalAmount': 1, 
-                'totalHours': 1, 
-                'startDate': 1, 
-                'endDate': 1, 
-                'pickupLocation': 1, 
-                'dropOffLocation': 1, 
-                'status': 1, 
-                'photo': '$bikeData.photo'
-              }
+                userId: userId
             }
-          ]
-       )
-       .then(async(data)=>{
-            const walletExist = await walletSchema.findOne(
-                {
-                    userId:userId
-                }
-            )
+        )
 
-            if(!walletExist){
-                const newWallet = {
-                    userId,
-                    walletAmount : price,
-                    walletHistory:[
-                        {
-                            transactionType :"cancel refund",
-                            amountAdded : price
-                        }
-                    ]
-                }
-                walletSchema.create(newWallet)
-            }else{
-                walletSchema.updateOne(
+        if (!walletExist) {
+            const newWallet = {
+                userId,
+                walletAmount: price,
+                walletHistory: [
                     {
-                        userId:userId
+                        transactionType: "cancel refund",
+                        amountAdded: price
+                    }
+                ]
+            }
+            walletSchema.create(newWallet)
+        } else {
+            walletSchema.updateOne(
+                {
+                    userId: userId
+                },
+                {
+                    $inc: {
+                        walletAmount: price
                     },
-                    {
-                        $inc:{
-                            walletAmount : price
-                        },
-                        $push:{
-                            walletHistory:{
-                                transactionType:"cancel refund",
-                                amountAdded : price
-                            }
+                    $push: {
+                        walletHistory: {
+                            transactionType: "cancel refund",
+                            amountAdded: price
                         }
                     }
-                )
-                .then((response)=>{
-                    res.status(200).json(data)
+                }
+            )
+            .then(() => {
+                bookingSchema.find({ userId: userId })
+                .find({ userId: userId }).populate('bikeId')
+                .then((data) => {
+                    res.status(200).json(data);
                 })
-            }
-       })
+                .catch((err) => {
+                    res.status(500).json({ message: 'Internal server error' });
+                });
+                   
+            })
+        }
+
+
 
     } catch (error) {
-        res.status(400).json("error while canceling bike order")
+        res.status(400).json({ message: "error while canceling bike order" })
     }
 }

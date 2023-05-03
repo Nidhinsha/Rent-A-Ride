@@ -68,7 +68,7 @@ function AllRides({ data }) {
                             </Tooltip>
                         </div>
                     )}
-                    sortable style={{ width: '25%' }}></Column>
+                    sortable ></Column>
                 <Column
                     body={(rowData) => (
                         <div>
@@ -79,7 +79,7 @@ function AllRides({ data }) {
                             </Tooltip>
                         </div>
                     )}
-                    header="pickUp" sortable style={{ width: '25%' }}></Column>
+                    header="pickUp" sortable ></Column>
                 <Column
                     body={(rowData) => (
                         <div>
@@ -90,7 +90,7 @@ function AllRides({ data }) {
                             </Tooltip>
                         </div>
                     )}
-                    header="dropOff" sortable style={{ width: '25%' }}></Column>
+                    header="dropOff" sortable ></Column>
                 <Column header="StartDate"
                     body={(rowData) => (
                         <div>
@@ -101,7 +101,7 @@ function AllRides({ data }) {
                             </Tooltip>
                         </div>
                     )}
-                    sortable style={{ width: '25%' }}
+                    sortable 
                 />
                 <Column
                     body={(rowData) => (
@@ -113,13 +113,13 @@ function AllRides({ data }) {
                             </Tooltip>
                         </div>
                     )}
-                    header="EndDate" sortable style={{ width: '25%' }}
+                    header="EndDate" sortable 
                 />
                 {/* </Column> */}
 
-                <Column field="needHelmet" header="Helmet" sortable style={{ width: '25%' }}></Column>
-                <Column field="totalHours" header="Hours" sortable style={{ width: '25%' }}></Column>
-                <Column field="totalAmount" header="Amount" sortable style={{ width: '25%' }}></Column>
+                <Column field="needHelmet" header="Helmet" sortable ></Column>
+                <Column field="totalHours" header="Hours" sortable ></Column>
+                <Column field="totalAmount" header="Amount" sortable ></Column>
 
                 <Column
                     header="Actions"
@@ -128,6 +128,8 @@ function AllRides({ data }) {
                             {
                                 rowData.status === "booked" ?
                                     <Button
+                                    className="p-button-raised p-button-danger"
+                                    icon="pi pi-times"
                                         onClick={(e) => {
                                             setCancelRide(true)
                                             setSelectedBike(rowData.bikeId)
@@ -142,6 +144,8 @@ function AllRides({ data }) {
                                     rowData.status === "onRide" ?
 
                                         <Button
+                                        className="p-button-raised p-button-danger"
+                                        icon="pi pi-times"
                                             onClick={(e) => {
                                                 setEndRide(true)
                                                 setSelectedBike(rowData.bikeId)
@@ -172,7 +176,7 @@ function AllRides({ data }) {
                             }
                         </>
                     )}
-                    sortable style={{ width: '25%' }}
+                    sortable 
                 />
             </DataTable>
             :<Box display="flex" justifyContent="center"><NoData/></Box>

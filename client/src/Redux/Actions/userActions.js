@@ -436,7 +436,7 @@ export const userCancelBookedBikeAction =(bikeId,bookingId,startTime,endTime,pri
   userCancelBookingAPI(bikeId,bookingId,startTime,endTime,price,userId,).then((data)=>{
     dispatch({
       type :userActionType.USER_CANCEL_BOOKED_BIKE_SUCCESS,
-      payload:data.bookingData
+      payload:data.data
     })
   })
   .catch((error)=>{

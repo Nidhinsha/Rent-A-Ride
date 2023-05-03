@@ -103,7 +103,7 @@ function BookedBikes() {
               >
               <Tab label="All Rides" />
               <Tab label="on Ride" />
-              <Tab label="Complted Ride" />
+              <Tab label="Completed Ride" />
               <Tab label="Pending Ride" />
               <Tab label="Cancel Ride" />
             </Tabs>

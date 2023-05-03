@@ -43,6 +43,9 @@ exports.payFine = async (req, res) => {
             success_url: `https://rentarideshop.netlify.app/userFine-payment-success?userId=${userId}&bikeId=${bikeId}&bookingId=${bookingId}&startTime=${startTime}&endTime=${endTime}`,
 
             cancel_url: 'https://rentarideshop.netlify.app/cancel',
+            // success_url: `http://localhost:3000/userFine-payment-success?userId=${userId}&bikeId=${bikeId}&bookingId=${bookingId}&startTime=${startTime}&endTime=${endTime}`,
+
+            // cancel_url: 'http://localhost:3000/cancel',
         });
         res.status(200).json({ url: session.url })
     } catch (error) {

@@ -20,8 +20,6 @@ import PriceDescSortBikes from '../../../components/UserBikeList/PriceDescSortBi
 import Footer from '../../../components/Home/Footer/Footer';
 import { MDBPagination, MDBPaginationItem, MDBPaginationLink } from 'mdb-react-ui-kit';
 import { Button, Grid, Paper } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import FilterOption from '../../../components/Filter/FilterOption';
 import NoData from '../../../components/Error/NoData';
@@ -61,15 +59,7 @@ TabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-// yup validation
 
-const schema = yup.object().shape({
-    search: yup
-        .string("search term should be string")
-        .required("search term is required")
-        .trim()
-        .test('contains-no-spaces', 'Search cannot contain only spaces', value => value.trim() !== ''),
-})
 
 
 
@@ -117,7 +107,7 @@ function Bikes() {
             dispatch(userBikeSearchAction(searchTerm, page))
             searchTerm(null)
         } catch (error) {
-            console.log('some error ocured in search');
+            
         }
     }
 

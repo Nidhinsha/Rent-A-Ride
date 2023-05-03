@@ -2,7 +2,7 @@ const bookingSchema = require("../../../models/bookingSchema")
 
 exports.bikesReportData =async (req,res)=>{
     try {
-        const reportData = await bookingSchema.find()
+        const reportData = await bookingSchema.find().populate('bikeId')
 
         res.status(200).json(reportData)
 
