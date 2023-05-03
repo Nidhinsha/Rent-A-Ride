@@ -12,7 +12,7 @@ exports.sortByBikeNameAsc = (req,res)=>{
             res.status(200).json(data)
         })
         .catch((error)=>{
-            res.status(400).json("error in sorting")
+            res.status(400).json({message:"error in sorting"})
         })
     } catch (error) {
         
@@ -30,7 +30,7 @@ exports.sortByBikeNameDsc = (req,res)=>{
             res.status(200).json(data)
         })
         .catch((error)=>{
-            res.status(400).json("error in sorting")
+            res.status(400).json({message:"error in sorting"})
         })
     } catch (error) {
         

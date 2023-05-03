@@ -6,7 +6,7 @@ exports.getBrands = async (req, res) => {
         const brands = await bikeSchema.distinct('brand')
         res.status(200).json(brands)
     } catch (error) {
-        res.status(400).json("error in finding brands")
+        res.status(400).json({message:"error in finding brands"})
     }
 }
 
@@ -290,6 +290,6 @@ exports.getBikeWithBrand = async (req, res) => {
 
 
     } catch (error) {
-        res.status(400).json("error finding brand with bike")
+        res.status(400).json({message:"error finding brand with bike"})
     }
 }

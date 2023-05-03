@@ -34,10 +34,8 @@ exports.addMessageController =async(req,res)=>{
 
         if(data){
             res.status(201).json({msg:"Message added Succesfully"})
-            console.log('done it');
         }else{
             res.status(400).json({msg:"Failed to add Message to the database"})
-            console.log('not done it');
         }
     } catch (error) {
         res.status(400).json({message:"error in adding Message"})
@@ -88,6 +86,6 @@ exports.getAllMessageController =async(req,res)=>{
 
        return res.status(200).json(projectedMessages)
     } catch (error) {
-        return res.status(400).json("error while finding messages")
+        return res.status(400).json({message:"error while finding messages"})
     }
 }

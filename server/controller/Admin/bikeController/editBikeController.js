@@ -21,13 +21,12 @@ try {
         }
 
         if(urls.length > 0){
-            console.log("Urls",urls);
 
             let photo =[]
 
             for (let i = 0; i < urls.length; i++) {
                 photo.push(urls[i].url) 
-                console.log(urls[i].url,'url for the add bike');  
+                 
             }
 
             bikeSchema.updateOne(

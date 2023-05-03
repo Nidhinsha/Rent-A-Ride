@@ -139,6 +139,7 @@ grid-template-rows: 10% 78% 12%;
     .avatar {
       img {
         height: 4rem;
+        width:80px;
         max-inline-size: 100%;
         border-radius:20px
       }

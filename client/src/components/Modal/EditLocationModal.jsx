@@ -39,7 +39,6 @@ function EditLocationModal({ open, onClose, locationId }) {
         const location = data.location
 
         dispatch(adminEditLocation(locationId,location))
-        console.log('kk', data.location);
     }
 
     return (
@@ -49,7 +48,6 @@ function EditLocationModal({ open, onClose, locationId }) {
             title="Edit Location"
             content={
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}
-                    // component="form" onSubmit={handleSubmit(submitHandler)}
                     >
                      <form style={{ width: '100%' }} onSubmit={handleSubmit(submitHandler)}>
 
@@ -61,7 +59,6 @@ function EditLocationModal({ open, onClose, locationId }) {
                         style={{ margin: '8px', width: '100%' }}
                         fullWidth
                         required
-                        // defaultValue={currentLocation}
                         error={!!errors.location}
                         helperText={errors.location ? errors.location.message : ""}
                         {...register("location")}
@@ -84,6 +81,9 @@ function EditLocationModal({ open, onClose, locationId }) {
                      </form>
                 </Box>
             }
+            BackdropProps={{
+                style: { backgroundColor: 'rgba(255, 255, 255, 0.5)' }
+              }}
         >
 
         </BasicModal>

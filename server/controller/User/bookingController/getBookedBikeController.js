@@ -60,8 +60,6 @@ exports.userGetBookedBikeController = async (req, res) => {
             res.status(200).json(booking)
           
     } catch (error) {
-        res.status(400).json("error while getting data from the booked data")
-        console.log(error,'catch');
-
+        res.status(400).json({message:"error while getting data from the booked data"})
     }
 }
