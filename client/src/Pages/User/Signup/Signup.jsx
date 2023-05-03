@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, TextField, Box, Typography, InputAdornment, Button } from '@mui/material';
 import { AccountCircle, Email, Lock } from '@mui/icons-material';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -16,10 +16,12 @@ import { signInWithPopup } from 'firebase/auth'
 
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { googleSignupAction, userSignup } from '../../../Redux/Actions/userActions';
+import { googleSignupAction, userSignup, userSignupAction } from '../../../Redux/Actions/userActions';
 import { Link } from 'react-router-dom'
 import Loading from '../../../components/Loading/Loading';
 import './Signup.css'
+import { googleSignupAPI, userSignUpAPI } from '../../../Api/User/ApiCalls';
+import { userActionType } from '../../../Redux/Constants/userConstants';
 
 // yup
 const schema = yup.object().shape({
@@ -54,6 +56,7 @@ function Signup() {
 
   const userSignupData = useSelector(state => state.userSignupReducer)
   const { signUpError, loading, signUpData } = userSignupData
+  const[error,setError] = useState("")
 
 
   const googleSignupSelector = useSelector((state) => state.googleSignupReducer)
@@ -62,17 +65,7 @@ function Signup() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  // google
-
-  const googleSignup = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      const fullName = data.user.displayName
-      const [firstName, lastName] = fullName.split(' ')
-      dispatch(googleSignupAction(firstName, lastName, data.user.email, data.user.phoneNumber, data.user.photoURL))
-
-    })
-  }
-
+  
   const { register, handleSubmit,
     formState: { errors } } = useForm({
       resolver: yupResolver(schema)
@@ -87,8 +80,17 @@ function Signup() {
     const referalCode = data?.referalCode
 
     try {
-      dispatch(userSignup(firstName, lastName, email, phone, password, referalCode))
+      // dispatch(userSignup(firstName, lastName, email, phone, password, referalCode))
+      userSignUpAPI(firstName, lastName, email, phone, password, referalCode)
+        .then((data)=>{
+            dispatch(userSignupAction(data.data))
+            navigate("/login")
+        })
+        .catch((error)=>{
+          setError(error.response.data.message)
+        })
     } catch (error) {
+     
 
     }
   }
@@ -101,6 +103,31 @@ function Signup() {
       navigate('/signup')
     }
   }, [])
+
+  // google
+
+  const googleSignup = () => {
+    signInWithPopup(auth, provider).then((data) => {
+      const fullName = data.user.displayName
+      const [firstName, lastName] = fullName.split(' ')
+
+      googleSignupAPI(firstName, lastName, data.user.email, data.user.phoneNumber, data.user.photoURL).then((data)=>{
+
+        dispatch(googleSignupAction(data.data))
+        localStorage.setItem("userInfo", JSON.stringify(data.data));
+        // navigate("/")
+        window.location.href='/'
+      })
+      .catch((error)=>{
+        dispatch({
+          type: userActionType.GOOGLE_SIGNUP_FAIL,
+          payload: error.response.data.message
+        })
+      })
+
+    })
+  }
+
 
 
   return (

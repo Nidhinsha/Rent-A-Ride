@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { googleSignupAction, userLogin } from '../../../Redux/Actions/userActions'
+import { googleSignupAction, userLoginAction } from '../../../Redux/Actions/userActions'
 import Loading from '../../../components/Loading/Loading'
 import './Login.css'
 
@@ -16,6 +16,8 @@ import './Login.css'
 
 import { auth, provider } from '../../../firebase/config';
 import { signInWithPopup } from 'firebase/auth'
+import { googleSignupAPI } from '../../../Api/User/ApiCalls';
+import { userActionType } from '../../../Redux/Constants/userConstants';
 
 const schema = yup.object().shape({
 
@@ -50,20 +52,33 @@ function Login() {
     const password = data.password
 
     try {
-      dispatch(userLogin(email, password))
+      dispatch(userLoginAction(email, password))
 
     } catch (error) {
 
     }
   }
 
+  // google
+
   const googleLogin = () => {
     signInWithPopup(auth, provider).then((data) => {
       const fullName = data.user.displayName
       const [firstName, lastName] = fullName.split(' ')
-     
-      dispatch(googleSignupAction(firstName, lastName, data.user.email, data.user.phoneNumber, data.user.photoURL))
-      navigate("/")
+
+      googleSignupAPI(firstName, lastName, data.user.email, data.user.phoneNumber, data.user.photoURL).then((data)=>{
+
+        dispatch(googleSignupAction(data.data))
+        localStorage.setItem("userInfo", JSON.stringify(data.data));
+        // navigate("/")
+        window.location.href='/'
+      })
+      .catch((error)=>{
+        dispatch({
+          type: userActionType.GOOGLE_SIGNUP_FAIL,
+          payload: error.response.data.message
+        })
+      })
 
     })
   }

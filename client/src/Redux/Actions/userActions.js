@@ -6,36 +6,40 @@ import { getBikeWithBrandAPI, getBrandsAPI, googleSignupAPI, homeBikeDataAPI, se
 
 // user signup
 
-export const userSignup = (firstName, lastName, email, phone, password,referalCode) => async (dispatch) => {
+export const userSignupAction = (data) => async (dispatch) => {
   // const navigate = useNavigate()
   try {
 
-    dispatch({
-      type: userActionType.USER_SIGNUP_REQUEST
-    })
+    // dispatch({
+    //   type: userActionType.USER_SIGNUP_REQUEST
+    // })
 
-    userSignUpAPI(firstName, lastName, email, phone, password,referalCode)
-      .then((data) => {
-        window.location.href = "/login"
-        // navigate("/login")
-        dispatch({
-          type: userActionType.USER_SIGNUP_SUCCESS,
+    // userSignUpAPI(firstName, lastName, email, phone, password,referalCode)
+    //   .then((data) => {
+    //     window.location.href = "/login"
+    //     // navigate("/login")
+    //     dispatch({
+    //       type: userActionType.USER_SIGNUP_SUCCESS,
+    //       payload: data
+    //     })
+    //   })
+    //   .catch((error) => {
+    //     dispatch({
+    //       type: userActionType.USER_SIGNUP_FAIL,
+    //       payload: error.response.data.message
+    //     })
+    //   })
+    dispatch({
+      type: userActionType.USER_SIGNUP_SUCCESS,
           payload: data
-        })
-      })
-      .catch((error) => {
-        dispatch({
-          type: userActionType.USER_SIGNUP_FAIL,
-          payload: error.response.data.message
-        })
-      })
+    })
   } catch (error) {
   }
 }
 
 // user login
 
-export const userLogin = (email, password) => async (dispatch) => {
+export const userLoginAction = (email, password) => async (dispatch) => {
  
   try {
     dispatch({
@@ -80,10 +84,10 @@ export const googleSignupAction = (firstName, lastName, email, phone, photo) => 
       payload: data,
     })
 
-    await localStorage.setItem("userInfo", JSON.stringify(data))
+    // await localStorage.setItem("userInfo", JSON.stringify(data))
 
     // navigate to home page after localStorage operation is complete
-    window.location.href = "/"
+    // window.location.href = "/"
 
   } catch (error) {
     dispatch({
