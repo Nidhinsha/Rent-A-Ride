@@ -15,10 +15,12 @@ import Select from '@mui/material/Select';
 
 import { useForm } from "react-hook-form"
 import { adminEditBikeAPI} from '../../../Api/Admin/ApiCalls'
+import Swal from 'sweetalert2';
 
 function EditBike() {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [images1, setImages1] = useState([])
     const [images, setImages] = useState([])
@@ -78,7 +80,13 @@ function EditBike() {
     
         const id= location.state.bikeData._id
         adminEditBikeAPI(id,formData).then((data) => {
-         
+         Swal.fire(
+                'Congrats!',
+                'You Bike Edited successfully!',
+                'success'
+              ).then(() => {
+                navigate('/admin/view-bike')
+              })
         })
     }
 
@@ -342,10 +350,9 @@ function EditBike() {
                                 mr: 2, mt: 5, width: '100%'
                             }}
                             type='submit'
-
                             onClick={handleSubmit}
                         >
-                            ADD BIKE
+                           UPDATE BIKE
                         </Button>
                     </div>
 

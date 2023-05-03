@@ -156,8 +156,8 @@ exports.LoginPost = async (req, res) => {
                 res.status(400).json({ message: "User Does Not Exits" })
             }
         }).
-            catch((error) => {
-                res.json("Error")
+        catch((error) => {
+            res.json("Error")
             })
     } catch (error) {
         res.status(500).json({ message: "Internal server error" })

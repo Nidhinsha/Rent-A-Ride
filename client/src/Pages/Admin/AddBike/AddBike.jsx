@@ -76,7 +76,7 @@ function AddBike() {
 
             Swal.fire(
                 'Congrats!',
-                'You booking is successfull!',
+                'You Bike Added successfully',
                 'success'
               ).then(() => {
                 navigate('/admin/view-bike')

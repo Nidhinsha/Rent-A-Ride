@@ -203,7 +203,13 @@ function Booking() {
 
         })
       } else {
-        setWalletError(true)
+        // setWalletError(true)
+        Swal.fire({
+          icon: 'error',
+          title: 'Insufficent Money',
+          text: 'Wallet does not have enough money!',
+         
+        })
       }
     }
   }
@@ -244,7 +250,15 @@ function Booking() {
           <Box>
             <Typography>Select Time Slots</Typography>
             {
-              bookingBikeDataError ? <p style={{ color: "red" }}>{bookingBikeDataError}</p> : ""
+              // bookingBikeDataError ? <p style={{ color: "red" }}>{bookingBikeDataError}</p> : ""
+                bookingBikeDataError ? Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'time already taken',
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+                :""
             }
             <RangePicker
               showTime={{ format: "HH:mm" }}
@@ -359,10 +373,22 @@ function Booking() {
               >Apply Coupon</Button>
             </Box>
             {
-              couponError ? <p style={{ color: 'red' }}>Coupon Code is not valid</p> : ""
+              couponError ? Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Coupon is not valid',
+                showConfirmButton: false,
+                timer: 3000
+              }) : ""
             }
             {
-              couponApplied ? <p style={{ color: 'red' }}>Coupon Has Already Applied</p> : ""
+              couponApplied ? Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Coupon is already used!!',
+                showConfirmButton: false,
+                timer: 3000
+              }) : ""
             }
           </Box>
           <Divider />

@@ -47,8 +47,7 @@ function Location() {
 
     useEffect(() => {
         dispatch(adminGetLocation())
-    }, [dispatch])
-
+    }, [dispatch,open,editModalOpen])
 
     return (
         <Box sx={{ display: 'flex' }}>
