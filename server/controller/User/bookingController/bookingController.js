@@ -247,9 +247,11 @@ exports.bikeBookingController = async (req, res) => {
                 }
             }
         } else {
+            console.log('the slot is already booked.please select another slot thankyou');
             res.status(400).json({message:"the slot is already booked.please select another slot thankyou"})
         }
     } catch (error) {
+        console.log(error,'booking erpr');
         res.status(400).json({message:'bookig error'});
     }
 }

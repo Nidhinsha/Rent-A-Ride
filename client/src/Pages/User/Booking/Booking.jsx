@@ -11,6 +11,7 @@ import { DatePicker } from "antd"
 import Footer from '../../../components/Home/Footer/Footer';
 import { userBookingBikeAPI } from '../../../Api/User/ApiCalls';
 import { Toaster, toast } from 'react-hot-toast';
+import ErrorMessage from '../../../components/Alert/Error';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -203,13 +204,7 @@ function Booking() {
 
         })
       } else {
-        // setWalletError(true)
-        Swal.fire({
-          icon: 'error',
-          title: 'Insufficent Money',
-          text: 'Wallet does not have enough money!',
-         
-        })
+        setWalletError(true)
       }
     }
   }
@@ -250,16 +245,8 @@ function Booking() {
           <Box>
             <Typography>Select Time Slots</Typography>
             {
-              // bookingBikeDataError ? <p style={{ color: "red" }}>{bookingBikeDataError}</p> : ""
-                bookingBikeDataError ? Swal.fire({
-                  position: 'top-end',
-                  icon: 'error',
-                  title: 'time already taken',
-                  showConfirmButton: false,
-                  timer: 3000
-                })
-                :""
-            }
+               bookingBikeDataError ? <p style={{ color: "red" }}>{bookingBikeDataError}</p> : ""
+             }
             <RangePicker
               showTime={{ format: "HH:mm" }}
               format="MM DD YYYY HH:mm"
@@ -508,7 +495,12 @@ function Booking() {
                             }}
                           />
                           {
-                            walletError ? <p style={{ color: 'red' }}>insufficient Anount</p> : ""
+                            walletError ? Swal.fire({
+                              icon: 'error',
+                              title: 'Insufficent Money',
+                              text: 'Wallet does not have enough money!',
+                             
+                            }) : ""
                           }
                           <FormControlLabel
                             value="stripe"

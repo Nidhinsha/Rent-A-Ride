@@ -44,7 +44,7 @@ function BikeCards() {
                                                 fule type : {bike.fuel}
                                             </Typography>
                                             <Typography variant="body1" color="text">
-                                                description : {bike.bikeModel} .
+                                                bike Model : {bike.bikeModel} .
                                             </Typography>
                                             <Typography variant="body1" color="text">
                                                 Rent from : <b> <span style={{ color: 'black' }}>{bike.price}/hr</span> </b>

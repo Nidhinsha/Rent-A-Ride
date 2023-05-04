@@ -9,7 +9,6 @@ function BookingSuccess() {
   const location = useLocation()
 
   const searchParams = new URLSearchParams(location.search)
-  console.log("searchPrams",searchParams);
 
   const userId = searchParams.get(`userId`)
   const userName = searchParams.get('userName')

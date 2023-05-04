@@ -1,6 +1,6 @@
 import Alert from 'react-bootstrap/Alert';
 
-function ErrorMessage({variant = "info",children}) {
+function ErrorMessage({variant = "error",children}) {
   
   return (
     <Alert variant={variant} >
