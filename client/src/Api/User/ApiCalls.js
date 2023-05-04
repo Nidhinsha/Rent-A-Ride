@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-// const API = axios.create({ baseURL: "https://rentaride.online/api/user" })
-const API = axios.create({ baseURL: "http://localhost:5000/api/user" })
+const API = axios.create({ baseURL: "https://rentaride.online/api/user" })
 
 const config = {
   headers: {
